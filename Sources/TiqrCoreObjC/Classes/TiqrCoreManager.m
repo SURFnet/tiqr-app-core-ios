@@ -60,8 +60,6 @@
         sharedInstance = [[self alloc] init];
     
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:SWIFTPM_MODULE_BUNDLE];
-//        StartViewController *startViewController = [storyboard instantiateInitialViewController];
-//        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:startViewController];
         sharedInstance.navigationController = [storyboard instantiateInitialViewController];
 
     });
