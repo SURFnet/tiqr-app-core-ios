@@ -29,12 +29,13 @@
 
 #import <CoreData/CoreData.h>
 #import "EnrollmentChallenge.h"
+#import "BaseViewControllerWithNavigationbarAppearance.h"
 #import <UIKit/UIKit.h>
 
 /**
  * Gives the user an overview of the account he/she just activated.
  */
-@interface EnrollmentSummaryViewController : UIViewController {
+@interface EnrollmentSummaryViewController : BaseViewControllerWithNavigationbarAppearance {
     
 }
 

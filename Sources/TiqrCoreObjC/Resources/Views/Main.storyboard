@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DA4-Fj-vM6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DA4-Fj-vM6">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,14 +14,14 @@
             <objects>
                 <viewController id="9PQ-bi-OS6" customClass="StartViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ku0-OK-M7X">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="804"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xJd-QF-ToO">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="721"/>
                                 <subviews>
                                     <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kmn-6s-yte">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="593"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="589"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <dataDetectorType key="dataDetectorTypes"/>
                                         <connections>
@@ -29,7 +29,7 @@
                                         </connections>
                                     </webView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1nW-1N-hYR">
-                                        <rect key="frame" x="41.5" y="637" width="331" height="44"/>
+                                        <rect key="frame" x="41.5" y="633" width="331" height="44"/>
                                         <color key="backgroundColor" red="0.54165369269999997" green="0.65141624210000004" blue="0.0940284282" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="S5V-wM-Ueh"/>
@@ -78,9 +78,10 @@
         <!--Navigation Controller-->
         <scene sceneID="GJy-kk-9Bv">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Kp-R6-C10" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="StartNavigationViewController" toolbarHidden="NO" id="DA4-Fj-vM6" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Pby-I3-11I" customClass="TiqrNavigationBar">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ti4-Po-JYm" customClass="TiqrToolbar">
@@ -91,7 +92,6 @@
                         <segue destination="9PQ-bi-OS6" kind="relationship" relationship="rootViewController" id="cwC-lw-0gU"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0Kp-R6-C10" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-794" y="110"/>
         </scene>

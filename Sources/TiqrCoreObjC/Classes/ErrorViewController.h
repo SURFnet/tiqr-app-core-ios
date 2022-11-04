@@ -32,8 +32,9 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "BaseViewControllerWithNavigationbarAppearance.h"
 
-@interface ErrorViewController : UIViewController {
+@interface ErrorViewController : BaseViewControllerWithNavigationbarAppearance {
     
 }
 

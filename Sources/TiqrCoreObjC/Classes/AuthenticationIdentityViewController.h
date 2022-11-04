@@ -29,13 +29,14 @@
 
 #import <CoreData/CoreData.h>
 #import "AuthenticationChallenge.h"
+#import "BaseViewControllerWithNavigationbarAppearance.h"
 #import <UIKit/UIKit.h>
 
 /**
  * Controller for selecting an identity for a certain identity provider if
  * more than one identity matches a certain authentication challenge.
  */
-@interface AuthenticationIdentityViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface AuthenticationIdentityViewController : BaseViewControllerWithNavigationbarAppearance <UITableViewDataSource, UITableViewDelegate> {
 
 }
 
