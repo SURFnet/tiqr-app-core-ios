@@ -30,13 +30,14 @@
 #import <CoreData/CoreData.h>
 #import "AuthenticationChallenge.h"
 #import "AuthenticationConfirmationRequest.h"
+#import "BaseViewControllerWithNavigationbarAppearance.h"
 #import <UIKit/UIKit.h>
 /**
  * Authentication confirmation controller.
  *
  * Gives the user the opportunity to confirm a login.
  */
-@interface AuthenticationConfirmViewController : UIViewController {
+@interface AuthenticationConfirmViewController : BaseViewControllerWithNavigationbarAppearance {
 
 }
 
