@@ -29,12 +29,13 @@
 
 #import "Identity.h"
 #import <UIKit/UIKit.h>
+#import "BaseViewControllerWithNavigationbarAppearance.h"
 
 /**
  * Identity detail screen. Shows an overview of the identity data
  * and allows the user to delete the identity.
  */
-@interface IdentityEditViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface IdentityEditViewController : BaseViewControllerWithNavigationbarAppearance <UITableViewDelegate, UITableViewDataSource> {
     
 }
 

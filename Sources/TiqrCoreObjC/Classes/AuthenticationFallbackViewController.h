@@ -29,13 +29,14 @@
 
 #import <CoreData/CoreData.h>
 #import "AuthenticationChallenge.h"
+#import "BaseViewControllerWithNavigationbarAppearance.h"
 #import <UIKit/UIKit.h>
 
 /**
  * Offline fallback. Gives the user an alternative way to login using
  * a one-time-password which he/she can enter on the website.
  */
-@interface AuthenticationFallbackViewController : UIViewController {
+@interface AuthenticationFallbackViewController : BaseViewControllerWithNavigationbarAppearance {
 
 }
 

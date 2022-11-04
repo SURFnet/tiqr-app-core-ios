@@ -29,6 +29,7 @@
 
 #import <CoreData/CoreData.h>
 #import "AuthenticationChallenge.h"
+#import "BaseViewControllerWithNavigationbarAppearance.h"
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -36,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Gives the user an overview of the login that he/she just completed.
  */
-@interface AuthenticationSummaryViewController : UIViewController {
+@interface AuthenticationSummaryViewController : BaseViewControllerWithNavigationbarAppearance {
     
 }
 

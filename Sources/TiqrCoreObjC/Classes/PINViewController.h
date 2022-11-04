@@ -28,6 +28,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "BaseViewControllerWithNavigationbarAppearance.h"
 
 /**
  * Base class for entering a PIN. Shows an icon for the entered digits
@@ -42,7 +43,7 @@
 
 @end
 
-@interface PINViewController : UIViewController <UITextFieldDelegate> {
+@interface PINViewController : BaseViewControllerWithNavigationbarAppearance <UITextFieldDelegate> {
     
 }
 

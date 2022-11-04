@@ -29,12 +29,13 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "BaseViewControllerWithNavigationbarAppearance.h"
 
 /**
  * View controller which contains the initial welcome message and 
  * usage instructions.
  */
-@interface StartViewController : UIViewController
+@interface StartViewController : BaseViewControllerWithNavigationbarAppearance
 
 
 @end
