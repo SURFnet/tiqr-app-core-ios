@@ -68,13 +68,6 @@
 
 - (UINavigationController * _Nonnull)startWithOptions:(NSDictionary * _Nullable)launchOptions {
     
-    BOOL allIdentitiesBlocked = ServiceContainer.sharedInstance.identityService.allIdentitiesBlocked;
-
-	if (!allIdentitiesBlocked) {
-		ScanViewController *scanViewController = [[ScanViewController alloc] init];
-        [self.navigationController pushViewController:scanViewController animated:NO];
-    }
-
     if (launchOptions != nil) {
         NSDictionary *info = [launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
 
