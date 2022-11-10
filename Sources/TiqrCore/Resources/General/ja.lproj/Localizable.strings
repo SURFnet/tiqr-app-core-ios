@@ -272,9 +272,6 @@
 /* Select Identity */
 "select_identity_title" = "IDを選択してください";
 
-/* Do you want to see these instructions when you start the application in the future? You can always open the instructions from the Scan window or change this behavior in Settings. */
-"show_instructions_preference_message" = "今後も、起動時に説明が必要ですか？いつでも、スキャン画面から説明を確認することができます。また後で設定を変更することもできます。";
-
 /* Start button title */
 "start_button" = "スタート";
 
