@@ -1,4 +1,4 @@
-﻿/* About tiqr */
+/* About tiqr */
 "about_title" = "About %@";
 
 /* Your account is activated! */
@@ -286,9 +286,6 @@
 
 /* Select Identity */
 "select_identity_title" = "Select identity";
-
-/* Do you want to see these instructions when you start the application in the future? You can always open the instructions from the Scan window or change this behavior in Settings. */
-"show_instructions_preference_message" = "Do you want to see these instructions when you start the application in the future? You can always open the instructions from the Scan window or change this behaviour in Settings.";
 
 /* Start button title */
 "start_button" = "Start";

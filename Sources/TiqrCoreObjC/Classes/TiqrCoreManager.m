@@ -68,14 +68,14 @@
 
 - (UINavigationController * _Nonnull)startWithOptions:(NSDictionary * _Nullable)launchOptions {
 
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];	
-	BOOL showInstructions = 
-        [defaults objectForKey:@"show_instructions_preference"] == nil || 
-        [defaults boolForKey:@"show_instructions_preference"];		
+//	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//	BOOL showInstructions =
+//        [defaults objectForKey:@"show_instructions_preference"] == nil ||
+//        [defaults boolForKey:@"show_instructions_preference"];
 
     BOOL allIdentitiesBlocked = ServiceContainer.sharedInstance.identityService.allIdentitiesBlocked;
 
-	if (!allIdentitiesBlocked && !showInstructions) {
+	if (!allIdentitiesBlocked) {
 		ScanViewController *scanViewController = [[ScanViewController alloc] init];
         [self.navigationController pushViewController:scanViewController animated:NO];
     }

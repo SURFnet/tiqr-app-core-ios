@@ -1,4 +1,4 @@
-﻿/* About tiqr */
+/* About tiqr */
 "about_title" = "Colofon";
 
 /* Your account is activated! */
@@ -286,9 +286,6 @@
 
 /* Select Identity */
 "select_identity_title" = "Selecteer identiteit";
-
-/* Do you want to see these instructions when you start the application in the future? You can always open the instructions from the Scan window or change this behavior in Settings. */
-"show_instructions_preference_message" = "Wil je deze instructies zien wanneer je de volgende keer de applicatie start? Je kunt altijd de instructies openen vanuit het Scannen-scherm of dit gedrag aanpassen in Instellingen.";
 
 /* Start button title */
 "start_button" = "Start";
