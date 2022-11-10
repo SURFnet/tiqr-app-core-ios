@@ -67,12 +67,7 @@
 }
 
 - (UINavigationController * _Nonnull)startWithOptions:(NSDictionary * _Nullable)launchOptions {
-
-//	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//	BOOL showInstructions =
-//        [defaults objectForKey:@"show_instructions_preference"] == nil ||
-//        [defaults boolForKey:@"show_instructions_preference"];
-
+    
     BOOL allIdentitiesBlocked = ServiceContainer.sharedInstance.identityService.allIdentitiesBlocked;
 
 	if (!allIdentitiesBlocked) {
@@ -96,16 +91,7 @@
 }
 
 - (void)popToStartViewControllerAnimated:(BOOL)animated {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];	
-    BOOL showInstructions = [defaults objectForKey:@"show_instructions_preference"] == nil || [defaults boolForKey:@"show_instructions_preference"];
-    BOOL allIdentitiesBlocked = ServiceContainer.sharedInstance.identityService.allIdentitiesBlocked;
-
-    if (allIdentitiesBlocked || showInstructions) {
-        [self.navigationController popToRootViewControllerAnimated:animated];
-    } else {
-        UIViewController *scanViewController = self.navigationController.viewControllers[1];
-        [self.navigationController popToViewController:scanViewController animated:animated];
-    }
+    [self.navigationController popToRootViewControllerAnimated:animated];
 }
 
 #pragma mark -
