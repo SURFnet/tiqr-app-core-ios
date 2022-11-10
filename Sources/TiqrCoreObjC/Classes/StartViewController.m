@@ -135,38 +135,8 @@
 }
 
 - (IBAction)scan {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];	
-    if (ServiceContainer.sharedInstance.identityService.identityCount > 0 &&
-        [defaults objectForKey:@"show_instructions_preference"] == nil) {
-		NSString *message = [Localization localize:@"show_instructions_preference_message" comment:@"Do you want to see these instructions when you start the application in the future? You can always open the instructions from the Scan window or change this behavior in Settings."];
-		NSString *yesTitle = [Localization localize:@"yes_button" comment:@"Yes button title"];
-		NSString *noTitle = [Localization localize:@"no_button" comment:@"No button title"];
-
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *yesButton = [UIAlertAction actionWithTitle:yesTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setBool:YES forKey:@"show_instructions_preference"];
-
-            ScanViewController *viewController = [[ScanViewController alloc] init];
-            [self.navigationController pushViewController:viewController animated:YES];
-        }];
-
-        UIAlertAction *noButton = [UIAlertAction actionWithTitle:noTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setBool:NO forKey:@"show_instructions_preference"];
-
-            ScanViewController *viewController = [[ScanViewController alloc] init];
-            [self.navigationController pushViewController:viewController animated:YES];
-        }];
-
-        [alertController addAction:yesButton];
-        [alertController addAction:noButton];
-
-        [self presentViewController:alertController animated:YES completion:nil];
-	} else {
-		ScanViewController *viewController = [[ScanViewController alloc] init];
-		[self.navigationController pushViewController:viewController animated:YES];	
-	}
+    ScanViewController *viewController = [[ScanViewController alloc] init];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (void)about {
