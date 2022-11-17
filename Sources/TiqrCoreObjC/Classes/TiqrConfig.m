@@ -228,4 +228,16 @@
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
 
++ (NSString *)buildVersion {
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+}
+
++ (NSString *)appAndBuildVersion {
+    return [NSString stringWithFormat:@"%@ (%@)", [self appVersion], [self buildVersion]];
+}
+
++ (NSString *)gitReleaseVersion {
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"TIQRGitReleaseVersion"];
+}
+
 @end

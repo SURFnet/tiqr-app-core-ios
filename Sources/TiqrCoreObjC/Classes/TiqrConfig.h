@@ -37,5 +37,8 @@
 
 @property (class, copy, readonly) NSString *appName;
 @property (class, copy, readonly) NSString *appVersion;
+@property (class, copy, readonly) NSString *buildVersion;
+@property (class, copy, readonly) NSString *appAndBuildVersion;
+@property (class, copy, readonly) NSString *gitReleaseVersion;
 
 @end
