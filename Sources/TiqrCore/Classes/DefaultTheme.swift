@@ -39,7 +39,9 @@ final class DefaultTheme: TiqrThemeType {
     let buttonFont: UIFont = .systemFont(ofSize: 14)
     let buttonTintColor: UIColor = .black
     let buttonBackgroundColor: UIColor = .green
-
+    let secondaryButtonTintColor: UIColor = .lightGray
+    let secondaryButtonBackgroundColor: UIColor = .black
+    
     let aboutIcon: UIImage? = UIImage(named: "tiqr-logo")
     let topBarIcon: UIImage? = UIImage(named: "tiqr-logo")
     let bottomBarIcon: UIImage? = UIImage(named: "surf-logo")

@@ -19,6 +19,9 @@
 /* Do you want to activate the following account */
 "activate_following_account" = "Do you want to activate your account?";
 
+/* Allow button */
+"allow_button" = "Allow";
+
 /* Account cannot be saved title */
 "error_enroll_failed_to_store_identity_title" = "Account cannot be saved";
 
@@ -51,6 +54,9 @@
 
 /* Delete */
 "delete_button" = "Delete";
+
+/* Deny button */
+"deny_button" = "Deny";
 
 /* Developed by: */
 "developed_by_title" = "Developed by:";
