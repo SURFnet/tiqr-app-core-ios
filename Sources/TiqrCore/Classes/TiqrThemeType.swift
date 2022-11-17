@@ -40,6 +40,8 @@ public protocol TiqrThemeType {
     var buttonFont: UIFont { get }
     var buttonTintColor: UIColor { get }
     var buttonBackgroundColor: UIColor { get }
+    var secondaryButtonTintColor: UIColor { get }
+    var secondaryButtonBackgroundColor: UIColor { get }
 
     var topBarIcon: UIImage? { get }
     var bottomBarIcon: UIImage? { get }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,13 +11,14 @@
             <connections>
                 <outlet property="accountIDLabel" destination="s0a-MS-KaH" id="wLv-wF-c4y"/>
                 <outlet property="accountLabel" destination="Uvv-D5-WBA" id="u2j-1G-Cu5"/>
+                <outlet property="allowButton" destination="12" id="Nvu-bT-pmo"/>
+                <outlet property="allowButtonBottomConstraint" destination="887-cF-jBT" id="miV-he-MIo"/>
+                <outlet property="denyButton" destination="rWv-7e-AAY" id="tTe-DJ-Ja5"/>
                 <outlet property="identityDisplayNameLabel" destination="38" id="44"/>
                 <outlet property="identityIdentifierLabel" destination="39" id="rUI-XF-ADd"/>
                 <outlet property="loggedInAsLabel" destination="43" id="50"/>
                 <outlet property="loginConfirmLabel" destination="21" id="49"/>
                 <outlet property="nonTouchIDViewsContainer" destination="lyj-AQ-uBR" id="wsU-aO-O1e"/>
-                <outlet property="okButton" destination="12" id="52"/>
-                <outlet property="okButtonBottomConstraint" destination="887-cF-jBT" id="BYi-y1-Yh5"/>
                 <outlet property="serviceProviderDisplayNameLabel" destination="41" id="47"/>
                 <outlet property="serviceProviderIdentifierLabel" destination="42" id="48"/>
                 <outlet property="toLabel" destination="40" id="51"/>
@@ -40,19 +41,19 @@
                     <rect key="frame" x="0.0" y="50" width="320" height="430"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Identity Name" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="38">
-                            <rect key="frame" x="168" y="54.5" width="142" height="17"/>
+                            <rect key="frame" x="168" y="54.333333333333329" width="142" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Identity identifier" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="39">
-                            <rect key="frame" x="168" y="76.5" width="142" height="17"/>
+                            <rect key="frame" x="168" y="76.333333333333329" width="142" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="1000" text="Account" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Uvv-D5-WBA">
-                            <rect key="frame" x="35" y="54.5" width="125" height="17"/>
+                            <rect key="frame" x="35" y="54.333333333333329" width="125" height="17"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="125" id="wgY-5T-OAM"/>
                             </constraints>
@@ -61,19 +62,19 @@
                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="1000" text="Tiqr account ID" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="s0a-MS-KaH">
-                            <rect key="frame" x="35" y="76.5" width="125" height="17"/>
+                            <rect key="frame" x="35" y="76.333333333333329" width="125" height="17"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="to:" lineBreakMode="tailTruncation" numberOfLines="2" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="40">
-                            <rect key="frame" x="20" y="130.5" width="280" height="19.5"/>
+                            <rect key="frame" x="20" y="130.33333333333334" width="280" height="19.333333333333343"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="You will be logged in as:" lineBreakMode="tailTruncation" numberOfLines="2" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="43">
-                            <rect key="frame" x="20" y="24" width="280" height="19.5"/>
+                            <rect key="frame" x="20" y="24" width="280" height="19.333333333333329"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -94,32 +95,47 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12">
-                            <rect key="frame" x="32" y="286" width="256" height="44"/>
+                            <rect key="frame" x="176" y="286" width="128" height="44"/>
                             <color key="backgroundColor" red="0.54165369272232056" green="0.65141624212265015" blue="0.094028428196907043" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="ro3-p6-cSC"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <state key="normal" title="OK">
+                            <state key="normal" title="Allow">
                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
-                                <action selector="ok" destination="-1" eventType="touchUpInside" id="34"/>
+                                <action selector="allow" destination="-1" eventType="touchUpInside" id="wnJ-hV-pFS"/>
                             </connections>
                         </button>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Service Provider Name" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="41">
-                            <rect key="frame" x="35" y="159" width="275" height="17"/>
+                            <rect key="frame" x="35" y="158.66666666666666" width="275" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Service Provider Identifier" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="42">
-                            <rect key="frame" x="35" y="181" width="275" height="17"/>
+                            <rect key="frame" x="35" y="180.66666666666666" width="275" height="17"/>
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                             <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rWv-7e-AAY">
+                            <rect key="frame" x="16" y="286" width="128" height="44"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="4AX-gP-Yus"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <state key="normal" title="Deny">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="deny" destination="-1" eventType="touchUpInside" id="ptb-2G-6Nx"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -132,12 +148,14 @@
                         <constraint firstItem="43" firstAttribute="leading" secondItem="lyj-AQ-uBR" secondAttribute="leading" constant="20" id="9j1-b8-Din"/>
                         <constraint firstItem="s0a-MS-KaH" firstAttribute="top" secondItem="Uvv-D5-WBA" secondAttribute="bottom" constant="5" id="A1P-f8-Hrp"/>
                         <constraint firstItem="Uvv-D5-WBA" firstAttribute="top" secondItem="43" secondAttribute="bottom" constant="11" id="AGO-cO-O8j"/>
+                        <constraint firstItem="rWv-7e-AAY" firstAttribute="centerX" secondItem="lyj-AQ-uBR" secondAttribute="centerX" multiplier="0.5" id="BGK-eN-iM2"/>
                         <constraint firstItem="38" firstAttribute="baseline" secondItem="Uvv-D5-WBA" secondAttribute="baseline" id="IC6-Bf-UsA"/>
                         <constraint firstItem="s0a-MS-KaH" firstAttribute="leading" secondItem="Uvv-D5-WBA" secondAttribute="leading" id="JGh-O8-oK9"/>
                         <constraint firstItem="42" firstAttribute="leading" secondItem="41" secondAttribute="leading" id="Kv1-Ui-Dkr"/>
                         <constraint firstAttribute="bottom" secondItem="unM-mg-XsY" secondAttribute="bottom" constant="41" id="Ocd-K2-hAU"/>
                         <constraint firstItem="43" firstAttribute="top" secondItem="lyj-AQ-uBR" secondAttribute="top" constant="24" id="Umr-q9-8ce"/>
                         <constraint firstItem="Uvv-D5-WBA" firstAttribute="leading" secondItem="lyj-AQ-uBR" secondAttribute="leading" constant="35" id="WOh-hj-fyJ"/>
+                        <constraint firstItem="12" firstAttribute="centerY" secondItem="rWv-7e-AAY" secondAttribute="centerY" id="XXp-60-ZUl"/>
                         <constraint firstItem="40" firstAttribute="trailing" secondItem="43" secondAttribute="trailing" id="aGn-wb-3p2"/>
                         <constraint firstItem="42" firstAttribute="top" secondItem="41" secondAttribute="bottom" constant="5" id="ePH-Sn-zZ5"/>
                         <constraint firstItem="unM-mg-XsY" firstAttribute="centerX" secondItem="lyj-AQ-uBR" secondAttribute="centerX" id="ff8-LH-Vk1"/>
@@ -145,12 +163,14 @@
                         <constraint firstItem="42" firstAttribute="trailing" secondItem="41" secondAttribute="trailing" id="gcU-nh-y2M"/>
                         <constraint firstItem="40" firstAttribute="top" secondItem="s0a-MS-KaH" secondAttribute="bottom" constant="37" id="hVU-Oe-Epy"/>
                         <constraint firstAttribute="trailing" secondItem="38" secondAttribute="trailing" constant="10" id="k8m-N4-9JL"/>
+                        <constraint firstItem="12" firstAttribute="height" secondItem="rWv-7e-AAY" secondAttribute="height" id="qPL-dV-BIM"/>
                         <constraint firstAttribute="trailing" secondItem="41" secondAttribute="trailing" constant="10" id="r1M-jj-bSF"/>
-                        <constraint firstItem="12" firstAttribute="width" secondItem="lyj-AQ-uBR" secondAttribute="width" multiplier="0.8" id="rkc-Zc-Ghr"/>
+                        <constraint firstItem="12" firstAttribute="width" secondItem="lyj-AQ-uBR" secondAttribute="width" multiplier="0.4" id="rkc-Zc-Ghr"/>
                         <constraint firstItem="41" firstAttribute="leading" secondItem="Uvv-D5-WBA" secondAttribute="leading" id="u8o-lh-l4o"/>
                         <constraint firstAttribute="trailing" secondItem="43" secondAttribute="trailing" constant="20" id="xld-1h-Z3f"/>
                         <constraint firstItem="40" firstAttribute="leading" secondItem="43" secondAttribute="leading" id="ycX-vI-m27"/>
-                        <constraint firstItem="12" firstAttribute="centerX" secondItem="lyj-AQ-uBR" secondAttribute="centerX" id="zWa-zJ-dkX"/>
+                        <constraint firstItem="12" firstAttribute="width" secondItem="rWv-7e-AAY" secondAttribute="width" id="zNh-HD-0VV"/>
+                        <constraint firstItem="12" firstAttribute="centerX" secondItem="lyj-AQ-uBR" secondAttribute="centerX" multiplier="1.5" id="zWa-zJ-dkX"/>
                     </constraints>
                 </view>
             </subviews>

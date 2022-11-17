@@ -22,6 +22,9 @@
 /* Account cannot be saved title */
 "error_enroll_failed_to_store_identity_title" = "Opslaan account mislukt";
 
+/* Allow button */
+"allow_button" = "Sta toe";
+
 /* Don\'t worry! Click the QR tag on the\nwebsite. You will be asked to enter the\nfollowing one-time credentials: */
 "authentication_fallback_description" = "Geen paniek! Klik op de QR-code op de\nwebsite. Je wordt gevraagd om de volgende\neenmalige gegevens in te geven:";
 
@@ -51,6 +54,9 @@
 
 /* Delete */
 "delete_button" = "Verwijder";
+
+/* Deny button */
+"deny_button" = "Weiger";
 
 /* Developed by: */
 "developed_by_title" = "Ontwikkeld door:";

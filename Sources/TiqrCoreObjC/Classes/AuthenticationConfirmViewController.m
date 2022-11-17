@@ -46,8 +46,9 @@
 @property (nonatomic, strong) IBOutlet UILabel *loginConfirmLabel;
 @property (nonatomic, strong) IBOutlet UILabel *loggedInAsLabel;
 @property (nonatomic, strong) IBOutlet UILabel *toLabel;
-@property (nonatomic, strong) IBOutlet UIButton *okButton;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint *okButtonBottomConstraint;
+@property (nonatomic, strong) IBOutlet UIButton *allowButton;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *allowButtonBottomConstraint;
+@property (nonatomic, strong) IBOutlet UIButton *denyButton;
 @property (nonatomic, strong) IBOutlet UIButton *usePincodeButton;
 @property (nonatomic, strong) IBOutlet UILabel *accountLabel;
 @property (nonatomic, strong) IBOutlet UILabel *accountIDLabel;
@@ -67,57 +68,64 @@
     if (self != nil) {
         self.challenge = challenge;
     }
-	
-	return self;
+    
+    return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
+    
     self.loginConfirmLabel.text = [Localization localize:@"confirm_authentication" comment:@"Are you sure you want to login?"];
     self.loggedInAsLabel.text = [Localization localize:@"you_will_be_logged_in_as" comment:@"You will be logged in as:"];
     self.toLabel.text = [Localization localize:@"to_service_provider" comment:@"to:"];
     self.accountLabel.text = [Localization localize:@"full_name" comment:@"Account"];
     self.accountIDLabel.text = [NSString stringWithFormat:[Localization localize:@"id" comment:@"Tiqr account ID"], TiqrConfig.appName];
-    [self.okButton setTitle:[Localization localize:@"ok_button" comment:@"OK"] forState:UIControlStateNormal];
-    self.okButton.layer.cornerRadius = 5;
-    self.okButtonBottomConstraint.constant = 41;
-
+    [self.allowButton setTitle:[Localization localize:@"allow_button" comment:@"Allow"] forState:UIControlStateNormal];
+    self.allowButton.layer.cornerRadius = 5;
+    self.allowButtonBottomConstraint.constant = 41;
+    
+    [self.denyButton setTitle:[Localization localize:@"deny_button" comment:@"Deny"] forState:UIControlStateNormal];
+    self.denyButton.layer.cornerRadius = 5;
+    
     [self.usePincodeButton setTitle:[Localization localize:@"pin_fallback_button" comment:@"Use pincode"] forState:UIControlStateNormal];
     self.usePincodeButton.hidden = YES;
     [self.usePincodeButton.titleLabel setFont:[ThemeService shared].theme.bodyFont];
-
+    
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-
-	self.identityDisplayNameLabel.text = self.challenge.identity.displayName;
+    
+    self.identityDisplayNameLabel.text = self.challenge.identity.displayName;
     self.identityIdentifierLabel.text = self.challenge.identity.identifier;
-	self.serviceProviderDisplayNameLabel.text = self.challenge.serviceProviderDisplayName;
-	self.serviceProviderIdentifierLabel.text = self.challenge.serviceProviderIdentifier;
+    self.serviceProviderDisplayNameLabel.text = self.challenge.serviceProviderDisplayName;
+    self.serviceProviderIdentifierLabel.text = self.challenge.serviceProviderIdentifier;
     
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    self.okButton.backgroundColor = [ThemeService shared].theme.buttonBackgroundColor;
-    [self.okButton.titleLabel setFont:[ThemeService shared].theme.buttonFont];
-    [self.okButton setTitleColor:[ThemeService shared].theme.buttonTintColor forState:UIControlStateNormal];
-
+    self.allowButton.backgroundColor = [ThemeService shared].theme.buttonBackgroundColor;
+    [self.allowButton.titleLabel setFont:[ThemeService shared].theme.buttonFont];
+    [self.allowButton setTitleColor:[ThemeService shared].theme.buttonTintColor forState:UIControlStateNormal];
+    
+    self.denyButton.backgroundColor = [ThemeService shared].theme.secondaryButtonBackgroundColor;
+    [self.denyButton.titleLabel setFont:[ThemeService shared].theme.buttonFont];
+    [self.denyButton setTitleColor:[ThemeService shared].theme.secondaryButtonTintColor forState:UIControlStateNormal];
+    
     self.loginConfirmLabel.font = [ThemeService shared].theme.headerFont;
-
+    
     self.loggedInAsLabel.font = [ThemeService shared].theme.bodyFont;
     self.identityDisplayNameLabel.font = [ThemeService shared].theme.bodyFont;
     self.identityIdentifierLabel.font = [ThemeService shared].theme.bodyFont;
     self.toLabel.font = [ThemeService shared].theme.bodyFont;
     self.serviceProviderDisplayNameLabel.font = [ThemeService shared].theme.bodyFont;
     self.serviceProviderIdentifierLabel.font = [ThemeService shared].theme.bodyFont;
-
+    
     self.accountLabel.font = [ThemeService shared].theme.bodyBoldFont;
     self.accountIDLabel.font = [ThemeService shared].theme.bodyBoldFont;
 }
 
 - (void)authenticateWithBiometrics {
     SecretService *secretService = ServiceContainer.sharedInstance.secretService;
-
+    
     NSMutableString *touchIDPrompt = [[Localization localize:@"you_will_be_logged_in_as" comment:@"You will be logged in as:"] mutableCopy];
     [touchIDPrompt appendString:@" "];
     [touchIDPrompt appendString:self.challenge.identity.displayName];
@@ -125,7 +133,7 @@
     [touchIDPrompt appendString:[Localization localize:@"to_service_provider" comment:@"to:"]];
     [touchIDPrompt appendString:@" "];
     [touchIDPrompt appendString:self.challenge.serviceProviderDisplayName];
-
+    
     [secretService secretForIdentity:self.challenge.identity touchIDPrompt:touchIDPrompt withSuccessHandler:^(NSData *secret) {
         [self completeAuthenticationWithSecret:secret];
     } failureHandler:^(BOOL cancelled) {
@@ -142,13 +150,13 @@
 
 - (void)completeAuthenticationWithSecret:(NSData *)secret {
     ChallengeService *challengeService = ServiceContainer.sharedInstance.challengeService;
-
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     [challengeService completeAuthenticationChallenge:self.challenge withSecret:secret completionHandler:^(BOOL succes, NSString *response, NSError *error) {
-
+        
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-
+        
         if (succes) {
             AuthenticationSummaryViewController *viewController = [[AuthenticationSummaryViewController alloc] initWithAuthenticationChallenge:self.challenge usedPIN:nil];
             [self.navigationController pushViewController:viewController animated:YES];
@@ -159,11 +167,11 @@
                     [self.navigationController pushViewController:viewController animated:YES];
                     break;
                 }
-
+                    
                 case TIQRACRAccountBlockedError: {
                     self.challenge.identity.blocked = @YES;
                     [ServiceContainer.sharedInstance.identityService saveIdentities];
-
+                    
                     [self presentErrorViewControllerWithError:error];
                     break;
                 }
@@ -173,11 +181,11 @@
                         [ServiceContainer.sharedInstance.identityService blockAllIdentities];
                         [ServiceContainer.sharedInstance.identityService saveIdentities];
                     }
-
+                    
                     [self presentErrorViewControllerWithError:error];
                     break;
                 }
-
+                    
                 default: {
                     [self presentErrorViewControllerWithError:error];
                     break;
@@ -192,7 +200,7 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (IBAction)ok {
+- (IBAction)allow {
     if (self.challenge.identity.usesBiometrics && [self.challenge.identity.biometricIDEnabled boolValue]) {
         [self authenticateWithBiometrics];
     } else {
@@ -200,8 +208,12 @@
     }
 }
 
+- (IBAction)deny {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (void)showPinFallback {
-    self.okButtonBottomConstraint.constant = 100;
+    self.allowButtonBottomConstraint.constant = 100;
     self.usePincodeButton.hidden = NO;
 }
 
