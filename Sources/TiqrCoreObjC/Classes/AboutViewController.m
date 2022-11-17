@@ -68,7 +68,12 @@
     [self.okButton setTitle:[Localization localize:@"ok_button" comment:@"OK"] forState:UIControlStateNormal];
     self.okButton.layer.cornerRadius = 5;
 
-    self.versionLabel.text = [NSString stringWithFormat:[Localization localize:@"app_version" comment:@"App version: %@"], TiqrConfig.appVersion];
+    self.versionLabel.text = [NSString stringWithFormat:[Localization localize:@"app_version" comment:@"App version: %@"], TiqrConfig.appAndBuildVersion];
+    
+    // Tap to reveal more technical version
+    UITapGestureRecognizer *revealTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showGitReleaseVersion:)];
+    [self.versionLabel addGestureRecognizer: revealTapRecognizer];
+    self.versionLabel.userInteractionEnabled = YES;
     
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -104,6 +109,10 @@
 
 - (IBAction)done {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)showGitReleaseVersion:(id)sender {
+    self.versionLabel.text = [NSString stringWithFormat:[Localization localize:@"app_version" comment:@"App version: %@"], TiqrConfig.gitReleaseVersion];
 }
 
 - (void)viewSafeAreaInsetsDidChange {
