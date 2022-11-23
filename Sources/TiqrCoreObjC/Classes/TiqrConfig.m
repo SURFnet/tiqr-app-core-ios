@@ -35,14 +35,6 @@
 
 @implementation TiqrConfig
 
-+ (NSString *)valueForKey:(NSString *)string {
-    NSString *path = [SWIFTPM_MODULE_BUNDLE pathForResource:@"Config" ofType:@"plist"];
-    NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
-    NSString *value = [dictionary objectForKey:string];
-    
-    return value;
-}
-
 + (BOOL)isValidAuthenticationURL:(NSString *)url {
     NSString *authenticationSchemeKey = @"TIQRAuthenticationURLScheme";
     NSString *appScheme = [[[NSBundle mainBundle] infoDictionary] objectForKey:authenticationSchemeKey];
@@ -218,6 +210,10 @@
     }
     // HTTPS URL but no path parameter supplied, so we don't support it at all
     return NO;
+}
+
++ (NSString *)protocolVersion {
+    return @"1";
 }
 
 + (NSString *)appName {

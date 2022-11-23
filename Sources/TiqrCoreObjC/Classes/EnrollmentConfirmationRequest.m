@@ -66,7 +66,7 @@ typedef void (^CompletionBlock)(BOOL success, NSError *error);
 	NSString *escapedLanguage = [[NSLocale preferredLanguages][0] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSString *notificationToken = [NotificationRegistration sharedInstance].notificationToken;
 	NSString *escapedNotificationToken = [notificationToken stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *version = [TiqrConfig valueForKey:@"TIQRProtocolVersion"];
+    NSString *version = TiqrConfig.protocolVersion;
     NSString *operation = @"register";
     NSString *notificationType = [NotificationRegistration sharedInstance].notificationType;
     NSString *escapedNotificationType = [notificationType stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
