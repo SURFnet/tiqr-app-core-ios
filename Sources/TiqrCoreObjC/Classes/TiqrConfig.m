@@ -240,4 +240,8 @@
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"TIQRGitReleaseVersion"];
 }
 
++ (NSString *)coreLibraryVersion {
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"TIQRLibraryVersion"];
+}
+
 @end

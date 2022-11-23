@@ -353,6 +353,9 @@
 /* App version: %@, Shown on the about screen */
 "app_version" = "App version: %@";
 
+/* Library version: %@, Shown on the about screen */
+"library_version" = "Library version: %@";
+
 /* Use pincode fallback button */
 "pin_fallback_button" = "Use PIN";
 
