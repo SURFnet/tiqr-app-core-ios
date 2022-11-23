@@ -351,7 +351,10 @@
 "upgrade" = "Upgraden";
 
 /* App version: %@, Shown on the about screen */
-"app_version" = "App versie: %@";
+"app_version" = "App-versie: %@";
+
+/* Library version: %@, Shown on the about screen */
+"library_version" = "Bibliotheek-versie: %@";
 
 /* Use pincode fallback button */
 "pin_fallback_button" = "PIN gebruiken";

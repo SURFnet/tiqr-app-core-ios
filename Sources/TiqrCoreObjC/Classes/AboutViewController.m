@@ -42,14 +42,23 @@
 @property (nonatomic, strong) IBOutlet UIButton *appLogo;
 @property (weak, nonatomic) IBOutlet UIButton *surfLogo;
 
+@property (nonatomic, assign) enum VersionInfo versionInfo;
+
 @end
+
+enum VersionInfo {
+    AppFriendly,
+    AppDetailed,
+    CoreDetailed
+};
 
 @implementation AboutViewController
 
 - (instancetype)init {
     self = [super initWithNibName:@"AboutView" bundle:SWIFTPM_MODULE_BUNDLE];
     if (self != nil) {
-        self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;    
+        self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        self.versionInfo = AppFriendly;
     }
 
     return self;
@@ -68,10 +77,10 @@
     [self.okButton setTitle:[Localization localize:@"ok_button" comment:@"OK"] forState:UIControlStateNormal];
     self.okButton.layer.cornerRadius = 5;
 
-    self.versionLabel.text = [NSString stringWithFormat:[Localization localize:@"app_version" comment:@"App version: %@"], TiqrConfig.appAndBuildVersion];
+    [self updateVersion];
     
-    // Tap to reveal more technical version
-    UITapGestureRecognizer *revealTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showGitReleaseVersion:)];
+    // Tap to reveal more technical versions
+    UITapGestureRecognizer *revealTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNextVersion:)];
     [self.versionLabel addGestureRecognizer: revealTapRecognizer];
     self.versionLabel.userInteractionEnabled = YES;
     
@@ -111,8 +120,33 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)showGitReleaseVersion:(id)sender {
-    self.versionLabel.text = [NSString stringWithFormat:[Localization localize:@"app_version" comment:@"App version: %@"], TiqrConfig.gitReleaseVersion];
+- (void)updateVersion {
+    switch (self.versionInfo) {
+        case AppFriendly:
+            self.versionLabel.text = [NSString stringWithFormat:[Localization localize:@"app_version" comment:@"App version: %@"], TiqrConfig.appAndBuildVersion];
+            break;
+        case AppDetailed:
+            self.versionLabel.text = [NSString stringWithFormat:[Localization localize:@"app_version" comment:@"App version: %@"], TiqrConfig.gitReleaseVersion];
+            break;
+        case CoreDetailed:
+            self.versionLabel.text = [NSString stringWithFormat:[Localization localize:@"library_version" comment:@"Library version: %@"], TiqrConfig.coreLibraryVersion];
+            break;
+    }
+}
+
+- (IBAction)showNextVersion:(id)sender {
+    switch (self.versionInfo) {
+        case AppFriendly:
+            self.versionInfo = AppDetailed;
+            break;
+        case AppDetailed:
+            self.versionInfo = CoreDetailed;
+            break;
+        case CoreDetailed:
+            self.versionInfo = AppFriendly;
+            break;
+    }
+    [self updateVersion];
 }
 
 - (void)viewSafeAreaInsetsDidChange {
