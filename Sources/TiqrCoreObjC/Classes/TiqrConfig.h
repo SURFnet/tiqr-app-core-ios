@@ -31,10 +31,10 @@
 
 @interface TiqrConfig : NSObject
 
-+ (NSString *)valueForKey:(NSString *)string;
 + (BOOL)isValidAuthenticationURL:(NSString *)string;
 + (BOOL)isValidEnrollmentURL:(NSString *)string;
 
+@property (class, copy, readonly) NSString *protocolVersion;
 @property (class, copy, readonly) NSString *appName;
 @property (class, copy, readonly) NSString *appVersion;
 @property (class, copy, readonly) NSString *buildVersion;
