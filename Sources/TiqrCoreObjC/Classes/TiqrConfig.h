@@ -40,5 +40,6 @@
 @property (class, copy, readonly) NSString *buildVersion;
 @property (class, copy, readonly) NSString *appAndBuildVersion;
 @property (class, copy, readonly) NSString *gitReleaseVersion;
+@property (class, copy, readonly) NSString *coreLibraryVersion;
 
 @end
