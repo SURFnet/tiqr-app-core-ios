@@ -41,6 +41,8 @@
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
 #endif
 
+@property (nonatomic) dispatch_queue_t sessionQueue;
+
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 @property (nonatomic, assign, getter=isDecoding) BOOL decoding;
 @property (nonatomic, strong) UIBarButtonItem *identitiesButtonItem;
@@ -98,6 +100,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.instructionLabel.text = [Localization localize:@"msg_default_status" comment:@"QR Code scan instruction"];
+    
+    // Communicate with the session and other session objects on this queue.
+    self.sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -130,7 +135,9 @@
 }
 
 - (void)promptForCameraAccess {
+    dispatch_suspend(self.sessionQueue);
     [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+        dispatch_resume(self.sessionQueue);
         dispatch_async(dispatch_get_main_queue(), ^{
             [self startCameraIfAllowed];
         });
@@ -175,8 +182,10 @@
 
 - (void)processMetadataObject:(AVMetadataMachineReadableCodeObject *)metadataObject {
     
-#ifdef HAS_AVFF
-    [self.captureSession stopRunning];
+#if HAS_AVFF
+    dispatch_async(self.sessionQueue, ^{
+        [self.captureSession stopRunning];
+    });
 #endif
     
     NSMutableArray *points = [NSMutableArray array];
@@ -226,12 +235,14 @@
     self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     [self.previewView.layer addSublayer:self.previewLayer];
     
-    [self.captureSession startRunning];
+    dispatch_async(self.sessionQueue, ^{
+        [self.captureSession startRunning];
+    });
 #endif
 }
 
 #if HAS_AVFF
--(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
+-(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     if ([metadataObjects count] > 0) {
         AVMetadataMachineReadableCodeObject *metadataObject = [metadataObjects objectAtIndex:0];
         AVMetadataMachineReadableCodeObject *transformedMetadataObject = (AVMetadataMachineReadableCodeObject *)[self.previewLayer transformedMetadataObjectForMetadataObject:metadataObject];
@@ -244,17 +255,19 @@
     self.decoding = NO;
     
 #if HAS_AVFF
-    [self.captureSession stopRunning];
-    
-    if ([self.captureSession.inputs count]) {
-        AVCaptureInput* input = [self.captureSession.inputs objectAtIndex:0];
-        [self.captureSession removeInput:input];
-    }
-    
-    if ([self.captureSession.outputs count]) {
-        AVCaptureVideoDataOutput* output = (AVCaptureVideoDataOutput *)[self.captureSession.outputs objectAtIndex:0];
-        [self.captureSession removeOutput:output];
-    }
+    dispatch_async(self.sessionQueue, ^{
+        [self.captureSession stopRunning];
+
+        if ([self.captureSession.inputs count]) {
+            AVCaptureInput* input = [self.captureSession.inputs objectAtIndex:0];
+            [self.captureSession removeInput:input];
+        }
+        
+        if ([self.captureSession.outputs count]) {
+            AVCaptureVideoDataOutput* output = (AVCaptureVideoDataOutput *)[self.captureSession.outputs objectAtIndex:0];
+            [self.captureSession removeOutput:output];
+        }
+    });
     
     [self.previewLayer removeFromSuperlayer];
     self.previewLayer = nil;
