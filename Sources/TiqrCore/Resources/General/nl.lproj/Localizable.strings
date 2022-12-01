@@ -143,6 +143,12 @@
 /* INVALID_RESPONSE error message (1 attempt left) */
 "error_auth_one_attempt_left" = "Je hebt nog één laatste poging. Als je weer een foute PIN invoert worden alle accounts op dit toestel geblokkeerd.";
 
+/* Protocol retired message */
+"error_auth_protocol_retired_message" = "De server is incompatibel met deze versie van %@.";
+
+/* Protocol retired title */
+"error_auth_protocol_retired_title" = "Niet ondersteunde %@-authenticatieversie";
+
 /* Server incompatible message */
 "error_auth_server_incompatible" = "De server is niet geschikt voor deze versie van de %@ app.";
 

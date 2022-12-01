@@ -131,6 +131,15 @@ NSString *const TIQRACErrorDomain = @"org.tiqr.ac";
         challenge.protocolVersion = @"1";
     }
 
+    if ([challenge.protocolVersion isEqualToString:@"1"]) {
+        NSString *errorTitle = [NSString stringWithFormat:[Localization localize:@"error_auth_protocol_retired_title" comment:@"Protocol retired title"], TiqrConfig.appName];
+        NSString *errorMessage = [NSString stringWithFormat:[Localization localize:@"error_auth_protocol_retired_message" comment:@"Protocol retired message"], TiqrConfig.appName];
+        NSDictionary *details = @{NSLocalizedDescriptionKey: errorTitle, NSLocalizedFailureReasonErrorKey: errorMessage};
+        *error = [NSError errorWithDomain:TIQRACErrorDomain code:TIQRACProtocolRetiredError userInfo:details];
+        return nil;
+    }
+
+    
     NSString *regex = @"^http(s)?://.*";
     NSPredicate *protocolPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
     
