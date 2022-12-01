@@ -19,20 +19,26 @@
 /* Do you want to activate the following account */
 "activate_following_account" = "以下のアカウントを有効にしますか？";
 
-/* Account cannot be saved title */
-"error_enroll_failed_to_store_identity_title" = "アカウント情報が保存できません";
+/* App version: %@, Shown on the about screen */
+"app_version" = "App version: %@";
 
 /* Don\'t worry! Click the QR tag on the\nwebsite. You will be asked to enter the\nfollowing one-time credentials: */
 "authentication_fallback_description" = "ネットワーク接続に問題がありますが心配無用です。⏎\nウェブサイトのQRコードをクリックするなりしてから、⏎\n次のワンタイムパスワードを入力してください：";
-
-/* Failed to generate identity secret. Please contact support. */
-"error_enroll_failed_to_generate_secret" = "秘密鍵の生成に失敗しました。サポートにご相談ください。";
 
 /* You appear to be offline */
 "authentication_fallback_title" = "ネットワークがオフラインです";
 
 /* Login title */
 "authentication_title" = "認証";
+
+/* Camera access prompt message */
+"camera_prompt_message" = "tiqrはQRコードをスキャンするため、カメラへのアクセスが必要です。 カメラへのアクセスを許可してください。";
+
+/* Camera access prompt title */
+"camera_prompt_title" = "カメラへのアクセスが必要";
+
+/* Cancel */
+"cancel" = "いいえ";
 
 /* Confirm account activation */
 "confirm_account_activation" = "アカウントの有効化の確認";
@@ -43,6 +49,12 @@
 /* Authentication confirm back button title */
 "confirm_authentication_title" = "ログインの確認";
 
+/* Delete confirm text */
+"confirm_delete" = "削除すると再登録が必要になります。";
+
+/* Delete confirm title */
+"confirm_delete_title" = "設定を削除しますか？";
+
 /* Delete */
 "delete_button" = "削除";
 
@@ -51,6 +63,9 @@
 
 /* Done */
 "done_button" = "完了";
+
+/* Error enroll title */
+"enroll_error_title" = "エラー";
 
 /* You will enroll to the following domain */
 "enroll_following_domain" = "次のサーバに対して登録します：";
@@ -77,26 +92,26 @@
 /* Alert title for error */
 "error" = "エラー";
 
+/* Account blocked message */
+"error_auth_account_blocked_message" = "このアカウントは利用できなくなりました";
+
 /* Account blocked temporary message */
 "error_auth_account_blocked_temporary_message" = "このアカウントは %@ 分間利用できません。";
 
 /* Account blocked temporary title */
 "error_auth_account_blocked_temporary_title" = "このアカウントは一時的に利用不能になりました。";
 
-/* Account blocked message */
-"error_auth_account_blocked_message" = "このアカウントは利用できなくなりました";
-
 /* Account blocked title */
 "error_auth_account_blocked_title" = "アカウント利用停止";
 
-/* No account title */
+/* INVALID_RESPONSE error message (infinite attempts left) */
+"error_auth_infinite_attempts_left" = "PINが間違っています。もう一度PINを入力してください。最後の数字を入力した際の動物アイコンが一致しているかどうか確認してください。";
+
+/* No account titleINVALID_USERID error title */
 "error_auth_invalid_account" = "アカウントが無効です";
 
 /* No account message */
 "error_auth_invalid_account_message" = "無効なアカウントでログインを試みています。登録しなおしてください。";
-
-/* INVALID_USERID error title */
-"error_auth_invalid_account" = "アカウントが無効です";
 
 /* Invalid QR tag message */
 "error_auth_invalid_challenge_message" = "スキャンされたQRコードは無効または期限切れです。やりなおしてください。";
@@ -140,17 +155,20 @@
 /* INVALID_RESPONSE error message (> 1 attempts left) */
 "error_auth_x_attempts_left" = "PINが間違っています。あと%d回PINを入力することができます。もう一度PINを入力してください。最後の数字を入力した際に表示される動物アイコンが合っているかどうか確認してください。";
 
-/* INVALID_RESPONSE error message (infinite attempts left) */
-"error_auth_infinite_attempts_left" = "PINが間違っています。もう一度PINを入力してください。最後の数字を入力した際の動物アイコンが一致しているかどうか確認してください。";
-
 /* Account already activated message */
 "error_enroll_already_enrolled" = "すでに%@というIDでサービス%@に登録されています";
 
 /* Account already activated */
 "error_enroll_already_enrolled_title" = "登録済みです";
 
+/* Failed to generate identity secret. Please contact support. */
+"error_enroll_failed_to_generate_secret" = "秘密鍵の生成に失敗しました。サポートにご相談ください。";
+
 /* Account cannot be saved message */
 "error_enroll_failed_to_store_identity" = "IDの登録に失敗しました。サポートに相談してください。";
+
+/* Account cannot be saved title */
+"error_enroll_failed_to_store_identity_title" = "アカウント情報が保存できません";
 
 /* Invalid QR tag title */
 "error_enroll_invalid_qr_code" = "登録用QRコードが不正です";
@@ -160,9 +178,6 @@
 
 /* Invalid response title */
 "error_enroll_invalid_response_title" = "応答が不正です";
-
-/* Error enroll title */
-"enroll_error_title" = "エラー";
 
 /* No identity provider logo message */
 "error_enroll_logo_error" = "サービスのロゴがダウンロードできません。ウェブサイトの管理者に連絡してください。";
@@ -188,6 +203,18 @@
 /* Identity select back button title */
 "identity_title" = "ID一覧";
 
+/* (No Comment) */
+"identity_upgrade_to_face_id" = "Face IDの有効化";
+
+/* (No Comment) */
+"identity_upgrade_to_touch_id" = "Touch IDの有効化";
+
+/* (No Comment) */
+"identity_uses_face_id" = "Face IDを使用";
+
+/* (No Comment) */
+"identity_uses_touch_id" = "Touch IDを使用";
+
 /* Info label */
 "information" = "情報";
 
@@ -196,6 +223,9 @@
 
 /* No connection error message */
 "internet_connection_required" = "アカウントの有効化にはインターネット接続が必要です。ネットワークに接続してやりなおしてください。";
+
+/* Library version: %@, Shown on the about screen */
+"library_version" = "Library version: %@";
 
 /* Login information message */
 "loggedin_with_account" = "次のアカウントでログインしました";
@@ -212,6 +242,15 @@
 /* Enter your PIN code again for verification. Please note the animal icon. This will help you remember your PIN code. */
 "login_verify_message" = "確認のためPINコードを再入力してください。動物のアイコンは、PINコードを確認する際に参考になります。";
 
+/* Blocked */
+"main_text_blocked" = "<b>対応方法</b><br/>IDプロバイダから再有効化のためのコードを入手してください。IDプロバイダへのリンクは、右上のIDから確認できます。<br/><br/>有効化のためのコードを入力すれば、アカウントを再有効化するための説明が通知されます。指示に従って<b>スキャン</b>してください。";
+
+/* Instructions */
+"main_text_instructions" = "利用したいサービスにアクセスし、次の手順に従ってください：<ul><li>ログイン画面のQRコードをスキャンします</li><li><i>複数のアカウントを登録している場合は、その中から利用したいアカウントを選択します。</i></li><li>アカウントに対応するPINを入力します。</li><li>ログイン完了!</li></ul>ログイン処理を開始するには<b>スキャン</b>ボタンを押してください。";
+
+/* Welcome */
+"main_text_welcome" = "tiqrを利用すれば、スマートフォンで簡単かつ安全にオンラインサービスにログインすることができます。<br/><br/>まず最初にアカウント登録を行ってください。tiqrが利用可能なIDプロバイダの一覧は <a href=\"https://tiqr.org\">tiqr.org</a>にあります。<br/><br/>登録後に、アカウントを有効化するためのコードとその方法の説明が通知されます。有効化手続きの中でQRコードのスキャンを行う際には、指示に従って<b>スキャン</b>のボタンを押してください。";
+
 /* Blocked navigation title */
 "main_title_blocked" = "tiqrは利用停止中です";
 
@@ -220,6 +259,9 @@
 
 /* Welcome navigation title */
 "main_title_welcome" = "tiqrへようこそ";
+
+/* Place a QR code inside the rectangle to scan it. */
+"msg_default_status" = "枠の中にQRコードが収まるようにスキャンしてください";
 
 /* You appear to have no active Internet connection. */
 "no_active_internet_connection." = "インターネット接続がありません";
@@ -251,6 +293,9 @@
 /* Error title if PIN's don't match */
 "passwords_dont_match_title" = "PINコードが一致しません";
 
+/* Use pincode fallback button */
+"pin_fallback_button" = "PINの認証に変更";
+
 /* provided by: */
 "provided_by" = "提供：";
 
@@ -272,6 +317,9 @@
 /* Select Identity */
 "select_identity_title" = "IDを選択してください";
 
+/* Name of the settings app */
+"settings_app_name" = "設定";
+
 /* Start button title */
 "start_button" = "スタート";
 
@@ -284,11 +332,26 @@
 /* to: */
 "to_service_provider" = "ログイン先：";
 
+/* TouchID */
+"touch_id_reason" = "tiqrに認証情報を保存";
+
 /* Unknown error message */
 "unkown_enroll_error_message" = "不明なエラーが発生しました。サポートに相談してください。";
 
 /* Unknown error title */
 "unkown_error" = "未知のエラー";
+
+/* Upgrade (to TouchID) */
+"upgrade" = "はい";
+
+/* Upgrade account to TouchID alert title */
+"upgrade_to_biometric_id" = "生体認証の利用";
+
+/* (No Comment) */
+"upgrade_to_face_id_message" = "PINコードの代わりにFace IDを使いますか？";
+
+/* Upgrade account to TouchID alert message */
+"upgrade_to_touch_id_message" = "PINコードの代わりにTouch IDを使いますか？";
 
 /* Yes button title */
 "yes_button" = "はい";
@@ -299,60 +362,3 @@
 /* Accounts navigation item title */
 "your_accounts" = "アカウント一覧";
 
-/* Place a QR code inside the rectangle to scan it. */
-"msg_default_status" = "枠の中にQRコードが収まるようにスキャンしてください";
-
-/* Welcome */
-"main_text_welcome" = "tiqrを利用すれば、スマートフォンで簡単かつ安全にオンラインサービスにログインすることができます。<br/><br/>まず最初にアカウント登録を行ってください。tiqrが利用可能なIDプロバイダの一覧は <a href=\"https://tiqr.org\">tiqr.org</a>にあります。<br/><br/>登録後に、アカウントを有効化するためのコードとその方法の説明が通知されます。有効化手続きの中でQRコードのスキャンを行う際には、指示に従って<b>スキャン</b>のボタンを押してください。";
-
-/* Instructions */
-"main_text_instructions" = "利用したいサービスにアクセスし、次の手順に従ってください：<ul><li>ログイン画面のQRコードをスキャンします</li><li><i>複数のアカウントを登録している場合は、その中から利用したいアカウントを選択します。</i></li><li>アカウントに対応するPINを入力します。</li><li>ログイン完了!</li></ul>ログイン処理を開始するには<b>スキャン</b>ボタンを押してください。";
-
-/* Blocked */
-"main_text_blocked" = "<b>対応方法</b><br/>IDプロバイダから再有効化のためのコードを入手してください。IDプロバイダへのリンクは、右上のIDから確認できます。<br/><br/>有効化のためのコードを入力すれば、アカウントを再有効化するための説明が通知されます。指示に従って<b>スキャン</b>してください。";
-
-/* Delete confirm title */
-"confirm_delete_title" = "設定を削除しますか？";
-
-/* Delete confirm text */
-"confirm_delete" = "削除すると再登録が必要になります。";
-
-/* Camera access prompt title */
-"camera_prompt_title" = "カメラへのアクセスが必要";
-
-/* Camera access prompt message */
-"camera_prompt_message" = "tiqrはQRコードをスキャンするため、カメラへのアクセスが必要です。 カメラへのアクセスを許可してください。";
-
-/* Name of the settings app */
-"settings_app_name" = "設定";
-
-/* TouchID */
-"touch_id_reason" = "tiqrに認証情報を保存";
-
-/* Cancel */
-"cancel" = "いいえ";
-
-/* Upgrade (to TouchID) */
-"upgrade" = "はい";
-
-/* App version: %@, Shown on the about screen */
-"app_version" = "App version: %@";
-
-/* Library version: %@, Shown on the about screen */
-"library_version" = "Library version: %@";
-
-/* Use pincode fallback button */
-"pin_fallback_button" = "PINの認証に変更";
-
-/* Upgrade account to TouchID alert title */
-"upgrade_to_biometric_id" = "生体認証の利用";
-
-/* Upgrade account to TouchID alert message */
-"upgrade_to_touch_id_message" = "PINコードの代わりにTouch IDを使いますか？";
-"upgrade_to_face_id_message" = "PINコードの代わりにFace IDを使いますか？";
-
-"identity_uses_touch_id" = "Touch IDを使用";
-"identity_uses_face_id" = "Face IDを使用";
-
-"identity_upgrade_to_touch_id" = "Touch IDの有効化";
-"identity_upgrade_to_face_id" = "Face IDの有効化";
