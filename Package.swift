@@ -6,6 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Tiqr",
     defaultLocalization: "en",
+    platforms: [.iOS(.v8)],
     products: [
         .library(
             name: "Tiqr",
