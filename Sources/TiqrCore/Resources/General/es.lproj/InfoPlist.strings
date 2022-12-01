@@ -1,10 +1,10 @@
-/* 
-  infoPlist.strings
+/* infoPlist.strings
   Tiqr
 
   Created by Thom Hoekstra on 07-11-16.
-  Copyright © 2016 Egeniq. All rights reserved.
-*/
+  Copyright © 2016 Egeniq. All rights reserved. */
+"NSCameraUsageDescription" = "Tiqr uses the camera to scan QR-codes";
 
-NSCameraUsageDescription = "Tiqr uses the camera to scan QR-codes";
-NSFaceIDUsageDescription = "Tiqr uses Face ID to login without a PIN";
+/* (No Comment) */
+"NSFaceIDUsageDescription" = "Tiqr uses Face ID to login without a PIN";
+
