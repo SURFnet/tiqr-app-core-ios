@@ -134,6 +134,12 @@
 /* INVALID_RESPONSE error message (1 attempt left) */
 "error_auth_one_attempt_left" = "You have one last attempt left. If you enter an incorrect PIN again all the accounts on this device will be blocked.";
 
+/* Protocol retired title */
+"error_auth_protocol_retired_title" = "Unsupported %@ authentication version";
+
+/* Protocol retired message */
+"error_auth_protocol_retired_message" = "The server is incompatible with this version of %@.";
+
 /* Server incompatible message */
 "error_auth_server_incompatible" = "The server is incompatible with this version of %@.";
 

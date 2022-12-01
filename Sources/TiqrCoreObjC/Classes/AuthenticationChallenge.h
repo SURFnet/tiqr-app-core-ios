@@ -42,7 +42,8 @@ enum {
     TIQRACUnknownIdentityProviderError = 202,
     TIQRACUnknownIdentityError = 203,
     TIQRACZeroIdentitiesForIdentityProviderError = 204,
-    TIQRACIdentityBlockedError = 205    
+    TIQRACIdentityBlockedError = 205,
+    TIQRACProtocolRetiredError = 206
 };
 
 /**
