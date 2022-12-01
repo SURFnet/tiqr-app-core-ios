@@ -201,6 +201,10 @@ typedef void (^CompletionBlock)(BOOL success, NSError *error);
                 code = TIQRACRInvalidRequestError;
                 title = [Localization localize:@"error_auth_invalid_request_title" comment:@"INVALID_REQUEST error title"];
                 message = [Localization localize:@"error_auth_invalid_request_message" comment:@"INVALID_REQUEST error message"];
+            } else if ([response isEqualToString:@"INVALID_RESPONSE"]) {
+                code = TIQRACRInvalidResponseError;
+                title = [Localization localize:@"error_auth_wrong_pin" comment:@"INVALID_RESPONSE error title (infinite attempts left)"];
+                message = [Localization localize:@"error_auth_infinite_attempts_left" comment:@"INVALID_RESPONSE error message (infinite attempts left)"];
             } else if ([response length]>=17 && [[response substringToIndex:17] isEqualToString:@"INVALID_RESPONSE:"]) {
                 attemptsLeft = @([[response substringFromIndex:17] intValue]);
                 code = TIQRACRInvalidResponseError;
@@ -245,7 +249,7 @@ typedef void (^CompletionBlock)(BOOL success, NSError *error);
 	NSString *notificationToken = [NotificationRegistration sharedInstance].notificationToken;
 	NSString *escapedNotificationToken = [notificationToken stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *operation = @"login";
-    NSString *version = [TiqrConfig valueForKey:@"TIQRProtocolVersion"];
+    NSString *version = TiqrConfig.protocolVersion;
     NSString *notificationType = [NotificationRegistration sharedInstance].notificationType;
     NSString *escapedNotificationType = [notificationType stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
