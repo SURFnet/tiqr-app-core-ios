@@ -1,5 +1,5 @@
 /* About tiqr */
-"about_title" = "Colofon";
+"about_title" = "Over %@";
 
 /* Your account is activated! */
 "account_activated" = "Je account is geactiveerd!";
@@ -19,17 +19,14 @@
 /* Do you want to activate the following account */
 "activate_following_account" = "Wil je het volgende account activeren?";
 
-/* Account cannot be saved title */
-"error_enroll_failed_to_store_identity_title" = "Opslaan account mislukt";
-
 /* Allow button */
 "allow_button" = "Sta toe";
 
+/* App version: %@, Shown on the about screen */
+"app_version" = "App-versie: %@";
+
 /* Don\'t worry! Click the QR tag on the\nwebsite. You will be asked to enter the\nfollowing one-time credentials: */
 "authentication_fallback_description" = "Geen paniek! Klik op de QR-code op de\nwebsite. Je wordt gevraagd om de volgende\neenmalige gegevens in te geven:";
-
-/* Failed to generate identity secret. Please contact support. */
-"error_enroll_failed_to_generate_secret" = "Genereren geheim mislukt. Neem contact op met support.";
 
 /* You appear to be offline */
 "authentication_fallback_title" = "Je lijkt offline te zijn";
@@ -37,8 +34,17 @@
 /* Login title */
 "authentication_title" = "Login";
 
+/* Camera access prompt message */
+"camera_prompt_message" = "%@ heeft toegang tot de camera nodig om QR codes te kunnen scannen. Je kunt de %@-app toestemming geven in de instellingen.";
+
+/* Camera access prompt title */
+"camera_prompt_title" = "Toegang tot de camera vereist";
+
+/* Cancel */
+"cancel" = "Annuleren";
+
 /* Confirm account activation */
-"confirm_account_activation" = "Bevestig account activatie";
+"confirm_account_activation" = "Bevestig accountactivatie";
 
 /* Are you sure you want to login? */
 "confirm_authentication" = "Weet je zeker dat je wilt inloggen?";
@@ -46,11 +52,11 @@
 /* Authentication confirm back button title */
 "confirm_authentication_title" = "Login bevestigen";
 
-/* Delete confirm title */
-"confirm_delete_title" = "Weet je het zeker?";
-
 /* Delete confirm text */
 "confirm_delete" = "Dit account kan na verwijderen niet meer gebruikt worden.";
+
+/* Delete confirm title */
+"confirm_delete_title" = "Weet je het zeker?";
 
 /* Delete */
 "delete_button" = "Verwijder";
@@ -63,6 +69,9 @@
 
 /* Done */
 "done_button" = "Gereed";
+
+/* Error enroll title */
+"enroll_error_title" = "Fout";
 
 /* You will enroll to the following domain */
 "enroll_following_domain" = "Je gaat je aanmelden bij het volgende domein:";
@@ -92,26 +101,26 @@
 /* Alert title for error */
 "error" = "Fout";
 
+/* Account blocked message */
+"error_auth_account_blocked_message" = "Dit account is niet langer geldig.";
+
 /* Account blocked temporary message */
 "error_auth_account_blocked_temporary_message" = "Dit account is voor %@ minuten geblokkeerd.";
 
 /* Account blocked temporary title */
 "error_auth_account_blocked_temporary_title" = "Dit account is tijdelijk geblokkeerd.";
 
-/* Account blocked message */
-"error_auth_account_blocked_message" = "Dit account is niet langer geldig.";
-
 /* Account blocked title */
 "error_auth_account_blocked_title" = "Account geblokkeerd";
 
-/* No account title */
+/* INVALID_RESPONSE error message (infinite attempts left) */
+"error_auth_infinite_attempts_left" = "De opgegeven PIN is onjuist. Voer je PIN opnieuw in. Controleer of je de juiste PIN hebt en voer deze nogmaals in.";
+
+/* No account titleINVALID_USERID error title */
 "error_auth_invalid_account" = "Ongeldig account";
 
 /* No account message */
 "error_auth_invalid_account_message" = "Je probeert in te loggen met een ongeldig of onbekend account. (Her-)activeer je account eerst.";
-
-/* INVALID_USERID error title */
-"error_auth_invalid_account" = "Ongeldig account";
 
 /* Invalid QR tag message */
 "error_auth_invalid_challenge_message" = "De gescande QR-code is ongeldig of verlopen. Probeer het opnieuw.";
@@ -143,17 +152,17 @@
 /* Unexpected error message */
 "error_auth_unknown_error" = "De server gaf een reponse in een formaat dat de %@-app niet kan begrijpen. Neem contact op met support.";
 
-/* UNKNOWN_RESPONSE_CODE error title */
-"error_auth_unknown_reponsecode" = "Onbekende response code";
-
-/* UNKNOWN_RESPONSE_CODE error message */
-"error_auth_unknown_reponsecode_message" = "De server gaf een response code terug die de %@-app niet kent. Neem contact op met support.";
-
 /* No account title */
 "error_auth_unknown_identity" = "Onbekende identiteit voor dienst, registreer eerst.";
 
 /* Unknown */
 "error_auth_unknown_identity_provider" = "Onbekende dienst, registreer eerst.";
+
+/* UNKNOWN_RESPONSE_CODE error title */
+"error_auth_unknown_reponsecode" = "Onbekende response code";
+
+/* UNKNOWN_RESPONSE_CODE error message */
+"error_auth_unknown_reponsecode_message" = "De server gaf een response code terug die de %@-app niet kent. Neem contact op met support.";
 
 /* Wrong PIN */
 "error_auth_wrong_pin" = "Verkeerde PIN";
@@ -161,17 +170,20 @@
 /* INVALID_RESPONSE error message (> 1 attempts left) */
 "error_auth_x_attempts_left" = "De opgegeven PIN is onjuist. Je hebt nog %d pogingen. Controleer of je de juiste PIN hebt en voer deze nogmaals in.";
 
-/* INVALID_RESPONSE error message (infinite attempts left) */
-"error_auth_infinite_attempts_left" = "De opgegeven PIN is onjuist. Voer je PIN opnieuw in. Controleer of je de juiste PIN hebt en voer deze nogmaals in.";
-
 /* Account already activated message */
 "error_enroll_already_enrolled" = "Je hebt de identeit %@ reeds geregistreerd voor de dienst %@.";
 
 /* Account already activated */
 "error_enroll_already_enrolled_title" = "Account reeds geactiveerd";
 
+/* Failed to generate identity secret. Please contact support. */
+"error_enroll_failed_to_generate_secret" = "Genereren geheim mislukt. Neem contact op met support.";
+
 /* Account cannot be saved message */
 "error_enroll_failed_to_store_identity" = "Opslaan dienst mislukt. Neem contact op met support.";
+
+/* Account cannot be saved title */
+"error_enroll_failed_to_store_identity_title" = "Opslaan account mislukt";
 
 /* Invalid QR tag title */
 "error_enroll_invalid_qr_code" = "Ongeldige registratie QR-code.";
@@ -181,9 +193,6 @@
 
 /* Invalid response title */
 "error_enroll_invalid_response_title" = "Ongeldig antwoord";
-
-/* Error enroll title */
-"enroll_error_title" = "Fout";
 
 /* No identity provider logo message */
 "error_enroll_logo_error" = "Kan het logo van de dienst niet downloaden. Neem contact op met de website beheerder.";
@@ -209,6 +218,18 @@
 /* Identity select back button title */
 "identity_title" = "Identiteiten";
 
+/* (No Comment) */
+"identity_upgrade_to_face_id" = "Upgraden naar Face ID";
+
+/* (No Comment) */
+"identity_upgrade_to_touch_id" = "Upgraden naar Touch ID";
+
+/* (No Comment) */
+"identity_uses_face_id" = "Gebruikt Face ID";
+
+/* (No Comment) */
+"identity_uses_touch_id" = "Gebruikt Touch ID";
+
 /* Info label */
 "information" = "Informatie";
 
@@ -217,6 +238,9 @@
 
 /* No connection error message */
 "internet_connection_required" = "Om je account te activeren heb je een actieve internetverbinding nodig. Probeer het later opnieuw.";
+
+/* Library version: %@, Shown on the about screen */
+"library_version" = "Bibliotheek-versie: %@";
 
 /* Login information message */
 "loggedin_with_account" = "Je bent ingelogd met het volgende account";
@@ -233,6 +257,15 @@
 /* Enter your PIN code again for verification. Please note the animal icon. This will help you remember your PIN code. */
 "login_verify_message" = "Voer je PIN nogmaals in en druk op OK";
 
+/* Blocked */
+"main_text_blocked" = "<b>Wat nu?</b><br/> Vraag bij je identiteitverstrekker(s) om een nieuwe activatiecode. Een link naar je identiteitverstrekker(s) is beschikbaar vanuit het accountoverzicht (rechtsboven). <br/><br/> Bij je nieuwe activatie ontvang je instructies. Zodra je daarom gevraagd wordt druk je op <b>Scannen</b>.";
+
+/* Instructions */
+"main_text_instructions" = "<b>Gebruik de %@-app op je smartphone om in te loggen</b><br/><ol><li>Open de %@ notificatie of druk op <b>Scannen</b> en scan de QR-code op de website.</li><li>Bevestig met je biometrie of je %@ PIN code en druk op <b>OK</b>.</li><li>Je bent ingelogd!</li></ol>";
+
+/* Welcome */
+"main_text_welcome" = "<b>Met de %@-app kun je met je smartphone veilig en vertrouwd inloggen bij verschillende webdiensten.</b><br/><br/>Deze app bevat nog geen actief account. Om gebruik te maken van %@ heb je een geactiveerd account nodig.<br/><br/>Tijdens het activatieproces moet je een QR code scannen. Druk op <b>Scannen</> als hier om gevraagd wordt.";
+
 /* Blocked navigation title */
 "main_title_blocked" = "%@ is geblokkeerd";
 
@@ -241,6 +274,9 @@
 
 /* Welcome navigation title */
 "main_title_welcome" = "Welkom bij de %@ app";
+
+/* Place a QR code inside the rectangle to scan it. */
+"msg_default_status" = "Plaats een QR-code in het vierkant om deze te scannen.";
 
 /* You appear to have no active Internet connection. */
 "no_active_internet_connection." = "Je hebt geen internetverbinding.";
@@ -272,6 +308,9 @@
 /* Error title if PIN's don't match */
 "passwords_dont_match_title" = "PINs komen niet overeen.";
 
+/* Use pincode fallback button */
+"pin_fallback_button" = "PIN gebruiken";
+
 /* provided by: */
 "provided_by" = "aangeboden door:";
 
@@ -293,6 +332,9 @@
 /* Select Identity */
 "select_identity_title" = "Selecteer identiteit";
 
+/* Name of the settings app */
+"settings_app_name" = "Instellingen";
+
 /* Start button title */
 "start_button" = "Start";
 
@@ -305,11 +347,26 @@
 /* to: */
 "to_service_provider" = "voor:";
 
+/* TouchID */
+"touch_id_reason" = "%@ wil de identiteit opslaan";
+
 /* Unknown error message */
 "unkown_enroll_error_message" = "Een onbekende fout heeft zich voorgedaan. Neem contact op met support.";
 
 /* Unknown error title */
 "unkown_error" = "Onbekende fout.";
+
+/* Upgrade (to TouchID) */
+"upgrade" = "Upgraden";
+
+/* Upgrade account to TouchID alert title */
+"upgrade_to_biometric_id" = "Account upgraden";
+
+/* (No Comment) */
+"upgrade_to_face_id_message" = "Wil je dit account upgraden om Face ID te gebruiken in plaats van een PIN?";
+
+/* Upgrade account to TouchID alert message */
+"upgrade_to_touch_id_message" = "Wil je dit account upgraden om Touch ID te gebruiken in plaats van een PIN?";
 
 /* Yes button title */
 "yes_button" = "Ja";
@@ -320,54 +377,3 @@
 /* Accounts navigation item title */
 "your_accounts" = "Je accounts";
 
-/* Place a QR code inside the rectangle to scan it. */
-"msg_default_status" = "Plaats een QR-code in het vierkant om deze te scannen.";
-
-/* Welcome */
-"main_text_welcome" = "<b>Met de %@-app kun je met je smartphone veilig en vertrouwd inloggen bij verschillende webdiensten.</b><br/><br/>Deze app bevat nog geen actief account. Om gebruik te maken van %@ heb je een geactiveerd account nodig.<br/><br/>Tijdens het activatieproces moet je een QR code scannen. Druk op <b>Scannen</> als hier om gevraagd wordt.";
-
-/* Instructions */
-"main_text_instructions" = "<b>Gebruik de %@-app op je smartphone om in te loggen</b><br/><ol><li>Open de %@ notificatie of druk op <b>Scannen</b> en scan de QR-code op de website.</li><li>Bevestig met je biometrie of je %@ PIN code en druk op <b>OK</b>.</li><li>Je bent ingelogd!</li></ol>";
-
-/* Blocked */
-"main_text_blocked" = "<b>Wat nu?</b><br/> Vraag bij je identiteitverstrekker(s) om een nieuwe activatiecode. Een link naar je identiteitverstrekker(s) is beschikbaar vanuit het accountoverzicht (rechtsboven). <br/><br/> Bij je nieuwe activatie ontvang je instructies. Zodra je daarom gevraagd wordt druk je op <b>Scannen</b>.";
-
-/* Camera access prompt title */
-"camera_prompt_title" = "Toegang tot de camera vereist";
-
-/* Camera access prompt message */
-"camera_prompt_message" = "%@ heeft toegang tot de camera nodig om QR codes te kunnen scannen. Je kunt de %@-app toestemming geven in de instellingen.";
-
-/* Name of the settings app */
-"settings_app_name" = "Instellingen";
-
-/* TouchID */
-"touch_id_reason" = "%@ wil de identiteit opslaan";
-
-/* Cancel */
-"cancel" = "Annuleren";
-
-/* Upgrade (to TouchID) */
-"upgrade" = "Upgraden";
-
-/* App version: %@, Shown on the about screen */
-"app_version" = "App-versie: %@";
-
-/* Library version: %@, Shown on the about screen */
-"library_version" = "Bibliotheek-versie: %@";
-
-/* Use pincode fallback button */
-"pin_fallback_button" = "PIN gebruiken";
-
-/* Upgrade account to TouchID alert title */
-"upgrade_to_biometric_id" = "Account upgraden";
-
-/* Upgrade account to TouchID alert message */
-"upgrade_to_touch_id_message" = "Wil je dit account upgraden om Touch ID te gebruiken in plaats van een PIN?";
-"upgrade_to_face_id_message" = "Wil je dit account upgraden om Face ID te gebruiken in plaats van een PIN?";
-
-"identity_uses_touch_id" = "Gebruikt Touch ID";
-"identity_uses_face_id" = "Gebruikt Face ID";
-
-"identity_upgrade_to_touch_id" = "Upgraden naar Touch ID";
-"identity_upgrade_to_face_id" = "Upgraden naar Face ID";
