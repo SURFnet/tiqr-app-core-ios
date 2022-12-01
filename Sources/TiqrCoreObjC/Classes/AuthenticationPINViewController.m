@@ -31,7 +31,6 @@
 #import "AuthenticationSummaryViewController.h"
 #import "AuthenticationFallbackViewController.h"
 #import "OCRAWrapper.h"
-#import "OCRAWrapper_v1.h"
 #import "External/MBProgressHUD.h"
 #import "ErrorViewController.h"
 #import "OCRAProtocol.h"
