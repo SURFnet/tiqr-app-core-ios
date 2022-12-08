@@ -33,6 +33,7 @@
 #import "AuthenticationFallbackViewController.h"
 #import "ServiceContainer.h"
 #import "OCRAWrapper.h"
+#import "OCRAWrapper_v1.h"
 #import "ErrorViewController.h"
 #import "OCRAProtocol.h"
 #import "External/MBProgressHUD.h"
