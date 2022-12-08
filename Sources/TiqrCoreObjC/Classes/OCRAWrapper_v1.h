@@ -10,8 +10,8 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of SURFnet bv nor the names of its contributors
- *    may be used to endorse or promote products derived from this
+ * 3. Neither the name of SURFnet bv nor the names of its contributors 
+ *    may be used to endorse or promote products derived from this 
  *    software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
@@ -27,20 +27,30 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "OCRAProtocol.h"
 
-@interface TiqrConfig : NSObject
+/**
+ * Simple class for computing the HOTP response for an OCRA challenge.
+ */
+@interface OCRAWrapper_v1 : NSObject <OCRAProtocol>
 
-+ (BOOL)isValidAuthenticationURL:(NSString *)string;
-+ (BOOL)isValidEnrollmentURL:(NSString *)string;
-+ (BOOL)isRetiredProtocolVersion:(NSString *)protocolVersion;
+/**
+ * Computes the HOTP response for the given OCRA challenge.
+ *
+ * @param ocraSuite  OCRA suite to use
+ * @param secret	 binary secret
+ * @param challenge	 numeric challenge
+ * @param sessionKey session key
+ *
+ * @return computed HOTP response
+ */
+- (NSString *)generateOCRA:(NSString*)ocraSuite
+                secret:(NSData *)secret 
+             challenge:(NSString*)challenge
+            sessionKey:(NSString*)sessionKey
+                 error:(NSError**)error;
 
-@property (class, copy, readonly) NSString *minimumProtocolVersion;
-@property (class, copy, readonly) NSString *appName;
-@property (class, copy, readonly) NSString *appVersion;
-@property (class, copy, readonly) NSString *buildVersion;
-@property (class, copy, readonly) NSString *appAndBuildVersion;
-@property (class, copy, readonly) NSString *gitReleaseVersion;
-@property (class, copy, readonly) NSString *coreLibraryVersion;
 
 @end
+

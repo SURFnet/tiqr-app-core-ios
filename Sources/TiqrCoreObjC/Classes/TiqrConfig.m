@@ -212,8 +212,14 @@
     return NO;
 }
 
-+ (NSString *)protocolVersion {
-    return @"1";
++ (BOOL)isRetiredProtocolVersion:(NSString *)protocolVersion {
+    NSInteger minimumVersion = [[self minimumProtocolVersion] integerValue];
+    NSInteger attemptedVersion = [protocolVersion integerValue];
+    return attemptedVersion < minimumVersion;
+}
+
++ (NSString *)minimumProtocolVersion {
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"TIQRMinimumProtocolVersion"];
 }
 
 + (NSString *)appName {

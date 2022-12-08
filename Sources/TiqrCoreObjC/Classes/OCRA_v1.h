@@ -10,8 +10,8 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of SURFnet bv nor the names of its contributors
- *    may be used to endorse or promote products derived from this
+ * 3. Neither the name of SURFnet bv nor the names of its contributors 
+ *    may be used to endorse or promote products derived from this 
  *    software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
@@ -27,20 +27,28 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface TiqrConfig : NSObject
+enum {
+    OCRAServerIncompatibleError = 206
+};
 
-+ (BOOL)isValidAuthenticationURL:(NSString *)string;
-+ (BOOL)isValidEnrollmentURL:(NSString *)string;
-+ (BOOL)isRetiredProtocolVersion:(NSString *)protocolVersion;
+@interface OCRA_v1 : NSObject {
+    
+}
 
-@property (class, copy, readonly) NSString *minimumProtocolVersion;
-@property (class, copy, readonly) NSString *appName;
-@property (class, copy, readonly) NSString *appVersion;
-@property (class, copy, readonly) NSString *buildVersion;
-@property (class, copy, readonly) NSString *appAndBuildVersion;
-@property (class, copy, readonly) NSString *gitReleaseVersion;
-@property (class, copy, readonly) NSString *coreLibraryVersion;
+/**
+ * Generate OCRA response.
+ *
+ * @return computed response
+ */
++ (NSString *) generateOCRA:(NSString*) ocraSuite
+                        key:(NSString*) key
+                    counter:(NSString*) counter
+                   question:(NSString*) question
+                   password:(NSString*) password
+         sessionInformation:(NSString*) sessionInformation
+                  timestamp:(NSString*) timeStamp
+                      error:(NSError**) error;
 
 @end

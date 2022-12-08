@@ -249,7 +249,7 @@ typedef void (^CompletionBlock)(BOOL success, NSError *error);
 	NSString *notificationToken = [NotificationRegistration sharedInstance].notificationToken;
 	NSString *escapedNotificationToken = [notificationToken stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *operation = @"login";
-    NSString *version = TiqrConfig.protocolVersion;
+    NSString *version = self.protocolVersion;
     NSString *notificationType = [NotificationRegistration sharedInstance].notificationType;
     NSString *escapedNotificationType = [notificationType stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
