@@ -19,6 +19,9 @@
 /* Do you want to activate the following account */
 "activate_following_account" = "Möchten Sie das folgende Benutzerkonto aktivieren?";
 
+/* Allow button */
+"allow_button" = "Allow";
+
 /* App version: %@, Shown on the about screen */
 "app_version" = "App version: %@";
 
@@ -31,6 +34,15 @@
 /* Login title */
 "authentication_title" = "Authentifizierung";
 
+/* Camera access prompt message */
+"camera_prompt_message" = "The %@ app requires access to the camera in order to scan QR codes. You can allow camera access to %@ in the settings.";
+
+/* Camera access prompt title */
+"camera_prompt_title" = "Camera access required";
+
+/* Cancel */
+"cancel" = "Cancel";
+
 /* Confirm account activation */
 "confirm_account_activation" = "Aktivierung des Benutzerkontos bestätigen";
 
@@ -40,8 +52,17 @@
 /* Authentication confirm back button title */
 "confirm_authentication_title" = "Anmeldung bestätigen";
 
+/* Delete confirm text */
+"confirm_delete" = "This account can no longer be used when deleted.";
+
+/* Delete confirm title */
+"confirm_delete_title" = "Are you sure?";
+
 /* Delete */
 "delete_button" = "Löschen";
+
+/* Deny button */
+"deny_button" = "Deny";
 
 /* Developed by: */
 "developed_by_title" = "Entwickelt von:";
@@ -54,6 +75,9 @@
 
 /* You will enroll to the following domain */
 "enroll_following_domain" = "Sie werden zur folgenden Domäne hinzugefügt:";
+
+/* You are enrolled for the following domain: */
+"enrolled_following_domain" = "You are enrolled for the following domain:";
 
 /* Account activation navigation title
  Account activation title */
@@ -119,6 +143,12 @@
 /* INVALID_RESPONSE error message (1 attempt left) */
 "error_auth_one_attempt_left" = "Sie haben nur noch einen weiteren Versuch. Wenn Sie noch einmal eine falsche PIN eingeben, werden sämtliche Benutzerkonten auf diesem Gerät gesperrt.";
 
+/* Protocol retired message */
+"error_auth_protocol_retired_message" = "The server is incompatible with this version of %@.";
+
+/* Protocol retired title */
+"error_auth_protocol_retired_title" = "Unsupported %@ authentication version";
+
 /* Server incompatible message */
 "error_auth_server_incompatible" = "Der Server verwendet eine inkompatible Version von %@.";
 
@@ -133,6 +163,12 @@
 
 /* Unknown */
 "error_auth_unknown_identity_provider" = "Unbekannter Identitätsprovider; bitte registrieren Sie sich zuerst.";
+
+/* UNKNOWN_RESPONSE_CODE error title */
+"error_auth_unknown_reponsecode" = "Unkown reponse code";
+
+/* UNKNOWN_RESPONSE_CODE error message */
+"error_auth_unknown_reponsecode_message" = "The server returned a response code the %@ app didn't understand. Please contact support.";
 
 /* Wrong PIN */
 "error_auth_wrong_pin" = "Falsche PIN";
@@ -187,6 +223,18 @@
 
 /* Identity select back button title */
 "identity_title" = "Identitäten";
+
+/* (No Comment) */
+"identity_upgrade_to_face_id" = "Upgrade to Face ID";
+
+/* (No Comment) */
+"identity_upgrade_to_touch_id" = "Upgrade to Touch ID";
+
+/* (No Comment) */
+"identity_uses_face_id" = "Uses Face ID";
+
+/* (No Comment) */
+"identity_uses_touch_id" = "Uses Touch ID";
 
 /* Info label */
 "information" = "Information";
@@ -266,6 +314,9 @@
 /* Error title if PIN's don't match */
 "passwords_dont_match_title" = "PINs stimmen nicht überein";
 
+/* Use pincode fallback button */
+"pin_fallback_button" = "Use PIN";
+
 /* provided by: */
 "provided_by" = "Zur Verfügung gestellt von:";
 
@@ -287,6 +338,9 @@
 /* Select Identity */
 "select_identity_title" = "Identität auswählen";
 
+/* Name of the settings app */
+"settings_app_name" = "Settings";
+
 /* Start button title */
 "start_button" = "Start";
 
@@ -299,11 +353,26 @@
 /* to: */
 "to_service_provider" = "bei:";
 
+/* TouchID */
+"touch_id_reason" = "%@ wants to save the identity";
+
 /* Unknown error message */
 "unkown_enroll_error_message" = "Ein unbekannter Fehler ist aufgetreten. Bitte wenden Sie sich an den Support.";
 
 /* Unknown error title */
 "unkown_error" = "Unbekannter Fehler";
+
+/* Upgrade (to TouchID) */
+"upgrade" = "Upgrade";
+
+/* Upgrade account to TouchID alert title */
+"upgrade_to_biometric_id" = "Upgrade account";
+
+/* (No Comment) */
+"upgrade_to_face_id_message" = "Do you want to upgrade this account to use Face ID instead of a PIN?";
+
+/* Upgrade account to TouchID alert message */
+"upgrade_to_touch_id_message" = "Do you want to upgrade this account to use Touch ID instead of a PIN?";
 
 /* Yes button title */
 "yes_button" = "Ja";

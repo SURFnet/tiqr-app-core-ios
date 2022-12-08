@@ -19,6 +19,9 @@
 /* Do you want to activate the following account */
 "activate_following_account" = "Vill du aktivera det här kontot?";
 
+/* Allow button */
+"allow_button" = "Allow";
+
 /* App version: %@, Shown on the about screen */
 "app_version" = "App version: %@";
 
@@ -31,6 +34,15 @@
 /* Login title */
 "authentication_title" = "Autentisering";
 
+/* Camera access prompt message */
+"camera_prompt_message" = "The %@ app requires access to the camera in order to scan QR codes. You can allow camera access to %@ in the settings.";
+
+/* Camera access prompt title */
+"camera_prompt_title" = "Camera access required";
+
+/* Cancel */
+"cancel" = "Cancel";
+
 /* Confirm account activation */
 "confirm_account_activation" = "Bekräfta kontoaktivering";
 
@@ -40,8 +52,17 @@
 /* Authentication confirm back button title */
 "confirm_authentication_title" = "Är detta vem du vill logga in som?";
 
+/* Delete confirm text */
+"confirm_delete" = "This account can no longer be used when deleted.";
+
+/* Delete confirm title */
+"confirm_delete_title" = "Are you sure?";
+
 /* Delete */
 "delete_button" = "Radera";
+
+/* Deny button */
+"deny_button" = "Deny";
 
 /* Developed by: */
 "developed_by_title" = "Utvecklad av:";
@@ -54,6 +75,9 @@
 
 /* You will enroll to the following domain */
 "enroll_following_domain" = "Du kommer att registrera dig i följande domän:";
+
+/* You are enrolled for the following domain: */
+"enrolled_following_domain" = "You are enrolled for the following domain:";
 
 /* Account activation navigation title
  Account activation title */
@@ -119,6 +143,12 @@
 /* INVALID_RESPONSE error message (1 attempt left) */
 "error_auth_one_attempt_left" = "Du har ett försök till. Om du skriver in fel PIN kod en gång till kommer all konton på denna enhet att blockeras.";
 
+/* Protocol retired message */
+"error_auth_protocol_retired_message" = "The server is incompatible with this version of %@.";
+
+/* Protocol retired title */
+"error_auth_protocol_retired_title" = "Unsupported %@ authentication version";
+
 /* Server incompatible message */
 "error_auth_server_incompatible" = "Inloggningstjänsten fungerar inte inte ihop med denna version av %@.";
 
@@ -133,6 +163,12 @@
 
 /* Unknown */
 "error_auth_unknown_identity_provider" = "Okänd identitetsleverantör, var snäll registrera dig först.";
+
+/* UNKNOWN_RESPONSE_CODE error title */
+"error_auth_unknown_reponsecode" = "Unkown reponse code";
+
+/* UNKNOWN_RESPONSE_CODE error message */
+"error_auth_unknown_reponsecode_message" = "The server returned a response code the %@ app didn't understand. Please contact support.";
 
 /* Wrong PIN */
 "error_auth_wrong_pin" = "Fel PIN";
@@ -187,6 +223,18 @@
 
 /* Identity select back button title */
 "identity_title" = "Identiteter";
+
+/* (No Comment) */
+"identity_upgrade_to_face_id" = "Upgrade to Face ID";
+
+/* (No Comment) */
+"identity_upgrade_to_touch_id" = "Upgrade to Touch ID";
+
+/* (No Comment) */
+"identity_uses_face_id" = "Uses Face ID";
+
+/* (No Comment) */
+"identity_uses_touch_id" = "Uses Touch ID";
 
 /* Info label */
 "information" = "Information";
@@ -266,6 +314,9 @@
 /* Error title if PIN's don't match */
 "passwords_dont_match_title" = "PIN koderna matchar inte.";
 
+/* Use pincode fallback button */
+"pin_fallback_button" = "Use PIN";
+
 /* provided by: */
 "provided_by" = "Tillhandahålls av:";
 
@@ -287,6 +338,9 @@
 /* Select Identity */
 "select_identity_title" = "Välj identitet";
 
+/* Name of the settings app */
+"settings_app_name" = "Settings";
+
 /* Start button title */
 "start_button" = "Börja";
 
@@ -299,11 +353,26 @@
 /* to: */
 "to_service_provider" = "till:";
 
+/* TouchID */
+"touch_id_reason" = "%@ wants to save the identity";
+
 /* Unknown error message */
 "unkown_enroll_error_message" = "Ett okänt fel inträffade. Var snäll kontakta support.";
 
 /* Unknown error title */
 "unkown_error" = "Okänt fel.";
+
+/* Upgrade (to TouchID) */
+"upgrade" = "Upgrade";
+
+/* Upgrade account to TouchID alert title */
+"upgrade_to_biometric_id" = "Upgrade account";
+
+/* (No Comment) */
+"upgrade_to_face_id_message" = "Do you want to upgrade this account to use Face ID instead of a PIN?";
+
+/* Upgrade account to TouchID alert message */
+"upgrade_to_touch_id_message" = "Do you want to upgrade this account to use Touch ID instead of a PIN?";
 
 /* Yes button title */
 "yes_button" = "Ja";
