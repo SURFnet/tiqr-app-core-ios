@@ -22,20 +22,26 @@
 /* Allow button */
 "allow_button" = "Allow";
 
-/* Account cannot be saved title */
-"error_enroll_failed_to_store_identity_title" = "Account cannot be saved";
+/* App version: %@, Shown on the about screen */
+"app_version" = "App version: %@";
 
 /* Don\'t worry! Click the QR tag on the\nwebsite. You will be asked to enter the\nfollowing one-time credentials: */
-"authentication_fallback_description" = "Don\'t worry! Click the QR code on the\nwebsite. You will be asked to enter the\nfollowing one-time credentials:";
-
-/* Failed to generate identity secret. Please contact support. */
-"error_enroll_failed_to_generate_secret" = "Failed to generate identity secret. Please contact support.";
+"authentication_fallback_description" = "Don't worry! Click the QR code on the\nwebsite. You will be asked to enter the\nfollowing one-time credentials:";
 
 /* You appear to be offline */
 "authentication_fallback_title" = "You appear to be offline";
 
 /* Login title */
 "authentication_title" = "Authentication";
+
+/* Camera access prompt message */
+"camera_prompt_message" = "The %@ app requires access to the camera in order to scan QR codes. You can allow camera access to %@ in the settings.";
+
+/* Camera access prompt title */
+"camera_prompt_title" = "Camera access required";
+
+/* Cancel */
+"cancel" = "Cancel";
 
 /* Confirm account activation */
 "confirm_account_activation" = "Confirm account activation";
@@ -46,11 +52,11 @@
 /* Authentication confirm back button title */
 "confirm_authentication_title" = "Confirm login";
 
-/* Delete confirm title */
-"confirm_delete_title" = "Are you sure?";
-
 /* Delete confirm text */
 "confirm_delete" = "This account can no longer be used when deleted.";
+
+/* Delete confirm title */
+"confirm_delete_title" = "Are you sure?";
 
 /* Delete */
 "delete_button" = "Delete";
@@ -63,6 +69,9 @@
 
 /* Done */
 "done_button" = "Done";
+
+/* Error enroll title */
+"enroll_error_title" = "Error";
 
 /* You will enroll to the following domain */
 "enroll_following_domain" = "You will enrol to the following domain:";
@@ -92,26 +101,26 @@
 /* Alert title for error */
 "error" = "Error";
 
+/* Account blocked message */
+"error_auth_account_blocked_message" = "This account can no longer be used.";
+
 /* Account blocked temporary message */
 "error_auth_account_blocked_temporary_message" = "This account has been blocked for %@ minutes.";
 
 /* Account blocked temporary title */
 "error_auth_account_blocked_temporary_title" = "This account has been blocked temporarily.";
 
-/* Account blocked message */
-"error_auth_account_blocked_message" = "This account can no longer be used.";
-
 /* Account blocked title */
 "error_auth_account_blocked_title" = "Account blocked";
 
-/* No account title */
+/* INVALID_RESPONSE error message (infinite attempts left) */
+"error_auth_infinite_attempts_left" = "You supplied an incorrect PIN. Please enter your PIN again. Check the verification icon for the last digit.";
+
+/* No account titleINVALID_USERID error title */
 "error_auth_invalid_account" = "Invalid account";
 
 /* No account message */
 "error_auth_invalid_account_message" = "You tried to log in with an invalid or unknown account. Please (re-)activate your account first.";
-
-/* INVALID_USERID error title */
-"error_auth_invalid_account" = "Invalid account";
 
 /* Invalid QR tag message */
 "error_auth_invalid_challenge_message" = "The scanned QR code is invalid or has expired. Please try again.";
@@ -123,7 +132,7 @@
 "error_auth_invalid_qr_code" = "Invalid authentication QR code.";
 
 /* INVALID_REQUEST error message */
-"error_auth_invalid_request_message" = "The server doesn\'t recognize the login request. Please contact support.";
+"error_auth_invalid_request_message" = "The server doesn't recognize the login request. Please contact support.";
 
 /* INVALID_REQUEST error title */
 "error_auth_invalid_request_title" = "Invalid request";
@@ -134,11 +143,11 @@
 /* INVALID_RESPONSE error message (1 attempt left) */
 "error_auth_one_attempt_left" = "You have one last attempt left. If you enter an incorrect PIN again all the accounts on this device will be blocked.";
 
-/* Protocol retired title */
-"error_auth_protocol_retired_title" = "Unsupported %@ authentication version";
-
 /* Protocol retired message */
 "error_auth_protocol_retired_message" = "The server is incompatible with this version of %@.";
+
+/* Protocol retired title */
+"error_auth_protocol_retired_title" = "Unsupported %@ authentication version";
 
 /* Server incompatible message */
 "error_auth_server_incompatible" = "The server is incompatible with this version of %@.";
@@ -149,17 +158,17 @@
 /* Unexpected error message */
 "error_auth_unknown_error" = "The server returned a response in a format the %@ app couldn't understand. Please contact support.";
 
-/* UNKNOWN_RESPONSE_CODE error title */
-"error_auth_unknown_reponsecode" = "Unkown reponse code";
-
-/* UNKNOWN_RESPONSE_CODE error message */
-"error_auth_unknown_reponsecode_message" = "The server returned a response code the %@ app didn't understand. Please contact support.";
-
 /* No account title */
 "error_auth_unknown_identity" = "Unknown identity, please enrol first.";
 
 /* Unknown */
 "error_auth_unknown_identity_provider" = "Unknown identity provider, please enrol first.";
+
+/* UNKNOWN_RESPONSE_CODE error title */
+"error_auth_unknown_reponsecode" = "Unkown reponse code";
+
+/* UNKNOWN_RESPONSE_CODE error message */
+"error_auth_unknown_reponsecode_message" = "The server returned a response code the %@ app didn't understand. Please contact support.";
 
 /* Wrong PIN */
 "error_auth_wrong_pin" = "Wrong PIN";
@@ -167,17 +176,20 @@
 /* INVALID_RESPONSE error message (> 1 attempts left) */
 "error_auth_x_attempts_left" = "You supplied an incorrect PIN. You have %d attempts left. Please enter your PIN again. Check the verification icon for the last digit.";
 
-/* INVALID_RESPONSE error message (infinite attempts left) */
-"error_auth_infinite_attempts_left" = "You supplied an incorrect PIN. Please enter your PIN again. Check the verification icon for the last digit.";
-
 /* Account already activated message */
 "error_enroll_already_enrolled" = "You already enrolled with the identity %@ for the service %@";
 
 /* Account already activated */
 "error_enroll_already_enrolled_title" = "Already enrolled";
 
+/* Failed to generate identity secret. Please contact support. */
+"error_enroll_failed_to_generate_secret" = "Failed to generate identity secret. Please contact support.";
+
 /* Account cannot be saved message */
 "error_enroll_failed_to_store_identity" = "Failed to store identity provider. Please contact support.";
+
+/* Account cannot be saved title */
+"error_enroll_failed_to_store_identity_title" = "Account cannot be saved";
 
 /* Invalid QR tag title */
 "error_enroll_invalid_qr_code" = "Invalid enrolment QR code.";
@@ -187,9 +199,6 @@
 
 /* Invalid response title */
 "error_enroll_invalid_response_title" = "Invalid response";
-
-/* Error enroll title */
-"enroll_error_title" = "Error";
 
 /* No identity provider logo message */
 "error_enroll_logo_error" = "Cannot download service logo. Please contact the website administrator.";
@@ -215,6 +224,18 @@
 /* Identity select back button title */
 "identity_title" = "Identities";
 
+/* (No Comment) */
+"identity_upgrade_to_face_id" = "Upgrade to Face ID";
+
+/* (No Comment) */
+"identity_upgrade_to_touch_id" = "Upgrade to Touch ID";
+
+/* (No Comment) */
+"identity_uses_face_id" = "Uses Face ID";
+
+/* (No Comment) */
+"identity_uses_touch_id" = "Uses Touch ID";
+
 /* Info label */
 "information" = "Information";
 
@@ -223,6 +244,9 @@
 
 /* No connection error message */
 "internet_connection_required" = "You need an Internet connection to activate your account. Please try again later.";
+
+/* Library version: %@, Shown on the about screen */
+"library_version" = "Library version: %@";
 
 /* Login information message */
 "loggedin_with_account" = "You logged in with the following account:";
@@ -239,6 +263,15 @@
 /* Enter your PIN code again for verification. Please note the animal icon. This will help you remember your PIN code. */
 "login_verify_message" = "Re-enter the PIN and press OK";
 
+/* Blocked */
+"main_text_blocked" = "<b>Now what?</b><br/> Ask your identity provider(s) for a new activation code. For a link to your identity provider(s) check your identities (accessible from the top right). <br/><br/> Together with your new activation code you will receive instructions for reactivating your account. Press <b>Scan</b> if asked.";
+
+/* Instructions */
+"main_text_instructions" = "<b>Use the %@ app on your smartphone to log in</b><br/><ol><li>Press <b>Scan</b> and scan the QR-code on the website.<br/></br><i>More than one ID? Select the relevant ID.</i></li><li>Scan your fingerprint or enter your PIN for %@ and press <b>OK</b>.</li><li>You are logged in!</li></ol>";
+
+/* Welcome */
+"main_text_welcome" = "<b>Use the %@ app on your smartphone to log in to websites easily and secure.</b><br/><br/>Register your new %@ account and follow the instructions for activation.<br/><br/>Press <b>Scan</b> when asked.";
+
 /* Blocked navigation title */
 "main_title_blocked" = "%@ is blocked";
 
@@ -247,6 +280,9 @@
 
 /* Welcome navigation title */
 "main_title_welcome" = "Welcome to %@";
+
+/* Place a QR code inside the rectangle to scan it. */
+"msg_default_status" = "Place a QR code inside the rectangle to scan it.";
 
 /* You appear to have no active Internet connection. */
 "no_active_internet_connection." = "You appear to have no active Internet connection.";
@@ -273,10 +309,13 @@
 "password_verify_back_button" = "Verify PIN";
 
 /* Error message if PINs don't match */
-"passwords_dont_match" = "The entered PINs don\'t match. Try again.\nChoose a PIN you can remember.";
+"passwords_dont_match" = "The entered PINs don't match. Try again.\nChoose a PIN you can remember.";
 
 /* Error title if PIN's don't match */
-"passwords_dont_match_title" = "PINs don\'t match";
+"passwords_dont_match_title" = "PINs don't match";
+
+/* Use pincode fallback button */
+"pin_fallback_button" = "Use PIN";
 
 /* provided by: */
 "provided_by" = "provided by:";
@@ -299,6 +338,9 @@
 /* Select Identity */
 "select_identity_title" = "Select identity";
 
+/* Name of the settings app */
+"settings_app_name" = "Settings";
+
 /* Start button title */
 "start_button" = "Start";
 
@@ -311,11 +353,26 @@
 /* to: */
 "to_service_provider" = "to:";
 
+/* TouchID */
+"touch_id_reason" = "%@ wants to save the identity";
+
 /* Unknown error message */
 "unkown_enroll_error_message" = "An unknown error occurred. Please contact support.";
 
 /* Unknown error title */
 "unkown_error" = "Unknown error";
+
+/* Upgrade (to TouchID) */
+"upgrade" = "Upgrade";
+
+/* Upgrade account to TouchID alert title */
+"upgrade_to_biometric_id" = "Upgrade account";
+
+/* (No Comment) */
+"upgrade_to_face_id_message" = "Do you want to upgrade this account to use Face ID instead of a PIN?";
+
+/* Upgrade account to TouchID alert message */
+"upgrade_to_touch_id_message" = "Do you want to upgrade this account to use Touch ID instead of a PIN?";
 
 /* Yes button title */
 "yes_button" = "Yes";
@@ -325,57 +382,4 @@
 
 /* Accounts navigation item title */
 "your_accounts" = "Your accounts";
-
-/* Place a QR code inside the rectangle to scan it. */
-"msg_default_status" = "Place a QR code inside the rectangle to scan it.";
-
-/* Welcome */
-"main_text_welcome" = "<b>Use the %@ app on your smartphone to log in to websites easily and secure.</b><br/><br/>Register your new %@ account and follow the instructions for activation.<br/><br/>Press <b>Scan</b> when asked.";
-
-/* Instructions */
-"main_text_instructions" = "<b>Use the %@ app on your smartphone to log in</b><br/><ol><li>Press <b>Scan</b> and scan the QR-code on the website.<br/></br><i>More than one ID? Select the relevant ID.</i></li><li>Scan your fingerprint or enter your PIN for %@ and press <b>OK</b>.</li><li>You are logged in!</li></ol>";
-
-/* Blocked */
-"main_text_blocked" = "<b>Now what?</b><br/> Ask your identity provider(s) for a new activation code. For a link to your identity provider(s) check your identities (accessible from the top right). <br/><br/> Together with your new activation code you will receive instructions for reactivating your account. Press <b>Scan</b> if asked.";
-
-/* Camera access prompt title */
-"camera_prompt_title" = "Camera access required";
-
-/* Camera access prompt message */
-"camera_prompt_message" = "The %@ app requires access to the camera in order to scan QR codes. You can allow camera access to %@ in the settings.";
-
-/* Name of the settings app */
-"settings_app_name" = "Settings";
-
-/* TouchID */
-"touch_id_reason" = "%@ wants to save the identity";
-
-/* Cancel */
-"cancel" = "Cancel";
-
-/* Upgrade (to TouchID) */
-"upgrade" = "Upgrade";
-
-/* App version: %@, Shown on the about screen */
-"app_version" = "App version: %@";
-
-/* Library version: %@, Shown on the about screen */
-"library_version" = "Library version: %@";
-
-/* Use pincode fallback button */
-"pin_fallback_button" = "Use PIN";
-
-/* Upgrade account to TouchID alert title */
-"upgrade_to_biometric_id" = "Upgrade account";
-
-/* Upgrade account to TouchID alert message */
-"upgrade_to_touch_id_message" = "Do you want to upgrade this account to use Touch ID instead of a PIN?";
-"upgrade_to_face_id_message" = "Do you want to upgrade this account to use Touch ID instead of a PIN?";
-
-"identity_uses_touch_id" = "Uses Touch ID";
-"identity_uses_face_id" = "Uses Face ID";
-
-"identity_upgrade_to_touch_id" = "Upgrade to Touch ID";
-"identity_upgrade_to_face_id" = "Upgrade to Face ID";
-
 

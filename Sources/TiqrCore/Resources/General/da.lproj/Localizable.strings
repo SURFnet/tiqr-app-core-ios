@@ -19,6 +19,9 @@
 /* Do you want to activate the following account */
 "activate_following_account" = "Vil du aktivere din konto?";
 
+/* Allow button */
+"allow_button" = "Allow";
+
 /* App version: %@, Shown on the about screen */
 "app_version" = "App-udgave: %@";
 
@@ -57,6 +60,9 @@
 
 /* Delete */
 "delete_button" = "Slet";
+
+/* Deny button */
+"deny_button" = "Deny";
 
 /* Developed by: */
 "developed_by_title" = "Udviklet af:";
@@ -136,6 +142,12 @@
 
 /* INVALID_RESPONSE error message (1 attempt left) */
 "error_auth_one_attempt_left" = "Du har ét sidste forsøg tilbage. Hvis du en gang til skanner et forkert fingeraftryk, vil samtlige konti her på enheden blive spærret.";
+
+/* Protocol retired message */
+"error_auth_protocol_retired_message" = "The server is incompatible with this version of %@.";
+
+/* Protocol retired title */
+"error_auth_protocol_retired_title" = "Unsupported %@ authentication version";
 
 /* Server incompatible message */
 "error_auth_server_incompatible" = "Serveren fungerer ikke sammen med den her udgave af %@.";

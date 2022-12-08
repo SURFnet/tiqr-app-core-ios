@@ -19,6 +19,9 @@
 /* Do you want to activate the following account */
 "activate_following_account" = "以下のアカウントを有効にしますか？";
 
+/* Allow button */
+"allow_button" = "Allow";
+
 /* App version: %@, Shown on the about screen */
 "app_version" = "App version: %@";
 
@@ -58,6 +61,9 @@
 /* Delete */
 "delete_button" = "削除";
 
+/* Deny button */
+"deny_button" = "Deny";
+
 /* Developed by: */
 "developed_by_title" = "開発者：";
 
@@ -69,6 +75,9 @@
 
 /* You will enroll to the following domain */
 "enroll_following_domain" = "次のサーバに対して登録します：";
+
+/* You are enrolled for the following domain: */
+"enrolled_following_domain" = "You are enrolled for the following domain:";
 
 /* Account activation navigation title
  Account activation title */
@@ -134,6 +143,12 @@
 /* INVALID_RESPONSE error message (1 attempt left) */
 "error_auth_one_attempt_left" = "PINが入力できるのはあと１回だけです。間違ったPINを入力すると、このデバイス上のアカウントは利用できなくなります。";
 
+/* Protocol retired message */
+"error_auth_protocol_retired_message" = "The server is incompatible with this version of %@.";
+
+/* Protocol retired title */
+"error_auth_protocol_retired_title" = "Unsupported %@ authentication version";
+
 /* Server incompatible message */
 "error_auth_server_incompatible" = "サーバがこのtiqrのバージョンに対応していません";
 
@@ -148,6 +163,12 @@
 
 /* Unknown */
 "error_auth_unknown_identity_provider" = "アカウントが登録されているサーバが見つかりません。先にアカウントの登録をしてください。";
+
+/* UNKNOWN_RESPONSE_CODE error title */
+"error_auth_unknown_reponsecode" = "Unkown reponse code";
+
+/* UNKNOWN_RESPONSE_CODE error message */
+"error_auth_unknown_reponsecode_message" = "The server returned a response code the %@ app didn't understand. Please contact support.";
 
 /* Wrong PIN */
 "error_auth_wrong_pin" = "PINコードが間違っています";
