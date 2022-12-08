@@ -34,6 +34,7 @@
 #import "AuthenticationConfirmationRequest.h"
 #import "ServiceContainer.h"
 #import "OCRAWrapper.h"
+#import "OCRAWrapper_v1.h"
 #import "OCRAProtocol.h"
 #import "TiqrConfig.h"
 @import TiqrCore;
@@ -201,17 +202,20 @@
 }
 
 - (void)completeAuthenticationChallenge:(AuthenticationChallenge *)challenge withSecret:(NSData *)secret completionHandler:(void (^)(BOOL succes, NSString *response, NSError *error))completionHandler {
-    
-    NSObject<OCRAProtocol> *ocra;
-    if (challenge.protocolVersion && [challenge.protocolVersion intValue] >= 2) {
-        ocra = [[OCRAWrapper alloc] init];
-    } else {
+    if ([TiqrConfig isRetiredProtocolVersion:challenge.protocolVersion]) {
         NSString *errorTitle = [NSString stringWithFormat:[Localization localize:@"error_auth_protocol_retired_title" comment:@"Protocol retired title"], TiqrConfig.appName];
         NSString *errorMessage = [NSString stringWithFormat:[Localization localize:@"error_auth_protocol_retired_message" comment:@"Protocol retired message"], TiqrConfig.appName];
         NSDictionary *details = @{NSLocalizedDescriptionKey: errorTitle, NSLocalizedFailureReasonErrorKey: errorMessage};
         NSError *error = [NSError errorWithDomain:TIQRACErrorDomain code:TIQRACProtocolRetiredError userInfo:details];
         completionHandler(NO, nil, error);
         return;
+    }
+    
+    NSObject<OCRAProtocol> *ocra;
+    if (challenge.protocolVersion && [challenge.protocolVersion intValue] >= 2) {
+        ocra = [[OCRAWrapper alloc] init];
+    } else {
+        ocra = [[OCRAWrapper_v1 alloc] init];
     }
     
     NSError *error = nil;
