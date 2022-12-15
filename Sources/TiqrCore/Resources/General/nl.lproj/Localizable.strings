@@ -267,7 +267,7 @@
 "main_text_blocked" = "<b>Wat nu?</b><br/> Vraag bij je identiteitverstrekker(s) om een nieuwe activatiecode. Een link naar je identiteitverstrekker(s) is beschikbaar vanuit het accountoverzicht (rechtsboven). <br/><br/> Bij je nieuwe activatie ontvang je instructies. Zodra je daarom gevraagd wordt druk je op <b>Scannen</b>.";
 
 /* Instructions */
-"main_text_instructions" = "<b>Gebruik de %@-app op je smartphone om in te loggen</b><br/><ol><li>Open de %@ notificatie of druk op <b>Scannen</b> en scan de QR-code op de website.</li><li>Bevestig met je biometrie of je %@ PIN code en druk op <b>OK</b>.</li><li>Je bent ingelogd!</li></ol>";
+"main_text_instructions" = "<b>Gebruik de %@-app op je smartphone om in te loggen</b><br/><ol><li>Open de notificatie of druk op <b>Scannen</b> en scan de QR-code op de website.</li><li>Bevestig met je biometrie of je PIN-code voor %@ en druk op <b>OK</b>.</li><li>Je bent ingelogd!</li></ol>";
 
 /* Welcome */
 "main_text_welcome" = "<b>Met de %@-app kun je met je smartphone veilig en vertrouwd inloggen bij verschillende webdiensten.</b><br/><br/>Deze app bevat nog geen actief account. Om gebruik te maken van %@ heb je een geactiveerd account nodig.<br/><br/>Tijdens het activatieproces moet je een QR code scannen. Druk op <b>Scannen</> als hier om gevraagd wordt.";
