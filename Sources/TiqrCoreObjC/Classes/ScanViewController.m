@@ -255,17 +255,18 @@
     self.decoding = NO;
     
 #if HAS_AVFF
+    AVCaptureSession *currentCaptureSession = self.captureSession;
     dispatch_async(self.sessionQueue, ^{
-        [self.captureSession stopRunning];
+        [currentCaptureSession stopRunning];
 
-        if ([self.captureSession.inputs count]) {
-            AVCaptureInput* input = [self.captureSession.inputs objectAtIndex:0];
-            [self.captureSession removeInput:input];
+        if ([currentCaptureSession.inputs count]) {
+            AVCaptureInput* input = [currentCaptureSession.inputs objectAtIndex:0];
+            [currentCaptureSession removeInput:input];
         }
         
-        if ([self.captureSession.outputs count]) {
-            AVCaptureVideoDataOutput* output = (AVCaptureVideoDataOutput *)[self.captureSession.outputs objectAtIndex:0];
-            [self.captureSession removeOutput:output];
+        if ([currentCaptureSession.outputs count]) {
+            AVCaptureVideoDataOutput* output = (AVCaptureVideoDataOutput *)[currentCaptureSession.outputs objectAtIndex:0];
+            [currentCaptureSession removeOutput:output];
         }
     });
     
@@ -325,10 +326,6 @@
 - (void)listIdentities {
     IdentityListViewController *viewController = [[IdentityListViewController alloc] init];
     [self.navigationController pushViewController:viewController animated:YES];
-}
-
-- (void)dealloc {
-    [self stopCapture];
 }
 
 @end
