@@ -61,7 +61,6 @@ NSString* const KEY_DEVICE_TOKEN = @"TiqrDeviceToken";
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *key = [self isTokenExchangeEnabled] ? KEY_NOTIFICATION_TOKEN : KEY_DEVICE_TOKEN;
 	[defaults setValue:notificationToken forKey: key];
-	[defaults synchronize];
 }
 
 - (NSString *)notificationToken {
