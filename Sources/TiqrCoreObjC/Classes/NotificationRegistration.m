@@ -61,7 +61,6 @@ NSString* const KEY_DEVICE_TOKEN = @"TiqrDeviceToken";
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *key = [self isTokenExchangeEnabled] ? KEY_NOTIFICATION_TOKEN : KEY_DEVICE_TOKEN;
 	[defaults setValue:notificationToken forKey: key];
-	[defaults synchronize];
 }
 
 - (NSString *)notificationToken {
@@ -78,7 +77,7 @@ NSString* const KEY_DEVICE_TOKEN = @"TiqrDeviceToken";
         return;
     }
 	
-	NSString *escapedLanguage = [[NSLocale preferredLanguages][0] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	NSString *escapedLanguage = [[[NSLocale preferredLanguages] firstObject] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSString *escapedNotificationToken = [self.notificationToken stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	
 	NSString *body;
@@ -100,39 +99,19 @@ NSString* const KEY_DEVICE_TOKEN = @"TiqrDeviceToken";
 	[request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
     [request setValue:[TiqrUserAgent getUserAgent] forHTTPHeaderField:@"User-Agent"];
 
-	NotificationRegistration *delegate = self;
-	NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:delegate];
-	if (connection != nil && delegate != nil) {
-		responseData = [NSMutableData data];
-	}
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    [responseData setLength:0];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    [responseData appendData:data];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-	responseData = nil;
-    if (error) {
-        NSLog(@"Unable to register for notifications: %@, %@", [error localizedDescription], [error userInfo]);
-    }
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-	NSString *response = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-	if ([response length] > 0) {
-		[self setNotificationToken:response];
-	}
-	
-	responseData = nil;	
-}
-
-- (void)dealloc {
-	responseData = nil;
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (data != nil) {
+            NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            if ([response length] > 0) {
+                [self setNotificationToken:response];
+                return;
+            }
+        }
+        if (error) {
+            NSLog(@"Unable to register for notifications: %@, %@", [error localizedDescription], [error userInfo]);
+        }
+    }];
+    [task resume];
 }
 
 #pragma mark -

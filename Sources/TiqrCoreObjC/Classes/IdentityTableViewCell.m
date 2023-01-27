@@ -72,6 +72,25 @@
     return self;
 }
 
+// Validates if the rect has no infinite or NaN numbers
++ (BOOL)isValidRect:(CGRect)rect {
+    CGPoint origin = rect.origin;
+    if (isnormal(origin.x) == NO) {
+        return NO;
+    }
+    if (isnormal(origin.y) == NO) {
+        return NO;
+    }
+    CGSize size = rect.size;
+    if (isnormal(size.width) == NO) {
+        return NO;
+    }
+    if (isnormal(size.height) == NO) {
+        return NO;
+    }
+    return YES;
+}
+
 - (void)layoutSubviews {
 	[super layoutSubviews];		
 	
@@ -96,9 +115,11 @@
 	imageFrame.origin.x = 30;
 	imageFrame.origin.y = padding + ((maxHeight - height) / 2);
 	imageFrame.size.width = width;
-	imageFrame.size.height = height;	
-	self.imageView.frame = imageFrame;
-	
+	imageFrame.size.height = height;
+    if ([IdentityTableViewCell isValidRect:imageFrame]) {
+        self.imageView.frame = imageFrame;
+    }
+    
 	CGFloat textPaddingX = 30.0;
     CGFloat textPaddingY = 0.0;
 	CGFloat textOriginX = imageFrame.origin.x + width + textPaddingX;
@@ -109,19 +130,25 @@
 	textFrame.origin.x = textOriginX;	
     textFrame.origin.y = textOriginY;
 	textFrame.size.width = self.frame.size.width - textFrame.origin.x - textPaddingX - 20.0;
-	self.textLabel.frame = textFrame;
-	
+    if ([IdentityTableViewCell isValidRect:textFrame]) {
+        self.textLabel.frame = textFrame;
+    }
+    
 	CGRect detailTextFrame = self.detailTextLabel.frame;
 	detailTextFrame.origin.x = textOriginX;	
     detailTextFrame.origin.y = textOriginY + textFrame.size.height + textPaddingY;
 	detailTextFrame.size.width = self.frame.size.width - detailTextFrame.origin.x - textPaddingX - 20.0;
-	self.detailTextLabel.frame = detailTextFrame;
+    if ([IdentityTableViewCell isValidRect:textFrame]) {
+        self.detailTextLabel.frame = detailTextFrame;
+    }
     
 	CGRect blockedFrame = self.blockedLabel.frame;
 	blockedFrame.origin.x = textOriginX;	
     blockedFrame.origin.y = textOriginY + textFrame.size.height + textPaddingY + detailTextFrame.size.height + textPaddingY;
 	blockedFrame.size.width = self.frame.size.width - blockedFrame.origin.x - textPaddingX - 20.0;
-	self.blockedLabel.frame = blockedFrame;
+    if ([IdentityTableViewCell isValidRect:blockedFrame]) {
+        self.blockedLabel.frame = blockedFrame;
+    }
 }
 
 - (void)setIdentity:(Identity *)identity {

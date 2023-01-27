@@ -37,7 +37,7 @@
 #import <UIKit/UIKit.h>
 
 @interface NotificationRegistration : NSObject {
-	NSMutableData *responseData;
+
 }
 
 /**
