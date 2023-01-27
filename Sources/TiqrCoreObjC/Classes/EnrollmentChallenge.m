@@ -104,7 +104,12 @@ NSString *const TIQRECErrorDomain = @"org.tiqr.ec";
         NSString *enrollmentScheme = [[[NSBundle mainBundle] infoDictionary] objectForKey:enrollmentSchemeKey];
         long startIndex = enrollmentScheme.length + 3; // +3 for the ://
         // Remove the custom scheme to get the metadata URL
-        metadataURL = [NSURL URLWithString:[challengeString substringFromIndex:startIndex]];
+        NSString *appSchemeless = [challengeString substringFromIndex:startIndex];
+        // Fix for colon in URL missing by the time it gets to us.
+        if ([appSchemeless hasPrefix:@"https//"]) {
+            appSchemeless = [appSchemeless stringByReplacingCharactersInRange:NSMakeRange(0, 7) withString:@"https://"];
+        }
+        metadataURL = [NSURL URLWithString:appSchemeless];
         if (metadataURL == nil) {
             [self generateInvalidQRCodeError: error];
             return nil;

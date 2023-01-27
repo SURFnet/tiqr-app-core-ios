@@ -123,7 +123,12 @@
         if (enforceChallengeHosts && enforceChallengeHosts.length > 0) {
             long startIndex = appScheme.length + 3; // +3 for the ://
             // Remove the custom scheme to get the metadata URL
-            NSURL* metadataURL = [NSURL URLWithString:[url substringFromIndex:startIndex]];
+            NSString *appSchemeless = [url substringFromIndex:startIndex];
+            // Fix for colon in URL missing by the time it gets to us.
+            if ([appSchemeless hasPrefix:@"https//"]) {
+                appSchemeless = [appSchemeless stringByReplacingCharactersInRange:NSMakeRange(0, 7) withString:@"https://"];
+            }
+            NSURL* metadataURL = [NSURL URLWithString:appSchemeless];
             if (metadataURL == nil) {
                 return NO;
             }
