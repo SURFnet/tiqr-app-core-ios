@@ -6,25 +6,33 @@ import PackageDescription
 let package = Package(
     name: "Tiqr",
     defaultLocalization: "en",
-    platforms: [.iOS(.v8)],
+    platforms: [.iOS(.v13)],
     products: [
         .library(
             name: "Tiqr",
             targets: ["Tiqr"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/roberthein/TinyConstraints.git", from: "4.0.0"),
+    ],
     targets: [
         .target(
             name: "Tiqr",
-            dependencies: ["TiqrCoreObjC", "TiqrCore"]),
+            dependencies: ["TiqrCoreObjC", "TiqrCore"]
+        ),
         .target(
             name: "TiqrCore"
         ),
         .target(
             name: "TiqrCoreObjC",
-            dependencies: ["TiqrCore"],
+            dependencies: ["TiqrCore", "EduIDExpansion"],
             resources: [
                 .process("Resources/Audio/cowbell.wav"),
-                .process("Resources/Views/HTML/start.html")
-            ])
+                .process("Resources/Views/HTML/start.html")]
+        ),
+        .target(
+            name: "EduIDExpansion",
+            dependencies: ["TinyConstraints"]
+        ),
     ]
 )

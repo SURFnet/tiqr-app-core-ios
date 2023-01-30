@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class OnboardingSuccessViewController: EduIDBaseViewController {
+class successViewController: EduIDBaseViewController {
     
     var buttonStack: AnimatedHStackView!
     
@@ -16,7 +16,6 @@ class OnboardingSuccessViewController: EduIDBaseViewController {
         super.viewWillAppear(animated)
         
         buttonStack.animate()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(qrTapped))
     }
     
     func setupUI() {
@@ -105,12 +104,6 @@ class OnboardingSuccessViewController: EduIDBaseViewController {
         
         buttonStack.hideAndTriggerAll()
         
-    }
-    
-    //MARK: - QR icon in navbar tapped
-    @objc
-    func qrTapped() {
-        (coordinator as? OnboardingCoordinator)?.showScanScreen()
     }
     
     //MARK: - action buttons
