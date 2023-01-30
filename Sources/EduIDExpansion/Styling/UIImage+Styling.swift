@@ -14,4 +14,5 @@ extension UIImage {
     static let activity = UIImage(named: "activity", in: Bundle.module, with: nil)!
     static let qrFrame = UIImage(named: "qr_frame", in: Bundle.module, with: nil)!
     static let flashLight = UIImage(named: "flashlight", in: Bundle.module, with: nil)!
+    static let flashLightOff = UIImage(named: "flashlight_off", in: Bundle.module, with: nil)!
 }

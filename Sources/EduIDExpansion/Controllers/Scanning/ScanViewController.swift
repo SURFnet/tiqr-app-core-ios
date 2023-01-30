@@ -4,15 +4,27 @@ import AVFoundation
 
 class ScanViewController: EduIDBaseViewController {
     
-    //MARK: - audio visual components
+    init(viewModel: ScanViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: viewmodel
+    var viewModel: ScanViewModel
+    
+    //MARK: flash button
+    let flashButton = UIButton()
+    
+    //MARK: audio visual components
     let previewLayer = AVCaptureVideoPreviewLayer()
-    let session = AVCaptureSession()
-    let output = AVCaptureMetadataOutput()
     
-    //MARK: - middel qr frame view
+    //MARK: middel qr frame view
     let middelSpaceView = UIImageView(image: .qrFrame)
-    
-    let frameSize: CGFloat = 275
 
     //MARK: - lifecycle
     override func viewDidLoad() {
@@ -21,7 +33,10 @@ class ScanViewController: EduIDBaseViewController {
         view.backgroundColor = .black
         view.layer.addSublayer(previewLayer)
         setupScanningFrameUI()
-        setupCaptureSession()
+        
+        previewLayer.session = viewModel.session
+        viewModel.setupCaptureSession()
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -30,47 +45,13 @@ class ScanViewController: EduIDBaseViewController {
         previewLayer.frame = view.bounds
     }
     
-    //MARK: - setup the av camera session
-    func setupCaptureSession() {
-        let device = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .back).devices.first
-        do {
-            if let device = device {
-                let input = try AVCaptureDeviceInput(device: device)
-                if session.canAddInput(input) {
-                    session.addInput(input)
-                }
-                
-                if session.canAddOutput(output) {
-                    session.addOutput(output)
-                }
-                
-                previewLayer.session = session
-                
-                output.metadataObjectTypes = [.qr]
-                output.setMetadataObjectsDelegate(self, queue: .main)
-                
-                //MARK: - set rect of interest
-                let screenBounds = UIScreen.main.bounds
-                let interestOrigin = CGPoint(x: (screenBounds.width - frameSize) / 2 / screenBounds.width, y: (screenBounds.height - frameSize) / 2 / screenBounds.height)
-                let interestSize = CGSize(width: frameSize / screenBounds.width, height: frameSize / screenBounds.height)
-                output.rectOfInterest = CGRect(origin: interestOrigin, size: interestSize)
-                
-                DispatchQueue.global(qos: .background).async { [weak self] in
-                    self?.session.startRunning()
-                }
-            }
-        } catch {
-            print(error)
-        }
-    }
-    
     func setupScanningFrameUI() {
         //MARK: - create the dark frame with image
         let upperDarkView = UIView()
         upperDarkView.backgroundColor = .black.withAlphaComponent(0.5)
-        let flashButton = UIButton()
-        flashButton.setImage(.flashLight, for: .normal)
+        flashButton.setImage(.flashLightOff, for: .normal)
         flashButton.size(CGSize(width: 50, height: 50))
+        flashButton.addTarget(self, action: #selector(toggleTorch), for: .touchUpInside)
         upperDarkView.addSubview(flashButton)
         flashButton.trailing(to: upperDarkView, offset: -36)
         flashButton.top(to: upperDarkView, offset: 100)
@@ -122,12 +103,23 @@ Scan it here
         upperDarkView.size(to: lowerDarkView)
         middelLeftDarkView.size(to: middelRightDarkView)
     }
-}
-
-//MARK: - preview layer delegate
-extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
     
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        print(metadataObjects)
+    //MARK: - toggle flash action
+    @objc
+    func toggleTorch() {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+        guard device.hasTorch else { print("Torch isn't available"); return }
+
+        do {
+            try device.lockForConfiguration()
+            let on = flashButton.image(for: .normal) == .flashLightOff
+            device.torchMode = on ? .on : .off
+            device.unlockForConfiguration()
+            let newImage: UIImage = on ? .flashLight : .flashLightOff
+            flashButton.setImage(newImage, for: .normal)
+        } catch {
+            print("Torch can't be used")
+        }
     }
 }
+

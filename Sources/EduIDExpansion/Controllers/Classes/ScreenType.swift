@@ -49,7 +49,7 @@ enum ScreenType: Int, CaseIterable {
         case .onboardingSuccessScreen:
             return SuccessViewController()
         case .scanScreen:
-            return ScanViewController()
+            return ScanViewController(viewModel: ScanViewModel())
         case .none:
             return nil
         }
