@@ -3,15 +3,11 @@ import AVFoundation
 
 final class ScanViewModel: NSObject {
     
+    //MARK: av componenets
     let session = AVCaptureSession()
     let output = AVCaptureMetadataOutput()
     
     let frameSize: CGFloat = 275
-    
-    override init() {
-        super.init()
-        
-    }
     
     //MARK: - setup the av camera session
     func setupCaptureSession() {

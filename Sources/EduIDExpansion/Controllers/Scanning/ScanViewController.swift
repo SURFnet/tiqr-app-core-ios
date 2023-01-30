@@ -7,7 +7,6 @@ class ScanViewController: EduIDBaseViewController {
     init(viewModel: ScanViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -15,16 +14,17 @@ class ScanViewController: EduIDBaseViewController {
     }
     
     //MARK: viewmodel
-    var viewModel: ScanViewModel
+    private let viewModel: ScanViewModel
     
     //MARK: flash button
-    let flashButton = UIButton()
+    private let flashButton = UIButton()
+    private var flashIsON: Bool = false
     
     //MARK: audio visual components
-    let previewLayer = AVCaptureVideoPreviewLayer()
+    private let previewLayer = AVCaptureVideoPreviewLayer()
     
     //MARK: middel qr frame view
-    let middelSpaceView = UIImageView(image: .qrFrame)
+    private let middelSpaceView = UIImageView(image: .qrFrame)
 
     //MARK: - lifecycle
     override func viewDidLoad() {
@@ -45,11 +45,12 @@ class ScanViewController: EduIDBaseViewController {
         previewLayer.frame = view.bounds
     }
     
-    func setupScanningFrameUI() {
+    private func setupScanningFrameUI() {
         //MARK: - create the dark frame with image
         let upperDarkView = UIView()
         upperDarkView.backgroundColor = .black.withAlphaComponent(0.5)
         flashButton.setImage(.flashLightOff, for: .normal)
+        flashButton.setImage(.flashLight, for: .selected)
         flashButton.size(CGSize(width: 50, height: 50))
         flashButton.addTarget(self, action: #selector(toggleTorch), for: .touchUpInside)
         upperDarkView.addSubview(flashButton)
@@ -106,17 +107,16 @@ Scan it here
     
     //MARK: - toggle flash action
     @objc
-    func toggleTorch() {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+    private func toggleTorch() {
+        guard let device = AVCaptureDevice.default(for: .video) else { return }
         guard device.hasTorch else { print("Torch isn't available"); return }
 
         do {
             try device.lockForConfiguration()
-            let on = flashButton.image(for: .normal) == .flashLightOff
-            device.torchMode = on ? .on : .off
+            device.torchMode = !flashIsON ? .on : .off
             device.unlockForConfiguration()
-            let newImage: UIImage = on ? .flashLight : .flashLightOff
-            flashButton.setImage(newImage, for: .normal)
+            flashIsON.toggle()
+            flashButton.isSelected.toggle()
         } catch {
             print("Torch can't be used")
         }
