@@ -32,7 +32,8 @@ let package = Package(
         ),
         .target(
             name: "EduIDExpansion",
-            dependencies: ["TinyConstraints"]
+            dependencies: ["TinyConstraints"],
+            resources: [.process("Resources/Assets.xcassets")]
         ),
     ]
 )

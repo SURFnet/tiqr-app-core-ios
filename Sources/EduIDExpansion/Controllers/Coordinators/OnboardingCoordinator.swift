@@ -1,6 +1,6 @@
 import UIKit
 
-final class OnboardingCoordinator: CoordinatorType {
+final class OnboardingCoordinator: OnboardingCoordinatorType {
     
     var children: [CoordinatorType] = []
     var navigationController: UINavigationController
@@ -60,8 +60,7 @@ final class OnboardingCoordinator: CoordinatorType {
         if screenType.showScanButtonInNavigationBar {
             navigationController.viewControllers.last?.navigationItem.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(showScanScreen))
         } else {
-            navigationController.viewControllers.last?.navigationItem.leftBarButtonItem = nil;
-            navigationController.viewControllers.last?.navigationItem.hidesBackButton = true;
+            navigationController.viewControllers.last?.navigationItem.hidesBackButton = true
             navigationController.viewControllers.last?.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage.arrowBack, style: .plain, target: self, action: #selector(goBack))
             navigationController.navigationBar.tintColor = screenType.bartintColor
         }
