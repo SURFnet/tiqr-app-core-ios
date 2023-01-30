@@ -1,16 +1,9 @@
-//
-//  EduIDBaseViewController.swift
-//  eduID
-//
-//  Created by Jairo Bambang Oetomo on 19/01/2023.
-//
-
 import UIKit
 
 class EduIDBaseViewController: UIViewController {
     
     var screenType: ScreenType = .none
-    weak var coordinator: CoordinatorType?
+    weak var coordinator: OnboardingCoordinatorType?
 
     override func viewDidLoad() {
         super.viewDidLoad()

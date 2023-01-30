@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class successViewController: EduIDBaseViewController {
+class SuccessViewController: EduIDBaseViewController {
     
     var buttonStack: AnimatedHStackView!
     
