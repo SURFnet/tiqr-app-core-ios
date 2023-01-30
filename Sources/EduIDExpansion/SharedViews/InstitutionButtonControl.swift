@@ -6,6 +6,8 @@ class InstitutionButtonControl: UIControl {
     init(label1: String, label2: String) {
         super.init(frame: .zero)
         
+        translatesAutoresizingMaskIntoConstraints = false
+        
         layer.cornerRadius = 6
         layer.borderWidth = 1
         layer.borderColor = UIColor.secondaryColor.cgColor
@@ -26,8 +28,9 @@ class InstitutionButtonControl: UIControl {
         secondLabel.height(20)
         
         let stack = UIStackView(arrangedSubviews: [firstLabel, secondLabel])
+        stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
-        stack.distribution = .fillEqually
+        stack.distribution = .equalSpacing
         self.backgroundColor = .white
         
         addSubview(stack)

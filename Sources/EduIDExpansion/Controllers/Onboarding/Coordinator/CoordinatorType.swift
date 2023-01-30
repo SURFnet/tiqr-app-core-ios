@@ -11,6 +11,7 @@ protocol CoordinatorType: AnyObject {
     
     var navigationController: UINavigationController { get set }
     var children: [CoordinatorType] { get set }
-    func showNextScreen(currentType: ScreenType)
+    func showNextScreen(currentScreen: ScreenType)
+    func goBack()
     func start()
 }

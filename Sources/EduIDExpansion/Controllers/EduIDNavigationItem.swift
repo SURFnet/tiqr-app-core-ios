@@ -12,11 +12,6 @@ class EduIDNavigationItem: UINavigationItem {
     init() {
         super.init(title: "")
         
-        let logo = UIImageView(image: UIImage.eduIDLogo)
-        logo.width(92)
-        logo.height(36)
-        titleView = logo
-        
         backBarButtonItem = UIBarButtonItem(image: UIImage.arrowBack, style: .plain, target: nil, action: nil)
     }
     

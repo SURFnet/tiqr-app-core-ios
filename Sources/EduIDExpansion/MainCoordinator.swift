@@ -19,12 +19,16 @@ class MainCoordinator: CoordinatorType {
     }
     
     func start() {
-        let onboardinCoordinator =  OnboardingCoordinator(navigationController: self.navigationController)
+        let onboardinCoordinator = OnboardingCoordinator(navigationController: self.navigationController)
         children.append(onboardinCoordinator)
         onboardinCoordinator.start()
     }
     
-    func showNextScreen(currentType: ScreenType) {
+    func goBack() {
+        print("does nothing")
+    }
+    
+    func showNextScreen(currentScreen: ScreenType) {
         
     }
 }

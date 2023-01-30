@@ -8,8 +8,8 @@
 import UIKit
 import TinyConstraints
 
-class CreateEduIDLandingPageViewController: EduIDBaseViewController {
-
+class ExplanationViewController: EduIDBaseViewController {
+    
     private var stack: AnimatedVStackView!
     
     //MARK: -lifecycle
@@ -18,12 +18,6 @@ class CreateEduIDLandingPageViewController: EduIDBaseViewController {
         super.viewDidLoad()
         
         setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        stack.animate(onlyThese: [2])
     }
     
     //MARK: - setup UI
@@ -46,10 +40,15 @@ eduID is a central account for users\nassociated with Dutch education and\nresea
         textView.attributedText = attrText
         //MARK: - create button
         let button = EduIDButton(type: .primary, buttonTitle: "Create a new eduID")
+        
+        //the action for this buton is defined in superclass
         button.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
         
+        //MARK: - spacing
+        let spacerView = UIView()
+        
         //MARK: - create the stackview
-        stack = AnimatedVStackView(arrangedSubviews: [posterLabel, textView, button])
+        stack = AnimatedVStackView(arrangedSubviews: [posterLabel, textView, spacerView, button])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
@@ -63,10 +62,9 @@ eduID is a central account for users\nassociated with Dutch education and\nresea
         posterLabel.height(34)
         button.width(to: stack, offset: -24)
         
-        textView.height(268)
+        textView.sizeToFit()
         textView.width(to: stack, offset: -32)
         
         stack.hideAndTriggerAll(onlyThese: [2])
-        
     }
 }
