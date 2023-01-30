@@ -1,7 +1,5 @@
 import UIKit
 
-
-
 class MainCoordinator: CoordinatorType {
     
     var children: [CoordinatorType] = []

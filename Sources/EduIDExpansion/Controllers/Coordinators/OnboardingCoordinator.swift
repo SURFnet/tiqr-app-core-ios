@@ -22,7 +22,7 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
     //MARK: - start scan screen
     @objc
     func showScanScreen() {
-        let scanViewcontroller = ScanViewController()
+        let scanViewcontroller = ScanViewController(viewModel: ScanViewModel())
         scanViewcontroller.coordinator = self
         scanViewcontroller.navigationItem.leftBarButtonItem?.image = scanViewcontroller.navigationItem.leftBarButtonItem?.image?.withRenderingMode(.alwaysTemplate)
         navigationController.navigationBar.tintColor = .white
