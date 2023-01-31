@@ -2,10 +2,10 @@ import UIKit
 
 class MainCoordinator: CoordinatorType {    
     
-    var parent: CoordinatorType?
+    weak var parent: CoordinatorType?
     
     var children: [CoordinatorType] = []
-    var homeNavigationController: UINavigationController!
+    weak var homeNavigationController: UINavigationController!
     
     init(homeNavigationController: UINavigationController) {
         self.homeNavigationController = homeNavigationController
@@ -35,6 +35,7 @@ class MainCoordinator: CoordinatorType {
         personalInfoNavigationController.isModalInPresentation = true
         
         let personalInfoCoordinator = PersonalInfoCoordinator(navigationController: personalInfoNavigationController)
+        editPersonalInfoViewcontroller.coordinator = personalInfoCoordinator
         children.append(personalInfoCoordinator)
          
         homeNavigationController.present(personalInfoNavigationController, animated: true)

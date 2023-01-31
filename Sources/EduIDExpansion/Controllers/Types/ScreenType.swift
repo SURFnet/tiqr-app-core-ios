@@ -9,6 +9,7 @@ enum ScreenType: Int, CaseIterable {
     case enterPhoneScreen
     case pinChallengeScreen
     case welcomeScreen
+    case firstTimeDialogScreen
     case addInstitutionScreen
     case homeScreen
     
@@ -54,6 +55,8 @@ enum ScreenType: Int, CaseIterable {
             return ScanViewController(viewModel: ScanViewModel())
         case .personalInfoScreen:
             return EditPersonalInfoViewController()
+        case .firstTimeDialogScreen:
+            return FirstTimeDialogViewController()
         case .none:
             return nil
         }

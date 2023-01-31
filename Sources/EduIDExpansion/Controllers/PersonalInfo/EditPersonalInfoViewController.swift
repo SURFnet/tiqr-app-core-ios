@@ -74,5 +74,8 @@ When you use eduID to login to other websites, some of your personal information
         secondControl.width(to: stack)
         thirdControl.width(to: stack)
         fourthControl.width(to: stack)
+        
+        //MARK: - actions
+        firstControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
     }
 }
