@@ -1,20 +1,27 @@
 import UIKit
 
-class MainCoordinator: CoordinatorType {
+class MainCoordinator: CoordinatorType {    
     
     var parent: CoordinatorType?
     
     var children: [CoordinatorType] = []
-    var navigationController: UINavigationController
+    var homeNavigationController: UINavigationController!
     
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init(homeNavigationController: UINavigationController) {
+        self.homeNavigationController = homeNavigationController
+        
     }
     
     func start() {
-        let onboardingCoordinator = OnboardingCoordinator(navigationController: self.navigationController)
+        let onboardingNavigationController = UINavigationController()
+        onboardingNavigationController.modalTransitionStyle = .flipHorizontal
+        onboardingNavigationController.isModalInPresentation = true
+        
+        let onboardingCoordinator = OnboardingCoordinator(navigationController: onboardingNavigationController)
         onboardingCoordinator.parent = self
         children.append(onboardingCoordinator)
+        
+        homeNavigationController.present(onboardingNavigationController, animated: false)
         onboardingCoordinator.start()
     }
     
@@ -30,30 +37,8 @@ class MainCoordinator: CoordinatorType {
         let personalInfoCoordinator = PersonalInfoCoordinator(navigationController: personalInfoNavigationController)
         children.append(personalInfoCoordinator)
          
-        navigationController.present(personalInfoNavigationController, animated: true)
+        homeNavigationController.present(personalInfoNavigationController, animated: true)
         personalInfoCoordinator.start()
-    }
-    
-    func showNavigationBarButtonsIfNeeded(screenType: ScreenType) {
-        // show scanbutton if needed
-        if screenType.showScanButtonInNavigationBar {
-            navigationController.viewControllers.last?.navigationItem.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(showScanScreen))
-        } else {
-            navigationController.viewControllers.last?.navigationItem.hidesBackButton = true
-            navigationController.viewControllers.last?.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage.arrowBack, style: .plain, target: self, action: #selector(dismissScanScreen))
-            navigationController.navigationBar.tintColor = screenType.bartintColor
-        }
-        
-        // show logo in titleview if needed
-        if screenType.showLogoInTitleView {
-            //create the scan barbutton item
-            let logo = UIImageView(image: UIImage.eduIDLogo)
-            logo.width(92)
-            logo.height(36)
-            navigationController.viewControllers.last?.navigationItem.titleView = logo
-        } else {
-            navigationController.viewControllers.last?.navigationItem.titleView = nil
-        }
     }
     
     //MARK: - start scan screen
@@ -61,22 +46,24 @@ class MainCoordinator: CoordinatorType {
     func showScanScreen() {
         let scanViewcontroller = ScanViewController(viewModel: ScanViewModel())
         scanViewcontroller.coordinator = self
-        scanViewcontroller.navigationItem.leftBarButtonItem?.image = scanViewcontroller.navigationItem.leftBarButtonItem?.image?.withRenderingMode(.alwaysTemplate)
-        navigationController.navigationBar.tintColor = .white
-        navigationController.setNavigationBarHidden(false, animated: true)
-        navigationController.pushViewController(scanViewcontroller, animated: true)
+        let logo = UIImageView(image: UIImage.eduIDLogo)
+        logo.width(92)
+        logo.height(36)
+        scanViewcontroller.navigationItem.titleView = logo
+        scanViewcontroller.navigationItem.hidesBackButton = true
+        scanViewcontroller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage.arrowBack, style: .plain, target: self, action: #selector(dismissScanScreen))
         
-        // show navigation bar buttons if needed
-        showNavigationBarButtonsIfNeeded(screenType: .scanScreen)
+        scanViewcontroller.navigationItem.leftBarButtonItem?.image = scanViewcontroller.navigationItem.leftBarButtonItem?.image?.withRenderingMode(.alwaysTemplate)
+        
+        let scanNavigationController = UINavigationController(rootViewController: scanViewcontroller)
+        scanNavigationController.navigationBar.tintColor = .white
+        scanNavigationController.setNavigationBarHidden(false, animated: true)
+        homeNavigationController.present(scanNavigationController, animated: true)
     }
     
     //MARK: - back action
     @objc
     func dismissScanScreen() {
-        navigationController.popViewController(animated: true)
-        
-        // show navigation bar buttons if needed
-        navigationController.viewControllers.last?.navigationItem.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(showScanScreen))
-        
+        homeNavigationController.presentedViewController?.dismiss(animated: true)
     }
 }

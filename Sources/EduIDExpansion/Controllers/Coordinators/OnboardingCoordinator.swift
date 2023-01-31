@@ -43,7 +43,7 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
         guard let nextViewController = currentScreen.nextViewController(current: currentScreen) else { return }
         
         if currentScreen == .addInstitutionScreen {
-            
+            navigationController.dismiss(animated: true)
         }
         
         (nextViewController as? EduIDBaseViewController)?.coordinator = self
