@@ -3,7 +3,7 @@ import UIKit
 class EduIDBaseViewController: UIViewController {
     
     var screenType: ScreenType = .none
-    weak var coordinator: OnboardingCoordinatorType?
+    weak var coordinator: CoordinatorType?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,12 +15,12 @@ class EduIDBaseViewController: UIViewController {
     
     @objc
     private func backTapped() {
-        coordinator?.goBack()
+        (coordinator as? OnboardingCoordinator)?.goBack()
     }
     
     @objc
     func showNextScreen() {
-        coordinator?.showNextScreen(currentScreen: screenType)
+        (coordinator as? OnboardingCoordinator)?.showNextScreen(currentScreen: screenType)
     }
 
 }
