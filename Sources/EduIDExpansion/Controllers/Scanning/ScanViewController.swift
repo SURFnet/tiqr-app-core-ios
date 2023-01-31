@@ -25,6 +25,9 @@ class ScanViewController: EduIDBaseViewController {
     
     //MARK: middel qr frame view
     private let middelSpaceView = UIImageView(image: .qrFrame)
+    
+    //MARK: gradient layer
+    private var gradientLayer: CAGradientLayer?
 
     //MARK: - lifecycle
     override func viewDidLoad() {
@@ -32,10 +35,12 @@ class ScanViewController: EduIDBaseViewController {
         
         view.backgroundColor = .black
         view.layer.addSublayer(previewLayer)
+        addGradient()
         setupScanningFrameUI()
         
         previewLayer.session = viewModel.session
         viewModel.setupCaptureSession()
+        
         
     }
     
@@ -43,6 +48,17 @@ class ScanViewController: EduIDBaseViewController {
         super.viewWillLayoutSubviews()
         
         previewLayer.frame = view.bounds
+        gradientLayer?.frame = view.bounds
+    }
+    
+    //MARK: - add gradient layer
+    private func addGradient() {
+        gradientLayer = CAGradientLayer()
+        gradientLayer?.colors = [UIColor.black.cgColor, UIColor.clear.cgColor, UIColor.clear.cgColor, UIColor.black.cgColor] as [Any]?
+        gradientLayer?.locations = [NSNumber(value: 0.05), NSNumber(value: 0.15), NSNumber(value: 0.85), NSNumber(value: 0.95)]
+        gradientLayer?.startPoint = CGPoint(x: 0.5, y: 0)
+        gradientLayer?.endPoint = CGPoint(x: 0.5, y: 1)
+        view.layer.addSublayer(gradientLayer!)
     }
     
     private func setupScanningFrameUI() {
