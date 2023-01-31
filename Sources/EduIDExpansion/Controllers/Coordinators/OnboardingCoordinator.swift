@@ -2,6 +2,8 @@ import UIKit
 
 final class OnboardingCoordinator: OnboardingCoordinatorType {
     
+    var parent: CoordinatorType?
+    
     var children: [CoordinatorType] = []
     var navigationController: UINavigationController
     
@@ -13,6 +15,9 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
         let landingScreen = LandingPageViewController()
         landingScreen.coordinator = self
         landingScreen.screenType = .landingScreen
+        
+        let successScreen = HomeViewController()
+        successScreen.coordinator = self
         navigationController.pushViewController(landingScreen, animated: false)
         
         // show navigation bar buttons if needed
@@ -36,6 +41,10 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
     //MARK: - show next screen
     func showNextScreen(currentScreen: ScreenType) {
         guard let nextViewController = currentScreen.nextViewController(current: currentScreen) else { return }
+        
+        if currentScreen == .addInstitutionScreen {
+            
+        }
         
         (nextViewController as? EduIDBaseViewController)?.coordinator = self
         navigationController.pushViewController(nextViewController, animated: true)

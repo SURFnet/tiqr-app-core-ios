@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class SuccessViewController: EduIDBaseViewController {
+class HomeViewController: EduIDBaseViewController {
     
     var buttonStack: AnimatedHStackView!
     
@@ -9,7 +9,6 @@ class SuccessViewController: EduIDBaseViewController {
         super.viewDidLoad()
         
         setupUI()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -20,7 +19,7 @@ class SuccessViewController: EduIDBaseViewController {
     
     func setupUI() {
         //MARK: - PosterLabel
-        let posterLabel = UILabel.posterTextLabelBicolor(text: "Your eduID app\nis ready for use", size: 32, primary: "Your eduID app")
+        let posterLabel = UILabel.posterTextLabelBicolor(text: "Your eduID app\nis ready for use", size: 32, primary: "Your eduID app", alignment: .center)
         posterLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(posterLabel)
         posterLabel.width(to: view)
@@ -115,7 +114,7 @@ class SuccessViewController: EduIDBaseViewController {
     
     @objc
     func personalInfoTapped() {
-        
+        (coordinator?.parent as? MainCoordinator)?.showPersonalInfo()
     }
     
     @objc

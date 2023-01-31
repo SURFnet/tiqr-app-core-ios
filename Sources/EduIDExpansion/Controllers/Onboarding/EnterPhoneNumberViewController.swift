@@ -6,7 +6,7 @@ class EnterPhoneNumberViewController: EduIDBaseViewController, ValidatedTextFiel
     var stack: AnimatedVStackView!
     
     //MARK: - phone textfield
-    let validatedPhoneTextField = EduIDValidatedTextStackView(title: "Enter your phone number", placeholder: "e.g. 0612345678", keyboardType: .numberPad)
+    let validatedPhoneTextField = TextStackViewWithValidation(title: "Enter your phone number", placeholder: "e.g. 0612345678", keyboardType: .numberPad)
     
     //MARK: - verify button
     let verifyButton = EduIDButton(type: .primary, buttonTitle: "Verify this phone number")

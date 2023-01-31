@@ -10,9 +10,11 @@ enum ScreenType: Int, CaseIterable {
     case pinChallengeScreen
     case welcomeScreen
     case addInstitutionScreen
-    case onboardingSuccessScreen
+    case homeScreen
     
     case scanScreen
+    
+    case personalInfoScreen
     
     case none
     
@@ -46,10 +48,12 @@ enum ScreenType: Int, CaseIterable {
             return WelcomeViewController()
         case .addInstitutionScreen:
             return AddInstitutionViewController()
-        case .onboardingSuccessScreen:
-            return SuccessViewController()
+        case .homeScreen:
+            return HomeViewController()
         case .scanScreen:
             return ScanViewController(viewModel: ScanViewModel())
+        case .personalInfoScreen:
+            return EditPersonalInfoViewController()
         case .none:
             return nil
         }
@@ -57,7 +61,7 @@ enum ScreenType: Int, CaseIterable {
     
     var showLogoInTitleView: Bool {
         switch self {
-        case .landingScreen, .onboardingSuccessScreen:
+        case .landingScreen, .homeScreen:
             return false
         default:
             return true
@@ -66,7 +70,7 @@ enum ScreenType: Int, CaseIterable {
     
     var showScanButtonInNavigationBar: Bool {
         switch self {
-        case .landingScreen, .onboardingSuccessScreen:
+        case .landingScreen, .homeScreen:
             return true
         default:
             return false
