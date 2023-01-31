@@ -5,7 +5,6 @@ public final class EduIDExpansion: NSObject {
     public static let shared = EduIDExpansion()
     
     private var mainCoordinator: MainCoordinator!
-    
     private override init() {
         super.init()
     }

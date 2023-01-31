@@ -5,7 +5,7 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
     var parent: CoordinatorType?
     
     var children: [CoordinatorType] = []
-    var navigationController: UINavigationController
+    weak var navigationController: UINavigationController!
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController

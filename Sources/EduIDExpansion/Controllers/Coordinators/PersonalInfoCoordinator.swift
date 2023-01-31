@@ -20,4 +20,9 @@ class PersonalInfoCoordinator: CoordinatorType {
     func dismissPersonalInfoFlow() {
         navigationController.dismiss(animated: true)
     }
+    
+    @objc
+    func drillDown() {
+        navigationController.pushViewController(UIViewController(), animated: true)
+    }
 }
