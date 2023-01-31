@@ -3,14 +3,17 @@ import UIKit
 @objc
 enum ScreenType: Int, CaseIterable {
     case landingScreen
-    case createScreen
+    case explanationScreen
     case enterInfoScreen
     case checkMailScreen
     case enterPhoneScreen
     case pinChallengeScreen
     case welcomeScreen
     case addInstitutionScreen
-    case accountCreatedScreen
+    case onboardingSuccessScreen
+    
+    case scanScreen
+    
     case none
     
     //MARK: - get the next viewcontroller in the flow and guard against out of bounds index
@@ -29,8 +32,8 @@ enum ScreenType: Int, CaseIterable {
         switch self {
         case .landingScreen:
             return LandingPageViewController()
-        case .createScreen:
-            return CreateEduIDLandingPageViewController()
+        case .explanationScreen:
+            return ExplanationViewController()
         case .enterInfoScreen:
             return EnterPersonalInfoViewController()
         case .checkMailScreen:
@@ -40,13 +43,42 @@ enum ScreenType: Int, CaseIterable {
         case .pinChallengeScreen:
             return PinChallengeViewController()
         case .welcomeScreen:
-            return WelcomeExplanationViewController()
+            return WelcomeViewController()
         case .addInstitutionScreen:
-            return ReviewViewController()
-        case .accountCreatedScreen:
-            return OnboardingSuccessViewController()
+            return AddInstitutionViewController()
+        case .onboardingSuccessScreen:
+            return SuccessViewController()
+        case .scanScreen:
+            return ScanViewController(viewModel: ScanViewModel())
         case .none:
             return nil
+        }
+    }
+    
+    var showLogoInTitleView: Bool {
+        switch self {
+        case .landingScreen, .onboardingSuccessScreen:
+            return false
+        default:
+            return true
+        }
+    }
+    
+    var showScanButtonInNavigationBar: Bool {
+        switch self {
+        case .landingScreen, .onboardingSuccessScreen:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var bartintColor: UIColor {
+        switch self {
+        case .scanScreen:
+            return .white
+        default:
+            return .backgroundColor
         }
     }
 }

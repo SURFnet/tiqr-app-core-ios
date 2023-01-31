@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class ReviewViewController: EduIDBaseViewController {
+class AddInstitutionViewController: EduIDBaseViewController {
 
     //MARK: - verify button
     let continueButton = EduIDButton(type: .primary, buttonTitle: "Verify this phone number")

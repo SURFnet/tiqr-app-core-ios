@@ -1,10 +1,3 @@
-//
-//  PinTextFieldView.swift
-//  eduID
-//
-//  Created by Jairo Bambang Oetomo on 20/01/2023.
-//
-
 import UIKit
 import TinyConstraints
 

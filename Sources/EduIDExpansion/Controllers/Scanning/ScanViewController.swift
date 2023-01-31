@@ -4,15 +4,27 @@ import AVFoundation
 
 class ScanViewController: EduIDBaseViewController {
     
-    //MARK: - audio visual components
-    let previewLayer = AVCaptureVideoPreviewLayer()
-    let session = AVCaptureSession()
-    let output = AVCaptureMetadataOutput()
+    init(viewModel: ScanViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
-    //MARK: - middel qr frame view
-    let middelSpaceView = UIImageView(image: .qrFrame)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    let frameSize: CGFloat = 275
+    //MARK: viewmodel
+    private let viewModel: ScanViewModel
+    
+    //MARK: flash button
+    private let flashButton = UIButton()
+    private var flashIsON: Bool = false
+    
+    //MARK: audio visual components
+    private let previewLayer = AVCaptureVideoPreviewLayer()
+    
+    //MARK: middel qr frame view
+    private let middelSpaceView = UIImageView(image: .qrFrame)
 
     //MARK: - lifecycle
     override func viewDidLoad() {
@@ -21,7 +33,10 @@ class ScanViewController: EduIDBaseViewController {
         view.backgroundColor = .black
         view.layer.addSublayer(previewLayer)
         setupScanningFrameUI()
-        setupCaptureSession()
+        
+        previewLayer.session = viewModel.session
+        viewModel.setupCaptureSession()
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -30,47 +45,14 @@ class ScanViewController: EduIDBaseViewController {
         previewLayer.frame = view.bounds
     }
     
-    //MARK: - setup the av camera session
-    func setupCaptureSession() {
-        let device = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .back).devices.first
-        do {
-            if let device = device {
-                let input = try AVCaptureDeviceInput(device: device)
-                if session.canAddInput(input) {
-                    session.addInput(input)
-                }
-                
-                if session.canAddOutput(output) {
-                    session.addOutput(output)
-                }
-                
-                previewLayer.session = session
-                
-                output.metadataObjectTypes = [.qr]
-                output.setMetadataObjectsDelegate(self, queue: .main)
-                
-                //MARK: - set rect of interest
-                let screenBounds = UIScreen.main.bounds
-                let interestOrigin = CGPoint(x: (screenBounds.width - frameSize) / 2 / screenBounds.width, y: (screenBounds.height - frameSize) / 2 / screenBounds.height)
-                let interestSize = CGSize(width: frameSize / screenBounds.width, height: frameSize / screenBounds.height)
-                output.rectOfInterest = CGRect(origin: interestOrigin, size: interestSize)
-                
-                DispatchQueue.global(qos: .background).async { [weak self] in
-                    self?.session.startRunning()
-                }
-            }
-        } catch {
-            print(error)
-        }
-    }
-    
-    func setupScanningFrameUI() {
+    private func setupScanningFrameUI() {
         //MARK: - create the dark frame with image
         let upperDarkView = UIView()
         upperDarkView.backgroundColor = .black.withAlphaComponent(0.5)
-        let flashButton = UIButton()
-        flashButton.setImage(.flashLight, for: .normal)
+        flashButton.setImage(.flashLightOff, for: .normal)
+        flashButton.setImage(.flashLight, for: .selected)
         flashButton.size(CGSize(width: 50, height: 50))
+        flashButton.addTarget(self, action: #selector(toggleTorch), for: .touchUpInside)
         upperDarkView.addSubview(flashButton)
         flashButton.trailing(to: upperDarkView, offset: -36)
         flashButton.top(to: upperDarkView, offset: 100)
@@ -122,12 +104,22 @@ Scan it here
         upperDarkView.size(to: lowerDarkView)
         middelLeftDarkView.size(to: middelRightDarkView)
     }
-}
-
-//MARK: - preview layer delegate
-extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
     
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        print(metadataObjects)
+    //MARK: - toggle flash action
+    @objc
+    private func toggleTorch() {
+        guard let device = AVCaptureDevice.default(for: .video) else { return }
+        guard device.hasTorch else { print("Torch isn't available"); return }
+
+        do {
+            try device.lockForConfiguration()
+            device.torchMode = !flashIsON ? .on : .off
+            device.unlockForConfiguration()
+            flashIsON.toggle()
+            flashButton.isSelected.toggle()
+        } catch {
+            print("Torch can't be used")
+        }
     }
 }
+
