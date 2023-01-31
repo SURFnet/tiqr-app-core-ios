@@ -114,7 +114,7 @@ class HomeViewController: EduIDBaseViewController {
     
     @objc
     func personalInfoTapped() {
-        (coordinator?.parent as? MainCoordinator)?.showPersonalInfo()
+        (coordinator as? MainCoordinator)?.showPersonalInfo()
     }
     
     @objc

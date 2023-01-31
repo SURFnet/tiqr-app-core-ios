@@ -10,11 +10,20 @@ public final class EduIDExpansion: NSObject {
         super.init()
     }
     
-    public func run() -> UINavigationController {
-        let navigationController = UINavigationController()
-        mainCoordinator = MainCoordinator(navigationController: navigationController)
+    public func attachViewController() -> UIViewController {
+        let homeViewController = HomeViewController()
+        let logo = UIImageView(image: UIImage.eduIDLogo)
+        logo.width(92)
+        logo.height(36)
+        homeViewController.navigationItem.titleView = logo
+        let homeNavigationController = UINavigationController(rootViewController: homeViewController)
+        mainCoordinator = MainCoordinator(homeNavigationController: homeNavigationController)
+        homeViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: mainCoordinator, action: #selector(MainCoordinator.showScanScreen))
+        homeViewController.coordinator = mainCoordinator
+        return homeNavigationController
+    }
+    
+    public func run() {
         mainCoordinator.start()
-
-        return navigationController
     }
 }
