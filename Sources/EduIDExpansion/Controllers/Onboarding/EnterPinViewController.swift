@@ -1,16 +1,41 @@
 import UIKit
 import TinyConstraints
 
-class PinChallengeViewController: EduIDBaseViewController, PinTextFieldDelegate {
+class EnterPinViewController: EduIDBaseViewController {
+    
 
-    //MARK: - verify button
+    //MARK: viewmodel
+    let viewModel: EnterPinViewModel
+    //MARK: verify button
     let verifyButton = EduIDButton(type: .primary, buttonTitle: "Verify this pin code")
-    //MARK: - pinstackview
+    //MARK: pin stack view
     let pinStack = AnimatedHStackView()
     //MARK: activity indicator
     let activity = UIActivityIndicatorView(style: .large)
 
+    //MARK: - init
+    init(viewModel: EnterPinViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        
+        viewModel.focusPinField = { [weak self] tag in
+            (self?.pinStack.arrangedSubviews[tag + 1] as? PinTextFieldView)?.focus()
+        }
+        
+        viewModel.enableVerifyButton = { [weak self] isEnabled in
+            self?.verifyButton.isEnabled = isEnabled
+        }
+        
+        viewModel.resignKeyboardFocus = { [weak self] in
+            self?.resignKeyboardFocus()
+        }
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,6 +50,7 @@ class PinChallengeViewController: EduIDBaseViewController, PinTextFieldDelegate 
         super.viewWillAppear(animated)
         
         pinStack.animate()
+        (pinStack.arrangedSubviews.first as? PinTextFieldView)?.becomeFirstResponder()
     }
     func setupUI() {
         //MARK: - posterLabel
@@ -53,7 +79,7 @@ Enter the six-digit code we sent to your phone to continue
         (0..<6).forEach { integer in
             let pinField = PinTextFieldView()
             pinField.tag = integer
-            pinField.delegate = self
+            pinField.delegate = viewModel
             pinStack.addArrangedSubview(pinField)
         }
         
@@ -87,17 +113,7 @@ Enter the six-digit code we sent to your phone to continue
         pinStack.hideAndTriggerAll()
     }
     
-    //MARK: pin textfield delegate
-    func didEnterPinNumber(tag: Int) {
-        if tag == 5 {
-            resignKeyboardFocus()
-            verifyButton.isEnabled = true
-        } else {
-            (pinStack.arrangedSubviews[tag + 1] as? PinTextFieldView)?.focus()
-        }
-    }
-    
-    //MARK: - gesture method resign keyboard focus
+    //MARK: - gesture action resign keyboard focus
     @objc
     func resignKeyboardFocus() {
         pinStack.arrangedSubviews.forEach { pinview in

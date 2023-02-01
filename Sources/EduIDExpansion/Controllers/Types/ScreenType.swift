@@ -44,7 +44,7 @@ enum ScreenType: Int, CaseIterable {
         case .enterPhoneScreen:
             return EnterPhoneNumberViewController()
         case .pinChallengeScreen:
-            return PinChallengeViewController()
+            return EnterPinViewController(viewModel: EnterPinViewModel())
         case .welcomeScreen:
             return WelcomeViewController()
         case .addInstitutionScreen:
