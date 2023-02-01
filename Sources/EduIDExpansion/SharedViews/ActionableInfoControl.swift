@@ -5,6 +5,9 @@ class ActionableInfoControl: UIControl {
 
     init(attributedTitle: NSAttributedString? = nil, attributedBodyText: NSAttributedString, iconInTitle: UIImage? = nil, iconInBody: UIImage? = nil, isFilled: Bool) {
         super.init(frame: .zero)
+                
+        backgroundColor = .white
+        translatesAutoresizingMaskIntoConstraints = false
         
         //MARK: set height
         attributedTitle != nil ? height(105) : height(70)
@@ -21,6 +24,7 @@ class ActionableInfoControl: UIControl {
         view.layer.borderWidth = isFilled ? 3 : 1
         view.layer.borderColor = isFilled ? UIColor.backgroundColor.cgColor : UIColor.disabledGray.cgColor
         let bodyLabel = UILabel()
+        bodyLabel.numberOfLines = 0
         bodyLabel.attributedText = attributedBodyText
         let iconInBodyView = UIImageView(image: iconInBody)
         let colorAttribute = attributedBodyText.attributes(at: 0, effectiveRange: nil)[.foregroundColor]
@@ -39,6 +43,7 @@ class ActionableInfoControl: UIControl {
         
         //MARK: - super stack
         let stack = UIStackView(arrangedSubviews: [titleLabel, view])
+        stack.isUserInteractionEnabled = false
         stack.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.isHidden = attributedTitle == nil
         stack.axis = .vertical

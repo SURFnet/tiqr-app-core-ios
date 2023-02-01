@@ -38,7 +38,7 @@ enum ScreenType: Int, CaseIterable {
         case .explanationScreen:
             return ExplanationViewController()
         case .enterInfoScreen:
-            return EnterPersonalInfoViewController()
+            return EnterPersonalInfoViewController(viewModel: EnterPersonalInfoViewModel())
         case .checkMailScreen:
             return CheckEmailViewController()
         case .enterPhoneScreen:
