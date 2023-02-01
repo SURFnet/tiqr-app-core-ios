@@ -1,24 +1,38 @@
 import UIKit
 import TinyConstraints
 
-class EnterPersonalInfoViewController: EduIDBaseViewController, ValidatedTextFieldDelegate {
+class EnterPersonalInfoViewController: EduIDBaseViewController {
+    
+    private var viewModel: EnterPersonalInfoViewModel
     
     var stack: AnimatedVStackView!
     let requestButton = EduIDButton(type: .primary, buttonTitle: "Request you eduID")
+    let emailField = TextStackViewWithValidation(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
     
-    var validationMap: [Int: Bool] = [0:false, 1:false, 2: false] {
-        didSet {
-            var isTrue = true
-            validationMap.forEach({ (key: Int, value: Bool) in
-                if !value {
-                    isTrue = false
-                }
-            })
-            requestButton.isEnabled = isTrue
+    
+    //MARK: - init
+    init(viewModel: EnterPersonalInfoViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        
+        viewModel.becomeFirstResponderClosure = { [weak self] tag in
+            guard tag != 2 else {
+                self?.resignKeyboardResponder()
+                return
+            }
+            _ = (self?.stack.arrangedSubviews[tag + 2] as? TextStackViewWithValidation)?.becomeFirstResponder()
+        }
+        
+        viewModel.setRequestButtonEnabled = { [weak self] isEnabled in
+            self?.requestButton.isEnabled = isEnabled
         }
     }
     
-    //MARK: lifecycle
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +43,7 @@ class EnterPersonalInfoViewController: EduIDBaseViewController, ValidatedTextFie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         stack.animate(onlyThese: [1, 2, 3, 4, 6])
+        _ = emailField.becomeFirstResponder()
     }
     
     private func setupUI() {
@@ -37,19 +52,18 @@ class EnterPersonalInfoViewController: EduIDBaseViewController, ValidatedTextFie
         let posterLabel = UILabel.posterTextLabel(text: "Request your eduID", size: 24)
         
         //MARK: - email
-        let emailField = TextStackViewWithValidation(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
         emailField.tag = 0
-        emailField.delegate = self
+        emailField.delegate = viewModel
         
         //MARK: - firstname
         let firstNameField = TextStackViewWithValidation(title: "First name", placeholder: "e.g. Tim", keyboardType: .default)
         firstNameField.tag = 1
-        firstNameField.delegate = self
+        firstNameField.delegate = viewModel
         
         //MARK: - lastName
         let lastNameField = TextStackViewWithValidation(title: "Last name", placeholder: "e.g. Berners-Lee", keyboardType: .default)
         lastNameField.tag = 2
-        lastNameField.delegate = self
+        lastNameField.delegate = viewModel
         
         //MARK: - check terms
         let termsHstack = UIStackView()
@@ -98,19 +112,6 @@ class EnterPersonalInfoViewController: EduIDBaseViewController, ValidatedTextFie
         lastNameField.width(to: stack)
         
         stack.hideAndTriggerAll(onlyThese: [1, 2, 3, 4, 6])
-    }
-    
-    //MARK: - textfield delegate
-    func updateValidation(with value: Bool, from tag: Int) {
-        validationMap[tag] = value
-    }
-    
-    func keyBoardDidReturn(tag: Int) {
-        guard tag != 2 else {
-            resignKeyboardResponder()
-            return
-        }
-        _ = (stack.arrangedSubviews[tag + 2] as? TextStackViewWithValidation)?.becomeFirstResponder()
     }
     
     @objc

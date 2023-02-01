@@ -40,8 +40,6 @@ class ScanViewController: EduIDBaseViewController {
         
         previewLayer.session = viewModel.session
         viewModel.setupCaptureSession()
-        
-        
     }
     
     override func viewWillLayoutSubviews() {

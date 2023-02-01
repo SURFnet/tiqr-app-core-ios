@@ -62,7 +62,7 @@ class MainCoordinator: CoordinatorType {
         homeNavigationController.present(scanNavigationController, animated: true)
     }
     
-    //MARK: - back action
+    //MARK: - dismiss scan
     @objc
     func dismissScanScreen() {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
