@@ -4,10 +4,12 @@ import TinyConstraints
 class EnterPersonalInfoViewController: EduIDBaseViewController {
     
     private var viewModel: EnterPersonalInfoViewModel
+    private var keyboardHeight: CGFloat?
     
     var stack: AnimatedVStackView!
     let requestButton = EduIDButton(type: .primary, buttonTitle: "Request you eduID")
     let emailField = TextStackViewWithValidation(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
+    let scrollView = UIScrollView()
     
     
     //MARK: - init
@@ -20,12 +22,18 @@ class EnterPersonalInfoViewController: EduIDBaseViewController {
                 self?.resignKeyboardResponder()
                 return
             }
+            //tag + 2 because the stackview's first subview is the poster label and we need the subview after the current, hence + 2
             _ = (self?.stack.arrangedSubviews[tag + 2] as? TextStackViewWithValidation)?.becomeFirstResponder()
+            self?.scrollViewToTextField(index: tag + 2)
         }
         
         viewModel.setRequestButtonEnabled = { [weak self] isEnabled in
             self?.requestButton.isEnabled = isEnabled
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: UIResponder.keyboardDidHideNotification, object: nil)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -47,6 +55,11 @@ class EnterPersonalInfoViewController: EduIDBaseViewController {
     }
     
     private func setupUI() {
+        //MARK: add scrollview to hierarchy
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        scrollView.edges(to: view)
+        
         
         //MARK: - poster text
         let posterLabel = UILabel.posterTextLabel(text: "Request your eduID", size: 24)
@@ -84,7 +97,6 @@ class EnterPersonalInfoViewController: EduIDBaseViewController {
         
         //MARK: - spacing
         let spacingView = UIView()
-        spacingView.height(300, priority: .defaultLow)
         
         //MARK: - requestButton
         requestButton.isEnabled = false
@@ -93,17 +105,19 @@ class EnterPersonalInfoViewController: EduIDBaseViewController {
         //MARK: - create the stackview
         stack = AnimatedVStackView(arrangedSubviews: [posterLabel, emailField, firstNameField, lastNameField, termsHstack, spacingView, requestButton])
         stack.spacing = 32
-        stack.setCustomSpacing(0, after: emailField)
-        stack.setCustomSpacing(0, after: firstNameField)
+        stack.setCustomSpacing(24, after: emailField)
+        stack.setCustomSpacing(24, after: firstNameField)
+        stack.setCustomSpacing(4, after: lastNameField)
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
         stack.alignment = .top
         
-        view.addSubview(stack)
+        scrollView.addSubview(stack)
         
         //MARK: - add constraints
-        stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
+        stack.edges(to: scrollView, insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: -24))
+        stack.width(to: scrollView, offset: -48)
         
         posterLabel.height(34)
         requestButton.width(to: stack, offset: -24)
@@ -112,6 +126,48 @@ class EnterPersonalInfoViewController: EduIDBaseViewController {
         lastNameField.width(to: stack)
         
         stack.hideAndTriggerAll(onlyThese: [1, 2, 3, 4, 6])
+    }
+    
+    //MARK: - keyboard related
+    
+    @objc
+    func keyboardDidShow(notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        keyboardHeight = keyboardFrame.size.height
+        for (i, arrangedSubview) in stack.arrangedSubviews.enumerated() {
+            if let textView = arrangedSubview as? TextStackViewWithValidation {
+                if textView.textField.isFirstResponder {
+                    scrollViewToTextField(index: i)
+                }
+            }
+        }
+    }
+    
+    @objc
+    func keyboardDidHide() {
+        resetScrollviewInsets()
+    }
+    
+    func resetScrollviewInsets() {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.scrollView.contentInset.bottom = 0
+            self?.scrollView.contentOffset.y = -(self?.view.safeAreaInsets.top ?? 0)
+        }
+    }
+    
+    func scrollViewToTextField(index: Int) {
+        let stackHeight = stack.frame.size.height
+        let textFieldLowpoint = ((stack.arrangedSubviews[index] as? TextStackViewWithValidation)?.frame.origin.y ?? 0) + ((stack.arrangedSubviews[index] as? TextStackViewWithValidation)?.frame.size.height ?? 0)
+        let distanceFromBottomToTextField = stackHeight - textFieldLowpoint
+        
+        if distanceFromBottomToTextField < keyboardHeight ?? 0 {
+            scrollView.contentInset.bottom = (keyboardHeight ?? 0) - distanceFromBottomToTextField
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.scrollView.contentOffset.y = (self?.keyboardHeight ?? 0) - distanceFromBottomToTextField
+            }
+        }
     }
     
     @objc

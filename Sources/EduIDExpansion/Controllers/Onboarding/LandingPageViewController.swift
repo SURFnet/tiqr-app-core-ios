@@ -34,12 +34,11 @@ class LandingPageViewController: EduIDBaseViewController {
         //MARK: add image
         let imageView = UIImageView(image: .landingPageImage)
         imageView.contentMode = .scaleAspectFit
-        imageView.height(252)
+        imageView.height(252, priority: .defaultLow)
         imageView.width(141)
         
         //MARK: - space
         let spaceView = UIView()
-        spaceView.height(999, priority: .defaultLow)
         
         //MARK: buttons
         let signinButton = EduIDButton(type: .primary, buttonTitle: "Sign in")
