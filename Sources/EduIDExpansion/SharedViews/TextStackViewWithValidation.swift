@@ -5,7 +5,7 @@ class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
     
     private let validLabel = UILabel()
     private let extraBorderView = UIView()
-    private let textField = UITextField()
+    let textField = UITextField()
     weak var delegate: ValidatedTextFieldDelegate?
     
     //MARK: init
@@ -18,6 +18,7 @@ class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
         
         //MARK: - title
         let label = UILabel()
+        label.height(16)
         label.font = .sourceSansProSemiBold(size: 16)
         label.textColor = .charcoalColor
         label.text = title
@@ -57,12 +58,11 @@ class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
         
         //MARK: - validationMessage
         validLabel.font = .sourceSansProSemiBold(size: 12)
+        validLabel.height(12)
         validLabel.textColor = .red
         validLabel.text = "The input doesn't follow regex"
         validLabel.alpha = 0
         addArrangedSubview(validLabel)
-        
-        height(104)
     }
     
     required init(coder: NSCoder) {

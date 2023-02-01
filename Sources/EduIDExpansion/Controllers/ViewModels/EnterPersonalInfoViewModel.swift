@@ -2,6 +2,7 @@ import UIKit
 
 class EnterPersonalInfoViewModel: NSObject {
     
+    //MARK: - closures that interact with the view controller
     var setRequestButtonEnabled: ((Bool) -> Void)?
     var becomeFirstResponderClosure: ((Int) -> Void)?
     
@@ -16,7 +17,6 @@ class EnterPersonalInfoViewModel: NSObject {
             setRequestButtonEnabled?(isTrue)
         }
     }
-    
 }
 
 //MARK: - textfield delegate
