@@ -23,6 +23,7 @@ class EnterPhoneNumberViewController: EduIDBaseViewController, ValidatedTextFiel
         super.viewWillAppear(animated)
         
         stack.animate(onlyThese: [2])
+        _ = validatedPhoneTextField.becomeFirstResponder()
     }
     
     func setupUI() {

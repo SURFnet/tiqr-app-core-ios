@@ -73,9 +73,13 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
         textfield.becomeFirstResponder()
     }
     
-    //MARK: - resign keyboard responder
+    //MARK: - keyboard responder
     override func resignFirstResponder() -> Bool {
         textfield.resignFirstResponder()
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        textfield.becomeFirstResponder()
     }
     
     //MARK: - tapped
