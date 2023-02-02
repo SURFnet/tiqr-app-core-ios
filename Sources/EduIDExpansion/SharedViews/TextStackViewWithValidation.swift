@@ -72,6 +72,7 @@ class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
     //MARK: - texfield delegate methods
     func textFieldDidBeginEditing(_ textField: UITextField) {
         extraBorderView.layer.borderColor = UIColor.textfieldFocusColor.cgColor
+        delegate?.didBecomeFirstResponder(tag: tag)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -113,4 +114,5 @@ protocol ValidatedTextFieldDelegate: AnyObject {
     
     func updateValidation(with value: Bool, from tag: Int)
     func keyBoardDidReturn(tag: Int)
+    func didBecomeFirstResponder(tag: Int)
 }

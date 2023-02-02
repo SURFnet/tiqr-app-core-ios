@@ -4,9 +4,10 @@ class EnterPersonalInfoViewModel: NSObject {
     
     //MARK: - closures that interact with the view controller
     var setRequestButtonEnabled: ((Bool) -> Void)?
-    var becomeFirstResponderClosure: ((Int) -> Void)?
+    var makeNextTextFieldFirstResponderClosure: ((Int) -> Void)?
+    var textFieldBecameFirstResponderClosure: ((Int) -> Void)?
     
-    var validationMap: [Int: Bool] = [0:false, 1:false, 2: false] {
+    var validationMap: [Int: Bool] = [1:false, 2:false, 3: false] {
         didSet {
             var isTrue = true
             validationMap.forEach({ (key: Int, value: Bool) in
@@ -27,6 +28,10 @@ extension EnterPersonalInfoViewModel: ValidatedTextFieldDelegate {
     }
     
     func keyBoardDidReturn(tag: Int) {
-        becomeFirstResponderClosure?(tag)
+        makeNextTextFieldFirstResponderClosure?(tag)
+    }
+    
+    func didBecomeFirstResponder(tag: Int) {
+        textFieldBecameFirstResponderClosure?(tag)
     }
 }
