@@ -17,9 +17,7 @@ class EnterPinViewModel: NSObject {
             enableVerifyButton?(areAllEntriesEntered)
         }
     }
-    
 }
-
 
 //MARK: - pin textfield delegate
 extension EnterPinViewModel: PinTextFieldDelegate {

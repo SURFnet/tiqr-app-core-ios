@@ -27,6 +27,8 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithS
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
+        var loadedTime = Date()
+        
         viewModel.makeNextTextFieldFirstResponderClosure = { [weak self] tag in
             guard tag != EnterPersonalInfoViewController.emailFieldTag else {
                 self?.resignKeyboardResponder()
@@ -42,6 +44,7 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithS
         }
         
         viewModel.textFieldBecameFirstResponderClosure = { [weak self] tag in
+            guard Date().timeIntervalSince(loadedTime) > 2 else { return }
             self?.scrollViewToTextField(index: tag)
         }
         
@@ -69,7 +72,6 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         stack.animate(onlyThese: [1, 2, 3, 4, 6])
-        _ = emailField.becomeFirstResponder()
         
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
@@ -81,6 +83,8 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithS
         if scrollView.frame.size.height > scrollView.contentSize.height + EnterPersonalInfoViewController.smallBuffer {
             spacingView.height(scrollView.frame.size.height - scrollView.contentSize.height - inset - view.safeAreaInsets.top)
         }
+        
+        _ = emailField.becomeFirstResponder()
     }
     
     private func setupUI() {

@@ -161,8 +161,3 @@ Scan it here
         delegate?.dismiss()
     }
 }
-
-protocol ScanNavigationDelegate: AnyObject {
-    
-    func dismiss()
-}
