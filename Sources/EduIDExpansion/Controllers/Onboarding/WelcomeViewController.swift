@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class WelcomeViewController: EduIDBaseViewController , ScreenWithScreenType {
+class WelcomeViewController: OnBoardingBaseViewController , ScreenWithScreenType {
     
     //MARK: - screen type
     var screenType: ScreenType = .welcomeScreen
@@ -27,7 +27,7 @@ class WelcomeViewController: EduIDBaseViewController , ScreenWithScreenType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
     
     //MARK: setup UI

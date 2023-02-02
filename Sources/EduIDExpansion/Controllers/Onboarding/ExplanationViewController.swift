@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class ExplanationViewController: EduIDBaseViewController, ScreenWithScreenType {
+class ExplanationViewController: OnBoardingBaseViewController, ScreenWithScreenType {
     
     //MARK: - scren type
     var screenType: ScreenType = .explanationScreen
@@ -19,7 +19,7 @@ class ExplanationViewController: EduIDBaseViewController, ScreenWithScreenType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
     
     //MARK: - setup UI

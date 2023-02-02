@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class EnterPersonalInfoViewController: EduIDBaseViewController, ScreenWithScreenType {
+class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithScreenType {
     
     private var viewModel: EnterPersonalInfoViewModel
     private var keyboardHeight: CGFloat?
@@ -71,7 +71,7 @@ class EnterPersonalInfoViewController: EduIDBaseViewController, ScreenWithScreen
         stack.animate(onlyThese: [1, 2, 3, 4, 6])
         _ = emailField.becomeFirstResponder()
         
-        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
     
     override func viewDidAppear(_ animated: Bool) {

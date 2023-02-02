@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class CheckEmailViewController: EduIDBaseViewController, ScreenWithScreenType {
+class CheckEmailViewController: OnBoardingBaseViewController, ScreenWithScreenType {
     
     //MARK: - screen type
     var screenType: ScreenType = .addInstitutionScreen
@@ -20,7 +20,7 @@ class CheckEmailViewController: EduIDBaseViewController, ScreenWithScreenType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
     
     func setupUI() {

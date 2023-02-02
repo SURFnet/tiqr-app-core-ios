@@ -8,7 +8,7 @@
 import UIKit
 import TinyConstraints
 
-class EditPersonalInfoViewController: EduIDBaseViewController {
+class EditPersonalInfoViewController: OnBoardingBaseViewController {
     
     private let scrollView = UIScrollView()
     
@@ -87,9 +87,9 @@ When you use eduID to login to other websites, some of your personal information
         fourthControl.width(to: stack)
         
         //MARK: - actions
-        firstControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
-        secondControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
-        thirdControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
-        fourthControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
+//        firstControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
+//        secondControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
+//        thirdControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
+//        fourthControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
     }
 }

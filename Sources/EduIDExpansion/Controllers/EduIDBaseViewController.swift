@@ -1,9 +1,8 @@
 import UIKit
 
-class EduIDBaseViewController: UIViewController {
+class OnBoardingBaseViewController: UIViewController {
     
-    weak var coordinator: CoordinatorType?
-
+    weak var delegate: OnBoardingNavigationDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -13,13 +12,18 @@ class EduIDBaseViewController: UIViewController {
     }
     
     @objc
-    private func backTapped() {
-        (coordinator as? OnboardingCoordinator)?.goBack()
+    func goBack() {
+        delegate?.goBack()
     }
     
     @objc
     func showNextScreen() {
-        (coordinator as? OnboardingCoordinator)?.showNextScreen()
+        delegate?.showNextScreen()
+    }
+    
+    @objc
+    func showScanScreen() {
+        delegate?.showScanScreen()
     }
 
 }

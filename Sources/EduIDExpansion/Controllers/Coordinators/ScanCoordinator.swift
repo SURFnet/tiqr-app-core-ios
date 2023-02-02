@@ -1,7 +1,7 @@
 import UIKit
 
-class ScanCoordinator: CoordinatorType {
-   
+class ScanCoordinator: CoordinatorType, ScanNavigationDelegate{
+
     var children: [CoordinatorType] = []
     var parent: CoordinatorType?
     
@@ -9,17 +9,16 @@ class ScanCoordinator: CoordinatorType {
     
     func start(presentedOn viewController: UIViewController) {
         let scanViewcontroller = ScanViewController(viewModel: ScanViewModel())
-        scanViewcontroller.coordinator = self
+        scanViewcontroller.delegate = self
         let navigationController = UINavigationController()
         self.navigationController = navigationController
-        navigationController.setNavigationBarHidden(false, animated: true)
+        navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.pushViewController(scanViewcontroller, animated: false)
         
-        viewController.present(navigationController, animated: false)
+        viewController.present(navigationController, animated: true)
     }
     
-    @objc
-    func dismissScanScreen() {
-        navigationController?.dismiss(animated: false)
+    func dismiss() {
+        navigationController?.dismiss(animated: true)
     }
 }

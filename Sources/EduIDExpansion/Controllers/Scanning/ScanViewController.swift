@@ -2,7 +2,10 @@ import UIKit
 import TinyConstraints
 import AVFoundation
 
-class ScanViewController: EduIDBaseViewController, ScreenWithScreenType {
+class ScanViewController: UIViewController, ScreenWithScreenType {
+    
+    //MARK: delegate
+    weak var delegate: ScanNavigationDelegate?
     
     //MARK: - screen type
     var screenType: ScreenType = .scanScreen
@@ -10,6 +13,8 @@ class ScanViewController: EduIDBaseViewController, ScreenWithScreenType {
     init(viewModel: ScanViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
+        view.backgroundColor = .black
     }
     
     required init?(coder: NSCoder) {
@@ -48,7 +53,7 @@ class ScanViewController: EduIDBaseViewController, ScreenWithScreenType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(ScanCoordinator.dismissScanScreen))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(dismissScanScreen))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -150,5 +155,14 @@ Scan it here
             print("Torch can't be used")
         }
     }
+    
+    @objc
+    func dismissScanScreen() {
+        delegate?.dismiss()
+    }
 }
 
+protocol ScanNavigationDelegate: AnyObject {
+    
+    func dismiss()
+}

@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class LandingPageViewController: EduIDBaseViewController, ScreenWithScreenType {
+class LandingPageViewController: OnBoardingBaseViewController, ScreenWithScreenType {
     
     private var stack: AnimatedVStackView!
     var screenType: ScreenType = .landingScreen
@@ -16,7 +16,7 @@ class LandingPageViewController: EduIDBaseViewController, ScreenWithScreenType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.showScanScreen))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen))
         stack?.animate(onlyThese: [3, 4, 5])
         
     }
@@ -48,7 +48,7 @@ class LandingPageViewController: EduIDBaseViewController, ScreenWithScreenType {
         signinButton.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
         let noEduIDYetButton = EduIDButton(type: .naked, buttonTitle: "I don't have an eduId")
         
-        //the action for this button is on EduIDBaseViewController superclass
+        //the action for this button is on OnBoardingBaseViewController superclass
         noEduIDYetButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
         
         //MARK: - create the stackview
