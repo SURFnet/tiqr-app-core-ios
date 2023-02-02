@@ -26,19 +26,11 @@ class MainCoordinator: CoordinatorType {
     }
     
     func showPersonalInfo() {
-        let editPersonalInfoViewcontroller = EditPersonalInfoViewController()
-        editPersonalInfoViewcontroller.screenType = .personalInfoScreen
-        editPersonalInfoViewcontroller.modalTransitionStyle = .flipHorizontal
-        
-        let personalInfoNavigationController = UINavigationController(rootViewController: editPersonalInfoViewcontroller)
-        personalInfoNavigationController.modalTransitionStyle = .flipHorizontal
-        personalInfoNavigationController.isModalInPresentation = true
-        
+        let personalInfoNavigationController = UINavigationController()
         let personalInfoCoordinator = PersonalInfoCoordinator(navigationController: personalInfoNavigationController)
-        editPersonalInfoViewcontroller.coordinator = personalInfoCoordinator
+        personalInfoCoordinator.parent = self
+        
         children.append(personalInfoCoordinator)
-         
-        homeNavigationController.present(personalInfoNavigationController, animated: true)
         personalInfoCoordinator.start()
     }
     

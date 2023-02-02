@@ -1,7 +1,10 @@
 import UIKit
 import TinyConstraints
 
-class EnterPhoneNumberViewController: EduIDBaseViewController, ValidatedTextFieldDelegate {
+class EnterPhoneNumberViewController: EduIDBaseViewController, ValidatedTextFieldDelegate, ScreenWithScreenType {
+    
+    //MARK: - screen type
+    var screenType: ScreenType = .addInstitutionScreen
     
     var stack: AnimatedVStackView!
     
@@ -24,6 +27,8 @@ class EnterPhoneNumberViewController: EduIDBaseViewController, ValidatedTextFiel
         
         stack.animate(onlyThese: [2])
         _ = validatedPhoneTextField.becomeFirstResponder()
+        
+        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
     }
     
     func setupUI() {

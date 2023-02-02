@@ -1,8 +1,10 @@
 import UIKit
 import TinyConstraints
 
-class EnterPinViewController: EduIDBaseViewController {
+class EnterPinViewController: EduIDBaseViewController, ScreenWithScreenType {
     
+    //MARK: - screen type
+    var screenType: ScreenType = .addInstitutionScreen
 
     //MARK: viewmodel
     let viewModel: EnterPinViewModel
@@ -51,6 +53,8 @@ class EnterPinViewController: EduIDBaseViewController {
         
         pinStack.animate()
         (pinStack.arrangedSubviews.first as? PinTextFieldView)?.becomeFirstResponder()
+        
+        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
     }
     func setupUI() {
         //MARK: - posterLabel

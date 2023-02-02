@@ -1,8 +1,12 @@
 import UIKit
 import TinyConstraints
 
-class CheckEmailViewController: EduIDBaseViewController {
+class CheckEmailViewController: EduIDBaseViewController, ScreenWithScreenType {
     
+    //MARK: - screen type
+    var screenType: ScreenType = .addInstitutionScreen
+    
+    //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -11,6 +15,12 @@ class CheckEmailViewController: EduIDBaseViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
             self?.showNextScreen()
         })
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
     }
     
     func setupUI() {

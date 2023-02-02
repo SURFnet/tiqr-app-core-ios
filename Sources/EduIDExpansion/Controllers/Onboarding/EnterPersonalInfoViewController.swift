@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class EnterPersonalInfoViewController: EduIDBaseViewController {
+class EnterPersonalInfoViewController: EduIDBaseViewController, ScreenWithScreenType {
     
     private var viewModel: EnterPersonalInfoViewModel
     private var keyboardHeight: CGFloat?
@@ -12,6 +12,9 @@ class EnterPersonalInfoViewController: EduIDBaseViewController {
     let requestButton = EduIDButton(type: .primary, buttonTitle: "Request you eduID")
     let emailField = TextStackViewWithValidation(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
     let scrollView = UIScrollView()
+    
+    //MARK: - screen type
+    var screenType: ScreenType = .enterInfoScreen
     
     //MARK: - spacing
     let spacingView = UIView()
@@ -65,6 +68,8 @@ class EnterPersonalInfoViewController: EduIDBaseViewController {
         super.viewWillAppear(animated)
         stack.animate(onlyThese: [1, 2, 3, 4, 6])
         _ = emailField.becomeFirstResponder()
+        
+        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
     }
     
     override func viewDidAppear(_ animated: Bool) {

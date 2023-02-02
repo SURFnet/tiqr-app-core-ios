@@ -2,7 +2,6 @@ import UIKit
 
 class EduIDBaseViewController: UIViewController {
     
-    var screenType: ScreenType = .none
     weak var coordinator: CoordinatorType?
 
     override func viewDidLoad() {
@@ -20,7 +19,11 @@ class EduIDBaseViewController: UIViewController {
     
     @objc
     func showNextScreen() {
-        (coordinator as? OnboardingCoordinator)?.showNextScreen(currentScreen: screenType)
+        (coordinator as? OnboardingCoordinator)?.showNextScreen()
     }
 
+}
+
+protocol ScreenWithScreenType {
+    var screenType: ScreenType { get set }
 }

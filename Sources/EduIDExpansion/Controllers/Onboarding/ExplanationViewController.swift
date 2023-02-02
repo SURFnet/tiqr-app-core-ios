@@ -1,7 +1,10 @@
 import UIKit
 import TinyConstraints
 
-class ExplanationViewController: EduIDBaseViewController {
+class ExplanationViewController: EduIDBaseViewController, ScreenWithScreenType {
+    
+    //MARK: - scren type
+    var screenType: ScreenType = .explanationScreen
     
     private var stack: AnimatedVStackView!
     
@@ -11,6 +14,12 @@ class ExplanationViewController: EduIDBaseViewController {
         super.viewDidLoad()
         
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
     }
     
     //MARK: - setup UI

@@ -14,10 +14,14 @@ class PersonalInfoCoordinator: CoordinatorType {
     
     func start() {
         navigationController.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(dismissPersonalInfoFlow))
-        let logo = UIImageView(image: UIImage.eduIDLogo)
-        logo.width(92)
-        logo.height(36)
-        navigationController.navigationBar.topItem?.titleView = logo
+                
+        let editPersonalInfoViewcontroller = EditPersonalInfoViewController()
+        
+        navigationController.modalTransitionStyle = .flipHorizontal
+        navigationController.isModalInPresentation = true
+        navigationController.pushViewController(editPersonalInfoViewcontroller, animated: false)
+        
+        (parent as? MainCoordinator)?.homeNavigationController.present(navigationController, animated: true)
     }
     
     @objc
