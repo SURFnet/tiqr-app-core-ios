@@ -1,5 +1,6 @@
 import UIKit
 import TinyConstraints
+import Combine
 
 class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
     
@@ -8,6 +9,9 @@ class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
     let textField = UITextField()
     weak var delegate: ValidatedTextFieldDelegate?
     
+    //MARK: - cancellables
+    var cancellables = Set<AnyCancellable>()
+
     //MARK: init
     init(regex: String? = nil, title: String, placeholder: String, keyboardType: UIKeyboardType) {
         super.init(frame: .zero)
@@ -35,6 +39,20 @@ class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
         textField.autocorrectionType = .no
         textField.enablesReturnKeyAutomatically = true
         textField.returnKeyType = .continue
+        
+        let textFieldPublisher = NotificationCenter.default
+            .publisher(for: UITextField.textDidChangeNotification, object: textField)
+            .map( {
+                ($0.object as? UITextField)?.text
+            })
+        
+        textFieldPublisher
+            .receive(on: RunLoop.main)
+            .debounce(for: 1, scheduler: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] value in
+                self?.validateText()
+            })
+            .store(in: &cancellables)
 
         //MARK: - textfield border
         extraBorderView.layer.borderWidth = 2
@@ -79,7 +97,7 @@ class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
         extraBorderView.layer.borderColor = UIColor.clear.cgColor
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func validateText() {
         if textField.text?.count ?? 0 < 3 || textField.text?.count ?? 0 > 20 {
             validLabel.alpha = 1
             delegate?.updateValidation(with: false, from: tag)
@@ -87,12 +105,16 @@ class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
             validLabel.alpha = 0
             delegate?.updateValidation(with: true, from: tag)
         }
-        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         delegate?.keyBoardDidReturn(tag: tag)
         return true
+    }
+    
+    //MARK: - deinit
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - keyboard responder
