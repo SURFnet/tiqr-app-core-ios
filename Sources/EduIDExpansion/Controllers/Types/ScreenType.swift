@@ -81,7 +81,13 @@ enum ScreenType: Int, CaseIterable {
     func configureNavigationItem(item: UINavigationItem, target: Any? = nil, action: Selector? = nil) {
         switch self {
         case .scanScreen:
-            break
+            let logo = UIImageView(image: UIImage.eduIDLogo)
+            logo.width(92)
+            logo.height(36)
+            item.titleView = logo
+            item.hidesBackButton = true
+            item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: target, action: action)
+            item.rightBarButtonItem?.tintColor = .white
         case .landingScreen:
             item.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: target, action: action)
         case .explanationScreen, .enterInfoScreen, .checkMailScreen, .enterPhoneScreen, .pinChallengeScreen, .welcomeScreen, .firstTimeDialogScreen, .addInstitutionScreen:
@@ -90,8 +96,8 @@ enum ScreenType: Int, CaseIterable {
             logo.height(36)
             item.titleView = logo
             item.hidesBackButton = true
-            item.leftBarButtonItem?.tintColor = .backgroundColor
             item.leftBarButtonItem = UIBarButtonItem(image: UIImage.arrowBack, style: .plain, target: target, action: action)
+            item.leftBarButtonItem?.tintColor = .backgroundColor
         default:
             break
         }

@@ -98,7 +98,6 @@ We will text you a code to verify your number.
     }
     
     func didBecomeFirstResponder(tag: Int) {
-        return
     }
     
     @objc
