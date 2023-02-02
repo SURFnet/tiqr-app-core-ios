@@ -42,15 +42,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *appLogo;
 @property (weak, nonatomic) IBOutlet UIButton *surfLogo;
 
-@property (nonatomic, assign) enum VersionInfo versionInfo;
-
 @end
-
-enum VersionInfo {
-    AppFriendly,
-    AppDetailed,
-    CoreDetailed
-};
 
 @implementation AboutViewController
 
@@ -58,7 +50,6 @@ enum VersionInfo {
     self = [super initWithNibName:@"AboutView" bundle:SWIFTPM_MODULE_BUNDLE];
     if (self != nil) {
         self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        self.versionInfo = AppFriendly;
     }
 
     return self;
@@ -78,11 +69,6 @@ enum VersionInfo {
     self.okButton.layer.cornerRadius = 5;
 
     [self updateVersion];
-    
-    // Tap to reveal more technical versions
-    UITapGestureRecognizer *revealTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNextVersion:)];
-    [self.versionLabel addGestureRecognizer: revealTapRecognizer];
-    self.versionLabel.userInteractionEnabled = YES;
     
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -121,32 +107,7 @@ enum VersionInfo {
 }
 
 - (void)updateVersion {
-    switch (self.versionInfo) {
-        case AppFriendly:
-            self.versionLabel.text = [NSString stringWithFormat:[Localization localize:@"app_version" comment:@"App version: %@"], TiqrConfig.appAndBuildVersion];
-            break;
-        case AppDetailed:
-            self.versionLabel.text = [NSString stringWithFormat:[Localization localize:@"app_version" comment:@"App version: %@"], TiqrConfig.gitReleaseVersion];
-            break;
-        case CoreDetailed:
-            self.versionLabel.text = [NSString stringWithFormat:[Localization localize:@"library_version" comment:@"Library version: %@"], TiqrConfig.coreLibraryVersion];
-            break;
-    }
-}
-
-- (IBAction)showNextVersion:(id)sender {
-    switch (self.versionInfo) {
-        case AppFriendly:
-            self.versionInfo = AppDetailed;
-            break;
-        case AppDetailed:
-            self.versionInfo = CoreDetailed;
-            break;
-        case CoreDetailed:
-            self.versionInfo = AppFriendly;
-            break;
-    }
-    [self updateVersion];
+    self.versionLabel.text = [NSString stringWithFormat: @"%@ %@ %@ - core %@", TiqrConfig.appName, TiqrConfig.appAndBuildVersion, TiqrConfig.shortGitReleaseVersion, TiqrConfig.shortCoreLibraryVersion];
 }
 
 - (void)viewSafeAreaInsetsDidChange {
