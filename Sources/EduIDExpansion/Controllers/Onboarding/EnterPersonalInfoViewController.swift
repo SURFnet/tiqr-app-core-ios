@@ -165,9 +165,9 @@ class EnterPersonalInfoViewController: EduIDBaseViewController {
         if distanceFromBottomToTextField < keyboardHeight ?? 0 {
             scrollView.contentInset.bottom = (keyboardHeight ?? 0) - distanceFromBottomToTextField
             UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.scrollView.contentOffset.y = (self?.keyboardHeight ?? 0) - distanceFromBottomToTextField
+                self?.scrollView.contentOffset.y = -(self?.view.safeAreaInsets.top ?? 0) + (self?.keyboardHeight ?? 0) - distanceFromBottomToTextField
             }
-        }
+        } 
     }
     
     @objc
