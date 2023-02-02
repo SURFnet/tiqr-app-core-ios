@@ -4,7 +4,10 @@ import TinyConstraints
 class AddInstitutionViewController: EduIDBaseViewController {
 
     //MARK: - verify button
-    let continueButton = EduIDButton(type: .primary, buttonTitle: "Verify this phone number")
+    let continueButton = EduIDButton(type: .primary, buttonTitle: "Continue")
+    
+    //MARK: scroll view
+    let scrollView = UIScrollView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,6 +18,10 @@ class AddInstitutionViewController: EduIDBaseViewController {
     }
     
     func setupUI() {
+        
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        scrollView.edges(to: view)
         
         //MARK: - posterLabel
         let posterLabel = UILabel.posterTextLabelBicolor(text: "Your school/uni\nwas contacted successfully", size: 24, primary: "Your school/uni")
@@ -47,10 +54,11 @@ The following information has been added to your eduID and can now be shared.
         stack.distribution = .fill
         stack.alignment = .center
         stack.spacing = 20
-        view.addSubview(stack)
+        scrollView.addSubview(stack)
         
         //MARK: - add constraints
-        stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
+        stack.edges(to: scrollView, insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: -24))
+        stack.width(to: scrollView, offset: -48)
         textView.width(to: stack)
         posterLabel.width(to: stack)
         firstInstitution.width(to: stack)

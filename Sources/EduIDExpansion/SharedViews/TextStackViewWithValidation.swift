@@ -48,7 +48,7 @@ class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
         
         textFieldPublisher
             .receive(on: RunLoop.main)
-            .debounce(for: 1, scheduler: DispatchQueue.main)
+            .debounce(for: 1, scheduler: RunLoop.main)
             .sink(receiveValue: { [weak self] value in
                 self?.validateText()
             })
@@ -87,16 +87,7 @@ class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - texfield delegate methods
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        extraBorderView.layer.borderColor = UIColor.textfieldFocusColor.cgColor
-        delegate?.didBecomeFirstResponder(tag: tag)
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        extraBorderView.layer.borderColor = UIColor.clear.cgColor
-    }
-    
+    //MARK: - textfield validation
     func validateText() {
         if textField.text?.count ?? 0 < 3 || textField.text?.count ?? 0 > 20 {
             validLabel.alpha = 1
@@ -105,6 +96,16 @@ class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
             validLabel.alpha = 0
             delegate?.updateValidation(with: true, from: tag)
         }
+    }
+    
+    //MARK: - texfield delegate methods
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        extraBorderView.layer.borderColor = UIColor.textfieldFocusColor.cgColor
+        delegate?.didBecomeFirstResponder(tag: tag)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        extraBorderView.layer.borderColor = UIColor.clear.cgColor
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
