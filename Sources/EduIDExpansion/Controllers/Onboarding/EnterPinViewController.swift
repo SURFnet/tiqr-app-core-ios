@@ -52,10 +52,17 @@ class EnterPinViewController: OnBoardingBaseViewController, ScreenWithScreenType
         super.viewWillAppear(animated)
         
         pinStack.animate()
-        (pinStack.arrangedSubviews.first as? PinTextFieldView)?.becomeFirstResponder()
         
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        _ = (pinStack.arrangedSubviews.first as? PinTextFieldView)?.becomeFirstResponder()
+    }
+    
+    //MARK: - setup ui
     func setupUI() {
         //MARK: - posterLabel
         let posterLabel = UILabel.posterTextLabel(text: "Check your messages", size: 24)

@@ -21,9 +21,6 @@ final class OnboardingCoordinator: OnboardingCoordinatorType, OnBoardingNavigati
         self.navigationController = navigationController
         
         viewController.present(self.navigationController, animated: false)
-        
-        // show navigation bar buttons if needed
-//        showNavigationBarButtonsIfNeeded(screenType: .landingScreen)
     }
     
     //MARK: - start scan screen

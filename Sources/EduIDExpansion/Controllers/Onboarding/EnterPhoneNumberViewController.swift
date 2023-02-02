@@ -26,9 +26,14 @@ class EnterPhoneNumberViewController: OnBoardingBaseViewController, ValidatedTex
         super.viewWillAppear(animated)
         
         stack.animate(onlyThese: [2])
-        _ = validatedPhoneTextField.becomeFirstResponder()
         
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        _ = validatedPhoneTextField.becomeFirstResponder()
     }
     
     func setupUI() {
