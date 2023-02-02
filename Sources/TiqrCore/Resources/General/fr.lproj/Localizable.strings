@@ -22,9 +22,6 @@
 /* Allow button */
 "allow_button" = "Allow";
 
-/* App version: %@, Shown on the about screen */
-"app_version" = "App version: %@";
-
 /* Don\'t worry! Click the QR tag on the\nwebsite. You will be asked to enter the\nfollowing one-time credentials: */
 "authentication_fallback_description" = "Rien de grave! Cliquez le code QR sur le site web. Vous allez devoir entrer les informations de connexion suivantes:";
 
@@ -244,9 +241,6 @@
 
 /* No connection error message */
 "internet_connection_required" = "Vous devez être connecté à Internet pour activer votre compte. Veuillez re-essayer plus tard.";
-
-/* Library version: %@, Shown on the about screen */
-"library_version" = "Library version: %@";
 
 /* Login information message */
 "loggedin_with_account" = "Vous êtes connecté avec le compte suivant";
