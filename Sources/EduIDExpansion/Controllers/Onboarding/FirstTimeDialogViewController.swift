@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class FirstTimeDialogViewController: EduIDBaseViewController, ScreenWithScreenType {
+class FirstTimeDialogViewController: OnBoardingBaseViewController, ScreenWithScreenType {
 
     //MARK: - screen type
     var screenType: ScreenType = .firstTimeDialogScreen
@@ -23,7 +23,7 @@ class FirstTimeDialogViewController: EduIDBaseViewController, ScreenWithScreenTy
         super.viewWillAppear(animated)
         
         stack.animate(onlyThese: [4, 5])
-        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
     
     func setupUI() {

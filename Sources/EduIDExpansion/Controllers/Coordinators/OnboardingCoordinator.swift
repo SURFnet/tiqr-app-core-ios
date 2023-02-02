@@ -1,7 +1,6 @@
 import UIKit
 
-final class OnboardingCoordinator: OnboardingCoordinatorType {
-    
+final class OnboardingCoordinator: OnboardingCoordinatorType, OnBoardingNavigationDelegate {
     
     weak var parent: CoordinatorType?
     
@@ -13,8 +12,8 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
     func start(presentOn viewController: UIViewController) {
         
         let landingScreen = LandingPageViewController()
-        landingScreen.coordinator = self
         landingScreen.screenType = .landingScreen
+        landingScreen.delegate = self
         
         let navigationController = UINavigationController(rootViewController: landingScreen)
         navigationController.modalTransitionStyle = .flipHorizontal
@@ -28,7 +27,6 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
     }
     
     //MARK: - start scan screen
-    @objc
     func showScanScreen() {
         let scanCoordinator = ScanCoordinator()
         children.append(scanCoordinator)
@@ -44,7 +42,7 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
         }
         
         guard let nextViewController = ScreenType(rawValue: currentScreenType.rawValue + 1)?.viewController() else { return }
-        (nextViewController as? EduIDBaseViewController)?.coordinator = self
+        (nextViewController as? OnBoardingBaseViewController)?.delegate = self
         navigationController.pushViewController(nextViewController, animated: true)
         currentScreenType = ScreenType(rawValue: currentScreenType.rawValue + 1) ?? .none
     }

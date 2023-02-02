@@ -1,6 +1,6 @@
 import UIKit
 
-class MainCoordinator: CoordinatorType {    
+class MainCoordinator: CoordinatorType, HomeNavigationDelegate {
     
     weak var parent: CoordinatorType?
     
@@ -20,7 +20,7 @@ class MainCoordinator: CoordinatorType {
         onboardingCoordinator.start(presentOn: homeNavigationController)
     }
     
-    func showPersonalInfo() {
+    func showPersonalInfoScreen() {
         let personalInfoNavigationController = UINavigationController()
         let personalInfoCoordinator = PersonalInfoCoordinator(navigationController: personalInfoNavigationController)
         personalInfoCoordinator.parent = self
@@ -43,4 +43,8 @@ class MainCoordinator: CoordinatorType {
     func dismissScanScreen() {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
     }
+    
+    func showSecurityScreen() {}
+    func showActivityScreen() {}
+
 }

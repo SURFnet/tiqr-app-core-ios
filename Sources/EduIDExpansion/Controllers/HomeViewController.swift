@@ -1,13 +1,15 @@
 import UIKit
 import TinyConstraints
 
-class HomeViewController: EduIDBaseViewController {
+class HomeViewController: UIViewController {
     
+    weak var delegate: HomeNavigationDelegate?
     var buttonStack: AnimatedHStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
         setupUI()
     }
     
@@ -109,16 +111,16 @@ class HomeViewController: EduIDBaseViewController {
     
     @objc
     func securityTapped() {
-        
+        delegate?.showSecurityScreen()
     }
     
     @objc
     func personalInfoTapped() {
-        (coordinator as? MainCoordinator)?.showPersonalInfo()
+        delegate?.showPersonalInfoScreen()
     }
     
     @objc
     func activityTapped() {
-        
+        delegate?.showActivityScreen()
     }
 }
