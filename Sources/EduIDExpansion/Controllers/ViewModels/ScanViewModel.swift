@@ -40,6 +40,11 @@ final class ScanViewModel: NSObject {
             print(error)
         }
     }
+    
+    deinit {
+        session.stopRunning()
+        session.removeOutput(output)
+    }
 }
 
 //MARK: - preview layer delegate

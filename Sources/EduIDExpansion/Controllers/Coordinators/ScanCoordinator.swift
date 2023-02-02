@@ -5,11 +5,13 @@ class ScanCoordinator: CoordinatorType {
     var children: [CoordinatorType] = []
     var parent: CoordinatorType?
     
-    var navigationController = UINavigationController()
+    weak var navigationController: UINavigationController?
     
     func start(presentedOn viewController: UIViewController) {
         let scanViewcontroller = ScanViewController(viewModel: ScanViewModel())
         scanViewcontroller.coordinator = self
+        let navigationController = UINavigationController()
+        self.navigationController = navigationController
         navigationController.setNavigationBarHidden(false, animated: true)
         navigationController.pushViewController(scanViewcontroller, animated: false)
         
@@ -18,6 +20,6 @@ class ScanCoordinator: CoordinatorType {
     
     @objc
     func dismissScanScreen() {
-        navigationController.dismiss(animated: false)
+        navigationController?.dismiss(animated: false)
     }
 }

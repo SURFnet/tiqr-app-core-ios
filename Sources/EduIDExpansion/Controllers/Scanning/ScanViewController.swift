@@ -51,6 +51,12 @@ class ScanViewController: EduIDBaseViewController, ScreenWithScreenType {
         screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(ScanCoordinator.dismissScanScreen))
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        viewModel.session.stopRunning()
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
