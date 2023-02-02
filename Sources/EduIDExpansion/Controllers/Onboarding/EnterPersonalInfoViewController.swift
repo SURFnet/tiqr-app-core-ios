@@ -65,8 +65,6 @@ class EnterPersonalInfoViewController: EduIDBaseViewController {
         super.viewWillAppear(animated)
         stack.animate(onlyThese: [1, 2, 3, 4, 6])
         _ = emailField.becomeFirstResponder()
-        
-        print(stack.frame)
     }
     
     override func viewDidAppear(_ animated: Bool) {

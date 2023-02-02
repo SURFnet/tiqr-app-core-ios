@@ -20,9 +20,11 @@ class ExplanationViewController: EduIDBaseViewController {
         let posterLabel = UILabel.posterTextLabel(text: "Don't have an eduID yet?", size: 24)
         
         //MARK: - create the textView
-        let textView = UITextView()
-        textView.isUserInteractionEnabled = false
-        textView.translatesAutoresizingMaskIntoConstraints = false
+        let textLabelParent = UIView()
+        let textLabel = UILabel()
+        textLabel.numberOfLines = 0
+        textLabel.isUserInteractionEnabled = false
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 24 - 16
         let attrText = NSMutableAttributedString(string:
@@ -30,7 +32,10 @@ class ExplanationViewController: EduIDBaseViewController {
 eduID is a central account for users\nassociated with Dutch education and\nresearch. It is yours and exists independent\nof an educational institution.\n\n• Use it to login to several services connected to SURFconext.\n• Users without an institution account can also request an eduID.\n• eduID is a lifelong account. It stays validafter you graduate.
 """
                                                  , attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.sourceSansProLight(size: 16), .foregroundColor: UIColor.secondaryColor])
-        textView.attributedText = attrText
+        textLabel.attributedText = attrText
+        textLabelParent.addSubview(textLabel)
+        textLabel.edges(to: textLabelParent)
+        
         //MARK: - create button
         let button = EduIDButton(type: .primary, buttonTitle: "Create a new eduID")
         
@@ -41,7 +46,7 @@ eduID is a central account for users\nassociated with Dutch education and\nresea
         let spacerView = UIView()
         
         //MARK: - create the stackview
-        stack = AnimatedVStackView(arrangedSubviews: [posterLabel, textView, spacerView, button])
+        stack = AnimatedVStackView(arrangedSubviews: [posterLabel, textLabelParent, spacerView, button])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
@@ -55,8 +60,7 @@ eduID is a central account for users\nassociated with Dutch education and\nresea
         posterLabel.height(34)
         button.width(to: stack, offset: -24)
         
-        textView.sizeToFit()
-        textView.width(to: stack, offset: -32)
+        textLabel.width(to: stack, offset: -32)
         
         stack.hideAndTriggerAll(onlyThese: [2])
     }

@@ -27,17 +27,20 @@ class AddInstitutionViewController: EduIDBaseViewController {
         let posterLabel = UILabel.posterTextLabelBicolor(text: "Your school/uni\nwas contacted successfully", size: 24, primary: "Your school/uni")
         
         //MARK: - create the textView
-        let textView = UITextView()
-        textView.isUserInteractionEnabled = false
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = .sourceSansProLight(size: 16)
-        textView.textColor = .secondaryColor
+        let textLabelParent = UIView()
+        let textLabel = UILabel()
+        textLabel.numberOfLines = 0
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
+        textLabel.font = .sourceSansProLight(size: 16)
+        textLabel.textColor = .secondaryColor
         let attributedText = NSMutableAttributedString(string:
 """
 The following information has been added to your eduID and can now be shared.
 """
                                                 ,attributes: [.font : UIFont.sourceSansProLight(size: 16)])
-        textView.attributedText = attributedText
+        textLabel.attributedText = attributedText
+        textLabelParent.addSubview(textLabel)
+        textLabel.edges(to: textLabelParent)
         
         //MARK: institution views
         let firstInstitution = InstitutionView(title: "full name", firstText: "R. van Hamersdonksveer", secondText: "Provided by Universiteit van Amsterdam", action: {})
@@ -48,7 +51,7 @@ The following information has been added to your eduID and can now be shared.
         let spaceView = UIView()
         
         //MARK: - create the stackview
-        let stack = UIStackView(arrangedSubviews: [posterLabel, textView, firstInstitution, secondInstitution, thirdInstitution, spaceView, continueButton])
+        let stack = UIStackView(arrangedSubviews: [posterLabel, textLabelParent, firstInstitution, secondInstitution, thirdInstitution, spaceView, continueButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
@@ -59,12 +62,11 @@ The following information has been added to your eduID and can now be shared.
         //MARK: - add constraints
         stack.edges(to: scrollView, insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: -24))
         stack.width(to: scrollView, offset: -48)
-        textView.width(to: stack)
+        textLabel.width(to: stack)
         posterLabel.width(to: stack)
         firstInstitution.width(to: stack)
         secondInstitution.width(to: stack)
         thirdInstitution.width(to: stack)
-        textView.height(60)
         posterLabel.height(68)
         continueButton.width(to: stack, offset: -24)
     }
