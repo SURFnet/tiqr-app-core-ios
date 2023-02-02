@@ -7,6 +7,8 @@ class EnterPersonalInfoViewController: EduIDBaseViewController, ScreenWithScreen
     private var keyboardHeight: CGFloat?
     private var isKeyBoardOnScreen = false
     private let inset: CGFloat = 24
+    static let smallBuffer: CGFloat = 50
+    static let emailFieldTag = 3
     
     var stack: AnimatedVStackView!
     let requestButton = EduIDButton(type: .primary, buttonTitle: "Request you eduID")
@@ -26,7 +28,7 @@ class EnterPersonalInfoViewController: EduIDBaseViewController, ScreenWithScreen
         super.init(nibName: nil, bundle: nil)
         
         viewModel.makeNextTextFieldFirstResponderClosure = { [weak self] tag in
-            guard tag != 3 else {
+            guard tag != EnterPersonalInfoViewController.emailFieldTag else {
                 self?.resignKeyboardResponder()
                 return
             }
@@ -76,7 +78,7 @@ class EnterPersonalInfoViewController: EduIDBaseViewController, ScreenWithScreen
         super.viewDidAppear(animated)
         
         //set the height of the spacer according to the view
-        if scrollView.frame.size.height > scrollView.contentSize.height + /* a small buffer */ 50 {
+        if scrollView.frame.size.height > scrollView.contentSize.height + EnterPersonalInfoViewController.smallBuffer {
             spacingView.height(scrollView.frame.size.height - scrollView.contentSize.height - inset - view.safeAreaInsets.top)
         }
     }

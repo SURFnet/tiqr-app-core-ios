@@ -2,6 +2,7 @@ import UIKit
 
 final class OnboardingCoordinator: OnboardingCoordinatorType {
     
+    
     weak var parent: CoordinatorType?
     
     var children: [CoordinatorType] = []
@@ -9,18 +10,18 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
     
     var currentScreenType: ScreenType = .landingScreen
     
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-    
-    func start() {
+    func start(presentOn viewController: UIViewController) {
+        
         let landingScreen = LandingPageViewController()
         landingScreen.coordinator = self
         landingScreen.screenType = .landingScreen
         
-        let successScreen = HomeViewController()
-        successScreen.coordinator = self
-        navigationController.pushViewController(landingScreen, animated: false)
+        let navigationController = UINavigationController(rootViewController: landingScreen)
+        navigationController.modalTransitionStyle = .flipHorizontal
+        
+        self.navigationController = navigationController
+        
+        viewController.present(self.navigationController, animated: false)
         
         // show navigation bar buttons if needed
 //        showNavigationBarButtonsIfNeeded(screenType: .landingScreen)
@@ -29,12 +30,10 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
     //MARK: - start scan screen
     @objc
     func showScanScreen() {
-        let scanViewcontroller = ScanViewController(viewModel: ScanViewModel())
-        scanViewcontroller.coordinator = self
-        scanViewcontroller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: .arrowBack.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(goBack))
-        navigationController.navigationBar.tintColor = .white
-        navigationController.setNavigationBarHidden(false, animated: true)
-        navigationController.pushViewController(scanViewcontroller, animated: true)
+        let scanCoordinator = ScanCoordinator()
+        children.append(scanCoordinator)
+        scanCoordinator.parent = self
+        scanCoordinator.start(presentedOn: navigationController)
         
     }
     

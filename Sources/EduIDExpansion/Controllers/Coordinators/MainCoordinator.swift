@@ -13,16 +13,11 @@ class MainCoordinator: CoordinatorType {
     }
     
     func start() {
-        let onboardingNavigationController = UINavigationController()
-        onboardingNavigationController.modalTransitionStyle = .flipHorizontal
-        onboardingNavigationController.isModalInPresentation = true
-        
-        let onboardingCoordinator = OnboardingCoordinator(navigationController: onboardingNavigationController)
+        let onboardingCoordinator = OnboardingCoordinator()
         onboardingCoordinator.parent = self
         children.append(onboardingCoordinator)
         
-        homeNavigationController.present(onboardingNavigationController, animated: false)
-        onboardingCoordinator.start()
+        onboardingCoordinator.start(presentOn: homeNavigationController)
     }
     
     func showPersonalInfo() {
@@ -37,21 +32,10 @@ class MainCoordinator: CoordinatorType {
     //MARK: - start scan screen
     @objc
     func showScanScreen() {
-        let scanViewcontroller = ScanViewController(viewModel: ScanViewModel())
-        scanViewcontroller.coordinator = self
-        let logo = UIImageView(image: UIImage.eduIDLogo)
-        logo.width(92)
-        logo.height(36)
-        scanViewcontroller.navigationItem.titleView = logo
-        scanViewcontroller.navigationItem.hidesBackButton = true
-        scanViewcontroller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage.arrowBack, style: .plain, target: self, action: #selector(dismissScanScreen))
-        
-        scanViewcontroller.navigationItem.leftBarButtonItem?.image = scanViewcontroller.navigationItem.leftBarButtonItem?.image?.withRenderingMode(.alwaysTemplate)
-        
-        let scanNavigationController = UINavigationController(rootViewController: scanViewcontroller)
-        scanNavigationController.navigationBar.tintColor = .white
-        scanNavigationController.setNavigationBarHidden(false, animated: true)
-        homeNavigationController.present(scanNavigationController, animated: true)
+        let scanCoordinator = ScanCoordinator()
+        children.append(scanCoordinator)
+        scanCoordinator.parent = self
+        scanCoordinator.start(presentedOn: homeNavigationController)
     }
     
     //MARK: - dismiss scan

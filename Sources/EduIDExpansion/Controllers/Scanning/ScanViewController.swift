@@ -48,7 +48,7 @@ class ScanViewController: EduIDBaseViewController, ScreenWithScreenType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(On))
+        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(ScanCoordinator.dismissScanScreen))
     }
     
     override func viewWillLayoutSubviews() {
