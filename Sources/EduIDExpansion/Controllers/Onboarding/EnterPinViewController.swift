@@ -57,18 +57,22 @@ class EnterPinViewController: EduIDBaseViewController {
         let posterLabel = UILabel.posterTextLabel(text: "Check your messages", size: 24)
         
         //MARK: - create the textView
-        let textView = UITextView()
-        textView.isUserInteractionEnabled = false
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = .sourceSansProLight(size: 16)
-        textView.textColor = .secondaryColor
+        let textLabelParent = UIView()
+        let textLabel = UILabel()
+        textLabel.numberOfLines = 0
+        textLabel.isUserInteractionEnabled = false
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
+        textLabel.font = .sourceSansProLight(size: 16)
+        textLabel.textColor = .secondaryColor
         let attributedText = NSMutableAttributedString(string:
 """
 Enter the six-digit code we sent to your phone to continue
 """
                                                 ,attributes: [.font : UIFont.sourceSansProLight(size: 16)])
         attributedText.setAttributes([.font : UIFont.sourceSansProSemiBold(size: 16)], range: NSRange(location: 10, length: 9))
-        textView.attributedText = attributedText
+        textLabel.attributedText = attributedText
+        textLabelParent.addSubview(textLabel)
+        textLabel.edges(to: textLabelParent)
         
         //MARK: pin fields
         
@@ -94,7 +98,7 @@ Enter the six-digit code we sent to your phone to continue
         let spaceView = UIView()
         
         //MARK: - create the stackview
-        let stack = UIStackView(arrangedSubviews: [posterLabel, textView, pinStack, activity, spaceView, verifyButton])
+        let stack = UIStackView(arrangedSubviews: [posterLabel, textLabelParent, pinStack, activity, spaceView, verifyButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
@@ -104,8 +108,7 @@ Enter the six-digit code we sent to your phone to continue
         
         //MARK: - add constraints
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
-        textView.width(to: stack)
-        textView.height(80)
+        textLabel.width(to: stack)
         posterLabel.height(34)
         verifyButton.width(to: stack, offset: -24)
         pinStack.width(to: stack)

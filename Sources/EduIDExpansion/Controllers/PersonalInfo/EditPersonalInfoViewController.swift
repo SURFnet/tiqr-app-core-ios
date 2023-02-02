@@ -10,6 +10,8 @@ import TinyConstraints
 
 class EditPersonalInfoViewController: EduIDBaseViewController {
     
+    private let scrollView = UIScrollView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,21 +20,30 @@ class EditPersonalInfoViewController: EduIDBaseViewController {
     
     func setupUI() {
         
+        //MARK: - scroll view
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        scrollView.edges(to: view)
+        
         //MARK: - posterLabel
         let posterLabel = UILabel.posterTextLabelBicolor(text: "Your personal info", size: 24, primary: "Your personal info")
         
         //MARK: - create the textView
-        let textView = UITextView()
-        textView.isUserInteractionEnabled = false
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = .sourceSansProLight(size: 16)
-        textView.textColor = .secondaryColor
+        let textLabelParent = UIView()
+        let textLabel = UILabel()
+        textLabel.numberOfLines = 0
+        textLabel.isUserInteractionEnabled = false
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
+        textLabel.font = .sourceSansProLight(size: 16)
+        textLabel.textColor = .secondaryColor
         let attributedText = NSMutableAttributedString(string:
 """
 When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party.
 """
                                                        ,attributes: [.font : UIFont.sourceSansProLight(size: 16)])
-        textView.attributedText = attributedText
+        textLabel.attributedText = attributedText
+        textLabelParent.addSubview(textLabel)
+        textLabel.edges(to: textLabelParent)
         
         let spaceView = UIView()
         
@@ -57,18 +68,18 @@ When you use eduID to login to other websites, some of your personal information
         let fourthControl = ActionableInfoControl(attributedBodyText: fourthBodyText, iconInBody: UIImage(systemName: "chevron.right")?.withRenderingMode(.alwaysTemplate), isFilled: true)
         
         //MARK: - create the stackview
-        let stack = UIStackView(arrangedSubviews: [posterLabel, textView, firstControl, secondControl, thirdControl, fourthControl, spaceView])
+        let stack = UIStackView(arrangedSubviews: [posterLabel, textLabelParent, firstControl, secondControl, thirdControl, fourthControl, spaceView])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
         stack.alignment = .center
         stack.spacing = 20
-        view.addSubview(stack)
+        scrollView.addSubview(stack)
         
         //MARK: - add constraints
-        stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
-        textView.width(to: stack)
-        textView.height(90)
+        stack.edges(to: scrollView, insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: -24))
+        stack.width(to: scrollView, offset: -48)
+        textLabel.width(to: stack)
         posterLabel.width(to: stack)
         firstControl.width(to: stack)
         secondControl.width(to: stack)
