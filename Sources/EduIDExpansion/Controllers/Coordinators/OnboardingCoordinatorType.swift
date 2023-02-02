@@ -1,6 +1,6 @@
 import Foundation
 
 protocol OnboardingCoordinatorType: CoordinatorType {
-    func showNextScreen(currentScreen: ScreenType)
+    func showNextScreen()
     func goBack()
 }

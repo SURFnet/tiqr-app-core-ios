@@ -1,9 +1,10 @@
 import UIKit
 import TinyConstraints
 
-class LandingPageViewController: EduIDBaseViewController {
+class LandingPageViewController: EduIDBaseViewController, ScreenWithScreenType {
     
     private var stack: AnimatedVStackView!
+    var screenType: ScreenType = .landingScreen
     
     //MARK: - lifecycle
     override func viewDidLoad() {
@@ -15,7 +16,9 @@ class LandingPageViewController: EduIDBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.showScanScreen))
         stack?.animate(onlyThese: [3, 4, 5])
+        
     }
     
     //MARK: - setupUI

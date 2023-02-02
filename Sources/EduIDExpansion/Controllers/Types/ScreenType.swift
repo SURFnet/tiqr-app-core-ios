@@ -19,17 +19,6 @@ enum ScreenType: Int, CaseIterable {
     
     case none
     
-    //MARK: - get the next viewcontroller in the flow and guard against out of bounds index
-    func nextViewController(current: ScreenType) -> UIViewController? {
-        guard current.rawValue != ScreenType.allCases.count - 2 else { return nil }
-        
-        let nextIndex = (ScreenType.allCases.firstIndex(of: current) ?? 0) + 1
-        if let nextViewController = ScreenType.allCases[nextIndex].viewController() as? EduIDBaseViewController {
-            nextViewController.screenType = ScreenType(rawValue: nextIndex) ?? .none
-            return nextViewController
-        }
-        return nil
-    }
     
     func viewController() -> UIViewController? {
         switch self {
@@ -86,6 +75,25 @@ enum ScreenType: Int, CaseIterable {
             return .white
         default:
             return .backgroundColor
+        }
+    }
+    
+    func configureNavigationItem(item: UINavigationItem, target: Any? = nil, action: Selector? = nil) {
+        switch self {
+        case .scanScreen:
+            break
+        case .landingScreen:
+            item.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: target, action: action)
+        case .explanationScreen, .enterInfoScreen, .checkMailScreen, .enterPhoneScreen, .pinChallengeScreen, .welcomeScreen, .firstTimeDialogScreen, .addInstitutionScreen:
+            let logo = UIImageView(image: UIImage.eduIDLogo)
+            logo.width(92)
+            logo.height(36)
+            item.titleView = logo
+            item.hidesBackButton = true
+            item.leftBarButtonItem?.tintColor = .backgroundColor
+            item.leftBarButtonItem = UIBarButtonItem(image: UIImage.arrowBack, style: .plain, target: target, action: action)
+        default:
+            break
         }
     }
 }

@@ -2,7 +2,10 @@ import UIKit
 import TinyConstraints
 import AVFoundation
 
-class ScanViewController: EduIDBaseViewController {
+class ScanViewController: EduIDBaseViewController, ScreenWithScreenType {
+    
+    //MARK: - screen type
+    var screenType: ScreenType = .scanScreen
     
     init(viewModel: ScanViewModel) {
         self.viewModel = viewModel
@@ -40,6 +43,12 @@ class ScanViewController: EduIDBaseViewController {
         
         previewLayer.session = viewModel.session
         viewModel.setupCaptureSession()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(On))
     }
     
     override func viewWillLayoutSubviews() {

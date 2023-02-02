@@ -1,8 +1,11 @@
 import UIKit
 import TinyConstraints
 
-class FirstTimeDialogViewController: EduIDBaseViewController {
+class FirstTimeDialogViewController: EduIDBaseViewController, ScreenWithScreenType {
 
+    //MARK: - screen type
+    var screenType: ScreenType = .firstTimeDialogScreen
+    
     //MARK: - primary button
     let addButton = EduIDButton(type: .primary, buttonTitle: "Connect your school/institution")
     
@@ -20,6 +23,7 @@ class FirstTimeDialogViewController: EduIDBaseViewController {
         super.viewWillAppear(animated)
         
         stack.animate(onlyThese: [4, 5])
+        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
     }
     
     func setupUI() {

@@ -1,7 +1,10 @@
 import UIKit
 import TinyConstraints
 
-class WelcomeViewController: EduIDBaseViewController {
+class WelcomeViewController: EduIDBaseViewController , ScreenWithScreenType {
+    
+    //MARK: - screen type
+    var screenType: ScreenType = .welcomeScreen
     
     //MARK: - attributed texts for numbered list
     var attributedTexts: [NSAttributedString] = []
@@ -19,6 +22,12 @@ class WelcomeViewController: EduIDBaseViewController {
         attributedTexts.append(contentsOf: [first, second, third])
 
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        screenType.configureNavigationItem(item: navigationItem, target: coordinator, action: #selector(OnboardingCoordinator.goBack))
     }
     
     //MARK: setup UI
