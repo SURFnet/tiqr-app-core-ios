@@ -86,6 +86,10 @@ We will text you a code to verify your number.
         resignKeyboardResponder()
     }
     
+    func didBecomeFirstResponder(tag: Int) {
+        return
+    }
+    
     @objc
     func resignKeyboardResponder() {
         _ = validatedPhoneTextField.resignFirstResponder()
