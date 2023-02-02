@@ -8,13 +8,14 @@ class TextViewBackgroundColor: UIView {
         
         self.backgroundColor = backgroundColor
         
-        let textView = UITextView()
-        textView.backgroundColor = .clear
-        textView.attributedText = attributedText
-        textView.translatesAutoresizingMaskIntoConstraints = false
+        let textLabel = UILabel()
+        textLabel.numberOfLines = 0
+        textLabel.backgroundColor = .clear
+        textLabel.attributedText = attributedText
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        addSubview(textView)
-        textView.edgesToSuperview(insets: TinyEdgeInsets(top: insets.top, left: insets.left, bottom: insets.bottom, right: insets.right))
+        addSubview(textLabel)
+        textLabel.edges(to: self, insets: TinyEdgeInsets(top: insets.top, left: insets.left, bottom: insets.bottom, right: insets.right))
         
     }
     

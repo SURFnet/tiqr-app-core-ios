@@ -37,12 +37,15 @@ class EnterPhoneNumberViewController: EduIDBaseViewController, ValidatedTextFiel
         //MARK: - posterLabel
         let posterLabel = UILabel.posterTextLabel(text: "Your eduID has been created", size: 24)
         
+        //MARK: - textView Parent
+        let textViewParent = UIView()
+        
         //MARK: - create the textView
-        let textView = UITextView()
-        textView.isUserInteractionEnabled = false
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = .sourceSansProLight(size: 16)
-        textView.textColor = .secondaryColor
+        let textLabel = UILabel()
+        textLabel.numberOfLines = 0
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
+        textLabel.font = .sourceSansProLight(size: 16)
+        textLabel.textColor = .secondaryColor
         let attributedText = NSMutableAttributedString(string:
 """
 Let’s add a recovery phonenumber
@@ -52,13 +55,17 @@ We will text you a code to verify your number.
 """
                                                 ,attributes: [.font : UIFont.sourceSansProLight(size: 16)])
         attributedText.setAttributes([.font : UIFont.sourceSansProSemiBold(size: 16)], range: NSRange(location: 0, length: 32))
-        textView.attributedText = attributedText
+        textLabel.attributedText = attributedText
+        
+        textViewParent.addSubview(textLabel)
+        textLabel.edges(to: textViewParent)
+        textLabel.sizeToFit()
         
         //MARK: - Space
         let spaceView = UIView()
         
         //MARK: - create the stackview
-        stack = AnimatedVStackView(arrangedSubviews: [posterLabel, textView, validatedPhoneTextField, spaceView, verifyButton])
+        stack = AnimatedVStackView(arrangedSubviews: [posterLabel, textViewParent, validatedPhoneTextField, spaceView, verifyButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
@@ -68,8 +75,7 @@ We will text you a code to verify your number.
         
         //MARK: - add constraints
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
-        textView.width(to: stack)
-        textView.height(120)
+        textViewParent.width(to: stack)
         posterLabel.height(34)
         verifyButton.width(to: stack, offset: -24)
         validatedPhoneTextField.width(to: stack)

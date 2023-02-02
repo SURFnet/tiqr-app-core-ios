@@ -70,7 +70,6 @@ You must therefore add the following information to your eduID:
         posterLabel.width(to: stack)
         addButton.width(to: stack, offset: -24)
         skipButton.width(to: stack, offset: -24)
-        textView.height(285)
         posterLabel.height(68)
         
         stack.hideAndTriggerAll(onlyThese: [4, 5])
