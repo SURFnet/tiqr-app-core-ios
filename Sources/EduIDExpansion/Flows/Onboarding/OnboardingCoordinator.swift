@@ -1,17 +1,17 @@
 import UIKit
 
-final class OnboardingCoordinator: OnboardingCoordinatorType, OnBoardingNavigationDelegate {
+final class OnboardingCoordinator: OnboardingCoordinatorType, OnBoardingNavigationDelegate, ScanMainNavigationDelegate {
     
-    weak var parent: CoordinatorType?
+    weak var navigationController: UINavigationController!
+    weak var delegate: OnBoardingMainNavigationDelegate?
     
     var children: [CoordinatorType] = []
-    weak var navigationController: UINavigationController!
     
     var currentScreenType: ScreenType = .landingScreen
     
     func start(presentOn viewController: UIViewController) {
         
-        let landingScreen = LandingPageViewController()
+        let landingScreen = OnBoardingLandingPageViewController()
         landingScreen.screenType = .landingScreen
         landingScreen.delegate = self
         
@@ -26,16 +26,22 @@ final class OnboardingCoordinator: OnboardingCoordinatorType, OnBoardingNavigati
     //MARK: - start scan screen
     func showScanScreen() {
         let scanCoordinator = ScanCoordinator()
+        scanCoordinator.delegate = self
         children.append(scanCoordinator)
-        scanCoordinator.parent = self
         scanCoordinator.start(presentedOn: navigationController)
-        
     }
+    
+    func dismissScanScreen() {
+        navigationController.presentedViewController?.dismiss(animated: true)
+        children.removeAll { $0 is ScanCoordinator }
+    }
+    
     
     //MARK: - show next screen
     func showNextScreen() {
         if currentScreenType == .addInstitutionScreen {
-            navigationController.dismiss(animated: true)
+            delegate?.dismissOnBoarding()
+            return
         }
         
         guard let nextViewController = ScreenType(rawValue: currentScreenType.rawValue + 1)?.viewController() else { return }

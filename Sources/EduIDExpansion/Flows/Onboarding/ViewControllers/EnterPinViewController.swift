@@ -4,7 +4,7 @@ import TinyConstraints
 class EnterPinViewController: OnBoardingBaseViewController, ScreenWithScreenType {
     
     //MARK: - screen type
-    var screenType: ScreenType = .addInstitutionScreen
+    var screenType: ScreenType = .pinChallengeScreen
 
     //MARK: viewmodel
     let viewModel: EnterPinViewModel

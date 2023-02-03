@@ -25,6 +25,7 @@ enum ScreenType: Int, CaseIterable {
     
     // security
     case securityLandingScreen
+    case securityEnterEmailScreen
     
     case none
     
@@ -32,7 +33,7 @@ enum ScreenType: Int, CaseIterable {
     func viewController() -> UIViewController? {
         switch self {
         case .landingScreen:
-            return LandingPageViewController()
+            return OnBoardingLandingPageViewController()
         case .explanationScreen:
             return ExplanationViewController()
         case .enterInfoScreen:
@@ -57,7 +58,7 @@ enum ScreenType: Int, CaseIterable {
             return FirstTimeDialogViewController()
         case .securityLandingScreen:
             return SecurityLandingViewController()
-        case .none:
+        default:
             return nil
         }
     }
@@ -107,7 +108,7 @@ enum ScreenType: Int, CaseIterable {
             item.hidesBackButton = true
             item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: target, action: action)
             item.rightBarButtonItem?.tintColor = .white
-        case .landingScreen:
+        case .landingScreen, .homeScreen:
             item.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: target, action: action)
         case .explanationScreen, .enterInfoScreen, .checkMailScreen, .enterPhoneScreen, .pinChallengeScreen, .welcomeScreen, .firstTimeDialogScreen, .addInstitutionScreen:
             let logo = UIImageView(image: UIImage.eduIDLogo)

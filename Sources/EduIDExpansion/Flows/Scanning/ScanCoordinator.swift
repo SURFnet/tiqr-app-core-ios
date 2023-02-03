@@ -2,10 +2,8 @@ import UIKit
 
 class ScanCoordinator: CoordinatorType, ScanNavigationDelegate{
 
-    var children: [CoordinatorType] = []
-    var parent: CoordinatorType?
-    
     weak var navigationController: UINavigationController?
+    weak var delegate: ScanMainNavigationDelegate?
     
     func start(presentedOn viewController: UIViewController) {
         let scanViewcontroller = ScanViewController(viewModel: ScanViewModel())
@@ -19,6 +17,6 @@ class ScanCoordinator: CoordinatorType, ScanNavigationDelegate{
     }
     
     func dismiss() {
-        navigationController?.dismiss(animated: true)
+        delegate?.dismissScanScreen()
     }
 }

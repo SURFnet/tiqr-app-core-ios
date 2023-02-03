@@ -4,7 +4,10 @@ import TinyConstraints
 class CheckEmailViewController: OnBoardingBaseViewController, ScreenWithScreenType {
     
     //MARK: - screen type
-    var screenType: ScreenType = .addInstitutionScreen
+    var screenType: ScreenType = .checkMailScreen
+    
+    //MARK: - delegate
+    weak var navDelegate: NavigationDelegate?
     
     //MARK: - lifecycle
     override func viewDidLoad() {
@@ -20,7 +23,7 @@ class CheckEmailViewController: OnBoardingBaseViewController, ScreenWithScreenTy
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBackNav))
     }
     
     func setupUI() {
@@ -74,8 +77,6 @@ class CheckEmailViewController: OnBoardingBaseViewController, ScreenWithScreenTy
         //MARK: - Space
         let spaceView = UIView()
         
-
-        
         //MARK: - create the stackview
         let stack = UIStackView(arrangedSubviews: [posterLabel, messageLabel, activity, emailOptionsVStack, spaceView])
         stack.axis = .vertical
@@ -90,6 +91,10 @@ class CheckEmailViewController: OnBoardingBaseViewController, ScreenWithScreenTy
         
         posterLabel.height(34)
 
-
+    }
+    
+    @objc
+    func goBackNav() {
+        navDelegate?.goBack()
     }
 }
