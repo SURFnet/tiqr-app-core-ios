@@ -2,6 +2,17 @@ import UIKit
 import TinyConstraints
 
 class ActionableInfoControl: UIControl {
+    
+    let view = UIView()
+    
+    override var isEnabled: Bool {
+        didSet {
+            if !isEnabled {
+                view.backgroundColor = .disabledGray.withAlphaComponent(0.5)
+                self.alpha = 0.5
+            }
+        }
+    }
 
     init(attributedTitle: NSAttributedString? = nil, attributedBodyText: NSAttributedString, iconInTitle: UIImage? = nil, iconInBody: UIImage? = nil, isFilled: Bool, shadow: Bool = false) {
         super.init(frame: .zero)
@@ -18,7 +29,6 @@ class ActionableInfoControl: UIControl {
         titleLabel.attributedText = attributedTitle
         
         //MARK: the control view
-        let view = UIView()
         view.height(70)
         view.backgroundColor = .white
         if shadow {
@@ -34,8 +44,8 @@ class ActionableInfoControl: UIControl {
         let iconInBodyView = UIImageView(image: iconInBody)
         let colorAttribute = attributedBodyText.attributes(at: 0, effectiveRange: nil)[.foregroundColor]
         iconInBodyView.tintColor = colorAttribute as? UIColor
-        iconInBodyView.width(30)
-        iconInBodyView.height(30)
+        iconInBodyView.width(24)
+        iconInBodyView.height(24)
         iconInBodyView.contentMode = .scaleAspectFit
         let bodyStack = UIStackView(arrangedSubviews: [bodyLabel, iconInBodyView])
         bodyStack.translatesAutoresizingMaskIntoConstraints = false
