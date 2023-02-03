@@ -13,11 +13,11 @@ class MainCoordinator: CoordinatorType, HomeNavigationDelegate {
     }
     
     func start() {
-        let onboardingCoordinator = OnboardingCoordinator()
-        onboardingCoordinator.parent = self
-        children.append(onboardingCoordinator)
-        
-        onboardingCoordinator.start(presentOn: homeNavigationController)
+//        let onboardingCoordinator = OnboardingCoordinator()
+//        onboardingCoordinator.parent = self
+//        children.append(onboardingCoordinator)
+//        
+//        onboardingCoordinator.start(presentOn: homeNavigationController)
     }
     
     func showPersonalInfoScreen() {
@@ -42,7 +42,12 @@ class MainCoordinator: CoordinatorType, HomeNavigationDelegate {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
     }
     
-    func showSecurityScreen() {}
+    //MARK: security screen flow
+    func showSecurityScreen() {
+        let securityCoordinator = SecurityCoordinator()
+        children.append(securityCoordinator)
+        securityCoordinator.start(presentOn: homeNavigationController)
+    }
     func showActivityScreen() {}
 
 }

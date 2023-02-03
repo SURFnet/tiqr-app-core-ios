@@ -1,20 +1,13 @@
-//
-//  EditPersonalInfoViewController.swift
-//  
-//
-//  Created by Jairo Bambang Oetomo on 31/01/2023.
-//
-
 import UIKit
 import TinyConstraints
 
-class EditPersonalInfoViewController: UIViewController, ScreenWithScreenType {
-   
+class SecurityLandingViewController: UIViewController, ScreenWithScreenType {
+    
     //MARK: screen type
-    var screenType: ScreenType = .personalInfoScreen
+    var screenType: ScreenType = .securityLandingScreen
     
     //MARK: - delegate
-    weak var delegate: PersonalInfoNavigationDelegate?
+    weak var delegate: SecurityNavigationDelegate?
     
     private let scrollView = UIScrollView()
     
@@ -29,7 +22,7 @@ class EditPersonalInfoViewController: UIViewController, ScreenWithScreenType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(dismissInfoScreen))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(dismissSecurityScreen))
     }
     
     func setupUI() {
@@ -40,19 +33,21 @@ class EditPersonalInfoViewController: UIViewController, ScreenWithScreenType {
         scrollView.edges(to: view)
         
         //MARK: - posterLabel
-        let posterLabel = UILabel.posterTextLabelBicolor(text: "Your personal info", size: 24, primary: "Your personal info")
+        let posterParent = UIView()
+        let posterLabel = UILabel.posterTextLabelBicolor(text: "Security settings", size: 24, primary: "Security settings")
+        posterParent.addSubview(posterLabel)
+        posterLabel.edges(to: posterParent)
         
         //MARK: - create the textView
         let textLabelParent = UIView()
         let textLabel = UILabel()
         textLabel.numberOfLines = 0
-        textLabel.isUserInteractionEnabled = false
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         textLabel.font = .sourceSansProLight(size: 16)
         textLabel.textColor = .secondaryColor
         let attributedText = NSMutableAttributedString(string:
 """
-When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party.
+We provide different methods to sign in to your eduID account.
 """
                                                        ,attributes: [.font : UIFont.sourceSansProLight(size: 16)])
         textLabel.attributedText = attributedText
@@ -62,10 +57,10 @@ When you use eduID to login to other websites, some of your personal information
         let spaceView = UIView()
         
         //MARK: - the info controls
-        let firstTitle = NSAttributedString(string: "About you", attributes: [.font : UIFont.sourceSansProBold(size: 16), .foregroundColor: UIColor.charcoalColor])
-        let firstBodyText = NSMutableAttributedString(string: "Your full name", attributes: [.font: UIFont.sourceSansProRegular(size: 16), .foregroundColor: UIColor.backgroundColor])
-        firstBodyText.setAttributeTo(part: "full name", attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.backgroundColor])
-        let firstControl = ActionableInfoControl(attributedTitle: firstTitle, attributedBodyText: firstBodyText, iconInBody: UIImage(systemName: "chevron.right")?.withRenderingMode(.alwaysTemplate), isFilled: true)
+        let firstTitle = NSAttributedString(string: "Sign-in methods", attributes: [.font : UIFont.sourceSansProBold(size: 16), .foregroundColor: UIColor.charcoalColor])
+        let firstBodyText = NSMutableAttributedString(string: "Send a magic link to\nedwin.van.de.bospoort@gmail.com", attributes: [.font: UIFont.sourceSansProRegular(size: 16), .foregroundColor: UIColor.charcoalColor])
+        firstBodyText.setAttributeTo(part: "edwin.van.de.bospoort@gmail.com", attributes: [.font: UIFont.sourceSansProLight(size: 12), .foregroundColor: UIColor.charcoalColor])
+        let firstControl = ActionableInfoControl(attributedTitle: firstTitle, attributedBodyText: firstBodyText, iconInBody: UIImage(systemName: "square.and.pencil")?.withRenderingMode(.alwaysTemplate), isFilled: true, shadow: true)
         
         let secondBodyText = NSMutableAttributedString(string: "Your email address", attributes: [.font: UIFont.sourceSansProRegular(size: 16), .foregroundColor: UIColor.backgroundColor])
         secondBodyText.setAttributeTo(part: "email address", attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.backgroundColor])
@@ -82,7 +77,7 @@ When you use eduID to login to other websites, some of your personal information
         let fourthControl = ActionableInfoControl(attributedBodyText: fourthBodyText, iconInBody: UIImage(systemName: "chevron.right")?.withRenderingMode(.alwaysTemplate), isFilled: true)
         
         //MARK: - create the stackview
-        let stack = UIStackView(arrangedSubviews: [posterLabel, textLabelParent, firstControl, secondControl, thirdControl, fourthControl, spaceView])
+        let stack = UIStackView(arrangedSubviews: [posterParent, textLabelParent, firstControl, secondControl, thirdControl, fourthControl, spaceView])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
@@ -108,7 +103,7 @@ When you use eduID to login to other websites, some of your personal information
     }
     
     @objc
-    func dismissInfoScreen() {
-        delegate?.dismiss()
+    func dismissSecurityScreen() {
+        delegate?.dismissSecurityFlow()
     }
 }

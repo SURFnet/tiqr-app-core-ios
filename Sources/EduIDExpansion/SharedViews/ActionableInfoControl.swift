@@ -3,7 +3,7 @@ import TinyConstraints
 
 class ActionableInfoControl: UIControl {
 
-    init(attributedTitle: NSAttributedString? = nil, attributedBodyText: NSAttributedString, iconInTitle: UIImage? = nil, iconInBody: UIImage? = nil, isFilled: Bool) {
+    init(attributedTitle: NSAttributedString? = nil, attributedBodyText: NSAttributedString, iconInTitle: UIImage? = nil, iconInBody: UIImage? = nil, isFilled: Bool, shadow: Bool = false) {
         super.init(frame: .zero)
                 
         backgroundColor = .white
@@ -20,8 +20,13 @@ class ActionableInfoControl: UIControl {
         //MARK: the control view
         let view = UIView()
         view.height(70)
+        view.backgroundColor = .white
+        if shadow {
+            view.setShadow(opacity: 0.2, color: .black, radius: 2, offset: CGSize(width: 2, height: 2))
+        }
         view.layer.cornerRadius = 6
         view.layer.borderWidth = isFilled ? 3 : 1
+        view.layer.borderWidth = shadow ? 1 : view.layer.borderWidth
         view.layer.borderColor = isFilled ? UIColor.backgroundColor.cgColor : UIColor.disabledGray.cgColor
         let bodyLabel = UILabel()
         bodyLabel.numberOfLines = 0
@@ -29,7 +34,8 @@ class ActionableInfoControl: UIControl {
         let iconInBodyView = UIImageView(image: iconInBody)
         let colorAttribute = attributedBodyText.attributes(at: 0, effectiveRange: nil)[.foregroundColor]
         iconInBodyView.tintColor = colorAttribute as? UIColor
-        iconInBodyView.width(24)
+        iconInBodyView.width(30)
+        iconInBodyView.height(30)
         iconInBodyView.contentMode = .scaleAspectFit
         let bodyStack = UIStackView(arrangedSubviews: [bodyLabel, iconInBodyView])
         bodyStack.translatesAutoresizingMaskIntoConstraints = false
