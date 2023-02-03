@@ -17,6 +17,7 @@ public final class EduIDExpansion: NSObject {
         homeViewController.navigationItem.titleView = logo
         let homeNavigationController = UINavigationController(rootViewController: homeViewController)
         mainCoordinator = MainCoordinator(homeNavigationController: homeNavigationController)
+        homeViewController.delegate = mainCoordinator
         homeViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: mainCoordinator, action: #selector(MainCoordinator.showScanScreen))
         return homeNavigationController
     }
