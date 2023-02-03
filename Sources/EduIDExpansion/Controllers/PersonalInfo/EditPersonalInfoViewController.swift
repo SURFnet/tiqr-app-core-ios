@@ -8,14 +8,28 @@
 import UIKit
 import TinyConstraints
 
-class EditPersonalInfoViewController: OnBoardingBaseViewController {
+class EditPersonalInfoViewController: UIViewController, ScreenWithScreenType {
+   
+    //MARK: screen type
+    var screenType: ScreenType = .personalInfoScreen
+    
+    //MARK: - delegate
+    weak var delegate: PersonalInfoNavigationDelegate?
     
     private let scrollView = UIScrollView()
     
+    //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(dismissInfoScreen))
     }
     
     func setupUI() {
@@ -91,5 +105,10 @@ When you use eduID to login to other websites, some of your personal information
 //        secondControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
 //        thirdControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
 //        fourthControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
+    }
+    
+    @objc
+    func dismissInfoScreen() {
+        delegate?.dismiss()
     }
 }

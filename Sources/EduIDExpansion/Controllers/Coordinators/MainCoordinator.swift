@@ -21,12 +21,11 @@ class MainCoordinator: CoordinatorType, HomeNavigationDelegate {
     }
     
     func showPersonalInfoScreen() {
-        let personalInfoNavigationController = UINavigationController()
-        let personalInfoCoordinator = PersonalInfoCoordinator(navigationController: personalInfoNavigationController)
+        let personalInfoCoordinator = PersonalInfoCoordinator()
+        children.append(personalInfoCoordinator)
         personalInfoCoordinator.parent = self
         
-        children.append(personalInfoCoordinator)
-        personalInfoCoordinator.start()
+        personalInfoCoordinator.start(presentOn: homeNavigationController)
     }
     
     //MARK: - start scan screen

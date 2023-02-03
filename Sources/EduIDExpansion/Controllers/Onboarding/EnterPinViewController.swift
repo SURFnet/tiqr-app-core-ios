@@ -91,7 +91,7 @@ Enter the six-digit code we sent to your phone to continue
         pinStack.distribution = .equalSpacing
         pinStack.height(50)
         
-        (0..<6).forEach { integer in
+        (0...5).forEach { integer in
             let pinField = PinTextFieldView()
             pinField.tag = integer
             pinField.delegate = viewModel
