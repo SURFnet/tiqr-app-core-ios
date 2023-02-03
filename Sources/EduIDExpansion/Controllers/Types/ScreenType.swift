@@ -2,6 +2,11 @@ import UIKit
 
 @objc
 enum ScreenType: Int, CaseIterable {
+    
+    // home
+    case homeScreen
+    
+    // onboarding
     case landingScreen
     case explanationScreen
     case enterInfoScreen
@@ -11,11 +16,15 @@ enum ScreenType: Int, CaseIterable {
     case welcomeScreen
     case firstTimeDialogScreen
     case addInstitutionScreen
-    case homeScreen
     
+    // scan
     case scanScreen
     
-    case personalInfoScreen
+    // personal info
+    case personalInfoLandingScreen
+    
+    // security
+    case securityLandingScreen
     
     case none
     
@@ -42,10 +51,12 @@ enum ScreenType: Int, CaseIterable {
             return HomeViewController()
         case .scanScreen:
             return ScanViewController(viewModel: ScanViewModel())
-        case .personalInfoScreen:
+        case .personalInfoLandingScreen:
             return EditPersonalInfoViewController()
         case .firstTimeDialogScreen:
             return FirstTimeDialogViewController()
+        case .securityLandingScreen:
+            return SecurityLandingViewController()
         case .none:
             return nil
         }
@@ -80,7 +91,7 @@ enum ScreenType: Int, CaseIterable {
     
     func configureNavigationItem(item: UINavigationItem, target: Any? = nil, action: Selector? = nil) {
         switch self {
-        case .personalInfoScreen:
+        case .personalInfoLandingScreen, .securityLandingScreen:
             let logo = UIImageView(image: UIImage.eduIDLogo)
             logo.width(92)
             logo.height(36)
