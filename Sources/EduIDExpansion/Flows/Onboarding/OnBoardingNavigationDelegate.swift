@@ -1,6 +1,6 @@
 import Foundation
 
-protocol OnBoardingNavigationDelegate: AnyObject {
+protocol OnBoardingNavigationDelegate: AnyObject, NavigationDelegate {
     
     func goBack()
     func showNextScreen()

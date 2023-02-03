@@ -2,9 +2,7 @@ import UIKit
 
 class PersonalInfoCoordinator: CoordinatorType, PersonalInfoNavigationDelegate {
     
-    var children: [CoordinatorType] = []
-    
-    var parent: CoordinatorType?
+    weak var delegate: PersonalInfoMainNavigationDelegate?
     weak var navigationController: UINavigationController?
     
     func start(presentOn viewController: UIViewController) {
@@ -21,7 +19,7 @@ class PersonalInfoCoordinator: CoordinatorType, PersonalInfoNavigationDelegate {
     }
     
     func dismiss() {
-        navigationController?.dismiss(animated: true)
+        delegate?.dismissPersonalInfoFlow()
     }
     
     @objc

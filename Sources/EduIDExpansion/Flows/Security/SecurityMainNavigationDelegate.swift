@@ -1,6 +1,6 @@
 import Foundation
 
-protocol SecurityNavigationDelegate: AnyObject {
+protocol SecurityMainNavigationDelegate: AnyObject {
     
     func dismissSecurityFlow()
 }

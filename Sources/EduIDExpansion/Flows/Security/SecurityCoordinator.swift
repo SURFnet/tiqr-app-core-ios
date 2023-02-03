@@ -2,10 +2,7 @@ import UIKit
 
 class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
     
-    var children: [CoordinatorType] = []
-    
-    var parent: CoordinatorType?
-    
+    weak var delegate: SecurityMainNavigationDelegate?
     weak var navigationController: UINavigationController?
     
     func start(presentOn viewController: UIViewController) {
@@ -19,8 +16,24 @@ class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
         viewController.present(navigationController, animated: true)
     }
     
+    func goBack() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     func dismissSecurityFlow() {
-        navigationController?.dismiss(animated: true)
+        delegate?.dismissSecurityFlow()
+    }
+    
+    func verifyEmail() {
+        let checkEmailViewController = CheckEmailViewController()
+        checkEmailViewController.navDelegate = self
+        navigationController?.pushViewController(checkEmailViewController, animated: true)
+    }
+    
+    func enterVerifyEmailFlow() {
+        let emailViewController = SecurityEnterEmailViewController()
+        emailViewController.delegate = self
+        navigationController?.pushViewController(emailViewController, animated: true)
     }
     
 }

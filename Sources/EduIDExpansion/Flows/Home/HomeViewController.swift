@@ -1,7 +1,10 @@
 import UIKit
 import TinyConstraints
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, ScreenWithScreenType {
+    
+    //MARK: - screen type
+    var screenType: ScreenType = .homeScreen
     
     weak var delegate: HomeNavigationDelegate?
     var buttonStack: AnimatedHStackView!
@@ -17,6 +20,7 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         buttonStack.animate()
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen))
     }
     
     func setupUI() {
@@ -108,6 +112,11 @@ class HomeViewController: UIViewController {
     }
     
     //MARK: - action buttons
+    
+    @objc
+    func showScanScreen() {
+        delegate?.showScanScreen()
+    }
     
     @objc
     func securityTapped() {

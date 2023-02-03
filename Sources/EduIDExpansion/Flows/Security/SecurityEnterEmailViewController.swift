@@ -1,24 +1,29 @@
 import UIKit
 import TinyConstraints
 
-class EnterPhoneNumberViewController: OnBoardingBaseViewController, ValidatedTextFieldDelegate, ScreenWithScreenType {
-    
+class SecurityEnterEmailViewController: UIViewController, ScreenWithScreenType, ValidatedTextFieldDelegate {
+
     //MARK: - screen type
     var screenType: ScreenType = .addInstitutionScreen
+    
+    //MARK: - delegate
+    weak var delegate: SecurityNavigationDelegate?
     
     var stack: AnimatedVStackView!
     
     //MARK: - phone textfield
-    let validatedPhoneTextField = TextStackViewWithValidation(title: "Enter your phone number", placeholder: "e.g. 0612345678", keyboardType: .numberPad)
+    let validatedEmailTextField = TextStackViewWithValidation(title: "Your new email address", placeholder: "e.g. jairo@egeniq.com", keyboardType: .emailAddress)
     
     //MARK: - verify button
-    let verifyButton = EduIDButton(type: .primary, buttonTitle: "Verify this phone number")
+    let verifyButton = EduIDButton(type: .primary, buttonTitle: "Verify email address")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
+        
         setupUI()
-        verifyButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
+        verifyButton.addTarget(self, action: #selector(verifyEmail), for: .touchUpInside)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(resignKeyboardResponder)))
     }
     
@@ -33,19 +38,22 @@ class EnterPhoneNumberViewController: OnBoardingBaseViewController, ValidatedTex
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        _ = validatedPhoneTextField.becomeFirstResponder()
+        _ = validatedEmailTextField.becomeFirstResponder()
     }
     
     func setupUI() {
         
         //MARK: - phone textfield delegate
-        validatedPhoneTextField.delegate = self
+        validatedEmailTextField.delegate = self
         
         //MARK: - button state
         verifyButton.isEnabled = false
         
         //MARK: - posterLabel
-        let posterLabel = UILabel.posterTextLabel(text: "Your eduID has been created", size: 24)
+        let posterParent = UIView()
+        let posterLabel = UILabel.posterTextLabelBicolor(text: "Email", size: 24, primary: "Email", alignment: .left)
+        posterParent.addSubview(posterLabel)
+        posterLabel.edges(to: posterParent)
         
         //MARK: - textView Parent
         let textViewParent = UIView()
@@ -58,13 +66,9 @@ class EnterPhoneNumberViewController: OnBoardingBaseViewController, ValidatedTex
         textLabel.textColor = .secondaryColor
         let attributedText = NSMutableAttributedString(string:
 """
-Let’s add a recovery phonenumber
-If you can't access eduID with the app or via email, you can use this to sign in to your eduID Account.
-
-We will text you a code to verify your number.
+Please enter your new email address. A verification mail will be sent to this address.
 """
                                                 ,attributes: [.font : UIFont.sourceSansProLight(size: 16)])
-        attributedText.setAttributes([.font : UIFont.sourceSansProSemiBold(size: 16)], range: NSRange(location: 0, length: 32))
         textLabel.attributedText = attributedText
         
         textViewParent.addSubview(textLabel)
@@ -75,7 +79,7 @@ We will text you a code to verify your number.
         let spaceView = UIView()
         
         //MARK: - create the stackview
-        stack = AnimatedVStackView(arrangedSubviews: [posterLabel, textViewParent, validatedPhoneTextField, spaceView, verifyButton])
+        stack = AnimatedVStackView(arrangedSubviews: [posterParent, textViewParent, validatedEmailTextField, spaceView, verifyButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
@@ -86,9 +90,9 @@ We will text you a code to verify your number.
         //MARK: - add constraints
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
         textViewParent.width(to: stack)
-        posterLabel.height(34)
         verifyButton.width(to: stack, offset: -24)
-        validatedPhoneTextField.width(to: stack)
+        validatedEmailTextField.width(to: stack)
+        posterLabel.width(to: stack)
         
         stack.hideAndTriggerAll(onlyThese: [2])
     }
@@ -107,7 +111,17 @@ We will text you a code to verify your number.
     
     @objc
     func resignKeyboardResponder() {
-        _ = validatedPhoneTextField.resignFirstResponder()
+        _ = validatedEmailTextField.resignFirstResponder()
     }
     
+    @objc
+    func goBack() {
+        delegate?.goBack()
+    }
+    
+    @objc
+    func verifyEmail() {
+        delegate?.verifyEmail()
+    }
+
 }

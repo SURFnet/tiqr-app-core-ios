@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class LandingPageViewController: OnBoardingBaseViewController, ScreenWithScreenType {
+class OnBoardingLandingPageViewController: OnBoardingBaseViewController, ScreenWithScreenType {
     
     private var stack: AnimatedVStackView!
     var screenType: ScreenType = .landingScreen

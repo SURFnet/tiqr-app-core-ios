@@ -60,21 +60,21 @@ We provide different methods to sign in to your eduID account.
         let firstTitle = NSAttributedString(string: "Sign-in methods", attributes: [.font : UIFont.sourceSansProBold(size: 16), .foregroundColor: UIColor.charcoalColor])
         let firstBodyText = NSMutableAttributedString(string: "Send a magic link to\nedwin.van.de.bospoort@gmail.com", attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.charcoalColor])
         firstBodyText.setAttributeTo(part: "edwin.van.de.bospoort@gmail.com", attributes: [.font: UIFont.sourceSansProLight(size: 12), .foregroundColor: UIColor.charcoalColor])
-        let firstControl = ActionableInfoControl(attributedTitle: firstTitle, attributedBodyText: firstBodyText, iconInBody: UIImage(systemName: "square.and.pencil")?.withRenderingMode(.alwaysTemplate), isFilled: true, shadow: true)
+        let firstControl = ActionableControlWithBodyAndTitle(attributedTitle: firstTitle, attributedBodyText: firstBodyText, iconInBody: UIImage(systemName: "square.and.pencil")?.withRenderingMode(.alwaysTemplate), isFilled: true, shadow: true)
         
         let secondBodyText = NSMutableAttributedString(string: "Use a password\n******", attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.charcoalColor])
         secondBodyText.setAttributeTo(part: "******", attributes: [.font: UIFont.sourceSansProRegular(size: 16), .foregroundColor: UIColor.charcoalColor])
-        let secondControl = ActionableInfoControl(attributedBodyText: secondBodyText, iconInBody: UIImage(systemName: "square.and.pencil"), isFilled: true, shadow: true)
+        let secondControl = ActionableControlWithBodyAndTitle(attributedBodyText: secondBodyText, iconInBody: UIImage(systemName: "square.and.pencil"), isFilled: true, shadow: true)
         
         let thirdBodyText = NSMutableAttributedString(string: "Use a security key\nnot available yet", attributes: [.font: UIFont.sourceSansProRegular(size: 16), .foregroundColor: UIColor.charcoalColor])
         thirdBodyText.setAttributeTo(part: "not available yet", attributes: [.font: UIFont.sourceSansProLight(size: 12)])
-        let thirdControl = ActionableInfoControl(attributedBodyText: thirdBodyText, iconInBody: UIImage(systemName: "chevron.right")?.withRenderingMode(.alwaysTemplate), isFilled: false, shadow: true)
+        let thirdControl = ActionableControlWithBodyAndTitle(attributedBodyText: thirdBodyText, iconInBody: UIImage(systemName: "chevron.right")?.withRenderingMode(.alwaysTemplate), isFilled: false, shadow: true)
         thirdControl.isEnabled = false
         
         let fourthTitle = NSAttributedString(string: "Sign-in settings", attributes: [.font : UIFont.sourceSansProBold(size: 16), .foregroundColor: UIColor.charcoalColor])
         let fourthBodyText = NSMutableAttributedString(string: "Stay logged in", attributes: [.font: UIFont.sourceSansProRegular(size: 16), .foregroundColor: UIColor.charcoalColor])
         fourthBodyText.setAttributeTo(part: "logged in", attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.charcoalColor])
-        let fourthControl = ActionableInfoControl(attributedTitle: fourthTitle, attributedBodyText: fourthBodyText, iconInBody: UIImage(systemName: "chevron.down")?.withRenderingMode(.alwaysTemplate), isFilled: true, shadow: true)
+        let fourthControl = ActionableControlWithBodyAndTitle(attributedTitle: fourthTitle, attributedBodyText: fourthBodyText, iconInBody: UIImage(systemName: "chevron.down")?.withRenderingMode(.alwaysTemplate), isFilled: true, shadow: true)
         
         //MARK: - create the stackview
         let stack = UIStackView(arrangedSubviews: [posterParent, textLabelParent, firstControl, secondControl, thirdControl, fourthControl, spaceView])
@@ -96,7 +96,7 @@ We provide different methods to sign in to your eduID account.
         fourthControl.width(to: stack)
         
         //MARK: - actions
-//        firstControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
+        firstControl.addTarget(self, action: #selector(enterEmailFlow), for: .touchUpInside)
 //        secondControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
 //        thirdControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
 //        fourthControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
@@ -105,5 +105,10 @@ We provide different methods to sign in to your eduID account.
     @objc
     func dismissSecurityScreen() {
         delegate?.dismissSecurityFlow()
+    }
+    
+    @objc
+    func enterEmailFlow() {
+        delegate?.enterVerifyEmailFlow()
     }
 }

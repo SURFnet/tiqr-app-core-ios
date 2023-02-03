@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class ActionableInfoControl: UIControl {
+class ActionableControlWithBodyAndTitle: UIControl {
     
     let view = UIView()
     
