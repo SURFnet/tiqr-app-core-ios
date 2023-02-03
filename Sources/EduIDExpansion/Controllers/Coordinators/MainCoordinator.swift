@@ -28,7 +28,7 @@ class MainCoordinator: CoordinatorType, HomeNavigationDelegate {
         personalInfoCoordinator.start(presentOn: homeNavigationController)
     }
     
-    //MARK: - start scan screen
+    //MARK: - scan screen methods
     @objc
     func showScanScreen() {
         let scanCoordinator = ScanCoordinator()
@@ -37,7 +37,6 @@ class MainCoordinator: CoordinatorType, HomeNavigationDelegate {
         scanCoordinator.start(presentedOn: homeNavigationController)
     }
     
-    //MARK: - dismiss scan
     @objc
     func dismissScanScreen() {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
