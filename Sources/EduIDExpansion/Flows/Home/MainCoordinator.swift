@@ -6,9 +6,11 @@ class MainCoordinator: CoordinatorType {
     var children: [CoordinatorType] = []
     weak var homeNavigationController: UINavigationController!
     
-    init(homeNavigationController: UINavigationController) {
+    init() {
+        let homeViewController = HomeViewController()
+        let homeNavigationController = UINavigationController(rootViewController: homeViewController)
         self.homeNavigationController = homeNavigationController
-        
+        homeViewController.delegate = self
     }
     
     func start() {
