@@ -1,10 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class AddInstitutionViewController: OnBoardingBaseViewController, ScreenWithScreenType {
-    
-    //MARK: - screen type
-    var screenType: ScreenType = .addInstitutionScreen
+class AddInstitutionViewController: OnBoardingBaseViewController {
 
     //MARK: - verify button
     let continueButton = EduIDButton(type: .primary, buttonTitle: "Continue")
@@ -15,18 +12,15 @@ class AddInstitutionViewController: OnBoardingBaseViewController, ScreenWithScre
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        screenType = .addInstitutionScreen
 
         setupUI()
         
         continueButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
-    }
-    
+    //MARK: - setup UI
     func setupUI() {
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false

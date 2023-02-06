@@ -1,10 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class ExplanationViewController: OnBoardingBaseViewController, ScreenWithScreenType {
-    
-    //MARK: - scren type
-    var screenType: ScreenType = .explanationScreen
+class ExplanationViewController: OnBoardingBaseViewController {
     
     private var stack: AnimatedVStackView!
     
@@ -13,13 +10,9 @@ class ExplanationViewController: OnBoardingBaseViewController, ScreenWithScreenT
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        screenType = .explanationScreen
         
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
+        setupUI()
     }
     
     //MARK: - setup UI

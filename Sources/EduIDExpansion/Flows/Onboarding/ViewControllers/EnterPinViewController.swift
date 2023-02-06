@@ -1,11 +1,8 @@
 import UIKit
 import TinyConstraints
 
-class EnterPinViewController: OnBoardingBaseViewController, ScreenWithScreenType {
+class EnterPinViewController: OnBoardingBaseViewController {
     
-    //MARK: - screen type
-    var screenType: ScreenType = .pinChallengeScreen
-
     //MARK: viewmodel
     let viewModel: EnterPinViewModel
     //MARK: verify button
@@ -19,6 +16,8 @@ class EnterPinViewController: OnBoardingBaseViewController, ScreenWithScreenType
     init(viewModel: EnterPinViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
+        screenType = .pinChallengeScreen
         
         viewModel.focusPinField = { [weak self] tag in
             (self?.pinStack.arrangedSubviews[tag + 1] as? PinTextFieldView)?.focus()
@@ -52,8 +51,6 @@ class EnterPinViewController: OnBoardingBaseViewController, ScreenWithScreenType
         super.viewWillAppear(animated)
         
         pinStack.animate()
-        
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
     
     override func viewDidAppear(_ animated: Bool) {

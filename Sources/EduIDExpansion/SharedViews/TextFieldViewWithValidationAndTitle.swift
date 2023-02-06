@@ -2,7 +2,7 @@ import UIKit
 import TinyConstraints
 import Combine
 
-class TextStackViewWithValidation: UIStackView, UITextFieldDelegate {
+class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
     
     private let validLabel = UILabel()
     private let extraBorderView = UIView()

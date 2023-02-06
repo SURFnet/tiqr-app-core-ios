@@ -14,7 +14,7 @@ class MainCoordinator: CoordinatorType, HomeNavigationDelegate, OnBoardingMainNa
         let onboardingCoordinator = OnboardingCoordinator()
         children.append(onboardingCoordinator)
         onboardingCoordinator.delegate = self
-//        onboardingCoordinator.start(presentOn: homeNavigationController)
+        onboardingCoordinator.start(presentOn: homeNavigationController)
     }
     
     //MARK: - personal info methods

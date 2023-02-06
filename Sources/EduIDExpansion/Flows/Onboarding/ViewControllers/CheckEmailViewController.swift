@@ -1,10 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class CheckEmailViewController: OnBoardingBaseViewController, ScreenWithScreenType {
-    
-    //MARK: - screen type
-    var screenType: ScreenType = .checkMailScreen
+class CheckEmailViewController: OnBoardingBaseViewController {
     
     //MARK: - delegate
     weak var navDelegate: NavigationDelegate?
@@ -13,6 +10,8 @@ class CheckEmailViewController: OnBoardingBaseViewController, ScreenWithScreenTy
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        screenType = .checkMailScreen
+        
         setupUI()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
@@ -20,12 +19,7 @@ class CheckEmailViewController: OnBoardingBaseViewController, ScreenWithScreenTy
         })
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBackNav))
-    }
-    
+    //MARK: - setup UI
     func setupUI() {
         
         //MARK: - posterLabel

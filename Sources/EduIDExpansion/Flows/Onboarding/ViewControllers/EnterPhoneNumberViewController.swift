@@ -1,21 +1,21 @@
 import UIKit
 import TinyConstraints
 
-class EnterPhoneNumberViewController: OnBoardingBaseViewController, ValidatedTextFieldDelegate, ScreenWithScreenType {
-    
-    //MARK: - screen type
-    var screenType: ScreenType = .enterPhoneScreen
+class EnterPhoneNumberViewController: OnBoardingBaseViewController, ValidatedTextFieldDelegate {
     
     var stack: AnimatedVStackView!
     
     //MARK: - phone textfield
-    let validatedPhoneTextField = TextStackViewWithValidation(title: "Enter your phone number", placeholder: "e.g. 0612345678", keyboardType: .numberPad)
+    let validatedPhoneTextField = TextFieldViewWithValidationAndTitle(title: "Enter your phone number", placeholder: "e.g. 0612345678", keyboardType: .numberPad)
     
     //MARK: - verify button
     let verifyButton = EduIDButton(type: .primary, buttonTitle: "Verify this phone number")
     
+    //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        screenType = .enterPhoneScreen
         
         setupUI()
         verifyButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
@@ -26,8 +26,6 @@ class EnterPhoneNumberViewController: OnBoardingBaseViewController, ValidatedTex
         super.viewWillAppear(animated)
         
         stack.animate(onlyThese: [2])
-        
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
     
     override func viewDidAppear(_ animated: Bool) {

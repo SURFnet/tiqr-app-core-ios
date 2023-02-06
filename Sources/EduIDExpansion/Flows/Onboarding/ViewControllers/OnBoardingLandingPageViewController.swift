@@ -1,22 +1,21 @@
 import UIKit
 import TinyConstraints
 
-class OnBoardingLandingPageViewController: OnBoardingBaseViewController, ScreenWithScreenType {
+class OnBoardingLandingPageViewController: OnBoardingBaseViewController {
     
     private var stack: AnimatedVStackView!
-    var screenType: ScreenType = .landingScreen
     
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        screenType = .landingScreen
         setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen))
         stack?.animate(onlyThese: [3, 4, 5])
         
     }

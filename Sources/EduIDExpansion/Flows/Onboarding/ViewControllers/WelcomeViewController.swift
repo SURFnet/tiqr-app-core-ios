@@ -1,10 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class WelcomeViewController: OnBoardingBaseViewController , ScreenWithScreenType {
-    
-    //MARK: - screen type
-    var screenType: ScreenType = .welcomeScreen
+class WelcomeViewController: OnBoardingBaseViewController {
     
     //MARK: - attributed texts for numbered list
     var attributedTexts: [NSAttributedString] = []
@@ -12,6 +9,8 @@ class WelcomeViewController: OnBoardingBaseViewController , ScreenWithScreenType
     //MARK: lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        screenType = .welcomeScreen
         
         let first = NSMutableAttributedString(string: "Quickly login to educational services", attributes: [.font: UIFont.sourceSansProRegular(size: 16)])
         first.setAttributes([.font: UIFont.sourceSansProBold(size: 16)], range: NSRange(location: 0, length: 13))
@@ -22,12 +21,6 @@ class WelcomeViewController: OnBoardingBaseViewController , ScreenWithScreenType
         attributedTexts.append(contentsOf: [first, second, third])
 
         setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
     
     //MARK: setup UI
