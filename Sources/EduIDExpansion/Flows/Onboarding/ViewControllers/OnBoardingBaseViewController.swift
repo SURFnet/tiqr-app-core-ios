@@ -11,17 +11,17 @@ class OnBoardingBaseViewController: BaseViewController {
     
     @objc
     override func goBack() {
-        delegate?.goBack()
+        delegate?.goBack(sender: self)
     }
     
     @objc
     func showNextScreen() {
-        delegate?.showNextScreen()
+        delegate?.showNextScreen(sender: self)
     }
     
     @objc
     func showScanScreen() {
-        delegate?.showScanScreen()
+        delegate?.showScanScreen(sender: self)
     }
 
 }

@@ -158,6 +158,6 @@ Scan it here
     
     @objc
     func dismissScanScreen() {
-        delegate?.dismiss()
+        delegate?.dismiss(sender: self)
     }
 }

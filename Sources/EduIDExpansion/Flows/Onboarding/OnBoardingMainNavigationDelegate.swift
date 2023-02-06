@@ -1,6 +1,6 @@
-import Foundation
+import UIKit
 
 protocol OnBoardingMainNavigationDelegate: AnyObject {
     
-    func dismissOnBoarding()
+    func dismissOnBoarding(sender: AnyObject)
 }

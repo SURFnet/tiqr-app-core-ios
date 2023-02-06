@@ -16,23 +16,23 @@ class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
         viewController.present(navigationController, animated: true)
     }
     
-    func goBack() {
+    func goBack(sender: AnyObject) {
         navigationController?.popViewController(animated: true)
     }
     
-    func dismissSecurityFlow() {
-        delegate?.dismissSecurityFlow()
+    func dismissSecurityFlow(sender: AnyObject) {
+        delegate?.dismissSecurityFlow(sender: self)
     }
     
     //MARK: - verify email flow
     
-    func verifyEmail() {
+    func verifyEmail(sender: AnyObject) {
         let checkEmailViewController = CheckEmailViewController()
         checkEmailViewController.navDelegate = self
         navigationController?.pushViewController(checkEmailViewController, animated: true)
     }
     
-    func enterVerifyEmailFlow() {
+    func enterVerifyEmailFlow(sender: AnyObject) {
         let emailViewController = SecurityEnterEmailViewController()
         emailViewController.delegate = self
         navigationController?.pushViewController(emailViewController, animated: true)
@@ -40,20 +40,22 @@ class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
     
     //MARK: - change password flow
     
-    func enterChangePasswordFlow() {
+    func enterChangePasswordFlow(sender: AnyObject) {
         let changePasswordViewController = SecurityChangePasswordViewController(viewModel: ChangePasswordViewModel())
         changePasswordViewController.delegate = self
         navigationController?.pushViewController(changePasswordViewController, animated: true)
     }
     
-    func resetPassword() {
+    func resetPassword(sender: AnyObject) {
         let confirmViewController = AlertMessageViewController(textMessage: "Password changed succefully", buttonTitle: "Ok") { [weak self] in
-            self?.securityGotoRootViewController()
+            if let self = self {
+                self.securityGotoRootViewController(sender: self.navigationController!)
+            }
         }
         navigationController?.pushViewController(confirmViewController, animated: true)
     }
     
-    func securityGotoRootViewController() {
+    func securityGotoRootViewController(sender: AnyObject) {
         navigationController?.popToRootViewController(animated: true)
     }
 }

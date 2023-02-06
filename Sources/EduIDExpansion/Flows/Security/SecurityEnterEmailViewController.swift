@@ -116,12 +116,12 @@ Please enter your new email address. A verification mail will be sent to this ad
     
     @objc
     func goBack() {
-        delegate?.goBack()
+        delegate?.goBack(sender: self)
     }
     
     @objc
     func verifyEmail() {
-        delegate?.verifyEmail()
+        delegate?.verifyEmail(sender: self)
     }
 
 }

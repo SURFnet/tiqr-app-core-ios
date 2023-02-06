@@ -2,5 +2,5 @@ import Foundation
 
 protocol NavigationDelegate: AnyObject {
     
-    func goBack()
+    func goBack(sender: AnyObject)
 }

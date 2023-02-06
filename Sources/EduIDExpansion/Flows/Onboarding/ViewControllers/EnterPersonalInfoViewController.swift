@@ -150,6 +150,10 @@ class EnterPersonalInfoViewController: ScrollingViewControllerWithTextFields {
     
     @objc
     func showNextScreen() {
-        delegate?.showNextScreen()
+        delegate?.showNextScreen(sender: self)
+    }
+    
+    override func goBack() {
+        delegate?.goBack(sender: self)
     }
 }

@@ -1,6 +1,6 @@
-import Foundation
+import UIKit
 
 protocol PersonalInfoMainNavigationDelegate: AnyObject {
     
-    func dismissPersonalInfoFlow()
+    func dismissPersonalInfoFlow(sender: AnyObject)
 }

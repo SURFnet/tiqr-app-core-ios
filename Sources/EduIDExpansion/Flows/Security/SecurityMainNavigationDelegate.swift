@@ -1,6 +1,6 @@
-import Foundation
+import UIKit
 
 protocol SecurityMainNavigationDelegate: AnyObject {
     
-    func dismissSecurityFlow()
+    func dismissSecurityFlow(sender: AnyObject)
 }

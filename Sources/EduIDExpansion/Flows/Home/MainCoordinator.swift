@@ -1,6 +1,7 @@
 import UIKit
 
-class MainCoordinator: CoordinatorType, HomeNavigationDelegate, OnBoardingMainNavigationDelegate, ScanMainNavigationDelegate, SecurityMainNavigationDelegate, PersonalInfoMainNavigationDelegate {
+class MainCoordinator: CoordinatorType {
+    
     
     var children: [CoordinatorType] = []
     weak var homeNavigationController: UINavigationController!
@@ -17,49 +18,69 @@ class MainCoordinator: CoordinatorType, HomeNavigationDelegate, OnBoardingMainNa
         onboardingCoordinator.start(presentOn: homeNavigationController)
     }
     
-    //MARK: - personal info methods
-    func showPersonalInfoScreen() {
+    func showActivityScreen() {}
+}
+
+extension MainCoordinator: HomeNavigationDelegate  {
+    
+    func showPersonalInfoScreen(sender: AnyObject) {
         let personalInfoCoordinator = PersonalInfoCoordinator()
         children.append(personalInfoCoordinator)
         personalInfoCoordinator.delegate = self
         personalInfoCoordinator.start(presentOn: homeNavigationController)
     }
     
-    func dismissPersonalInfoFlow() {
-        homeNavigationController.presentedViewController?.dismiss(animated: true)
-        children.removeAll { $0 is PersonalInfoCoordinator }
-    }
-    
-    //MARK: - scan screen methods
-    func showScanScreen() {
-        let scanCoordinator = ScanCoordinator()
-        scanCoordinator.delegate = self
-        children.append(scanCoordinator)
-        scanCoordinator.start(presentedOn: homeNavigationController)
-    }
-    
-    func dismissScanScreen() {
-        homeNavigationController.presentedViewController?.dismiss(animated: true)
-        children.removeAll { $0 is ScanCoordinator }
-    }
-    
-    //MARK: security screen flow
-    func showSecurityScreen() {
+    func showSecurityScreen(sender: AnyObject) {
         let securityCoordinator = SecurityCoordinator()
         children.append(securityCoordinator)
         securityCoordinator.delegate = self
         securityCoordinator.start(presentOn: homeNavigationController)
     }
     
-    func dismissSecurityFlow() {
+    func showActivityScreen(sender: AnyObject) {
+        
+    }
+    
+    func showScanScreen(sender: AnyObject) {
+        let scanCoordinator = ScanCoordinator()
+        scanCoordinator.delegate = self
+        children.append(scanCoordinator)
+        scanCoordinator.start(presentedOn: homeNavigationController)
+    }
+}
+
+extension MainCoordinator: PersonalInfoMainNavigationDelegate {
+    //MARK: - personal info methods
+    
+    func dismissPersonalInfoFlow(sender: AnyObject) {
+        homeNavigationController.presentedViewController?.dismiss(animated: true)
+        children.removeAll { $0 is PersonalInfoCoordinator }
+    }
+}
+
+    
+extension MainCoordinator: ScanMainNavigationDelegate {
+    
+    //MARK: - scan screen methods
+    func dismissScanScreen(sender: AnyObject) {
+        homeNavigationController.presentedViewController?.dismiss(animated: true)
+        children.removeAll { $0 is ScanCoordinator }
+    }
+}
+
+extension MainCoordinator: SecurityMainNavigationDelegate {
+    
+    //MARK: security screen flow
+    func dismissSecurityFlow(sender: AnyObject) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 is SecurityCoordinator }
     }
+}
     
-    func showActivityScreen() {}
+extension MainCoordinator: OnBoardingMainNavigationDelegate {
     
     //MARK: - onboarding delegate
-    func dismissOnBoarding() {
+    func dismissOnBoarding(sender: AnyObject) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 is OnboardingCoordinator }
     }

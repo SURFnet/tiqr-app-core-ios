@@ -1,8 +1,8 @@
-import Foundation
+import UIKit
 
 protocol OnBoardingNavigationDelegate: AnyObject, NavigationDelegate {
     
-    func goBack()
-    func showNextScreen()
-    func showScanScreen()
+    func goBack(sender: AnyObject)
+    func showNextScreen(sender: AnyObject)
+    func showScanScreen(sender: AnyObject)
 }

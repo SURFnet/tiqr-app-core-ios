@@ -16,7 +16,7 @@ class ScanCoordinator: CoordinatorType, ScanNavigationDelegate{
         viewController.present(navigationController, animated: true)
     }
     
-    func dismiss() {
-        delegate?.dismissScanScreen()
+    func dismiss(sender: AnyObject) {
+        delegate?.dismissScanScreen(sender: self)
     }
 }
