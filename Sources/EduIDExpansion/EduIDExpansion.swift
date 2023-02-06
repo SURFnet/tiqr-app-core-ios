@@ -10,11 +10,8 @@ public final class EduIDExpansion: NSObject {
     }
     
     public func attachViewController() -> UIViewController {
-        let homeViewController = HomeViewController()
-        let homeNavigationController = UINavigationController(rootViewController: homeViewController)
-        mainCoordinator = MainCoordinator(homeNavigationController: homeNavigationController)
-        homeViewController.delegate = mainCoordinator
-        return homeNavigationController
+        mainCoordinator = MainCoordinator()
+        return mainCoordinator.homeNavigationController
     }
     
     public func run() {
