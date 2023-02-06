@@ -13,7 +13,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
     var cancellables = Set<AnyCancellable>()
 
     //MARK: init
-    init(regex: String? = nil, title: String, placeholder: String, keyboardType: UIKeyboardType) {
+    init(regex: String? = nil, title: String, placeholder: String, keyboardType: UIKeyboardType, isPassword: Bool = false) {
         super.init(frame: .zero)
         
         extraBorderView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
@@ -39,6 +39,8 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
         textField.autocorrectionType = .no
         textField.enablesReturnKeyAutomatically = true
         textField.returnKeyType = .continue
+        
+        textField.isSecureTextEntry = isPassword
         
         let textFieldPublisher = NotificationCenter.default
             .publisher(for: UITextField.textDidChangeNotification, object: textField)

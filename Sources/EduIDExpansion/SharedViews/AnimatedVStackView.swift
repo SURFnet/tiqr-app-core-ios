@@ -1,6 +1,6 @@
 import UIKit
 
-class AnimatedVStackView: UIStackView {
+class AnimatedVStackView: BasicStackView {
     
     func hideAndTriggerAll(onlyThese indices: [Int]) {
         var filterSubViews: [UIView] = []

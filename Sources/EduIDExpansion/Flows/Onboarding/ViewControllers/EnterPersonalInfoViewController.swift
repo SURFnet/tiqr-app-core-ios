@@ -1,23 +1,19 @@
 import UIKit
 import TinyConstraints
 
-class EnterPersonalInfoViewController: OnBoardingBaseViewController {
+class EnterPersonalInfoViewController: ScrollingViewControllerWithTextFields {
+    
+    weak var delegate: OnBoardingNavigationDelegate?
     
     private var viewModel: EnterPersonalInfoViewModel
-    private var keyboardHeight: CGFloat?
-    private var isKeyBoardOnScreen = false
     private let inset: CGFloat = 24
-    static let smallBuffer: CGFloat = 50
     static let emailFieldTag = 3
     
-    var stack: AnimatedVStackView!
     let requestButton = EduIDButton(type: .primary, buttonTitle: "Request you eduID")
     let emailField = TextFieldViewWithValidationAndTitle(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
-    let scrollView = UIScrollView()
     
     //MARK: - spacing
     let spacingView = UIView()
-    
     
     //MARK: - init
     init(viewModel: EnterPersonalInfoViewModel) {
@@ -46,15 +42,9 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController {
             guard Date().timeIntervalSince(loadedTime) > 2 else { return }
             self?.scrollViewToTextField(index: tag)
         }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: UIResponder.keyboardDidHideNotification, object: nil)
-        
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -71,6 +61,7 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         stack.animate(onlyThese: [1, 2, 3, 4, 6])
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -155,62 +146,10 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController {
         
         stack.hideAndTriggerAll(onlyThese: [1, 2, 3, 4, 6])
     }
-    
-    //MARK: - keyboard related
-    
-    @objc
-    func keyboardDidShow(notification: Notification) {
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-            return
-        }
-        keyboardHeight = keyboardFrame.size.height
-        guard !isKeyBoardOnScreen else {
-            return
-        }
-        isKeyBoardOnScreen = true
-        for (i, arrangedSubview) in stack.arrangedSubviews.enumerated() {
-            if let textView = arrangedSubview as? TextFieldViewWithValidationAndTitle {
-                if textView.textField.isFirstResponder {
-                    scrollViewToTextField(index: i)
-                }
-            }
-        }
-    }
+
     
     @objc
-    func keyboardDidHide() {
-        isKeyBoardOnScreen = false
-        resetScrollviewInsets()
+    func showNextScreen() {
+        delegate?.showNextScreen()
     }
-    
-    func resetScrollviewInsets() {
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.scrollView.contentInset.bottom = 0
-            self?.scrollView.contentOffset.y = -(self?.view.safeAreaInsets.top ?? 0)
-        }
-    }
-    
-    func scrollViewToTextField(index: Int) {
-        let stackHeight = stack.frame.size.height
-        let textFieldFrameInWindow = stack.arrangedSubviews[index].convert(stack.arrangedSubviews[index].bounds, to: view.window)
-        let textFieldOriginY = textFieldFrameInWindow.origin.y
-        let textFieldHeight = textFieldFrameInWindow.size.height
-        let textFieldLowpoint = textFieldOriginY + textFieldHeight
-        let distanceFromBottomToTextField = scrollView.frame.size.height - textFieldLowpoint
-                
-        if distanceFromBottomToTextField < keyboardHeight ?? 0 {
-            scrollView.contentInset.bottom = (keyboardHeight ?? 0) - distanceFromBottomToTextField
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.scrollView.contentOffset.y = -(self?.view.safeAreaInsets.top ?? 0) + (self?.keyboardHeight ?? 0) - distanceFromBottomToTextField
-            }
-        } 
-    }
-    
-    @objc
-    func resignKeyboardResponder() {
-        (1...3).forEach { integer in
-            _ = (stack.arrangedSubviews[integer] as? TextFieldViewWithValidationAndTitle)?.resignFirstResponder()
-        }
-    }
-    
 }
