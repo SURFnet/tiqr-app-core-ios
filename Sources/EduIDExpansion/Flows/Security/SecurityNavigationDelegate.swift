@@ -7,4 +7,5 @@ protocol SecurityNavigationDelegate: AnyObject, NavigationDelegate {
     func dismissSecurityFlow()
     func verifyEmail()
     func enterChangePasswordFlow()
+    func resetPassword()
 }

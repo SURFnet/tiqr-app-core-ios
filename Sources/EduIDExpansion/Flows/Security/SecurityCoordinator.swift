@@ -46,5 +46,15 @@ class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
         navigationController?.pushViewController(changePasswordViewController, animated: true)
     }
     
+    func resetPassword() {
+        let confirmViewController = AlertMessageViewController(textMessage: "Password changed succefully", buttonTitle: "Ok") { [weak self] in
+            self?.securityGotoRootViewController()
+        }
+        navigationController?.pushViewController(confirmViewController, animated: true)
+    }
+    
+    func securityGotoRootViewController() {
+        navigationController?.popToRootViewController(animated: true)
+    }
 }
 
