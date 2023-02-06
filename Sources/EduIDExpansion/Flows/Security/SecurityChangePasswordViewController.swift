@@ -64,6 +64,12 @@ class SecurityChangePasswordViewController: ScrollingViewControllerWithTextField
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
+    }
+    
     //MARK: - setup UI
     private func setupUI() {
         // scrollView
@@ -124,6 +130,10 @@ Make sure your new password is at least 15 characters OR at least 8 characters i
     @objc
     func resetAction() {
         delegate?.resetPassword()
+    }
+    
+    override func goBack() {
+        delegate?.goBack()
     }
 
 }
