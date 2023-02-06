@@ -46,6 +46,7 @@ final class OnboardingCoordinator: OnboardingCoordinatorType, OnBoardingNavigati
         
         guard let nextViewController = ScreenType(rawValue: currentScreenType.rawValue + 1)?.viewController() else { return }
         (nextViewController as? OnBoardingBaseViewController)?.delegate = self
+        (nextViewController as? EnterPersonalInfoViewController)?.delegate = self
         navigationController.pushViewController(nextViewController, animated: true)
         currentScreenType = ScreenType(rawValue: currentScreenType.rawValue + 1) ?? .none
     }
