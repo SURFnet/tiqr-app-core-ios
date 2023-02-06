@@ -116,7 +116,14 @@ Make sure your new password is at least 15 characters OR at least 8 characters i
         newPasswordField.width(to: stack)
         repeatPasswordField.width(to: stack)
         
+        // actions
+        resetPasswordButton.addTarget(self, action: #selector(resetAction), for: .touchUpInside)
+        
     }
 
+    @objc
+    func resetAction() {
+        delegate?.resetPassword()
+    }
 
 }
