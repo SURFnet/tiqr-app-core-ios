@@ -1,6 +1,6 @@
-import Foundation
+import UIKit
 
 protocol ScanNavigationDelegate: AnyObject {
     
-    func dismiss()
+    func dismiss(sender: AnyObject)
 }

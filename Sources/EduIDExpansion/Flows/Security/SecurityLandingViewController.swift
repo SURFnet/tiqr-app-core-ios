@@ -104,16 +104,16 @@ We provide different methods to sign in to your eduID account.
     
     @objc
     func dismissSecurityScreen() {
-        delegate?.dismissSecurityFlow()
+        delegate?.dismissSecurityFlow(sender: self)
     }
     
     @objc
     func enterEmailFlow() {
-        delegate?.enterVerifyEmailFlow()
+        delegate?.enterVerifyEmailFlow(sender: self)
     }
     
     @objc
     func enterChangePasswordFlow() {
-        delegate?.enterChangePasswordFlow()
+        delegate?.enterChangePasswordFlow(sender: self)
     }
 }

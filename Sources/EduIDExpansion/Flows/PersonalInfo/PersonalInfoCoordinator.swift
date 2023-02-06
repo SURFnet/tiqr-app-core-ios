@@ -18,24 +18,17 @@ class PersonalInfoCoordinator: CoordinatorType, PersonalInfoNavigationDelegate {
         viewController.present(navigationController, animated: true)
     }
     
-    func dismiss() {
-        delegate?.dismissPersonalInfoFlow()
+    func dismiss(sender: AnyObject) {
+        delegate?.dismissPersonalInfoFlow(sender: self)
     }
     
     @objc
-    func drillDown() {
-//        navigationController?.pushViewController(EditPersonalInfoViewController(), animated: true)
-//        navigationController.viewControllers.last?.navigationItem.hidesBackButton = true
-//        navigationController.viewControllers.last?.navigationItem.leftBarButtonItem = UIBarButtonItem(image: .arrowBack, style: .plain, target: self, action: #selector(goBack))
-//        navigationController.navigationBar.tintColor = .backgroundColor
-//        let logo = UIImageView(image: .eduIDLogo)
-//        logo.width(92)
-//        logo.height(36)
-//        navigationController.viewControllers.last?.navigationItem.titleView = logo
+    func enterItem() {
+        //TODO: implement screens
     }
     
     @objc
-    func goBack() {
+    func goBack(sender: AnyObject) {
         navigationController?.popViewController(animated: true)
     }
 }

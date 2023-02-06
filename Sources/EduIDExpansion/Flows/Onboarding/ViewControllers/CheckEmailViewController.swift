@@ -88,6 +88,6 @@ class CheckEmailViewController: OnBoardingBaseViewController {
     
     @objc
     func goBackNav() {
-        navDelegate?.goBack()
+        navDelegate?.goBack(sender: self)
     }
 }

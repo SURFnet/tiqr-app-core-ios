@@ -26,6 +26,7 @@ class SecurityChangePasswordViewController: ScrollingViewControllerWithTextField
                 self?.resignKeyboardResponder()
                 return
             }
+            
             //tag + 2 because the stackview's first subview is the poster label and we need the subview after the current, hence + 2
             _ = (self?.stack.arrangedSubviews[self?.nextTextfieldBy(tag: tag) ?? 0] as? TextFieldViewWithValidationAndTitle)?.becomeFirstResponder()
             self?.scrollViewToTextField(index: self?.nextTextfieldBy(tag: tag) ?? 0)
@@ -129,11 +130,11 @@ Make sure your new password is at least 15 characters OR at least 8 characters i
 
     @objc
     func resetAction() {
-        delegate?.resetPassword()
+        delegate?.resetPassword(sender: self)
     }
     
     override func goBack() {
-        delegate?.goBack()
+        delegate?.goBack(sender: self)
     }
 
 }

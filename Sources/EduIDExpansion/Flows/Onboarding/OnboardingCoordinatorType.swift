@@ -1,6 +1,6 @@
 import Foundation
 
 protocol OnboardingCoordinatorType: CoordinatorType {
-    func showNextScreen()
-    func goBack()
+    func showNextScreen(sender: AnyObject)
+    func goBack(sender: AnyObject)
 }

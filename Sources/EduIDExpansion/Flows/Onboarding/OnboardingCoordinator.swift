@@ -1,6 +1,6 @@
 import UIKit
 
-final class OnboardingCoordinator: OnboardingCoordinatorType, OnBoardingNavigationDelegate, ScanMainNavigationDelegate {
+final class OnboardingCoordinator: OnboardingCoordinatorType {
     
     weak var navigationController: UINavigationController!
     weak var delegate: OnBoardingMainNavigationDelegate?
@@ -20,27 +20,34 @@ final class OnboardingCoordinator: OnboardingCoordinatorType, OnBoardingNavigati
         
         self.navigationController = navigationController
         
-//        viewController.present(self.navigationController, animated: false)
+        viewController.present(self.navigationController, animated: false)
     }
+}
+
+extension OnboardingCoordinator: ScanMainNavigationDelegate {
     
     //MARK: - start scan screen
-    func showScanScreen() {
+    
+    
+    func dismissScanScreen(sender: AnyObject) {
+        navigationController.presentedViewController?.dismiss(animated: true)
+        children.removeAll { $0 is ScanCoordinator }
+    }
+}
+
+extension OnboardingCoordinator: OnBoardingNavigationDelegate {
+    
+    func showScanScreen(sender: AnyObject) {
         let scanCoordinator = ScanCoordinator()
         scanCoordinator.delegate = self
         children.append(scanCoordinator)
         scanCoordinator.start(presentedOn: navigationController)
     }
     
-    func dismissScanScreen() {
-        navigationController.presentedViewController?.dismiss(animated: true)
-        children.removeAll { $0 is ScanCoordinator }
-    }
-    
-    
     //MARK: - show next screen
-    func showNextScreen() {
+    func showNextScreen(sender: AnyObject) {
         if currentScreenType == .addInstitutionScreen {
-            delegate?.dismissOnBoarding()
+            delegate?.dismissOnBoarding(sender: self)
             return
         }
         
@@ -51,10 +58,12 @@ final class OnboardingCoordinator: OnboardingCoordinatorType, OnBoardingNavigati
         currentScreenType = ScreenType(rawValue: currentScreenType.rawValue + 1) ?? .none
     }
     
+    
     //MARK: - back action
     @objc
-    func goBack() {
+    func goBack(sender: AnyObject) {
         currentScreenType = ScreenType(rawValue: max(0, currentScreenType.rawValue - 1)) ?? .none
         navigationController.popViewController(animated: true)
     }
 }
+
