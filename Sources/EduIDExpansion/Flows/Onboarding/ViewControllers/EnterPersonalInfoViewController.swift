@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithScreenType {
+class EnterPersonalInfoViewController: OnBoardingBaseViewController {
     
     private var viewModel: EnterPersonalInfoViewModel
     private var keyboardHeight: CGFloat?
@@ -12,11 +12,8 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithS
     
     var stack: AnimatedVStackView!
     let requestButton = EduIDButton(type: .primary, buttonTitle: "Request you eduID")
-    let emailField = TextStackViewWithValidation(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
+    let emailField = TextFieldViewWithValidationAndTitle(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
     let scrollView = UIScrollView()
-    
-    //MARK: - screen type
-    var screenType: ScreenType = .enterInfoScreen
     
     //MARK: - spacing
     let spacingView = UIView()
@@ -27,6 +24,8 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithS
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
+        screenType = .enterInfoScreen
+        
         var loadedTime = Date()
         
         viewModel.makeNextTextFieldFirstResponderClosure = { [weak self] tag in
@@ -35,7 +34,7 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithS
                 return
             }
             //tag + 2 because the stackview's first subview is the poster label and we need the subview after the current, hence + 2
-            _ = (self?.stack.arrangedSubviews[tag + 1] as? TextStackViewWithValidation)?.becomeFirstResponder()
+            _ = (self?.stack.arrangedSubviews[tag + 1] as? TextFieldViewWithValidationAndTitle)?.becomeFirstResponder()
             self?.scrollViewToTextField(index: tag + 1)
         }
         
@@ -72,8 +71,6 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         stack.animate(onlyThese: [1, 2, 3, 4, 6])
-        
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -102,12 +99,12 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithS
         emailField.delegate = viewModel
         
         //MARK: - firstname
-        let firstNameField = TextStackViewWithValidation(title: "First name", placeholder: "e.g. Tim", keyboardType: .default)
+        let firstNameField = TextFieldViewWithValidationAndTitle(title: "First name", placeholder: "e.g. Tim", keyboardType: .default)
         firstNameField.tag = 2
         firstNameField.delegate = viewModel
         
         //MARK: - lastName
-        let lastNameField = TextStackViewWithValidation(title: "Last name", placeholder: "e.g. Berners-Lee", keyboardType: .default)
+        let lastNameField = TextFieldViewWithValidationAndTitle(title: "Last name", placeholder: "e.g. Berners-Lee", keyboardType: .default)
         lastNameField.tag = 3
         lastNameField.delegate = viewModel
         
@@ -171,7 +168,7 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithS
         }
         isKeyBoardOnScreen = true
         for (i, arrangedSubview) in stack.arrangedSubviews.enumerated() {
-            if let textView = arrangedSubview as? TextStackViewWithValidation {
+            if let textView = arrangedSubview as? TextFieldViewWithValidationAndTitle {
                 if textView.textField.isFirstResponder {
                     scrollViewToTextField(index: i)
                 }
@@ -211,7 +208,7 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController, ScreenWithS
     @objc
     func resignKeyboardResponder() {
         (1...3).forEach { integer in
-            _ = (stack.arrangedSubviews[integer] as? TextStackViewWithValidation)?.resignFirstResponder()
+            _ = (stack.arrangedSubviews[integer] as? TextFieldViewWithValidationAndTitle)?.resignFirstResponder()
         }
     }
     

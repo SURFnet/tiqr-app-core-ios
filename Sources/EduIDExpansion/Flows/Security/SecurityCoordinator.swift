@@ -24,6 +24,8 @@ class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
         delegate?.dismissSecurityFlow()
     }
     
+    //MARK: - verify email flow
+    
     func verifyEmail() {
         let checkEmailViewController = CheckEmailViewController()
         checkEmailViewController.navDelegate = self
@@ -34,6 +36,14 @@ class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
         let emailViewController = SecurityEnterEmailViewController()
         emailViewController.delegate = self
         navigationController?.pushViewController(emailViewController, animated: true)
+    }
+    
+    //MARK: - change password flow
+    
+    func enterChangePasswordFlow() {
+        let changePasswordViewController = SecurityChangePasswordViewController()
+        changePasswordViewController.delegate = self
+        navigationController?.pushViewController(changePasswordViewController, animated: true)
     }
     
 }

@@ -97,7 +97,7 @@ We provide different methods to sign in to your eduID account.
         
         //MARK: - actions
         firstControl.addTarget(self, action: #selector(enterEmailFlow), for: .touchUpInside)
-//        secondControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
+        secondControl.addTarget(self, action: #selector(enterChangePasswordFlow), for: .touchUpInside)
 //        thirdControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
 //        fourthControl.addTarget(coordinator, action: #selector(PersonalInfoCoordinator.drillDown), for: .touchUpInside)
     }
@@ -110,5 +110,10 @@ We provide different methods to sign in to your eduID account.
     @objc
     func enterEmailFlow() {
         delegate?.enterVerifyEmailFlow()
+    }
+    
+    @objc
+    func enterChangePasswordFlow() {
+        delegate?.enterChangePasswordFlow()
     }
 }

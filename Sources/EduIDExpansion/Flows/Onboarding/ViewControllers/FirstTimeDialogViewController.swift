@@ -1,12 +1,8 @@
 import UIKit
 import TinyConstraints
 
-class FirstTimeDialogViewController: OnBoardingBaseViewController, ScreenWithScreenType {
+class FirstTimeDialogViewController: OnBoardingBaseViewController {
 
-    //MARK: - screen type
-    var screenType: ScreenType = .firstTimeDialogScreen
-    
-    
     //MARK: - primary button
     let addButton = EduIDButton(type: .primary, buttonTitle: "Connect your school/institution")
     
@@ -19,6 +15,8 @@ class FirstTimeDialogViewController: OnBoardingBaseViewController, ScreenWithScr
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        screenType = .firstTimeDialogScreen
+        
         setupUI()
         addButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
     }
@@ -27,7 +25,6 @@ class FirstTimeDialogViewController: OnBoardingBaseViewController, ScreenWithScr
         super.viewWillAppear(animated)
         
         stack.animate(onlyThese: [4, 5])
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
     }
     
     override func viewDidLayoutSubviews() {

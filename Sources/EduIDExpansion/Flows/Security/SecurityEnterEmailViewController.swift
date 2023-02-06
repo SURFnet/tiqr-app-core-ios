@@ -12,7 +12,7 @@ class SecurityEnterEmailViewController: UIViewController, ScreenWithScreenType, 
     var stack: AnimatedVStackView!
     
     //MARK: - phone textfield
-    let validatedEmailTextField = TextStackViewWithValidation(title: "Your new email address", placeholder: "e.g. jairo@egeniq.com", keyboardType: .emailAddress)
+    let validatedEmailTextField = TextFieldViewWithValidationAndTitle(title: "Your new email address", placeholder: "e.g. jairo@egeniq.com", keyboardType: .emailAddress)
     
     //MARK: - verify button
     let verifyButton = EduIDButton(type: .primary, buttonTitle: "Verify email address")

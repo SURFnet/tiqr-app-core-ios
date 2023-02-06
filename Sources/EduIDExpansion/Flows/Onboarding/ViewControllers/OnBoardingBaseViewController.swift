@@ -1,13 +1,11 @@
 import UIKit
 
-class OnBoardingBaseViewController: UIViewController {
+class OnBoardingBaseViewController: BaseViewController {
     
     weak var delegate: OnBoardingNavigationDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
-
         // Do any additional setup after loading the view.
     }
     
