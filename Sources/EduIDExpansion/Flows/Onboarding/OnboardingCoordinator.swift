@@ -51,7 +51,7 @@ extension OnboardingCoordinator: OnBoardingNavigationDelegate {
             return
         }
         
-        guard let nextViewController = ScreenType(rawValue: currentScreenType.rawValue + 1)?.viewController() else { return }
+        guard let nextViewController = currentScreenType.nextOnBoardingScreen().viewController() else { return }
         (nextViewController as? OnBoardingBaseViewController)?.delegate = self
         (nextViewController as? EnterPersonalInfoViewController)?.delegate = self
         navigationController.pushViewController(nextViewController, animated: true)

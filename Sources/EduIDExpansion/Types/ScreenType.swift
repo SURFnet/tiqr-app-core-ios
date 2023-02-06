@@ -30,6 +30,28 @@ enum ScreenType: Int, CaseIterable {
     
     case none
     
+    func nextOnBoardingScreen() -> ScreenType {
+        switch self {
+        case .landingScreen:
+            return .explanationScreen
+        case .explanationScreen:
+            return .enterInfoScreen
+        case .enterInfoScreen:
+            return .checkMailScreen
+        case .checkMailScreen:
+            return .enterPhoneScreen
+        case .enterPhoneScreen:
+            return .pinChallengeScreen
+        case .pinChallengeScreen:
+            return .welcomeScreen
+        case .welcomeScreen:
+            return .firstTimeDialogScreen
+        case .firstTimeDialogScreen:
+            return .addInstitutionScreen
+        default:
+            return .none
+        }
+    }
     
     func viewController() -> UIViewController? {
         switch self {
