@@ -116,6 +116,7 @@ class EnterPersonalInfoViewController: OnBoardingBaseViewController {
         
         let theSwitch = UISwitch()
         theSwitch.onTintColor = .primaryColor
+        
         let termsLabel = UILabel()
         termsLabel.font = .sourceSansProRegular(size: 12)
         termsLabel.textColor = .charcoalColor

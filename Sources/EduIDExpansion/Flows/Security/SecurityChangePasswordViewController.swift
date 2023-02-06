@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class SecurityChangePasswordViewController: UIViewController {
+class SecurityChangePasswordViewController: BaseViewController {
     
     //MARK: delegate
     weak var delegate: SecurityNavigationDelegate?
@@ -12,6 +12,8 @@ class SecurityChangePasswordViewController: UIViewController {
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        screenType = .securityChangePasswordScreen
 
         setupUI()
     }

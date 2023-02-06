@@ -10,7 +10,7 @@ class OnBoardingBaseViewController: BaseViewController {
     }
     
     @objc
-    func goBack() {
+    override func goBack() {
         delegate?.goBack()
     }
     

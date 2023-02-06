@@ -48,6 +48,7 @@ class FirstTimeDialogViewController: OnBoardingBaseViewController {
         //MARK: - textView
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineSpacing = 24 - 16
+        
         let attributedText = NSMutableAttributedString(string: """
 When you study in the Netherlands and you want to use eduID to logon to an educational services, we need to be sure it’s you and not someone impersonating you.
 You must therefore add the following information to your eduID:
@@ -65,12 +66,7 @@ You must therefore add the following information to your eduID:
         
         //MARK: - additional text view
         let labelParent = UIView()
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        let attributedText2 = NSMutableAttributedString(string: "Add this information by connecting your school/institution via SURFconext.", attributes: [.foregroundColor: UIColor.charcoalColor, .font: UIFont.sourceSansProRegular(size: 16)])
-        attributedText2.setAttributeTo(part: "Add this information", attributes: [.font: UIFont.sourceSansProBold(size: 16)])
-        label.attributedText = attributedText2
+        let label = UILabel.plainTextLabelPartlyBold(text: "Add this information by connecting your school/institution via SURFconext.", partBold: "Add this information")
         labelParent.addSubview(label)
         label.edges(to: labelParent)
         

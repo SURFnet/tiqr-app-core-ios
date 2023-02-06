@@ -22,7 +22,12 @@ class BaseViewController: UIViewController, ScreenWithScreenType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        screenType.configureNavigationItem(item: self.navigationItem)
+        screenType.configureNavigationItem(item: self.navigationItem, target: self, action: #selector(goBack))
+    }
+    
+    @objc
+    func goBack() {
+        
     }
     
 

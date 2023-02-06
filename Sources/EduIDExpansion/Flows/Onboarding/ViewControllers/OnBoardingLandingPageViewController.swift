@@ -17,6 +17,7 @@ class OnBoardingLandingPageViewController: OnBoardingBaseViewController {
         super.viewWillAppear(animated)
         
         stack?.animate(onlyThese: [3, 4, 5])
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen))
         
     }
     
