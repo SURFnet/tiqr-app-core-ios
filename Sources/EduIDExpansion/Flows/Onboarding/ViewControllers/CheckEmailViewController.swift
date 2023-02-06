@@ -26,11 +26,10 @@ class CheckEmailViewController: OnBoardingBaseViewController {
         let posterLabel = UILabel.posterTextLabel(text: "Check your email", size: 24)
         
         //MARK: - messageLabel
-        let messageLabel = UILabel()
-        messageLabel.font = .sourceSansProRegular(size: 16)
-        messageLabel.textColor = .charcoalColor
-        messageLabel.text = "To sign in, click the link in the email we sent to juanCarlos02@hotmail.com."
-        messageLabel.numberOfLines = 2
+        let messageLabel = UILabel.plainTextLabelPartlyBold(text: "To sign in, click the link in the email we sent to juanCarlos02@hotmail.com.", partBold: "juanCarlos02@hotmail.com.")
+        let messageParent = UIView()
+        messageParent.addSubview(messageLabel)
+        messageLabel.edges(to: messageParent)
         
         //MARK: - activityIndicatorView
         let activity = UIActivityIndicatorView(style: .large)
@@ -72,7 +71,7 @@ class CheckEmailViewController: OnBoardingBaseViewController {
         let spaceView = UIView()
         
         //MARK: - create the stackview
-        let stack = UIStackView(arrangedSubviews: [posterLabel, messageLabel, activity, emailOptionsVStack, spaceView])
+        let stack = UIStackView(arrangedSubviews: [posterLabel, messageParent, activity, emailOptionsVStack, spaceView])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill

@@ -20,7 +20,7 @@ final class OnboardingCoordinator: OnboardingCoordinatorType, OnBoardingNavigati
         
         self.navigationController = navigationController
         
-        viewController.present(self.navigationController, animated: false)
+//        viewController.present(self.navigationController, animated: false)
     }
     
     //MARK: - start scan screen

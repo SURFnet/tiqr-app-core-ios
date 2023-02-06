@@ -32,17 +32,10 @@ class AddInstitutionViewController: OnBoardingBaseViewController {
         
         //MARK: - create the textView
         let textLabelParent = UIView()
-        let textLabel = UILabel()
-        textLabel.numberOfLines = 0
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.font = .sourceSansProLight(size: 16)
-        textLabel.textColor = .secondaryColor
-        let attributedText = NSMutableAttributedString(string:
-"""
+        let textLabel = UILabel.plainTextLabelPartlyBold(text: """
 The following information has been added to your eduID and can now be shared.
 """
-                                                ,attributes: [.font : UIFont.sourceSansProLight(size: 16)])
-        textLabel.attributedText = attributedText
+                                                         , partBold: "")
         textLabelParent.addSubview(textLabel)
         textLabel.edges(to: textLabelParent)
         

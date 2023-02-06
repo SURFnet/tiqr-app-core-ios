@@ -26,6 +26,7 @@ enum ScreenType: Int, CaseIterable {
     // security
     case securityLandingScreen
     case securityEnterEmailScreen
+    case securityChangePasswordScreen
     
     case none
     
@@ -63,33 +64,6 @@ enum ScreenType: Int, CaseIterable {
         }
     }
     
-    var showLogoInTitleView: Bool {
-        switch self {
-        case .landingScreen, .homeScreen:
-            return false
-        default:
-            return true
-        }
-    }
-    
-    var showScanButtonInNavigationBar: Bool {
-        switch self {
-        case .landingScreen, .homeScreen:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    var bartintColor: UIColor {
-        switch self {
-        case .scanScreen:
-            return .white
-        default:
-            return .backgroundColor
-        }
-    }
-    
     func configureNavigationItem(item: UINavigationItem, target: Any? = nil, action: Selector? = nil) {
         switch self {
         case .personalInfoLandingScreen, .securityLandingScreen:
@@ -110,7 +84,7 @@ enum ScreenType: Int, CaseIterable {
             item.rightBarButtonItem?.tintColor = .white
         case .landingScreen, .homeScreen:
             item.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: target, action: action)
-        case .explanationScreen, .enterInfoScreen, .checkMailScreen, .enterPhoneScreen, .pinChallengeScreen, .welcomeScreen, .firstTimeDialogScreen, .addInstitutionScreen:
+        default:
             let logo = UIImageView(image: UIImage.eduIDLogo)
             logo.width(92)
             logo.height(36)
@@ -118,8 +92,6 @@ enum ScreenType: Int, CaseIterable {
             item.hidesBackButton = true
             item.leftBarButtonItem = UIBarButtonItem(image: UIImage.arrowBack, style: .plain, target: target, action: action)
             item.leftBarButtonItem?.tintColor = .backgroundColor
-        default:
-            break
         }
     }
 }

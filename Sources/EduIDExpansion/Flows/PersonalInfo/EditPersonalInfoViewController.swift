@@ -44,18 +44,9 @@ class EditPersonalInfoViewController: UIViewController, ScreenWithScreenType {
         
         //MARK: - create the textView
         let textLabelParent = UIView()
-        let textLabel = UILabel()
-        textLabel.numberOfLines = 0
-        textLabel.isUserInteractionEnabled = false
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.font = .sourceSansProLight(size: 16)
-        textLabel.textColor = .secondaryColor
-        let attributedText = NSMutableAttributedString(string:
-"""
+        let textLabel = UILabel.plainTextLabelPartlyBold(text: """
 When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party.
-"""
-                                                       ,attributes: [.font : UIFont.sourceSansProLight(size: 16)])
-        textLabel.attributedText = attributedText
+""", partBold: "")
         textLabelParent.addSubview(textLabel)
         textLabel.edges(to: textLabelParent)
         
