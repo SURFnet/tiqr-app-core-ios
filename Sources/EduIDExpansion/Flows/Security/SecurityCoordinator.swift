@@ -41,7 +41,7 @@ class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
     //MARK: - change password flow
     
     func enterChangePasswordFlow() {
-        let changePasswordViewController = SecurityChangePasswordViewController()
+        let changePasswordViewController = SecurityChangePasswordViewController(viewModel: ChangePasswordViewModel())
         changePasswordViewController.delegate = self
         navigationController?.pushViewController(changePasswordViewController, animated: true)
     }
