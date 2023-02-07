@@ -71,7 +71,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
         textFieldParent.trailing(to: extraBorderView, offset: -2)
         textFieldParent.layer.cornerRadius = 6
         textFieldParent.layer.borderWidth = 1
-        textFieldParent.layer.borderColor = UIColor.tertiary.cgColor
+        textFieldParent.layer.borderColor = UIColor.tertiaryColor.cgColor
         textFieldParent.addSubview(textField)
         textField.center(in: textFieldParent)
         textField.width(to: self, offset: -24)
