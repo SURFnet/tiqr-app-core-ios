@@ -40,7 +40,10 @@ extension MainCoordinator: HomeNavigationDelegate  {
     }
     
     func showActivityScreen(sender: AnyObject) {
-        
+        let activityCoordinator = ActivityCoordinator()
+        children.append(activityCoordinator)
+        activityCoordinator.delegate = self
+        activityCoordinator.start(presentOn: homeNavigationController)
     }
     
     func showScanScreen(sender: AnyObject) {
@@ -52,8 +55,8 @@ extension MainCoordinator: HomeNavigationDelegate  {
 }
 
 extension MainCoordinator: PersonalInfoMainNavigationDelegate {
-    //MARK: - personal info methods
     
+    //MARK: - personal info methods
     func dismissPersonalInfoFlow(sender: AnyObject) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 is PersonalInfoCoordinator }
@@ -72,7 +75,7 @@ extension MainCoordinator: ScanMainNavigationDelegate {
 
 extension MainCoordinator: SecurityMainNavigationDelegate {
     
-    //MARK: security screen flow
+    //MARK: - security screen flow
     func dismissSecurityFlow(sender: AnyObject) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 is SecurityCoordinator }
@@ -86,5 +89,13 @@ extension MainCoordinator: OnBoardingMainNavigationDelegate {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 is OnboardingCoordinator }
     }
+}
 
+extension MainCoordinator: ActivitMainNavigationDelegate {
+    
+    //MARK: - activity flow methods
+    func dismissActivityFlow(sender: AnyObject) {
+        homeNavigationController.presentedViewController?.dismiss(animated: true)
+        children.removeAll { $0 is ActivityCoordinator }
+    }
 }
