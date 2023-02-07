@@ -1,11 +1,5 @@
-//
-//  ActivityItemControl.swift
-//  
-//
-//  Created by Jairo Bambang Oetomo on 07/02/2023.
-//
-
 import UIKit
+import TinyConstraints
 
 class ActivityItemControl: UIControl {
 
