@@ -251,4 +251,22 @@
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"TIQRLibraryVersion"];
 }
 
++ (NSString *)shortGitReleaseVersion {
+    NSString *gitReleaseVersion = [TiqrConfig gitReleaseVersion];
+    if ([gitReleaseVersion length] > 7) {
+        return [gitReleaseVersion substringToIndex: 7];
+    } else {
+        return gitReleaseVersion;
+    }
+}
+
++ (NSString *)shortCoreLibraryVersion {
+    NSString *coreLibraryVersion = [TiqrConfig coreLibraryVersion];
+    if ([coreLibraryVersion length] > 7) {
+        return [coreLibraryVersion substringToIndex: 7];
+    } else {
+        return coreLibraryVersion;
+    }
+}
+
 @end

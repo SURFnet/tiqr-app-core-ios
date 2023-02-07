@@ -22,9 +22,6 @@
 /* Allow button */
 "allow_button" = "Sta toe";
 
-/* App version: %@, Shown on the about screen */
-"app_version" = "App-versie: %@";
-
 /* Don\'t worry! Click the QR tag on the\nwebsite. You will be asked to enter the\nfollowing one-time credentials: */
 "authentication_fallback_description" = "Geen paniek! Klik op de QR-code op de\nwebsite. Je wordt gevraagd om de volgende\neenmalige gegevens in te geven:";
 
@@ -244,9 +241,6 @@
 
 /* No connection error message */
 "internet_connection_required" = "Om je account te activeren heb je een actieve internetverbinding nodig. Probeer het later opnieuw.";
-
-/* Library version: %@, Shown on the about screen */
-"library_version" = "Bibliotheek-versie: %@";
 
 /* Login information message */
 "loggedin_with_account" = "Je bent ingelogd met het volgende account";

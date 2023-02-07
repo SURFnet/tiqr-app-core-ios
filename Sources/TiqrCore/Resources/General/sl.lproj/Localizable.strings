@@ -22,9 +22,6 @@
 /* Allow button */
 "allow_button" = "Allow";
 
-/* App version: %@, Shown on the about screen */
-"app_version" = "App version: %@";
-
 /* Don\'t worry! Click the QR tag on the\nwebsite. You will be asked to enter the\nfollowing one-time credentials: */
 "authentication_fallback_description" = "Ne skrbite! Kliknite kodo QR na spletni strani,\nin prijavili se boste lahko z enkratnim geslom:";
 
@@ -244,9 +241,6 @@
 
 /* No connection error message */
 "internet_connection_required" = "Za aktivacijo računa potrebujete aktivno povezavo v internet. Vzpostavite povezavo in  poskusite ponovno.";
-
-/* Library version: %@, Shown on the about screen */
-"library_version" = "Library version: %@";
 
 /* Login information message */
 "loggedin_with_account" = "Prijavili ste se z računom:";

@@ -22,9 +22,6 @@
 /* Allow button */
 "allow_button" = "Allow";
 
-/* App version: %@, Shown on the about screen */
-"app_version" = "App version: %@";
-
 /* Don\'t worry! Click the QR tag on the\nwebsite. You will be asked to enter the\nfollowing one-time credentials: */
 "authentication_fallback_description" = "Clicca sul codice QR sul sito web per continuare . Ti verra' chiesto di inserire la tua one-time password :";
 
@@ -244,9 +241,6 @@
 
 /* No connection error message */
 "internet_connection_required" = "L'account non puo' essere attivato perche' non sei connesso ad Internet. Riprova piu' tardi";
-
-/* Library version: %@, Shown on the about screen */
-"library_version" = "Library version: %@";
 
 /* Login information message */
 "loggedin_with_account" = "Ti sei collegato con il seguente account:";
