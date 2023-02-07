@@ -2,7 +2,7 @@ import UIKit
 
 class OnBoardingBaseViewController: BaseViewController {
     
-    weak var delegate: OnBoardingNavigationDelegate?
+    weak var delegate: NavigationDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,12 +16,12 @@ class OnBoardingBaseViewController: BaseViewController {
     
     @objc
     func showNextScreen() {
-        delegate?.showNextScreen(sender: self)
+        (delegate as? OnBoardingNavigationDelegate)?.showNextScreen(sender: self)
     }
     
     @objc
     func showScanScreen() {
-        delegate?.showScanScreen(sender: self)
+        (delegate as? OnBoardingNavigationDelegate)?.showScanScreen(sender: self)
     }
 
 }

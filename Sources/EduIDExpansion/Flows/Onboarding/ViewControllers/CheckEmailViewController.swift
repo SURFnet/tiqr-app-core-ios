@@ -3,9 +3,6 @@ import TinyConstraints
 
 class CheckEmailViewController: OnBoardingBaseViewController {
     
-    //MARK: - delegate
-    weak var navDelegate: NavigationDelegate?
-    
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,10 +81,5 @@ class CheckEmailViewController: OnBoardingBaseViewController {
         
         posterLabel.height(34)
 
-    }
-    
-    @objc
-    func goBackNav() {
-        navDelegate?.goBack(sender: self)
     }
 }
