@@ -28,7 +28,7 @@ class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
     
     func verifyEmail(sender: AnyObject) {
         let checkEmailViewController = CheckEmailViewController()
-        checkEmailViewController.delegate = self
+        checkEmailViewController.navDelegate = self
         navigationController?.pushViewController(checkEmailViewController, animated: true)
     }
     
