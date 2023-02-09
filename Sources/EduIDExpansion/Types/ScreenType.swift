@@ -61,19 +61,19 @@ enum ScreenType: Int, CaseIterable {
         case .landingScreen:
             return OnBoardingLandingPageViewController()
         case .explanationScreen:
-            return ExplanationViewController()
+            return OnBoardingExplanationViewController()
         case .enterInfoScreen:
-            return EnterPersonalInfoViewController(viewModel: EnterPersonalInfoViewModel())
+            return OnBoardingEnterPersonalInfoViewController(viewModel: EnterPersonalInfoViewModel())
         case .checkMailScreen:
             return CheckEmailViewController()
         case .enterPhoneScreen:
-            return EnterPhoneNumberViewController()
+            return OnBoardingEnterPhoneNumberViewController()
         case .pinChallengeScreen:
-            return EnterPinViewController(viewModel: EnterPinViewModel())
+            return OnBoardingEnterPinViewController(viewModel: EnterPinViewModel())
         case .welcomeScreen:
-            return WelcomeViewController()
+            return OnBoardingWelcomeViewController()
         case .addInstitutionScreen:
-            return AddInstitutionViewController()
+            return OnBoardingAddInstitutionViewController()
         case .homeScreen:
             return HomeViewController()
         case .scanScreen:
@@ -81,7 +81,7 @@ enum ScreenType: Int, CaseIterable {
         case .personalInfoLandingScreen:
             return PersonalInfoViewController()
         case .firstTimeDialogScreen:
-            return FirstTimeDialogViewController()
+            return OnBoardingFirstTimeDialogViewController()
         case .securityLandingScreen:
             return SecurityLandingViewController()
         default:

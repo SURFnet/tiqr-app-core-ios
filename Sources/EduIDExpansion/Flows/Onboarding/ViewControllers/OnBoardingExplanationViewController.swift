@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class ExplanationViewController: OnBoardingBaseViewController {
+class OnBoardingExplanationViewController: OnBoardingBaseViewController {
     
     private var stack: AnimatedVStackView!
     

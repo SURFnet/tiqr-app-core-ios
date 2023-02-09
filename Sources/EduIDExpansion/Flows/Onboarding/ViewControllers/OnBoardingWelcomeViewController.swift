@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class WelcomeViewController: OnBoardingBaseViewController {
+class OnBoardingWelcomeViewController: OnBoardingBaseViewController {
     
     //MARK: - attributed texts for numbered list
     var attributedTexts: [NSAttributedString] = []
