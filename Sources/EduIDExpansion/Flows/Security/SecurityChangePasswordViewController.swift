@@ -6,7 +6,7 @@ class SecurityChangePasswordViewController: ScrollingViewControllerWithTextField
     static let tagOfRepeatPasswordField = 4
     
     //MARK: delegate
-    weak var delegate: SecurityNavigationDelegate?
+    weak var delegate: SecurityViewControllerDelegate?
     
     //MARK: view model
     var viewModel: ChangePasswordViewModel
@@ -69,6 +69,8 @@ class SecurityChangePasswordViewController: ScrollingViewControllerWithTextField
         super.viewWillAppear(animated)
         
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(goBack))
+        
+        stack.animate(onlyThese: [1, 3, 4])
     }
     
     //MARK: - setup UI
@@ -126,15 +128,17 @@ Make sure your new password is at least 15 characters OR at least 8 characters i
         // actions
         resetPasswordButton.addTarget(self, action: #selector(resetAction), for: .touchUpInside)
         
+        stack.hideAndTriggerAll(onlyThese: [1, 3, 4])
+        
     }
 
     @objc
     func resetAction() {
-        delegate?.resetPassword(sender: self)
+        delegate?.securityViewController(viewController: self, reset: "")
     }
     
     override func goBack() {
-        delegate?.goBack(sender: self)
+        delegate?.goBack(viewController: self)
     }
 
 }

@@ -1,5 +1,5 @@
 import UIKit
 
-protocol ActivityNavigationDelegate: AnyObject {
+protocol ActivityViewControllerDelegate: AnyObject {
     func activityViewControllerDismissActivityFlow(viewController: UIViewController)
 }

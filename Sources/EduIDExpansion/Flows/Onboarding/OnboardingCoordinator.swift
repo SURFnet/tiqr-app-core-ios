@@ -1,15 +1,24 @@
 import UIKit
 
-final class OnboardingCoordinator: OnboardingCoordinatorType {
+final class OnboardingCoordinator: CoordinatorType {
+    
+    weak var viewControllerToPresentOn: UIViewController?
     
     weak var navigationController: UINavigationController!
-    weak var delegate: OnBoardingMainNavigationDelegate?
+    weak var delegate: OnBoardingCoordinatorDelegate?
     
     var children: [CoordinatorType] = []
     
+    // state variable to keep track of the current screen in the flow
     var currentScreenType: ScreenType = .landingScreen
     
-    func start(presentOn viewController: UIViewController) {
+    //MARK: - init
+    required init(viewControllerToPresentOn: UIViewController?) {
+        self.viewControllerToPresentOn = viewControllerToPresentOn
+    }
+    
+    //MARK: - start
+    func start() {
         
         let landingScreen = OnBoardingLandingPageViewController()
         landingScreen.screenType = .landingScreen
@@ -21,34 +30,34 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
         self.navigationController = navigationController
         
         // the next line is responsible for presenting the onboarding and is sometimes commented out for development purposes
-        viewController.present(self.navigationController, animated: false)
+//        viewControllerToPresentOn.present(self.navigationController, animated: false)
     }
 }
 
-extension OnboardingCoordinator: ScanMainNavigationDelegate {
+extension OnboardingCoordinator: ScanCoordinatorDelegate {
     
     //MARK: - start scan screen
     
     
-    func dismissScanScreen(sender: AnyObject) {
+    func scanCoordinatorDismissScanScreen(coordinator: CoordinatorType) {
         navigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 is ScanCoordinator }
     }
 }
 
-extension OnboardingCoordinator: OnBoardingNavigationDelegate {
+extension OnboardingCoordinator: OnBoardingViewControllerDelegate {
     
-    func showScanScreen(sender: AnyObject) {
-        let scanCoordinator = ScanCoordinator()
+    func onBoardingViewControllerShowScanScreen(viewController: UIViewController) {
+        let scanCoordinator = ScanCoordinator(viewControllerToPresentOn: navigationController)
         scanCoordinator.delegate = self
         children.append(scanCoordinator)
-        scanCoordinator.start(presentedOn: navigationController)
+        scanCoordinator.start()
     }
     
     //MARK: - show next screen
-    func showNextScreen(sender: AnyObject) {
+    func onBoardingViewControllerShowNextScreen(viewController: UIViewController) {
         if currentScreenType == .addInstitutionScreen {
-            delegate?.dismissOnBoarding(sender: self)
+            delegate?.onBoardingCoordinatorDismissOnBoarding(coordinator: self)
             return
         }
         
@@ -62,7 +71,7 @@ extension OnboardingCoordinator: OnBoardingNavigationDelegate {
     
     //MARK: - back action
     @objc
-    func goBack(sender: AnyObject) {
+    func goBack(viewController: UIViewController) {
         currentScreenType = ScreenType(rawValue: max(0, currentScreenType.rawValue - 1)) ?? .none
         navigationController.popViewController(animated: true)
     }

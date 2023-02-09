@@ -5,7 +5,7 @@ import AVFoundation
 class ScanViewController: UIViewController, ScreenWithScreenType {
     
     //MARK: delegate
-    weak var delegate: ScanNavigationDelegate?
+    weak var delegate: ScanViewControllerDelegate?
     
     //MARK: - screen type
     var screenType: ScreenType = .scanScreen

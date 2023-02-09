@@ -1,6 +1,6 @@
 import UIKit
 
-protocol ScanNavigationDelegate: AnyObject {
+protocol ScanViewControllerDelegate: AnyObject {
     
     func scanViewControllerDismissScanFlow(viewController: UIViewController)
 }

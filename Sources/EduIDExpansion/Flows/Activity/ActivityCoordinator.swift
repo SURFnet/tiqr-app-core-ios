@@ -1,11 +1,19 @@
 import UIKit
 
-class ActivityCoordinator: CoordinatorType {
+final class ActivityCoordinator: CoordinatorType {
+    
+    weak var viewControllerToPresentOn: UIViewController?
+    
+    //MARK: - init
+    required init(viewControllerToPresentOn: UIViewController?) {
+        self.viewControllerToPresentOn = viewControllerToPresentOn
+    }
     
     weak var navigationController: UINavigationController?
-    weak var delegate: ActivityMainNavigationDelegate?
+    weak var delegate: ActivityCoordinatorDelegate?
     
-    func start(presentOn viewController: UIViewController) {
+    //MARK: start
+    func start() {
         let activityViewController = ActivityViewController()
         activityViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: activityViewController)
@@ -13,15 +21,13 @@ class ActivityCoordinator: CoordinatorType {
         navigationController.modalTransitionStyle = .flipHorizontal
         navigationController.isModalInPresentation = true
         
-        viewController.present(navigationController, animated: true)
-        
-        
+        viewControllerToPresentOn?.present(navigationController, animated: true)
     }
 }
 
-extension ActivityCoordinator: ActivityNavigationDelegate {
+extension ActivityCoordinator: ActivityViewControllerDelegate {
     
     func activityViewControllerDismissActivityFlow(viewController: UIViewController) {
-        delegate?.dismissActivityFlow(sender: self)
+        delegate?.activityCoordinatorDismissActivityFlow(coordinator: self)
     }
 }
