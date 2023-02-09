@@ -1,5 +1,5 @@
 import UIKit
 
-protocol ActivitMainNavigationDelegate: AnyObject {
+protocol ActivityMainNavigationDelegate: AnyObject {
     func dismissActivityFlow(sender: AnyObject)
 }

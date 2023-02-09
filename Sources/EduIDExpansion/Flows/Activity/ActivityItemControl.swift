@@ -18,6 +18,7 @@ class ActivityItemControl: UIControl {
         imageView.center(in: imageParent)
         
         // the middle part with title and date
+        let middleParent = UIView()
         let titleLabel = UILabel()
         titleLabel.font = .sourceSansProBold(size: 16)
         titleLabel.textColor = .charcoalColor
@@ -29,6 +30,10 @@ class ActivityItemControl: UIControl {
         let middleStack = UIStackView(arrangedSubviews: [titleLabel, dateLabel])
         middleStack.axis = .vertical
         middleStack.distribution = .fillEqually
+        middleStack.spacing = 0
+        middleStack.translatesAutoresizingMaskIntoConstraints = false
+        middleParent.addSubview(middleStack)
+        middleStack.edges(to: middleParent, insets: TinyEdgeInsets(top: 14, left: 6, bottom: 14, right: 6))
         
         // the chevron image
         let chevronParent = UIView()
@@ -42,7 +47,7 @@ class ActivityItemControl: UIControl {
         chevronView.center(in: chevronParent)
         
         // the master stack
-        let stack = UIStackView(arrangedSubviews: [imageParent, middleStack, chevronParent])
+        let stack = UIStackView(arrangedSubviews: [imageParent, middleParent, chevronParent])
         stack.axis = .horizontal
         stack.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stack)

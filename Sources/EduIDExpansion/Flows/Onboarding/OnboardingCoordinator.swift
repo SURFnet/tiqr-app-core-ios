@@ -20,7 +20,8 @@ final class OnboardingCoordinator: OnboardingCoordinatorType {
         
         self.navigationController = navigationController
         
-        viewController.present(self.navigationController, animated: false)
+        // this line is responsible for presenting the onboarding and is sometimes commented out for development purposes
+//        viewController.present(self.navigationController, animated: false)
     }
 }
 

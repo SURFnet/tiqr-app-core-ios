@@ -96,6 +96,6 @@ When you use eduID to login to other websites, some of your personal information
     
     @objc
     func dismissInfoScreen() {
-        delegate?.dismiss(sender: self)
+        delegate?.personalInfoViewControllerDismissPersonalInfoFlow(viewController: self)
     }
 }

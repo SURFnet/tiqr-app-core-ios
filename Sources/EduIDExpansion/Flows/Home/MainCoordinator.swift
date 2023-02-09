@@ -59,7 +59,7 @@ extension MainCoordinator: PersonalInfoMainNavigationDelegate {
     //MARK: - personal info methods
     func dismissPersonalInfoFlow(sender: AnyObject) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
-        children.removeAll { $0 is PersonalInfoCoordinator }
+        children.removeAll { $0 === sender }
     }
 }
 
@@ -69,7 +69,7 @@ extension MainCoordinator: ScanMainNavigationDelegate {
     //MARK: - scan screen methods
     func dismissScanScreen(sender: AnyObject) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
-        children.removeAll { $0 is ScanCoordinator }
+        children.removeAll { $0 === sender }
     }
 }
 
@@ -78,7 +78,7 @@ extension MainCoordinator: SecurityMainNavigationDelegate {
     //MARK: - security screen flow
     func dismissSecurityFlow(sender: AnyObject) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
-        children.removeAll { $0 is SecurityCoordinator }
+        children.removeAll { $0 === sender }
     }
 }
     
@@ -87,15 +87,15 @@ extension MainCoordinator: OnBoardingMainNavigationDelegate {
     //MARK: - onboarding delegate
     func dismissOnBoarding(sender: AnyObject) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
-        children.removeAll { $0 is OnboardingCoordinator }
+        children.removeAll { $0 === sender }
     }
 }
 
-extension MainCoordinator: ActivitMainNavigationDelegate {
+extension MainCoordinator: ActivityMainNavigationDelegate {
     
     //MARK: - activity flow methods
     func dismissActivityFlow(sender: AnyObject) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
-        children.removeAll { $0 is ActivityCoordinator }
+        children.removeAll { $0 === sender }
     }
 }

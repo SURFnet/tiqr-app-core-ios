@@ -18,7 +18,7 @@ class PersonalInfoCoordinator: CoordinatorType, PersonalInfoNavigationDelegate {
         viewController.present(navigationController, animated: true)
     }
     
-    func dismiss(sender: AnyObject) {
+    func personalInfoViewControllerDismissPersonalInfoFlow(viewController: UIViewController) {
         delegate?.dismissPersonalInfoFlow(sender: self)
     }
     
