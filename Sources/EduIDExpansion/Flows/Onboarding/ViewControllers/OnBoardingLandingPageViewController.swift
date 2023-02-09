@@ -19,6 +19,8 @@ class OnBoardingLandingPageViewController: OnBoardingBaseViewController {
         stack?.animate(onlyThese: [3, 4, 5])
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen))
         
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
     }
     
     //MARK: - setupUI
@@ -32,7 +34,7 @@ class OnBoardingLandingPageViewController: OnBoardingBaseViewController {
         logo.width(150)
         
         //MARK: - add label
-        let posterLabel = UILabel.posterTextLabel(text: "Personal account\nfor Education and Research", size: 24)
+        let posterLabel = UILabel.posterTextLabel(text: "Personal account\nfor Education and Research", size: 24, alignment: .center)
         
         //MARK: add image
         let imageView = UIImageView(image: .landingPageImage)
@@ -46,22 +48,24 @@ class OnBoardingLandingPageViewController: OnBoardingBaseViewController {
         //MARK: buttons
         let signinButton = EduIDButton(type: .primary, buttonTitle: "Sign in")
         signinButton.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
+        let scanQRButton = EduIDButton(type: .primary, buttonTitle: "Scan a QR code")
+        scanQRButton.addTarget(self, action: #selector(showScanScreen), for: .touchUpInside)
         let noEduIDYetButton = EduIDButton(type: .naked, buttonTitle: "I don't have an eduId")
         
         //the action for this button is on OnBoardingBaseViewController superclass
         noEduIDYetButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
         
         //MARK: - create the stackview
-        stack = AnimatedVStackView(arrangedSubviews: [logo, posterLabel, imageView, spaceView, signinButton, noEduIDYetButton])
+        stack = AnimatedVStackView(arrangedSubviews: [logo, posterLabel, imageView, signinButton, scanQRButton, noEduIDYetButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.distribution = .fill
+        stack.distribution = .equalSpacing
         stack.alignment = .center
-        stack.spacing = 32
         view.addSubview(stack)
         
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
         signinButton.width(to: stack, offset: -24)
+        scanQRButton.width(to: stack, offset: -24)
         noEduIDYetButton.width(to: stack, offset: -24)
         posterLabel.width(to: stack)
         

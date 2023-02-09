@@ -9,7 +9,7 @@ class BasicStackView: UIStackView {
             addArrangedSubview(view)
         }
         axis = .vertical
-        spacing = 23
+        spacing = 16
         translatesAutoresizingMaskIntoConstraints = false
         distribution = .fill
     }

@@ -107,7 +107,7 @@ enum ScreenType: Int, CaseIterable {
             item.hidesBackButton = true
             item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: target, action: action)
             item.rightBarButtonItem?.tintColor = .white
-        case .landingScreen, .homeScreen:
+        case .homeScreen:
             item.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: target, action: action)
         default:
             let logo = UIImageView(image: UIImage.eduIDLogo)
