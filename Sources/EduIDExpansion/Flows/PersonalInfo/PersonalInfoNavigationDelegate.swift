@@ -2,6 +2,6 @@ import UIKit
 
 protocol PersonalInfoNavigationDelegate: AnyObject, NavigationDelegate {
     
-    func dismiss(sender: AnyObject)
+    func personalInfoViewControllerDismissPersonalInfoFlow(viewController: UIViewController)
     func goBack(sender: AnyObject)
 }

@@ -3,7 +3,7 @@ import UIKit
 class ActivityCoordinator: CoordinatorType {
     
     weak var navigationController: UINavigationController?
-    weak var delegate: ActivitMainNavigationDelegate?
+    weak var delegate: ActivityMainNavigationDelegate?
     
     func start(presentOn viewController: UIViewController) {
         let activityViewController = ActivityViewController()
@@ -21,7 +21,7 @@ class ActivityCoordinator: CoordinatorType {
 
 extension ActivityCoordinator: ActivityNavigationDelegate {
     
-    func dismissActivityFlow(sender: AnyObject) {
+    func activityViewControllerDismissActivityFlow(viewController: UIViewController) {
         delegate?.dismissActivityFlow(sender: self)
     }
 }

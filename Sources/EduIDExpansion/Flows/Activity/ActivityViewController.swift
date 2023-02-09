@@ -72,7 +72,7 @@ Each service you accessed through eduID receives certain personal data (attribut
     
     @objc
     func dismissActivityScreen() {
-        delegate?.dismissActivityFlow(sender: self)
+        delegate?.activityViewControllerDismissActivityFlow(viewController: self)
     }
     
 }
