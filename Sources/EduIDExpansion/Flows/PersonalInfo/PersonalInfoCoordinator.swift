@@ -1,25 +1,32 @@
 import UIKit
 
-class PersonalInfoCoordinator: CoordinatorType, PersonalInfoNavigationDelegate {
+class PersonalInfoCoordinator: CoordinatorType, PersonalInfoViewControllerDelegate {
     
-    weak var delegate: PersonalInfoMainNavigationDelegate?
+    weak var viewControllerToPresentOn: UIViewController?
+    
+    weak var delegate: PersonalInfoCoordinatorDelegate?
     weak var navigationController: UINavigationController?
     
-    func start(presentOn viewController: UIViewController) {
+    //MARK: - init
+    required init(viewControllerToPresentOn: UIViewController?) {
+        self.viewControllerToPresentOn = viewControllerToPresentOn
+    }
+    
+    func start() {
         let navigationController = UINavigationController()
         self.navigationController = navigationController
-        let editPersonalInfoViewcontroller = EditPersonalInfoViewController()
+        let editPersonalInfoViewcontroller = PersonalInfoViewController()
         editPersonalInfoViewcontroller.delegate = self
         
         navigationController.modalTransitionStyle = .flipHorizontal
         navigationController.isModalInPresentation = true
         navigationController.pushViewController(editPersonalInfoViewcontroller, animated: false)
         
-        viewController.present(navigationController, animated: true)
+        viewControllerToPresentOn?.present(navigationController, animated: true)
     }
     
     func personalInfoViewControllerDismissPersonalInfoFlow(viewController: UIViewController) {
-        delegate?.dismissPersonalInfoFlow(sender: self)
+        delegate?.personalInfoCoordinatorDismissPersonalInfoFlow(coordinator: self)
     }
     
     @objc
@@ -28,7 +35,7 @@ class PersonalInfoCoordinator: CoordinatorType, PersonalInfoNavigationDelegate {
     }
     
     @objc
-    func goBack(sender: AnyObject) {
+    func goBack(viewController: UIViewController) {
         navigationController?.popViewController(animated: true)
     }
 }

@@ -1,6 +1,6 @@
-import Foundation
+import UIKit
 
 protocol NavigationDelegate: AnyObject {
     
-    func goBack(sender: AnyObject)
+    func goBack(viewController: UIViewController)
 }

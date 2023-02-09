@@ -6,7 +6,7 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     //MARK: - screen type
     var screenType: ScreenType = .homeScreen
     
-    weak var delegate: HomeNavigationDelegate?
+    weak var delegate: HomeViewControllerDelegate?
     var buttonStack: AnimatedHStackView!
     
     override func viewDidLoad() {
@@ -115,21 +115,21 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     
     @objc
     func showScanScreen() {
-        delegate?.showScanScreen(sender: self)
+        delegate?.homeViewControllerShowScanScreen(sender: self)
     }
     
     @objc
     func securityTapped() {
-        delegate?.showSecurityScreen(sender: self)
+        delegate?.homeViewControllerShowSecurityScreen(sender: self)
     }
     
     @objc
     func personalInfoTapped() {
-        delegate?.showPersonalInfoScreen(sender: self)
+        delegate?.homeViewControllerShowPersonalInfoScreen(sender: self)
     }
     
     @objc
     func activityTapped() {
-        delegate?.showActivityScreen(sender: self)
+        delegate?.homeViewControllerShowActivityScreen(sender: self)
     }
 }

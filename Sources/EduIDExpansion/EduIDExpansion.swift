@@ -10,7 +10,7 @@ public final class EduIDExpansion: NSObject {
     }
     
     public func attachViewController() -> UIViewController {
-        mainCoordinator = MainCoordinator()
+        mainCoordinator = MainCoordinator(viewControllerToPresentOn: nil)
         return mainCoordinator.homeNavigationController
     }
     

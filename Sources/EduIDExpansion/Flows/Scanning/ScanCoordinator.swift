@@ -1,11 +1,19 @@
 import UIKit
 
-class ScanCoordinator: CoordinatorType {
+final class ScanCoordinator: CoordinatorType {
+    
+    weak var viewControllerToPresentOn: UIViewController?
     
     weak var navigationController: UINavigationController?
-    weak var delegate: ScanMainNavigationDelegate?
+    weak var delegate: ScanCoordinatorDelegate?
     
-    func start(presentedOn viewController: UIViewController) {
+    //MARK: - init
+    required init(viewControllerToPresentOn: UIViewController?) {
+        self.viewControllerToPresentOn = viewControllerToPresentOn
+    }
+    
+    //MARK: - start
+    func start() {
         let scanViewcontroller = ScanViewController(viewModel: ScanViewModel())
         scanViewcontroller.delegate = self
         let navigationController = UINavigationController()
@@ -13,13 +21,13 @@ class ScanCoordinator: CoordinatorType {
         navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.pushViewController(scanViewcontroller, animated: false)
         
-        viewController.present(navigationController, animated: true)
+        viewControllerToPresentOn?.present(navigationController, animated: true)
     }
 }
     
-extension ScanCoordinator: ScanNavigationDelegate {
+extension ScanCoordinator: ScanViewControllerDelegate {
         
     func scanViewControllerDismissScanFlow(viewController: UIViewController) {
-        delegate?.dismissScanScreen(sender: self)
+        delegate?.scanCoordinatorDismissScanScreen(coordinator: self)
     }
 }

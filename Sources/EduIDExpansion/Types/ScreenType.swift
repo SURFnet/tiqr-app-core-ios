@@ -79,7 +79,7 @@ enum ScreenType: Int, CaseIterable {
         case .scanScreen:
             return ScanViewController(viewModel: ScanViewModel())
         case .personalInfoLandingScreen:
-            return EditPersonalInfoViewController()
+            return PersonalInfoViewController()
         case .firstTimeDialogScreen:
             return FirstTimeDialogViewController()
         case .securityLandingScreen:

@@ -1,20 +1,13 @@
-//
-//  EditPersonalInfoViewController.swift
-//  
-//
-//  Created by Jairo Bambang Oetomo on 31/01/2023.
-//
-
 import UIKit
 import TinyConstraints
 
-class EditPersonalInfoViewController: UIViewController, ScreenWithScreenType {
+class PersonalInfoViewController: UIViewController, ScreenWithScreenType {
    
     //MARK: screen type
     var screenType: ScreenType = .personalInfoLandingScreen
     
     //MARK: - delegate
-    weak var delegate: PersonalInfoNavigationDelegate?
+    weak var delegate: PersonalInfoViewControllerDelegate?
     
     private let scrollView = UIScrollView()
     

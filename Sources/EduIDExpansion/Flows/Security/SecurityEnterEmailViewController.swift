@@ -7,7 +7,7 @@ class SecurityEnterEmailViewController: UIViewController, ScreenWithScreenType, 
     var screenType: ScreenType = .addInstitutionScreen
     
     //MARK: - delegate
-    weak var delegate: SecurityNavigationDelegate?
+    weak var delegate: SecurityViewControllerDelegate?
     
     var stack: AnimatedVStackView!
     
@@ -116,12 +116,12 @@ Please enter your new email address. A verification mail will be sent to this ad
     
     @objc
     func goBack() {
-        delegate?.goBack(sender: self)
+        delegate?.goBack(viewController: self)
     }
     
     @objc
     func verifyEmail() {
-        delegate?.verifyEmail(sender: self)
+        delegate?.securityViewController(viewController: self, verify: "")
     }
 
 }

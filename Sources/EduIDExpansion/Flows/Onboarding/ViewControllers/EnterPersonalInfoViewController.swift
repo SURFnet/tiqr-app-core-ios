@@ -3,7 +3,7 @@ import TinyConstraints
 
 class EnterPersonalInfoViewController: ScrollingViewControllerWithTextFields {
     
-    weak var delegate: OnBoardingNavigationDelegate?
+    weak var delegate: OnBoardingViewControllerDelegate?
     
     private var viewModel: EnterPersonalInfoViewModel
     private let inset: CGFloat = 24
@@ -150,10 +150,10 @@ class EnterPersonalInfoViewController: ScrollingViewControllerWithTextFields {
     
     @objc
     func showNextScreen() {
-        delegate?.showNextScreen(sender: self)
+        delegate?.onBoardingViewControllerShowNextScreen(viewController: self)
     }
     
     override func goBack() {
-        delegate?.goBack(sender: self)
+        delegate?.goBack(viewController: self)
     }
 }

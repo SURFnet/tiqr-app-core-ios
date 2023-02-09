@@ -7,7 +7,7 @@ class SecurityLandingViewController: UIViewController, ScreenWithScreenType {
     var screenType: ScreenType = .securityLandingScreen
     
     //MARK: - delegate
-    weak var delegate: SecurityNavigationDelegate?
+    weak var delegate: SecurityViewControllerDelegate?
     
     private let scrollView = UIScrollView()
     
@@ -102,16 +102,16 @@ We provide different methods to sign in to your eduID account.
     
     @objc
     func dismissSecurityScreen() {
-        delegate?.dismissSecurityFlow(sender: self)
+        delegate?.securityViewControllerDismissSecurityFlow(viewController: self)
     }
     
     @objc
     func enterEmailFlow() {
-        delegate?.enterVerifyEmailFlow(sender: self)
+        delegate?.securityViewControllerEnterVerifyEmailFlow(viewController: self)
     }
     
     @objc
     func enterChangePasswordFlow() {
-        delegate?.enterChangePasswordFlow(sender: self)
+        delegate?.securityViewControllerEnterChangePasswordFlow(viewController: self)
     }
 }

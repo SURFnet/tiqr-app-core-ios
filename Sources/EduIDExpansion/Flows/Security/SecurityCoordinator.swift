@@ -1,11 +1,19 @@
 import UIKit
 
-class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
+class SecurityCoordinator: CoordinatorType, SecurityViewControllerDelegate {
     
-    weak var delegate: SecurityMainNavigationDelegate?
+    weak var viewControllerToPresentOn: UIViewController?
+    
+    weak var delegate: SecurityCoordinatorDelegate?
     weak var navigationController: UINavigationController?
     
-    func start(presentOn viewController: UIViewController) {
+    //MARK: - init
+    required init(viewControllerToPresentOn: UIViewController?) {
+        self.viewControllerToPresentOn = viewControllerToPresentOn
+    }
+
+    //MARK: - start
+    func start() {
         let securityLandingViewController = SecurityLandingViewController()
         securityLandingViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: securityLandingViewController)
@@ -13,26 +21,26 @@ class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
         navigationController.modalTransitionStyle = .flipHorizontal
         navigationController.isModalInPresentation = true
         
-        viewController.present(navigationController, animated: true)
+        viewControllerToPresentOn?.present(navigationController, animated: true)
     }
     
-    func goBack(sender: AnyObject) {
+    func goBack(viewController: UIViewController) {
         navigationController?.popViewController(animated: true)
     }
     
-    func dismissSecurityFlow(sender: AnyObject) {
-        delegate?.dismissSecurityFlow(sender: self)
+    func securityViewControllerDismissSecurityFlow(viewController: UIViewController) {
+        delegate?.securityCoordinatorDismissSecurityFlow(coordinator: self)
     }
     
     //MARK: - verify email flow
     
-    func verifyEmail(sender: AnyObject) {
+    func securityViewController(viewController: UIViewController, verify email: String) {
         let checkEmailViewController = CheckEmailViewController()
         checkEmailViewController.delegate = self
         navigationController?.pushViewController(checkEmailViewController, animated: true)
     }
     
-    func enterVerifyEmailFlow(sender: AnyObject) {
+    func securityViewControllerEnterVerifyEmailFlow(viewController: UIViewController) {
         let emailViewController = SecurityEnterEmailViewController()
         emailViewController.delegate = self
         navigationController?.pushViewController(emailViewController, animated: true)
@@ -40,13 +48,13 @@ class SecurityCoordinator: CoordinatorType, SecurityNavigationDelegate {
     
     //MARK: - change password flow
     
-    func enterChangePasswordFlow(sender: AnyObject) {
+    func securityViewControllerEnterChangePasswordFlow(viewController: UIViewController) {
         let changePasswordViewController = SecurityChangePasswordViewController(viewModel: ChangePasswordViewModel())
         changePasswordViewController.delegate = self
         navigationController?.pushViewController(changePasswordViewController, animated: true)
     }
     
-    func resetPassword(sender: AnyObject) {
+    func securityViewController(viewController: UIViewController, reset password: String) {
         let confirmViewController = AlertMessageViewController(textMessage: "Password changed succefully", buttonTitle: "Ok") { [weak self] in
             if let self = self {
                 self.securityGotoRootViewController(sender: self.navigationController!)

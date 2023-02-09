@@ -12,7 +12,7 @@ class ActivityViewController: BaseViewController {
     
     var stack: AnimatedVStackView!
     let scrollView = UIScrollView()
-    weak var delegate: ActivityNavigationDelegate?
+    weak var delegate: ActivityViewControllerDelegate?
 
     //MARK: - lifecycle
     override func viewDidLoad() {
