@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class EnterPinViewController: OnBoardingBaseViewController {
+class OnBoardingEnterPinViewController: OnBoardingBaseViewController {
     
     //MARK: viewmodel
     let viewModel: EnterPinViewModel

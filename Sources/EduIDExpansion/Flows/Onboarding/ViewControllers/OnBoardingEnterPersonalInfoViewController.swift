@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class EnterPersonalInfoViewController: ScrollingViewControllerWithTextFields {
+class OnBoardingEnterPersonalInfoViewController: ScrollingViewControllerWithTextFields {
     
     weak var delegate: OnBoardingViewControllerDelegate?
     
@@ -25,7 +25,7 @@ class EnterPersonalInfoViewController: ScrollingViewControllerWithTextFields {
         var loadedTime = Date()
         
         viewModel.makeNextTextFieldFirstResponderClosure = { [weak self] tag in
-            guard tag != EnterPersonalInfoViewController.emailFieldTag else {
+            guard tag != OnBoardingEnterPersonalInfoViewController.emailFieldTag else {
                 self?.resignKeyboardResponder()
                 return
             }
@@ -68,7 +68,7 @@ class EnterPersonalInfoViewController: ScrollingViewControllerWithTextFields {
         super.viewDidAppear(animated)
         
         //set the height of the spacer according to the view
-        if scrollView.frame.size.height > scrollView.contentSize.height + EnterPersonalInfoViewController.smallBuffer {
+        if scrollView.frame.size.height > scrollView.contentSize.height + OnBoardingEnterPersonalInfoViewController.smallBuffer {
             spacingView.height(scrollView.frame.size.height - scrollView.contentSize.height - inset - view.safeAreaInsets.top)
         }
         
