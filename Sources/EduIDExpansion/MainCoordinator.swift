@@ -29,28 +29,28 @@ class MainCoordinator: CoordinatorType {
 
 extension MainCoordinator: HomeViewControllerDelegate  {
     
-    func homeViewControllerShowPersonalInfoScreen(sender: AnyObject) {
+    func homeViewControllerShowPersonalInfoScreen(viewController: HomeViewController) {
         let personalInfoCoordinator = PersonalInfoCoordinator(viewControllerToPresentOn: homeNavigationController)
         children.append(personalInfoCoordinator)
         personalInfoCoordinator.delegate = self
         personalInfoCoordinator.start()
     }
     
-    func homeViewControllerShowSecurityScreen(sender: AnyObject) {
+    func homeViewControllerShowSecurityScreen(viewController: HomeViewController) {
         let securityCoordinator = SecurityCoordinator(viewControllerToPresentOn: homeNavigationController)
         children.append(securityCoordinator)
         securityCoordinator.delegate = self
         securityCoordinator.start()
     }
     
-    func homeViewControllerShowActivityScreen(sender: AnyObject) {
+    func homeViewControllerShowActivityScreen(viewController: HomeViewController) {
         let activityCoordinator = ActivityCoordinator(viewControllerToPresentOn: homeNavigationController)
         children.append(activityCoordinator)
         activityCoordinator.delegate = self
         activityCoordinator.start()
     }
     
-    func homeViewControllerShowScanScreen(sender: AnyObject) {
+    func homeViewControllerShowScanScreen(viewController: HomeViewController) {
         let scanCoordinator = ScanCoordinator(viewControllerToPresentOn: homeNavigationController)
         scanCoordinator.delegate = self
         children.append(scanCoordinator)
