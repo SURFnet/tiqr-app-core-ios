@@ -5,16 +5,16 @@ public final class EduIDExpansion: NSObject {
     public static let shared = EduIDExpansion()
     
     private var mainCoordinator: MainCoordinator!
-    
     private override init() {
         super.init()
     }
     
-    public func run() -> UINavigationController {
-        let navigationController = UINavigationController()
-        mainCoordinator = MainCoordinator(navigationController: navigationController)
+    public func attachViewController() -> UIViewController {
+        mainCoordinator = MainCoordinator(viewControllerToPresentOn: nil)
+        return mainCoordinator.homeNavigationController
+    }
+    
+    public func run() {
         mainCoordinator.start()
-
-        return navigationController
     }
 }

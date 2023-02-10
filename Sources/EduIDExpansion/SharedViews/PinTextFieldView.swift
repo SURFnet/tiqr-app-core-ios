@@ -31,7 +31,7 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
         addSubview(parentView)
         parentView.edges(to: self, insets: TinyEdgeInsets(top: 2, left: 2, bottom: 2, right: 2))
         parentView.layer.borderWidth = 1
-        parentView.layer.borderColor = UIColor.tertiary.cgColor
+        parentView.layer.borderColor = UIColor.tertiaryColor.cgColor
         
         //MARK: - create textfield
         textfield.translatesAutoresizingMaskIntoConstraints = false
@@ -73,9 +73,13 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
         textfield.becomeFirstResponder()
     }
     
-    //MARK: - resign keyboard responder
+    //MARK: - keyboard responder
     override func resignFirstResponder() -> Bool {
         textfield.resignFirstResponder()
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        textfield.becomeFirstResponder()
     }
     
     //MARK: - tapped

@@ -15,7 +15,7 @@ extension UIColor {
     static let disabledGrayBackground = UIColor(named: "GrayDisabledBackground", in: Bundle.module, compatibleWith: nil)!
     static let grayGhost = UIColor(named: "GrayGhost", in: Bundle.module, compatibleWith: nil)!
     static let charcoalColor = UIColor(named: "CharcoalColor", in: Bundle.module, compatibleWith: nil)!
-    static let tertiary = UIColor(named: "TertiaryColor", in: Bundle.module, compatibleWith: nil)!
+    static let tertiaryColor = UIColor(named: "TertiaryColor", in: Bundle.module, compatibleWith: nil)!
     static let textfieldFocusColor = UIColor(named: "TextfieldFocusColor", in: Bundle.module, compatibleWith: nil)!
     static let yellowColor = UIColor(named: "YellowColor", in: Bundle.module, compatibleWith: nil)!
 }
