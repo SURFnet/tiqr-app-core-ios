@@ -115,21 +115,21 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     
     @objc
     func showScanScreen() {
-        delegate?.homeViewControllerShowScanScreen(sender: self)
+        delegate?.homeViewControllerShowScanScreen(viewController: self)
     }
     
     @objc
     func securityTapped() {
-        delegate?.homeViewControllerShowSecurityScreen(sender: self)
+        delegate?.homeViewControllerShowSecurityScreen(viewController: self)
     }
     
     @objc
     func personalInfoTapped() {
-        delegate?.homeViewControllerShowPersonalInfoScreen(sender: self)
+        delegate?.homeViewControllerShowPersonalInfoScreen(viewController: self)
     }
     
     @objc
     func activityTapped() {
-        delegate?.homeViewControllerShowActivityScreen(sender: self)
+        delegate?.homeViewControllerShowActivityScreen(viewController: self)
     }
 }

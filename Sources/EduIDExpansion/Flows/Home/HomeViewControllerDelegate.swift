@@ -2,8 +2,8 @@ import UIKit
 
 protocol HomeViewControllerDelegate: AnyObject {
     
-    func homeViewControllerShowPersonalInfoScreen(sender: AnyObject)
-    func homeViewControllerShowSecurityScreen(sender: AnyObject)
-    func homeViewControllerShowActivityScreen(sender: AnyObject)
-    func homeViewControllerShowScanScreen(sender: AnyObject)
+    func homeViewControllerShowPersonalInfoScreen(viewController: HomeViewController)
+    func homeViewControllerShowSecurityScreen(viewController: HomeViewController)
+    func homeViewControllerShowActivityScreen(viewController: HomeViewController)
+    func homeViewControllerShowScanScreen(viewController: HomeViewController)
 }

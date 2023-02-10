@@ -9,7 +9,6 @@ class PersonalInfoViewController: UIViewController, ScreenWithScreenType {
     //MARK: - delegate
     weak var delegate: PersonalInfoViewControllerDelegate?
     
-    private let scrollView = UIScrollView()
     
     //MARK: - lifecycle
     override func viewDidLoad() {
@@ -28,6 +27,7 @@ class PersonalInfoViewController: UIViewController, ScreenWithScreenType {
     func setupUI() {
         
         //MARK: - scroll view
+        let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         scrollView.edges(to: view)
@@ -84,7 +84,6 @@ When you use eduID to login to other websites, some of your personal information
         thirdControl.width(to: stack)
         fourthControl.width(to: stack)
         
-        //MARK: - actions
     }
     
     @objc

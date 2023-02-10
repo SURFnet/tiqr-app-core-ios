@@ -74,11 +74,8 @@ class ScrollingViewControllerWithTextFields: BaseViewController {
     
     @objc
     func resignKeyboardResponder() {
-        //0...10 is an edge case where there are 11 possible textfields
-        (0...10).forEach { integer in
-            guard stack.arrangedSubviews.count - 1 > integer else { return }
-            
-            _ = (stack.arrangedSubviews[integer] as? TextFieldViewWithValidationAndTitle)?.resignFirstResponder()
+        stack.arrangedSubviews.forEach {
+          _ = ($0 as? TextFieldViewWithValidationAndTitle)?.resignFirstResponder()
         }
     }
     
