@@ -31,7 +31,7 @@ class VerifyLoginViewController: BaseViewController {
         let cancelButton = EduIDButton(type: .ghost, buttonTitle: "Cancel")
         let loginButton = EduIDButton(type: .primary, buttonTitle: "Log in")
         let animatedHStack = AnimatedHStackView(arrangedSubviews: [cancelButton, loginButton])
-        animatedHStack.spacing = 12
+        animatedHStack.spacing = 24
         
         // the stackView
         let stack = BasicStackView(arrangedSubviews: [posterParent, upperspace, middlePosterParent, lowerSpace, animatedHStack])
