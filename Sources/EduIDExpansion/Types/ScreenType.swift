@@ -17,8 +17,9 @@ enum ScreenType: Int, CaseIterable {
     case firstTimeDialogScreen
     case addInstitutionScreen
     
-    // scan screen
+    // scan screens
     case scanScreen
+    case verifyLogin
     
     // personal info screens
     case personalInfoLandingScreen

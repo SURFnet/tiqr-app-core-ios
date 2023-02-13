@@ -54,4 +54,16 @@ extension UILabel {
         label.attributedText = attributedString
         return label
     }
+    
+    static func requestLoginLabel(organisationName: String) -> UILabel {
+        var paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 16
+        let attributedString = NSMutableAttributedString(string: "Request login for:\n\(organisationName)", attributes: [.font: UIFont.sourceSansProSemiBold(size: 24), .foregroundColor: UIColor.primaryColor, .paragraphStyle: paragraphStyle])
+        attributedString.setAttributeTo(part: organisationName, attributes: [.foregroundColor: UIColor.charcoalColor, .font: UIFont.sourceSansProSemiBold(size: 36), .paragraphStyle: paragraphStyle])
+        let label = UILabel()
+        label.attributedText = attributedString
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }
 }
