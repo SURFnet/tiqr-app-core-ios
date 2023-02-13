@@ -3,6 +3,9 @@ import AVFoundation
 
 final class ScanViewModel: NSObject {
     
+    //MARK: - delegate
+    weak var delegate: ScanViewModelDelegate?
+    
     //MARK: av componenets
     let session = AVCaptureSession()
     let output = AVCaptureMetadataOutput()
@@ -30,7 +33,7 @@ final class ScanViewModel: NSObject {
                 let screenBounds = UIScreen.main.bounds
                 let interestOrigin = CGPoint(x: (screenBounds.width - frameSize) / 2 / screenBounds.width, y: (screenBounds.height - frameSize) / 2 / screenBounds.height)
                 let interestSize = CGSize(width: frameSize / screenBounds.width, height: frameSize / screenBounds.height)
-                output.rectOfInterest = CGRect(origin: interestOrigin, size: interestSize)
+//                output.rectOfInterest = CGRect(origin: interestOrigin, size: interestSize)
                 
                 DispatchQueue.global(qos: .background).async { [weak self] in
                     self?.session.startRunning()
@@ -39,6 +42,10 @@ final class ScanViewModel: NSObject {
         } catch {
             print(error)
         }
+    }
+    
+    func processMetaDataObject(object: AVMetadataMachineReadableCodeObject) {
+        delegate?.scanViewModelAddPoints(_for: object, viewModel: self)
     }
     
     deinit {
@@ -51,6 +58,9 @@ final class ScanViewModel: NSObject {
 extension ScanViewModel: AVCaptureMetadataOutputObjectsDelegate {
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        print(metadataObjects)
+        if metadataObjects.count > 0 {
+            processMetaDataObject(object: metadataObjects.first as! AVMetadataMachineReadableCodeObject)
+            session.stopRunning()
+        }
     }
 }

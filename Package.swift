@@ -10,7 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "Tiqr",
-            targets: ["Tiqr"]),
+            targets: ["Tiqr", "EduIDExpansion"]),
     ],
     dependencies: [
         .package(url: "https://github.com/roberthein/TinyConstraints.git", from: "4.0.0"),
@@ -21,18 +21,21 @@ let package = Package(
             dependencies: ["TiqrCoreObjC", "TiqrCore"]
         ),
         .target(
+            name: "EduIDExpansion",
+            dependencies: ["TiqrCoreObjC", "TinyConstraints"]
+        ),
+        .target(
             name: "TiqrCore"
         ),
         .target(
             name: "TiqrCoreObjC",
-            dependencies: ["TiqrCore", "EduIDExpansion"],
+            dependencies: ["TiqrCore"],
             resources: [
                 .process("Resources/Audio/cowbell.wav"),
-                .process("Resources/Views/HTML/start.html")]
-        ),
-        .target(
-            name: "EduIDExpansion",
-            dependencies: ["TinyConstraints"]
+                .process("Resources/Views/HTML/start.html")],
+            cSettings: [
+                    .headerSearchPath("Internal"), // 5
+                 ]
         )
     ]
 )

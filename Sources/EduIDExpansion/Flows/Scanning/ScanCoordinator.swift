@@ -14,7 +14,9 @@ final class ScanCoordinator: CoordinatorType {
     
     //MARK: - start
     func start() {
-        let scanViewcontroller = ScanViewController(viewModel: ScanViewModel())
+        let viewModel = ScanViewModel()
+        let scanViewcontroller = ScanViewController(viewModel: viewModel)
+        viewModel.delegate = scanViewcontroller
         scanViewcontroller.delegate = self
         let navigationController = UINavigationController()
         self.navigationController = navigationController
@@ -26,8 +28,13 @@ final class ScanCoordinator: CoordinatorType {
 }
     
 extension ScanCoordinator: ScanViewControllerDelegate {
-        
-    func scanViewControllerDismissScanFlow(viewController: UIViewController) {
+       
+    func scanViewControllerDismissScanFlow(viewController: ScanViewController) {
         delegate?.scanCoordinatorDismissScanScreen(coordinator: self)
     }
+    
+    func promtUserWithVerifyScreen(viewController: ScanViewController) {
+        navigationController?.pushViewController(VerifyLoginViewController(), animated: true)
+    }
+     
 }

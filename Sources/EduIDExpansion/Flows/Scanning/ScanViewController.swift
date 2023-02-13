@@ -1,5 +1,6 @@
 import UIKit
 import TinyConstraints
+import TiqrCoreObjC
 import AVFoundation
 
 class ScanViewController: UIViewController, ScreenWithScreenType {
@@ -9,6 +10,8 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
     
     //MARK: - screen type
     var screenType: ScreenType = .scanScreen
+    
+    var overlayView = ScanOverlayView(frame: .zero)
     
     init(viewModel: ScanViewModel) {
         self.viewModel = viewModel
@@ -41,8 +44,11 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        overlayView.translatesAutoresizingMaskIntoConstraints = false
+        
         view.backgroundColor = .black
         view.layer.addSublayer(previewLayer)
+        view.addSubview(overlayView)
         addGradient()
         setupScanningFrameUI()
         
@@ -54,6 +60,8 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
         super.viewWillAppear(animated)
         
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(dismissScanScreen))
+        overlayView.points = nil
+        overlayView.backgroundColor = .clear
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,6 +74,7 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
         super.viewWillLayoutSubviews()
         
         previewLayer.frame = view.bounds
+        overlayView.frame = view.bounds
         gradientLayer?.frame = view.bounds
     }
     
@@ -159,5 +168,24 @@ Scan it here
     @objc
     func dismissScanScreen() {
         delegate?.scanViewControllerDismissScanFlow(viewController: self)
+    }
+}
+
+extension ScanViewController: ScanViewModelDelegate {
+    func scanViewModelAddPoints(_for object: AVMetadataMachineReadableCodeObject, viewModel: ScanViewModel) {
+        let projectedObject = previewLayer.transformedMetadataObject(for: object) as! AVMetadataMachineReadableCodeObject
+        for corner in projectedObject.corners {
+            overlayView.addPoint(corner)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
+            guard let self = self else { return }
+            
+            self.delegate?.promtUserWithVerifyScreen(viewController: self)
+        })
+    }
+    
+    @objc
+    func promptUserWithVerifyScreen() {
+        
     }
 }
