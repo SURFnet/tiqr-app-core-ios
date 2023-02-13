@@ -172,16 +172,28 @@ Scan it here
 }
 
 extension ScanViewController: ScanViewModelDelegate {
-    func scanViewModelAddPoints(_for object: AVMetadataMachineReadableCodeObject, viewModel: ScanViewModel) {
-        let projectedObject = previewLayer.transformedMetadataObject(for: object) as! AVMetadataMachineReadableCodeObject
-        for corner in projectedObject.corners {
-            overlayView.addPoint(corner)
-        }
+    
+    func scanViewModelShowErrorAlert(error: Any, viewModel: ScanViewModel) {
+        let sheet = UIAlertController(title: "Error", message: (error as? Error)?.localizedDescription, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: "Ok", style: .default) { action in
+            sheet.dismiss(animated: true)
+        })
+        present(sheet, animated: true)
+    }
+    
+    func scanViewModelShowVerifyAuthAttempt(with object: NSObject, viewModel: ScanViewModel) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
             guard let self = self else { return }
             
             self.delegate?.promtUserWithVerifyScreen(viewController: self)
         })
+    }
+    
+    func scanViewModelAddPoints(_for object: AVMetadataMachineReadableCodeObject, viewModel: ScanViewModel) {
+        let projectedObject = previewLayer.transformedMetadataObject(for: object) as! AVMetadataMachineReadableCodeObject
+        for corner in projectedObject.corners {
+            overlayView.addPoint(corner)
+        }
     }
     
     @objc
