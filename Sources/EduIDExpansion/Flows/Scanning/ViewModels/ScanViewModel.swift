@@ -10,6 +10,9 @@ final class ScanViewModel: NSObject {
     let session = AVCaptureSession()
     let output = AVCaptureMetadataOutput()
     
+    //MARK: authentication object
+    var authenticationObject: NSObject?
+    
     let frameSize: CGFloat = 275
     
     //MARK: - setup the av camera session
@@ -51,8 +54,9 @@ final class ScanViewModel: NSObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: object.stringValue ?? "") { [weak self] type, challengeObject, error in
                 guard let self = self else { return }
-                if type != .invalid {
-                    self.delegate?.scanViewModelShowVerifyAuthAttempt(with: challengeObject, viewModel: self)
+                
+                if true /* temporarily use dummy flow type != .invalid */ {
+                    self.delegate?.scanViewModelShowVerifyAuthAttempt(viewModel: self)
                 } else {
                     self.delegate?.scanViewModelShowErrorAlert(error: error, viewModel: self)
                 }
@@ -75,9 +79,8 @@ extension ScanViewModel: AVCaptureMetadataOutputObjectsDelegate {
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         if metadataObjects.count > 0 {
-            self.processMetaDataObject(object: metadataObjects.first as! AVMetadataMachineReadableCodeObject)
-            
             self.session.stopRunning()
+            self.processMetaDataObject(object: metadataObjects.first as! AVMetadataMachineReadableCodeObject)
         }
     }
 }
