@@ -14,6 +14,8 @@ enum ScreenType: Int, CaseIterable {
     case enterPhoneScreen
     case pinChallengeScreen
     case welcomeScreen
+    case selectPincodeScreen
+    case confirmPincodeScreen
     case firstTimeDialogScreen
     case addInstitutionScreen
     case biometricApprovalScreen
@@ -53,6 +55,12 @@ enum ScreenType: Int, CaseIterable {
         case .pinChallengeScreen:
             return .welcomeScreen
         case .welcomeScreen:
+            return .selectPincodeScreen
+        case .selectPincodeScreen:
+            return .confirmPincodeScreen
+        case .confirmPincodeScreen:
+            return .biometricApprovalScreen
+        case .biometricApprovalScreen:
             return .firstTimeDialogScreen
         case .firstTimeDialogScreen:
             return .addInstitutionScreen
@@ -74,7 +82,7 @@ enum ScreenType: Int, CaseIterable {
         case .enterPhoneScreen:
             return OnBoardingEnterPhoneNumberViewController()
         case .pinChallengeScreen:
-            return OnBoardingEnterPinViewController(viewModel: EnterPinViewModel())
+            return OnBoardingEnterPinViewController(viewModel: EnterPinViewModel(), isSecure: false)
         case .welcomeScreen:
             return OnBoardingWelcomeViewController()
         case .addInstitutionScreen:
@@ -89,6 +97,12 @@ enum ScreenType: Int, CaseIterable {
             return OnBoardingFirstTimeDialogViewController()
         case .securityLandingScreen:
             return SecurityLandingViewController()
+        case .selectPincodeScreen:
+            return SelectPincodeViewController(viewModel: EnterPinViewModel(), isSecure: true)
+        case.confirmPincodeScreen:
+            return ConfirmPincodeViewController(viewModel: EnterPinViewModel(), isSecure: true)
+        case .biometricApprovalScreen:
+            return OnBoardingBiometricApprovalViewController()
         default:
             return nil
         }

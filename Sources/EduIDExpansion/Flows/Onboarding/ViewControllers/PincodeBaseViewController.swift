@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class PincodeViewController: OnBoardingBaseViewController {
+class PincodeBaseViewController: OnBoardingBaseViewController {
     
     //MARK: viewmodel
     let viewModel: EnterPinViewModel
@@ -12,8 +12,17 @@ class PincodeViewController: OnBoardingBaseViewController {
     //MARK: activity indicator
     let activity = UIActivityIndicatorView(style: .large)
     
+    //MARK: - configurable labels
+    var posterLabel: UILabel!
+    var textLabel: UILabel!
+    
+    // flag for secure input
+    var isSecure = false
+    
+
     //MARK: - init
-    init(viewModel: EnterPinViewModel) {
+    init(viewModel: EnterPinViewModel, isSecure: Bool) {
+        self.isSecure = isSecure
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
@@ -62,23 +71,17 @@ class PincodeViewController: OnBoardingBaseViewController {
     //MARK: - setup ui
     func setupUI() {
         //MARK: - posterLabel
-        let posterLabel = UILabel.posterTextLabel(text: "Check your messages", size: 24)
+        let posterParent = UIView()
+        posterLabel = UILabel.posterTextLabel(text: "Check your messages", size: 24)
+        posterParent.addSubview(posterLabel)
+        posterLabel.edges(to: posterParent)
         
         //MARK: - create the textView
         let textLabelParent = UIView()
-        let textLabel = UILabel()
-        textLabel.numberOfLines = 0
-        textLabel.isUserInteractionEnabled = false
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.font = .sourceSansProLight(size: 16)
-        textLabel.textColor = .secondaryColor
-        let attributedText = NSMutableAttributedString(string:
-    """
-    Enter the six-digit code we sent to your phone to continue
-    """
-                                                       ,attributes: [.font : UIFont.sourceSansProLight(size: 16)])
-        attributedText.setAttributes([.font : UIFont.sourceSansProSemiBold(size: 16)], range: NSRange(location: 10, length: 9))
-        textLabel.attributedText = attributedText
+        textLabel = UILabel.plainTextLabelPartlyBold(text: """
+Enter the six-digit code we sent to your phone to continue
+"""
+                                                         , partBold: "six-digit")
         textLabelParent.addSubview(textLabel)
         textLabel.edges(to: textLabelParent)
         
@@ -89,7 +92,7 @@ class PincodeViewController: OnBoardingBaseViewController {
         pinStack.height(50)
         
         (0...5).forEach { integer in
-            let pinField = PinTextFieldView()
+            let pinField = PinTextFieldView(isSecure: isSecure)
             pinField.tag = integer
             pinField.delegate = viewModel
             pinStack.addArrangedSubview(pinField)
@@ -106,7 +109,7 @@ class PincodeViewController: OnBoardingBaseViewController {
         let spaceView = UIView()
         
         //MARK: - create the stackview
-        let stack = UIStackView(arrangedSubviews: [posterLabel, textLabelParent, pinStack, activity, spaceView, verifyButton])
+        let stack = UIStackView(arrangedSubviews: [posterParent, textLabelParent, pinStack, activity, spaceView, verifyButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
@@ -118,6 +121,7 @@ class PincodeViewController: OnBoardingBaseViewController {
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
         textLabel.width(to: stack)
         posterLabel.height(34)
+        posterParent.width(to: stack)
         verifyButton.width(to: stack, offset: -24)
         pinStack.width(to: stack)
         
