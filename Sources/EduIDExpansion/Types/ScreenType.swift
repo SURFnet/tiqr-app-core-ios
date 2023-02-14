@@ -16,10 +16,11 @@ enum ScreenType: Int, CaseIterable {
     case welcomeScreen
     case firstTimeDialogScreen
     case addInstitutionScreen
+    case biometricApprovalScreen
     
     // scan screens
     case scanScreen
-    case verifyLogin
+    case verifyLoginScreen
     
     // personal info screens
     case personalInfoLandingScreen
@@ -31,6 +32,9 @@ enum ScreenType: Int, CaseIterable {
     
     // activity screens
     case activityLandingScreen
+    
+    case confirmScreen
+    case pincodeScreen
     
     case none
     
@@ -93,31 +97,33 @@ enum ScreenType: Int, CaseIterable {
     func configureNavigationItem(item: UINavigationItem, target: Any? = nil, action: Selector? = nil) {
         switch self {
         case .personalInfoLandingScreen, .securityLandingScreen, .activityLandingScreen:
-            let logo = UIImageView(image: UIImage.eduIDLogo)
-            logo.width(92)
-            logo.height(36)
-            item.titleView = logo
+            addLogoTo(item: item)
             item.hidesBackButton = true
             item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: target, action: action)
             item.rightBarButtonItem?.tintColor = .backgroundColor
         case .scanScreen:
-            let logo = UIImageView(image: UIImage.eduIDLogo)
-            logo.width(92)
-            logo.height(36)
-            item.titleView = logo
+            addLogoTo(item: item)
             item.hidesBackButton = true
             item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: target, action: action)
             item.rightBarButtonItem?.tintColor = .white
         case .homeScreen:
             item.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: target, action: action)
+            item.rightBarButtonItem = UIBarButtonItem(title: "Log off", style: .plain, target: target, action: action)
+        case .confirmScreen, .verifyLoginScreen:
+            addLogoTo(item: item)
+            item.hidesBackButton = true
         default:
-            let logo = UIImageView(image: UIImage.eduIDLogo)
-            logo.width(92)
-            logo.height(36)
-            item.titleView = logo
+            addLogoTo(item: item)
             item.hidesBackButton = true
             item.leftBarButtonItem = UIBarButtonItem(image: UIImage.arrowBack, style: .plain, target: target, action: action)
             item.leftBarButtonItem?.tintColor = .backgroundColor
         }
+    }
+    
+    func addLogoTo(item: UINavigationItem) {
+        let logo = UIImageView(image: .eduIDLogo)
+        logo.width(92)
+        logo.height(36)
+        item.titleView = logo
     }
 }

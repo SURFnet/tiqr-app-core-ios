@@ -10,7 +10,14 @@ class ConfirmViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        screenType = .confirmScreen
         setupUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        screenType.configureNavigationItem(item: navigationItem)
     }
     
     //MARK: - setupUI

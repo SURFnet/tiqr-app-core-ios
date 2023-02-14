@@ -20,9 +20,15 @@ class VerifyLoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        screenType = .verifyLoginScreen
         setupUI()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        screenType.configureNavigationItem(item: navigationItem)
+    }
     //MARK: - setupUI
     func setupUI() {
         //top poster label

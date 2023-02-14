@@ -49,8 +49,13 @@ final class ScanViewModel: NSObject {
         }
     }
     
+    //MARK: - process the meta data
     func processMetaDataObject(object: AVMetadataMachineReadableCodeObject) {
+        
+        // call the viewcontroller to add green markers
         delegate?.scanViewModelAddPoints(_for: object, viewModel: self)
+        
+        // after 1s send the meta data to the challenge service
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: object.stringValue ?? "") { [weak self] type, challengeObject, error in
                 guard let self = self else { return }
@@ -62,10 +67,6 @@ final class ScanViewModel: NSObject {
                 }
             }
         })
-    }
-    
-    func handleError() {
-        
     }
     
     deinit {
