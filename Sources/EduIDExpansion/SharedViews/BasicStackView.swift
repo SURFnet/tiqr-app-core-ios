@@ -12,6 +12,7 @@ class BasicStackView: UIStackView {
         spacing = 16
         translatesAutoresizingMaskIntoConstraints = false
         distribution = .fill
+        alignment = .center
     }
     
     required init(coder: NSCoder) {

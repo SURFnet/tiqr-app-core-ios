@@ -174,18 +174,30 @@ Scan it here
 extension ScanViewController: ScanViewModelDelegate {
     
     func scanViewModelShowErrorAlert(error: Any, viewModel: ScanViewModel) {
+        
+        // present a dialog sheet with reason text
         let sheet = UIAlertController(title: "Error", message: (error as? Error)?.localizedDescription, preferredStyle: .actionSheet)
-        sheet.addAction(UIAlertAction(title: "Ok", style: .default) { action in
+        
+        // action to continue scanning - start session
+        sheet.addAction(UIAlertAction(title: "Ok", style: .default) { [weak self] action in
             sheet.dismiss(animated: true)
+            
+            // remove marker points
+            self?.overlayView.points = []
+            
+            // restart the av session
+            DispatchQueue.global(qos: .background).async { [weak self] in
+                self?.viewModel.session.startRunning()
+            }
         })
         present(sheet, animated: true)
     }
     
-    func scanViewModelShowVerifyAuthAttempt(with object: NSObject, viewModel: ScanViewModel) {
+    func scanViewModelShowVerifyAuthAttempt(viewModel: ScanViewModel) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
             guard let self = self else { return }
             
-            self.delegate?.promtUserWithVerifyScreen(viewController: self)
+            self.delegate?.promtUserWithVerifyScreen(viewController: self, viewModel: viewModel)
         })
     }
     
@@ -194,10 +206,5 @@ extension ScanViewController: ScanViewModelDelegate {
         for corner in projectedObject.corners {
             overlayView.addPoint(corner)
         }
-    }
-    
-    @objc
-    func promptUserWithVerifyScreen() {
-        
     }
 }
