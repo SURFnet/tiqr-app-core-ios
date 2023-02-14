@@ -1,8 +1,7 @@
 import UIKit
 import TinyConstraints
-import KeyboardKit
 
-class OnBoardingEnterPinViewController: OnBoardingBaseViewController {
+class PincodeViewController: OnBoardingBaseViewController {
     
     //MARK: viewmodel
     let viewModel: EnterPinViewModel
@@ -12,7 +11,7 @@ class OnBoardingEnterPinViewController: OnBoardingBaseViewController {
     let pinStack = AnimatedHStackView()
     //MARK: activity indicator
     let activity = UIActivityIndicatorView(style: .large)
-
+    
     //MARK: - init
     init(viewModel: EnterPinViewModel) {
         self.viewModel = viewModel
@@ -74,10 +73,10 @@ class OnBoardingEnterPinViewController: OnBoardingBaseViewController {
         textLabel.font = .sourceSansProLight(size: 16)
         textLabel.textColor = .secondaryColor
         let attributedText = NSMutableAttributedString(string:
-"""
-Enter the six-digit code we sent to your phone to continue
-"""
-                                                ,attributes: [.font : UIFont.sourceSansProLight(size: 16)])
+    """
+    Enter the six-digit code we sent to your phone to continue
+    """
+                                                       ,attributes: [.font : UIFont.sourceSansProLight(size: 16)])
         attributedText.setAttributes([.font : UIFont.sourceSansProSemiBold(size: 16)], range: NSRange(location: 10, length: 9))
         textLabel.attributedText = attributedText
         textLabelParent.addSubview(textLabel)
