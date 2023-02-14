@@ -10,7 +10,18 @@ final class EduIDButton: UIButton {
     }
 
     var type: ButtonType
-    var buttonTitle: String
+    var buttonTitle: String {
+        didSet {
+            switch type {
+            case .primary:
+                setupWithPrimaryStyle()
+            case .ghost:
+                setupWithGhostStyle()
+            case .naked:
+                setupWithNakedStyle()
+            }
+        }
+    }
     
     override var isEnabled: Bool {
         didSet {

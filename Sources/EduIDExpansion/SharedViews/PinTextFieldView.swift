@@ -9,8 +9,8 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
     let textfield = UITextField()
 
     //MARK: - initialize
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(isSecure: Bool) {
+        super.init(frame: .zero)
         
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
         
@@ -39,6 +39,7 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
         textfield.width(20)
         textfield.height(20)
         textfield.tintColor = .clear
+        textfield.isSecureTextEntry = isSecure
         textfield.keyboardType = .numberPad
         textfield.center(in: parentView)
         textfield.textAlignment = .center

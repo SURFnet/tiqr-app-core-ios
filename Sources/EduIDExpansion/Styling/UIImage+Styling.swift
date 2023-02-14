@@ -17,4 +17,5 @@ extension UIImage {
     static let flashLightOff = UIImage(named: "flashlight_off", in: Bundle.module, with: nil)!
     static let shield = UIImage(named: "shield", in: Bundle.module, with: nil)!
     static let surfLogo = UIImage(named: "surf_logo_vector", in: Bundle.module, with: nil)!
+    static let biometric = UIImage(named: "biometric_image", in: Bundle.module, with: nil)!
 }
