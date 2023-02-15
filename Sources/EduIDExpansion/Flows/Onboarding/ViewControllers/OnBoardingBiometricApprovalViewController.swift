@@ -3,6 +3,18 @@ import TinyConstraints
 
 class OnBoardingBiometricApprovalViewController: OnBoardingBaseViewController {
     
+    let createPincodeViewModel: CreatePincodeViewModel
+    
+    //MARK: - init
+    init(viewModel: CreatePincodeViewModel) {
+        self.createPincodeViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - setup lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +37,7 @@ class OnBoardingBiometricApprovalViewController: OnBoardingBaseViewController {
         let textLabel = UILabel.plainTextLabelPartlyBold(text: """
 Do you want to use your biometrics to access the eduID app more easily?
 """
-                                                         , partBold: "")
+                                                         , partBold: "biometrics")
         textParent.addSubview(textLabel)
         textLabel.edges(to: textParent)
         

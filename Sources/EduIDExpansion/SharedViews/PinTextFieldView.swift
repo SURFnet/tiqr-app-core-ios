@@ -64,7 +64,7 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         textField.text = string
-        delegate?.didEnterPinNumber(tag: tag)
+        delegate?.didEnterPinNumber(tag: tag, value: string.first ?? "0")
         return true
     }
     
@@ -91,5 +91,5 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
 }
 
 protocol PinTextFieldDelegate: AnyObject {
-    func didEnterPinNumber(tag: Int)
+    func didEnterPinNumber(tag: Int, value: Character)
 }

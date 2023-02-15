@@ -1,15 +1,17 @@
 import UIKit
 
-class EnterPinViewModel: NSObject {
+class PinViewModel: NSObject {
     
     var resignKeyboardFocus: (() -> Void)?
     var enableVerifyButton: ((Bool) -> Void)?
     var focusPinField: ((Int) -> Void)?
     
-    var pinIsEnteredOn: [Int: Bool] = [:] {
+    var pinValue: [Character] = ["0", "0", "0", "0", "0", "0"]
+    
+    var pinIsEnteredOnTextFieldIndex: [Int: Bool] = [:] {
         didSet {
             var areAllEntriesEntered = true
-            pinIsEnteredOn.forEach { (key, value) in
+            pinIsEnteredOnTextFieldIndex.forEach { (key, value) in
                 if !value {
                     areAllEntriesEntered = false
                 }
@@ -20,10 +22,11 @@ class EnterPinViewModel: NSObject {
 }
 
 //MARK: - pin textfield delegate
-extension EnterPinViewModel: PinTextFieldDelegate {
+extension PinViewModel: PinTextFieldDelegate {
 
-    func didEnterPinNumber(tag: Int) {
-        pinIsEnteredOn[tag] = true
+    func didEnterPinNumber(tag: Int, value: Character) {
+        pinValue[tag] = value
+        pinIsEnteredOnTextFieldIndex[tag] = true
         guard tag != 5 else {
             resignKeyboardFocus?()
             return }
