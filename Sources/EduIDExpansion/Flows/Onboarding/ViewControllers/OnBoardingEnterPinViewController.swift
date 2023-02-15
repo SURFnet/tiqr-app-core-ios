@@ -4,7 +4,7 @@ import TinyConstraints
 class OnBoardingEnterPinViewController: PincodeBaseViewController {
     
     //MARK: - init
-    override init(viewModel: EnterPinViewModel, isSecure: Bool) {
+    override init(viewModel: PinViewModel, isSecure: Bool) {
         super.init(viewModel: viewModel, isSecure: isSecure)
         
         screenType = .pinChallengeScreen

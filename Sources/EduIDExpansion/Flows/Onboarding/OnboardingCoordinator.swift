@@ -62,11 +62,27 @@ extension OnboardingCoordinator: OnBoardingViewControllerDelegate {
         }
         
         guard let nextViewController = currentScreenType.nextOnBoardingScreen().viewController() else { return }
+        // TODO: add sensible comment
         (nextViewController as? OnBoardingBaseViewController)?.delegate = self
         (nextViewController as? OnBoardingEnterPersonalInfoViewController)?.delegate = self
         navigationController.pushViewController(nextViewController, animated: true)
         currentScreenType = ScreenType(rawValue: currentScreenType.rawValue + 1) ?? .none
     }
+    
+    func onBoardingViewControllerShowConfirmPincodeScreen(viewController: CreatePincodeFirstEntryViewController, viewModel: CreatePincodeViewModel) {
+        let createPincodeSecondEntryViewController = CreatePincodeSecondEntryViewController(viewModel: viewModel)
+        createPincodeSecondEntryViewController.delegate = self
+        navigationController.pushViewController(createPincodeSecondEntryViewController, animated: true)
+        currentScreenType = .createPincodeSecondEntryScreen
+    }
+    
+    func onBoardingViewControllerShowBiometricUsageScreen(viewController: CreatePincodeSecondEntryViewController, viewModel: CreatePincodeViewModel) {
+        let biometricViewController = OnBoardingBiometricApprovalViewController(viewModel: viewModel)
+        biometricViewController.delegate = self
+        navigationController.pushViewController(biometricViewController, animated: true)
+        currentScreenType = .biometricApprovalScreen
+    }
+    
     
     
     //MARK: - back action

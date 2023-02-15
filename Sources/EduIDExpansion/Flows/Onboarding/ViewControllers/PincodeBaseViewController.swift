@@ -1,10 +1,11 @@
 import UIKit
 import TinyConstraints
 
+
 class PincodeBaseViewController: OnBoardingBaseViewController {
     
     //MARK: viewmodel
-    let viewModel: EnterPinViewModel
+    let viewModel: PinViewModel
     //MARK: verify button
     let verifyButton = EduIDButton(type: .primary, buttonTitle: "Verify this pin code")
     //MARK: pin stack view
@@ -21,7 +22,7 @@ class PincodeBaseViewController: OnBoardingBaseViewController {
     
 
     //MARK: - init
-    init(viewModel: EnterPinViewModel, isSecure: Bool) {
+    init(viewModel: PinViewModel, isSecure: Bool) {
         self.isSecure = isSecure
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -50,10 +51,6 @@ class PincodeBaseViewController: OnBoardingBaseViewController {
         super.viewDidLoad()
         
         setupUI()
-        
-        verifyButton.isEnabled = false
-        verifyButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(resignKeyboardFocus)))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -126,6 +123,11 @@ Enter the six-digit code we sent to your phone to continue
         pinStack.width(to: stack)
         
         pinStack.hideAndTriggerAll()
+        
+        // verify button state and action
+        verifyButton.isEnabled = false
+        verifyButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(resignKeyboardFocus)))
     }
     
     //MARK: - gesture action resign keyboard focus
