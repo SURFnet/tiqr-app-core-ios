@@ -66,6 +66,6 @@ Do you want to use your biometrics to access the eduID app more easily?
         skipButton.width(to: stack, offset: -24)
         
         // actions
-        setupButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
+        setupButton.addTarget(createPincodeViewModel, action: #selector(createPincodeViewModel.setupBiometricAccess), for: .touchUpInside)
     }
 }
