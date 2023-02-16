@@ -7,5 +7,6 @@ protocol OnBoardingViewControllerDelegate: AnyObject, NavigationDelegate {
     func onBoardingViewControllerShowScanScreen(viewController: UIViewController)
     func onBoardingViewControllerShowConfirmPincodeScreen(viewController: CreatePincodeFirstEntryViewController, viewModel: CreatePincodeViewModel)
     func onBoardingViewControllerShowBiometricUsageScreen(viewController: CreatePincodeSecondEntryViewController, viewModel: CreatePincodeViewModel)
+    func onBoardingViewControllerRedoCreatePin(viewController: CreatePincodeSecondEntryViewController)
     
 }

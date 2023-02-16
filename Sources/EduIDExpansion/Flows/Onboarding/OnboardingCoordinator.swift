@@ -83,6 +83,17 @@ extension OnboardingCoordinator: OnBoardingViewControllerDelegate {
         currentScreenType = .biometricApprovalScreen
     }
     
+    func onBoardingViewControllerRedoCreatePin(viewController: CreatePincodeSecondEntryViewController) {
+        navigationController.popToViewController(navigationController.viewControllers.first { $0 is CreatePincodeFirstEntryViewController}!, animated: true)
+        let alert = UIAlertController(title: "Oops, let's try again", message: "The entered PIN codes were not equal", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default) { action in
+            // no action
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+            self?.navigationController.present(alert, animated: true)
+        })
+    }
+    
     
     
     //MARK: - back action

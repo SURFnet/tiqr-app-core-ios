@@ -62,6 +62,9 @@ class PincodeBaseViewController: OnBoardingBaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        pinStack.arrangedSubviews.forEach { pinView in
+            (pinView as? PinTextFieldView)?.textfield.text = ""
+        }
         _ = (pinStack.arrangedSubviews.first as? PinTextFieldView)?.becomeFirstResponder()
     }
     

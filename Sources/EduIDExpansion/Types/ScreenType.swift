@@ -108,20 +108,26 @@ enum ScreenType: Int, CaseIterable {
     
     func configureNavigationItem(item: UINavigationItem, target: Any? = nil, action: Selector? = nil) {
         switch self {
+            // logo and cross to dismiss
         case .personalInfoLandingScreen, .securityLandingScreen, .activityLandingScreen:
             addLogoTo(item: item)
             item.hidesBackButton = true
             item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: target, action: action)
             item.rightBarButtonItem?.tintColor = .backgroundColor
+        
+            // logo and white back arrow
         case .scanScreen:
             addLogoTo(item: item)
             item.hidesBackButton = true
             item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: target, action: action)
             item.rightBarButtonItem?.tintColor = .white
+            
         case .homeScreen:
             item.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: target, action: action)
             item.rightBarButtonItem = UIBarButtonItem(title: "Log off", style: .plain, target: target, action: action)
-        case .confirmScreen, .verifyLoginScreen:
+            
+            // just logo
+        case .confirmScreen, .verifyLoginScreen, .createPincodefirstEntryScreen, .createPincodeSecondEntryScreen:
             addLogoTo(item: item)
             item.hidesBackButton = true
         default:

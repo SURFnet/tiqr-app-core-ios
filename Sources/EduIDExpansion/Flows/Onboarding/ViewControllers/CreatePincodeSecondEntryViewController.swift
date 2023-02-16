@@ -18,7 +18,14 @@ class CreatePincodeSecondEntryViewController: PincodeBaseViewController {
         
         createPincodeViewModel.showUseBiometricScreen = { [weak self] in
             guard let self = self else { return }
+            
             (self.delegate as? OnBoardingViewControllerDelegate)?.onBoardingViewControllerShowBiometricUsageScreen(viewController: self, viewModel: self.createPincodeViewModel)
+        }
+        
+        createPincodeViewModel.redoCreatePincode = { [weak self] in
+            guard let self = self else { return }
+            
+            (self.delegate as? OnBoardingViewControllerDelegate)?.onBoardingViewControllerRedoCreatePin(viewController: self)
         }
     }
     
@@ -38,6 +45,7 @@ class CreatePincodeSecondEntryViewController: PincodeBaseViewController {
     }
     
     override func showNextScreen() {
+        createPincodeViewModel.secondEnteredPin = viewModel.pinValue
         createPincodeViewModel.verifyPinSimilarity()
     }
 }
