@@ -23,8 +23,8 @@ class ChangePasswordViewModel: NSObject {
 //MARK: - textfield delegate
 extension ChangePasswordViewModel: ValidatedTextFieldDelegate {
     
-    func updateValidation(with value: Bool, from tag: Int) {
-        validationMap[tag] = value
+    func updateValidation(with value: String, isValid: Bool, from tag: Int) {
+        validationMap[tag] = isValid
     }
     
     func keyBoardDidReturn(tag: Int) {

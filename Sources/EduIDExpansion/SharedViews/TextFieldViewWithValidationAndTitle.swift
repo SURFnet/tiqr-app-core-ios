@@ -93,10 +93,10 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
     func validateText() {
         if textField.text?.count ?? 0 < 3 || textField.text?.count ?? 0 > 20 {
             validLabel.alpha = 1
-            delegate?.updateValidation(with: false, from: tag)
+            delegate?.updateValidation(with: textField.text ?? "", isValid: false, from: tag)
         } else {
             validLabel.alpha = 0
-            delegate?.updateValidation(with: true, from: tag)
+            delegate?.updateValidation(with: textField.text ?? "", isValid: true, from: tag)
         }
     }
     
@@ -137,7 +137,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
 
 protocol ValidatedTextFieldDelegate: AnyObject {
     
-    func updateValidation(with value: Bool, from tag: Int)
+    func updateValidation(with value: String, isValid: Bool, from tag: Int)
     func keyBoardDidReturn(tag: Int)
     func didBecomeFirstResponder(tag: Int)
 }

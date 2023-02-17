@@ -37,13 +37,13 @@ final class CreatePincodeViewModel: NSObject {
     
     @objc
     func setupBiometricAccess() {
-        if ServiceContainer.sharedInstance().secretService.biometricIDAvailable {
-            let enrollment = (try? EnrollmentChallenge(challenge: ServiceContainer.sharedInstance().challengeService., allowFiles: true))!
-            ServiceContainer.sharedInstance().challengeService.complete(enrollment, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { succes, error in
-                print(succes, error)
-            }
-        } else {
-            
-        }
+//        if ServiceContainer.sharedInstance().secretService.biometricIDAvailable {
+////            let enrollment = (try? EnrollmentChallenge(challenge: ServiceContainer.sharedInstance().challengeService., allowFiles: true))!
+////            ServiceContainer.sharedInstance().challengeService.complete(enrollment, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { succes, error in
+//                print(succes, error)
+//            }
+//        } else {
+//            
+//        }
     }
 }

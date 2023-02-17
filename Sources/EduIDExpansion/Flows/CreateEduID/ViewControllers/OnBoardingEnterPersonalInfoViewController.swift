@@ -7,8 +7,11 @@ class OnBoardingEnterPersonalInfoViewController: ScrollingViewControllerWithText
     
     private var viewModel: EnterPersonalInfoViewModel
     private let inset: CGFloat = 24
-    static let emailFieldTag = 3
     
+    static let lastNameFieldTag = 3
+    static let firstNameFieldTag = 2
+    static let emailFieldTag = 1
+   
     let requestButton = EduIDButton(type: .primary, buttonTitle: "Request you eduID")
     let emailField = TextFieldViewWithValidationAndTitle(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
     
@@ -25,7 +28,7 @@ class OnBoardingEnterPersonalInfoViewController: ScrollingViewControllerWithText
         var loadedTime = Date()
         
         viewModel.makeNextTextFieldFirstResponderClosure = { [weak self] tag in
-            guard tag != OnBoardingEnterPersonalInfoViewController.emailFieldTag else {
+            guard tag != OnBoardingEnterPersonalInfoViewController.lastNameFieldTag else {
                 self?.resignKeyboardResponder()
                 return
             }
@@ -86,17 +89,17 @@ class OnBoardingEnterPersonalInfoViewController: ScrollingViewControllerWithText
         let posterLabel = UILabel.posterTextLabel(text: "Request your eduID", size: 24)
         
         //MARK: - email
-        emailField.tag = 1
+        emailField.tag = OnBoardingEnterPersonalInfoViewController.emailFieldTag
         emailField.delegate = viewModel
         
         //MARK: - firstname
         let firstNameField = TextFieldViewWithValidationAndTitle(title: "First name", placeholder: "e.g. Tim", keyboardType: .default)
-        firstNameField.tag = 2
+        firstNameField.tag = OnBoardingEnterPersonalInfoViewController.firstNameFieldTag
         firstNameField.delegate = viewModel
         
         //MARK: - lastName
         let lastNameField = TextFieldViewWithValidationAndTitle(title: "Last name", placeholder: "e.g. Berners-Lee", keyboardType: .default)
-        lastNameField.tag = 3
+        lastNameField.tag = OnBoardingEnterPersonalInfoViewController.lastNameFieldTag
         lastNameField.delegate = viewModel
         
         //MARK: - check terms
@@ -147,10 +150,9 @@ class OnBoardingEnterPersonalInfoViewController: ScrollingViewControllerWithText
         stack.hideAndTriggerAll(onlyThese: [1, 2, 3, 4, 6])
     }
 
-    
     @objc
     func showNextScreen() {
-        delegate?.onBoardingViewControllerShowNextScreen(viewController: self)
+        viewModel.apiCallToCreateEduID()
     }
     
     override func goBack() {
