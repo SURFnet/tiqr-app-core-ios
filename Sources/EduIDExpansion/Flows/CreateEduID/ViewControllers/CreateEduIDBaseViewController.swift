@@ -21,7 +21,7 @@ class CreateEduIDBaseViewController: BaseViewController {
     
     @objc
     func showScanScreen() {
-        (delegate as? OnBoardingViewControllerDelegate)?.createEduIDViewControllerShowScanScreen(viewController: self)
+        (delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowScanScreen(viewController: self)
     }
 
 }
