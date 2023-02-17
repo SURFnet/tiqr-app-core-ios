@@ -92,8 +92,8 @@ We will text you a code to verify your number.
     }
     
     //MARK: - textfield validation method
-    func updateValidation(with value: Bool, from tag: Int) {
-        verifyButton.isEnabled = value
+    func updateValidation(with value: String, isValid: Bool, from tag: Int) {
+        verifyButton.isEnabled = isValid
     }
     
     func keyBoardDidReturn(tag: Int) {

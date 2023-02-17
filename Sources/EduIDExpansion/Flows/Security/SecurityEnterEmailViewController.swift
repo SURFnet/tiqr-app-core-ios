@@ -98,8 +98,8 @@ Please enter your new email address. A verification mail will be sent to this ad
     }
     
     //MARK: - textfield validation method
-    func updateValidation(with value: Bool, from tag: Int) {
-        verifyButton.isEnabled = value
+    func updateValidation(with value: String, isValid: Bool, from tag: Int) {
+        verifyButton.isEnabled = isValid
     }
     
     func keyBoardDidReturn(tag: Int) {
