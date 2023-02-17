@@ -1,6 +1,6 @@
 import UIKit
 
-final class ScanCoordinator: CoordinatorType {
+final class ScanCoordinator: NSObject, CoordinatorType {
     
     weak var viewControllerToPresentOn: UIViewController?
     
@@ -22,6 +22,8 @@ final class ScanCoordinator: CoordinatorType {
         self.navigationController = navigationController
         navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.pushViewController(scanViewcontroller, animated: false)
+        navigationController.transitioningDelegate = self
+        navigationController.modalPresentationStyle = .custom
         
         viewControllerToPresentOn?.present(navigationController, animated: true)
     }
@@ -52,5 +54,16 @@ extension ScanCoordinator: ConfirmViewControllerDelegate {
     
     func confirmViewControllerDismiss(viewController: ConfirmViewController) {
         navigationController?.dismiss(animated: true)
+    }
+}
+
+extension ScanCoordinator: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return QRAnimatedTransition(presenting: true)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return QRAnimatedTransition(presenting: false)
     }
 }
