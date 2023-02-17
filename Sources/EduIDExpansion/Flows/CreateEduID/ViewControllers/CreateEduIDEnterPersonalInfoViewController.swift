@@ -42,12 +42,10 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingViewControllerWithTex
         }
         
         viewModel.textFieldBecameFirstResponderClosure = { [weak self] tag in
-            guard Date().timeIntervalSince(loadedTime) > 2 else { return }
+            guard Date().timeIntervalSince(loadedTime) > 1 else { return }
             self?.scrollViewToTextField(index: tag)
         }
     }
-    
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

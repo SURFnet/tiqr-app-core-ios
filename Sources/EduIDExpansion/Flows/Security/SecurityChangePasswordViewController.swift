@@ -124,6 +124,7 @@ Make sure your new password is at least 15 characters OR at least 8 characters i
         textParent.width(to: stack)
         newPasswordField.width(to: stack)
         repeatPasswordField.width(to: stack)
+        resetPasswordButton.width(to: stack, offset: -24)
         
         // actions
         resetPasswordButton.addTarget(self, action: #selector(resetAction), for: .touchUpInside)
