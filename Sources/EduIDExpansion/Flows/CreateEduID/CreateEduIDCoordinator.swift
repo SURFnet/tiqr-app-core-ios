@@ -61,10 +61,10 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
             return
         }
         
-        guard let nextViewController = currentScreenType.nextOnBoardingScreen().viewController() else { return }
+        guard let nextViewController = currentScreenType.nextCreateEduIDScreen().viewController() else { return }
         // TODO: add sensible comment
-        (nextViewController as? OnBoardingBaseViewController)?.delegate = self
-        (nextViewController as? OnBoardingEnterPersonalInfoViewController)?.delegate = self
+        (nextViewController as? CreateEduIDBaseViewController)?.delegate = self
+        (nextViewController as? CreateEduIDEnterPersonalInfoViewController)?.delegate = self
         navigationController.pushViewController(nextViewController, animated: true)
         currentScreenType = ScreenType(rawValue: currentScreenType.rawValue + 1) ?? .none
     }
@@ -77,7 +77,7 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
     }
     
     func createEduIDViewControllerShowBiometricUsageScreen(viewController: CreatePincodeSecondEntryViewController, viewModel: CreatePincodeViewModel) {
-        let biometricViewController = OnBoardingBiometricApprovalViewController(viewModel: viewModel)
+        let biometricViewController = CreateEduIDBiometricApprovalViewController(viewModel: viewModel)
         biometricViewController.delegate = self
         navigationController.pushViewController(biometricViewController, animated: true)
         currentScreenType = .biometricApprovalScreen
