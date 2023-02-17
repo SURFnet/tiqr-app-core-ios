@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class OnBoardingAddInstitutionViewController: OnBoardingBaseViewController {
+class CreateEduIDAddInstitutionViewController: CreateEduIDBaseViewController {
 
     //MARK: - verify button
     let continueButton = EduIDButton(type: .primary, buttonTitle: "Continue")

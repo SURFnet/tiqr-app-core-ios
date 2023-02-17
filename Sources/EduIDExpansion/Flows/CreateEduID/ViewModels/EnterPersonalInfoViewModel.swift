@@ -11,9 +11,9 @@ class EnterPersonalInfoViewModel: NSObject {
     var textFieldBecameFirstResponderClosure: ((Int) -> Void)?
     
     var textFieldModels: [TextFieldModelWithTagAndValid] = [
-        TextFieldModelWithTagAndValid(tag: OnBoardingEnterPersonalInfoViewController.emailFieldTag, text: "", isValid: false),
-        TextFieldModelWithTagAndValid(tag: OnBoardingEnterPersonalInfoViewController.firstNameFieldTag, text: "", isValid: false),
-        TextFieldModelWithTagAndValid(tag: OnBoardingEnterPersonalInfoViewController.lastNameFieldTag, text: "", isValid: false)
+        TextFieldModelWithTagAndValid(tag: CreateEduIDEnterPersonalInfoViewController.emailFieldTag, text: "", isValid: false),
+        TextFieldModelWithTagAndValid(tag: CreateEduIDEnterPersonalInfoViewController.firstNameFieldTag, text: "", isValid: false),
+        TextFieldModelWithTagAndValid(tag: CreateEduIDEnterPersonalInfoViewController.lastNameFieldTag, text: "", isValid: false)
     ] {
         didSet {
             var isTrue = true

@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class OnBoardingEnterPhoneNumberViewController: OnBoardingBaseViewController, ValidatedTextFieldDelegate {
+class CreateEduIDEnterPhoneNumberViewController: CreateEduIDBaseViewController, ValidatedTextFieldDelegate {
     
     var stack: AnimatedVStackView!
     

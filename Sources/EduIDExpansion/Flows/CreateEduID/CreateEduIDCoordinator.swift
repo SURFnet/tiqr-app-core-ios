@@ -1,11 +1,11 @@
 import UIKit
 
-final class OnboardingCoordinator: CoordinatorType {
+final class CreateEduIDCoordinator: CoordinatorType {
     
     weak var viewControllerToPresentOn: UIViewController?
     
     weak var navigationController: UINavigationController!
-    weak var delegate: OnBoardingCoordinatorDelegate?
+    weak var delegate: CreateEduIDCoordinatorDelegate?
     
     var children: [CoordinatorType] = []
     
@@ -20,7 +20,7 @@ final class OnboardingCoordinator: CoordinatorType {
     //MARK: - start
     func start() {
         
-        let landingScreen = OnBoardingLandingPageViewController()
+        let landingScreen = CreateEduIDLandingPageViewController()
         landingScreen.screenType = .landingScreen
         landingScreen.delegate = self
         
@@ -34,7 +34,7 @@ final class OnboardingCoordinator: CoordinatorType {
     }
 }
 
-extension OnboardingCoordinator: ScanCoordinatorDelegate {
+extension CreateEduIDCoordinator: ScanCoordinatorDelegate {
     
     //MARK: - start scan screen
     
@@ -45,9 +45,9 @@ extension OnboardingCoordinator: ScanCoordinatorDelegate {
     }
 }
 
-extension OnboardingCoordinator: OnBoardingViewControllerDelegate {
+extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
     
-    func onBoardingViewControllerShowScanScreen(viewController: UIViewController) {
+    func createEduIDViewControllerShowScanScreen(viewController: UIViewController) {
         let scanCoordinator = ScanCoordinator(viewControllerToPresentOn: navigationController)
         scanCoordinator.delegate = self
         children.append(scanCoordinator)
@@ -55,9 +55,9 @@ extension OnboardingCoordinator: OnBoardingViewControllerDelegate {
     }
     
     //MARK: - show next screen
-    func onBoardingViewControllerShowNextScreen(viewController: UIViewController) {
+    func createEduIDViewControllerShowNextScreen(viewController: UIViewController) {
         if currentScreenType == .addInstitutionScreen {
-            delegate?.onBoardingCoordinatorDismissOnBoarding(coordinator: self)
+            delegate?.createEduIDCoordinatorDismissOnBoarding(coordinator: self)
             return
         }
         
@@ -69,21 +69,21 @@ extension OnboardingCoordinator: OnBoardingViewControllerDelegate {
         currentScreenType = ScreenType(rawValue: currentScreenType.rawValue + 1) ?? .none
     }
     
-    func onBoardingViewControllerShowConfirmPincodeScreen(viewController: CreatePincodeFirstEntryViewController, viewModel: CreatePincodeViewModel) {
+    func createEduIDViewControllerShowConfirmPincodeScreen(viewController: CreatePincodeFirstEntryViewController, viewModel: CreatePincodeViewModel) {
         let createPincodeSecondEntryViewController = CreatePincodeSecondEntryViewController(viewModel: viewModel)
         createPincodeSecondEntryViewController.delegate = self
         navigationController.pushViewController(createPincodeSecondEntryViewController, animated: true)
         currentScreenType = .createPincodeSecondEntryScreen
     }
     
-    func onBoardingViewControllerShowBiometricUsageScreen(viewController: CreatePincodeSecondEntryViewController, viewModel: CreatePincodeViewModel) {
+    func createEduIDViewControllerShowBiometricUsageScreen(viewController: CreatePincodeSecondEntryViewController, viewModel: CreatePincodeViewModel) {
         let biometricViewController = OnBoardingBiometricApprovalViewController(viewModel: viewModel)
         biometricViewController.delegate = self
         navigationController.pushViewController(biometricViewController, animated: true)
         currentScreenType = .biometricApprovalScreen
     }
     
-    func onBoardingViewControllerRedoCreatePin(viewController: CreatePincodeSecondEntryViewController) {
+    func createEduIDViewControllerRedoCreatePin(viewController: CreatePincodeSecondEntryViewController) {
         navigationController.popToViewController(navigationController.viewControllers.first { $0 is CreatePincodeFirstEntryViewController}!, animated: true)
         let alert = UIAlertController(title: "Oops, let's try again", message: "The entered PIN codes were not equal", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default) { action in

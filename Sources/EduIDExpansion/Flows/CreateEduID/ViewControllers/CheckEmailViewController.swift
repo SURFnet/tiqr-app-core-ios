@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class CheckEmailViewController: OnBoardingBaseViewController {
+class CheckEmailViewController: CreateEduIDBaseViewController {
     
     //MARK: - lifecycle
     override func viewDidLoad() {

@@ -18,7 +18,7 @@ class MainCoordinator: CoordinatorType {
     }
     
     func start() {
-        let onboardingCoordinator = OnboardingCoordinator(viewControllerToPresentOn: homeNavigationController)
+        let onboardingCoordinator = CreateEduIDCoordinator(viewControllerToPresentOn: homeNavigationController)
         children.append(onboardingCoordinator)
         onboardingCoordinator.delegate = self
         onboardingCoordinator.start()
@@ -86,10 +86,10 @@ extension MainCoordinator: SecurityCoordinatorDelegate {
     }
 }
     
-extension MainCoordinator: OnBoardingCoordinatorDelegate {
+extension MainCoordinator: CreateEduIDCoordinatorDelegate {
     
     //MARK: - onboarding delegate
-    func onBoardingCoordinatorDismissOnBoarding(coordinator: CoordinatorType) {
+    func createEduIDCoordinatorDismissOnBoarding(coordinator: CoordinatorType) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 === coordinator }
     }

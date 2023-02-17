@@ -1,6 +1,6 @@
 import UIKit
 
-class OnBoardingBaseViewController: BaseViewController {
+class CreateEduIDBaseViewController: BaseViewController {
     
     weak var delegate: NavigationDelegate?
     
@@ -16,12 +16,12 @@ class OnBoardingBaseViewController: BaseViewController {
     
     @objc
     func showNextScreen() {
-        (delegate as? OnBoardingViewControllerDelegate)?.onBoardingViewControllerShowNextScreen(viewController: self)
+        (delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: self)
     }
     
     @objc
     func showScanScreen() {
-        (delegate as? OnBoardingViewControllerDelegate)?.onBoardingViewControllerShowScanScreen(viewController: self)
+        (delegate as? OnBoardingViewControllerDelegate)?.createEduIDViewControllerShowScanScreen(viewController: self)
     }
 
 }

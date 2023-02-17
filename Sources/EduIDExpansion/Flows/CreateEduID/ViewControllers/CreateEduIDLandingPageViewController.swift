@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class OnBoardingLandingPageViewController: OnBoardingBaseViewController {
+class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
     
     private var stack: AnimatedVStackView!
     
@@ -52,7 +52,7 @@ class OnBoardingLandingPageViewController: OnBoardingBaseViewController {
         scanQRButton.addTarget(self, action: #selector(showScanScreen), for: .touchUpInside)
         let noEduIDYetButton = EduIDButton(type: .naked, buttonTitle: "I don't have an eduId")
         
-        //the action for this button is on OnBoardingBaseViewController superclass
+        //the action for this button is on CreateEduIDBaseViewController superclass
         noEduIDYetButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
         
         //MARK: - create the stackview

@@ -28,6 +28,6 @@ class CreatePincodeFirstEntryViewController: PincodeBaseViewController {
     
     override func showNextScreen() {
         createPincodeViewModel.firstEnteredPin = viewModel.pinValue
-        (delegate as? OnBoardingViewControllerDelegate)?.onBoardingViewControllerShowConfirmPincodeScreen(viewController: self, viewModel: createPincodeViewModel)
+        (delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowConfirmPincodeScreen(viewController: self, viewModel: createPincodeViewModel)
     }
 }

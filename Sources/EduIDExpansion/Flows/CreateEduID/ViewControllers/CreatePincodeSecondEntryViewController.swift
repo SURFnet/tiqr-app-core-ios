@@ -19,13 +19,13 @@ class CreatePincodeSecondEntryViewController: PincodeBaseViewController {
         createPincodeViewModel.showUseBiometricScreen = { [weak self] in
             guard let self = self else { return }
             
-            (self.delegate as? OnBoardingViewControllerDelegate)?.onBoardingViewControllerShowBiometricUsageScreen(viewController: self, viewModel: self.createPincodeViewModel)
+            (self.delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowBiometricUsageScreen(viewController: self, viewModel: self.createPincodeViewModel)
         }
         
         createPincodeViewModel.redoCreatePincode = { [weak self] in
             guard let self = self else { return }
             
-            (self.delegate as? OnBoardingViewControllerDelegate)?.onBoardingViewControllerRedoCreatePin(viewController: self)
+            (self.delegate as? OnBoardingViewControllerDelegate)?.createEduIDViewControllerRedoCreatePin(viewController: self)
         }
     }
     

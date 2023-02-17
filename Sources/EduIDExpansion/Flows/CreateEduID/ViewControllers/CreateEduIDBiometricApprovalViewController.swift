@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class OnBoardingBiometricApprovalViewController: OnBoardingBaseViewController {
+class CreateEduIDBiometricApprovalViewController: CreateEduIDBaseViewController {
     
     let createPincodeViewModel: CreatePincodeViewModel
     

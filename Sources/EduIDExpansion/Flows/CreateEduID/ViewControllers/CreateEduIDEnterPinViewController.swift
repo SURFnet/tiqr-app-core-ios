@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class OnBoardingEnterPinViewController: PincodeBaseViewController {
+class CreateEduIDEnterPinViewController: PincodeBaseViewController {
     
     //MARK: - init
     override init(viewModel: PinViewModel, isSecure: Bool) {
