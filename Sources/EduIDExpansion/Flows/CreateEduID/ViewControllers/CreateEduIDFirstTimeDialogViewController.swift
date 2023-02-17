@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class OnBoardingFirstTimeDialogViewController: OnBoardingBaseViewController {
+class CreateEduIDFirstTimeDialogViewController: CreateEduIDBaseViewController {
 
     //MARK: - primary button
     let addButton = EduIDButton(type: .primary, buttonTitle: "Connect your school/institution")

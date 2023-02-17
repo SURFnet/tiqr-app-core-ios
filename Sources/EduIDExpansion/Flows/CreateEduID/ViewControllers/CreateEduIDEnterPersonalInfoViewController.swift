@@ -1,9 +1,9 @@
 import UIKit
 import TinyConstraints
 
-class OnBoardingEnterPersonalInfoViewController: ScrollingViewControllerWithTextFields {
+class CreateEduIDEnterPersonalInfoViewController: ScrollingViewControllerWithTextFields {
     
-    weak var delegate: OnBoardingViewControllerDelegate?
+    weak var delegate: CreateEduIDViewControllerDelegate?
     
     private var viewModel: EnterPersonalInfoViewModel
     private let inset: CGFloat = 24
@@ -28,7 +28,7 @@ class OnBoardingEnterPersonalInfoViewController: ScrollingViewControllerWithText
         var loadedTime = Date()
         
         viewModel.makeNextTextFieldFirstResponderClosure = { [weak self] tag in
-            guard tag != OnBoardingEnterPersonalInfoViewController.lastNameFieldTag else {
+            guard tag != CreateEduIDEnterPersonalInfoViewController.lastNameFieldTag else {
                 self?.resignKeyboardResponder()
                 return
             }
@@ -71,7 +71,7 @@ class OnBoardingEnterPersonalInfoViewController: ScrollingViewControllerWithText
         super.viewDidAppear(animated)
         
         //set the height of the spacer according to the view
-        if scrollView.frame.size.height > scrollView.contentSize.height + OnBoardingEnterPersonalInfoViewController.smallBuffer {
+        if scrollView.frame.size.height > scrollView.contentSize.height + CreateEduIDEnterPersonalInfoViewController.smallBuffer {
             spacingView.height(scrollView.frame.size.height - scrollView.contentSize.height - inset - view.safeAreaInsets.top)
         }
         
@@ -89,17 +89,17 @@ class OnBoardingEnterPersonalInfoViewController: ScrollingViewControllerWithText
         let posterLabel = UILabel.posterTextLabel(text: "Request your eduID", size: 24)
         
         //MARK: - email
-        emailField.tag = OnBoardingEnterPersonalInfoViewController.emailFieldTag
+        emailField.tag = CreateEduIDEnterPersonalInfoViewController.emailFieldTag
         emailField.delegate = viewModel
         
         //MARK: - firstname
         let firstNameField = TextFieldViewWithValidationAndTitle(title: "First name", placeholder: "e.g. Tim", keyboardType: .default)
-        firstNameField.tag = OnBoardingEnterPersonalInfoViewController.firstNameFieldTag
+        firstNameField.tag = CreateEduIDEnterPersonalInfoViewController.firstNameFieldTag
         firstNameField.delegate = viewModel
         
         //MARK: - lastName
         let lastNameField = TextFieldViewWithValidationAndTitle(title: "Last name", placeholder: "e.g. Berners-Lee", keyboardType: .default)
-        lastNameField.tag = OnBoardingEnterPersonalInfoViewController.lastNameFieldTag
+        lastNameField.tag = CreateEduIDEnterPersonalInfoViewController.lastNameFieldTag
         lastNameField.delegate = viewModel
         
         //MARK: - check terms

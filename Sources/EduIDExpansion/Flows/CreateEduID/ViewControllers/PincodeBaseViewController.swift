@@ -2,7 +2,7 @@ import UIKit
 import TinyConstraints
 
 
-class PincodeBaseViewController: OnBoardingBaseViewController {
+class PincodeBaseViewController: CreateEduIDBaseViewController {
     
     //MARK: viewmodel
     let viewModel: PinViewModel

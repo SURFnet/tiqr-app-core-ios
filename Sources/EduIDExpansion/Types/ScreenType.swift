@@ -40,7 +40,7 @@ enum ScreenType: Int, CaseIterable {
     
     case none
     
-    func nextOnBoardingScreen() -> ScreenType {
+    func nextCreateEduIDScreen() -> ScreenType {
         switch self {
         case .landingScreen:
             return .explanationScreen
@@ -72,21 +72,21 @@ enum ScreenType: Int, CaseIterable {
     func viewController() -> UIViewController? {
         switch self {
         case .landingScreen:
-            return OnBoardingLandingPageViewController()
+            return CreateEduIDLandingPageViewController()
         case .explanationScreen:
-            return OnBoardingExplanationViewController()
+            return CreateEduIDExplanationViewController()
         case .enterInfoScreen:
-            return OnBoardingEnterPersonalInfoViewController(viewModel: EnterPersonalInfoViewModel())
+            return CreateEduIDEnterPersonalInfoViewController(viewModel: EnterPersonalInfoViewModel())
         case .checkMailScreen:
             return CheckEmailViewController()
         case .enterPhoneScreen:
-            return OnBoardingEnterPhoneNumberViewController()
+            return CreateEduIDEnterPhoneNumberViewController()
         case .pinChallengeScreen:
-            return OnBoardingEnterPinViewController(viewModel: PinViewModel(), isSecure: false)
+            return CreateEduIDEnterPinViewController(viewModel: PinViewModel(), isSecure: false)
         case .welcomeScreen:
-            return OnBoardingWelcomeViewController()
+            return CreateEduIDWelcomeViewController()
         case .addInstitutionScreen:
-            return OnBoardingAddInstitutionViewController()
+            return CreateEduIDAddInstitutionViewController()
         case .homeScreen:
             return HomeViewController()
         case .scanScreen:
@@ -94,7 +94,7 @@ enum ScreenType: Int, CaseIterable {
         case .personalInfoLandingScreen:
             return PersonalInfoViewController()
         case .firstTimeDialogScreen:
-            return OnBoardingFirstTimeDialogViewController()
+            return CreateEduIDFirstTimeDialogViewController()
         case .securityLandingScreen:
             return SecurityLandingViewController()
         case .createPincodefirstEntryScreen:
