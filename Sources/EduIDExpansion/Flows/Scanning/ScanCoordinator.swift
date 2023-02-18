@@ -36,10 +36,16 @@ extension ScanCoordinator: ScanViewControllerDelegate {
         delegate?.scanCoordinatorDismissScanScreen(coordinator: self)
     }
     
-    func promtUserWithVerifyScreen(viewController: ScanViewController, viewModel: ScanViewModel) {
+    func scanViewControllerPromtUserWithVerifyScreen(viewController: ScanViewController, viewModel: ScanViewModel) {
         let verifyViewController = VerifyScanResultViewController(viewModel: viewModel)
         verifyViewController.delegate = self
         navigationController.pushViewController(verifyViewController, animated: true)
+    }
+    
+    func scanViewControllerShowConfirmScreen(viewController: ScanViewController) {
+        let confirmViewController = ConfirmViewController()
+        confirmViewController.delegate = self
+        navigationController.pushViewController(confirmViewController, animated: true)
     }
 }
 
