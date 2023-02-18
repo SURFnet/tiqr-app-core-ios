@@ -12,7 +12,7 @@ class QRAnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning {
     static let frequency: TimeInterval = 0.025
     
     //checker size in pixels
-    static let resolution: CGFloat = 7
+    static let resolution: CGFloat = 12
     
     var timer: Timer?
     
