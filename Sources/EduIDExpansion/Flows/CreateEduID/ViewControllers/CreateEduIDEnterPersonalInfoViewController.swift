@@ -150,7 +150,8 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingViewControllerWithTex
 
     @objc
     func showNextScreen() {
-        viewModel.apiCallToCreateEduID()
+        delegate?.createEduIDViewControllerShowNextScreen(viewController: self)
+//        viewModel.apiCallToCreateEduID()
     }
     
     override func goBack() {

@@ -4,6 +4,6 @@ import AVFoundation
 
 protocol ScanViewModelDelegate: AnyObject {
     func scanViewModelAddPoints(_for object: AVMetadataMachineReadableCodeObject, viewModel: ScanViewModel)
-    func scanViewModelShowVerifyAuthAttempt(viewModel: ScanViewModel)
+    func scanViewModelShowScanAttempt(viewModel: ScanViewModel)
     func scanViewModelShowErrorAlert(error: Any, viewModel: ScanViewModel)
 }

@@ -193,7 +193,7 @@ extension ScanViewController: ScanViewModelDelegate {
         present(sheet, animated: true)
     }
     
-    func scanViewModelShowVerifyAuthAttempt(viewModel: ScanViewModel) {
+    func scanViewModelShowScanAttempt(viewModel: ScanViewModel) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
             guard let self = self else { return }
             

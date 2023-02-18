@@ -30,7 +30,7 @@ final class CreateEduIDCoordinator: CoordinatorType {
         self.navigationController = navigationController
         
         // the next line is responsible for presenting the onboarding and is sometimes commented out for development purposes
-//        viewControllerToPresentOn?.present(self.navigationController, animated: false)
+        viewControllerToPresentOn?.present(self.navigationController, animated: false)
     }
 }
 
@@ -69,14 +69,14 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
         currentScreenType = ScreenType(rawValue: currentScreenType.rawValue + 1) ?? .none
     }
     
-    func createEduIDViewControllerShowConfirmPincodeScreen(viewController: CreatePincodeFirstEntryViewController, viewModel: CreatePincodeViewModel) {
+    func createEduIDViewControllerShowConfirmPincodeScreen(viewController: CreatePincodeFirstEntryViewController, viewModel: CreatePincodeAndBiometricAccessViewModel) {
         let createPincodeSecondEntryViewController = CreatePincodeSecondEntryViewController(viewModel: viewModel)
         createPincodeSecondEntryViewController.delegate = self
         navigationController.pushViewController(createPincodeSecondEntryViewController, animated: true)
         currentScreenType = .createPincodeSecondEntryScreen
     }
     
-    func createEduIDViewControllerShowBiometricUsageScreen(viewController: CreatePincodeSecondEntryViewController, viewModel: CreatePincodeViewModel) {
+    func createEduIDViewControllerShowBiometricUsageScreen(viewController: CreatePincodeSecondEntryViewController, viewModel: CreatePincodeAndBiometricAccessViewModel) {
         let biometricViewController = CreateEduIDBiometricApprovalViewController(viewModel: viewModel)
         biometricViewController.delegate = self
         navigationController.pushViewController(biometricViewController, animated: true)

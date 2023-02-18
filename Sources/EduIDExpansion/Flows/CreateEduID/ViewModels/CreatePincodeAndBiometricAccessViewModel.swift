@@ -1,15 +1,24 @@
 import UIKit
 import TiqrCoreObjC
 
-final class CreatePincodeViewModel: NSObject {
+final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     
-    //MARK: - entered pincodes
+    // - enrollment challenge object
+    let enrollmentChallenge: EnrollmentChallenge?
+    
+    // - entered pincodes
     var firstEnteredPin: [Character] = []
     var secondEnteredPin: [Character] = []
     
     var showUseBiometricScreen: (() -> Void)?
     var proceedWithoutBiometric: (() -> Void)?
     var redoCreatePincode: (() -> Void)?
+   
+    //MARK: - init
+    init(enrollmentChallenge: EnrollmentChallenge? = nil) {
+        self.enrollmentChallenge = enrollmentChallenge
+        super.init()
+    }
     
     func verifyPinSimilarity() {
         if firstEnteredPin == secondEnteredPin {
@@ -37,13 +46,12 @@ final class CreatePincodeViewModel: NSObject {
     
     @objc
     func setupBiometricAccess() {
-//        if ServiceContainer.sharedInstance().secretService.biometricIDAvailable {
-////            let enrollment = (try? EnrollmentChallenge(challenge: ServiceContainer.sharedInstance().challengeService., allowFiles: true))!
-////            ServiceContainer.sharedInstance().challengeService.complete(enrollment, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { succes, error in
-//                print(succes, error)
-//            }
-//        } else {
-//            
-//        }
+        if ServiceContainer.sharedInstance().secretService.biometricIDAvailable {
+            ServiceContainer.sharedInstance().challengeService.complete(enrollmentChallenge!, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { succes, error in
+                print(succes)
+            }
+        } else {
+            
+        }
     }
 }
