@@ -69,6 +69,11 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     }
     
     func handleUseBiometricAccess() {
+        guard enrollmentChallenge != nil else {
+            proceedWithoutBiometricClosure?()
+            return
+        }
+        
         ServiceContainer.sharedInstance().challengeService.complete(enrollmentChallenge!, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { [weak self] success, error in
             if success {
                 self?.biometricAccessSuccessClosure?()

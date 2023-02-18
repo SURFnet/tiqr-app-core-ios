@@ -3,22 +3,23 @@ import TinyConstraints
 
 class CreateEduIDFirstTimeDialogViewController: CreateEduIDBaseViewController {
 
-    //MARK: - primary button
-    let addButton = EduIDButton(type: .primary, buttonTitle: "Connect your school/institution")
+    // - primary button
+    let connectButton = EduIDButton(type: .primary, buttonTitle: "Connect your school/institution")
     
-    //MARK: - stack
+    // - stack
     var stack: AnimatedVStackView!
     
-    //MARK: - scroll view
+    // - scroll view
     var scrollView = UIScrollView()
     
+    //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         screenType = .firstTimeDialogScreen
         
         setupUI()
-        addButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
+        connectButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,19 +34,20 @@ class CreateEduIDFirstTimeDialogViewController: CreateEduIDBaseViewController {
         scrollView.contentSize = stack.frame.inset(by: UIEdgeInsets(top: -24, left: -24, bottom: -24, right: -24)).size
     }
     
+    //MARK: - setup UI
     func setupUI() {
-        //MARK: - scroll view setup
+        // - scroll view setup
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         scrollView.edges(to: view)
         
-        //MARK: - postertext
+        // - postertext
         let posterParent = UIView()
         let posterLabel = UILabel.posterTextLabelBicolor(text: "Are you studying in NL?\nConnect your institution!", size: 24, primary: "Connect your institution!")
         posterParent.addSubview(posterLabel)
         posterLabel.edges(to: posterParent)
         
-        //MARK: - textView
+        // - textView
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineSpacing = 24 - 16
         
@@ -61,21 +63,21 @@ You must therefore add the following information to your eduID:
         attributedText.setAttributeTo(part: "You must therefore add the following information to your eduID:", attributes: [.font: UIFont.sourceSansProBold(size: 16), .paragraphStyle: paragraph])
         let textView = TextViewBackgroundColor(attributedText: attributedText, backgroundColor: .yellowColor, insets: UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12))
         
-        //MARK: - spacing
+        // - spacing
         let spaceView = UIView()
         
-        //MARK: - additional text view
+        // - additional text view
         let labelParent = UIView()
         let label = UILabel.plainTextLabelPartlyBold(text: "Add this information by connecting your school/institution via SURFconext.", partBold: "Add this information")
         labelParent.addSubview(label)
         label.edges(to: labelParent)
         
-        //MARK: - skip button
+        // - skip button
         let skipButton = EduIDButton(type: .ghost, buttonTitle: "Skip this")
         skipButton.isEnabled = false
         
-        //MARK: - create the stackview
-        stack = AnimatedVStackView(arrangedSubviews: [posterParent, textView, spaceView, labelParent, addButton, skipButton])
+        // - create the stackview
+        stack = AnimatedVStackView(arrangedSubviews: [posterParent, textView, spaceView, labelParent, connectButton, skipButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
@@ -83,12 +85,12 @@ You must therefore add the following information to your eduID:
         stack.spacing = 20
         scrollView.addSubview(stack)
         
-        //MARK: - add constraints
+        // - add constraints
         stack.edges(to: scrollView, insets: TinyEdgeInsets(top: 24, left: 24, bottom: -24, right: -24))
         stack.width(to: scrollView, offset: -48)
         textView.width(to: stack)
         posterLabel.width(to: stack)
-        addButton.width(to: stack, offset: -24)
+        connectButton.width(to: stack, offset: -24)
         skipButton.width(to: stack, offset: -24)
         
         stack.hideAndTriggerAll(onlyThese: [4, 5])
