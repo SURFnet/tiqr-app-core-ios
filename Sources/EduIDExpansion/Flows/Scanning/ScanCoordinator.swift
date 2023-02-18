@@ -53,9 +53,9 @@ extension ScanCoordinator: VerifyScanResultViewControllerDelegate {
     }
     
     func verifyScanResultViewControllerLogin(viewController: VerifyScanResultViewController, viewModel: ScanViewModel) {
-        let confirmViewController = ConfirmViewController()
-        confirmViewController.delegate = self
-        navigationController.pushViewController(confirmViewController, animated: true)
+        let pincodeFirstEntryViewController = CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel(authenticationChallenge: viewModel.challenge as? AuthenticationChallenge))
+        pincodeFirstEntryViewController.delegate = self
+        navigationController.pushViewController(pincodeFirstEntryViewController, animated: true)
     }
 }
 
@@ -100,8 +100,8 @@ extension ScanCoordinator: CreateEduIDViewControllerDelegate {
     }
     
     func createEduIDViewControllerShowBiometricUsageScreen(viewController: CreatePincodeSecondEntryViewController, viewModel: CreatePincodeAndBiometricAccessViewModel) {
-        let biometricViewController = CreateEduIDBiometricApprovalViewController(viewModel: viewModel)
-        biometricViewController.delegate = self
+        let biometricViewController = BiometricApprovalViewController(viewModel: viewModel)
+        biometricViewController.biometricApprovaldelegate = self
         navigationController.pushViewController(biometricViewController, animated: true)
     }
     
@@ -114,6 +114,20 @@ extension ScanCoordinator: CreateEduIDViewControllerDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
             self?.navigationController.present(alert, animated: true)
         })
+    }
+}
+
+extension ScanCoordinator: BiometricApprovalViewControllerDelegate {
+    func biometricApprovalViewControllerContinueWithSucces(viewController: BiometricApprovalViewController) {
+        let confirmViewController = ConfirmViewController()
+        confirmViewController.delegate = self
+        navigationController.pushViewController(confirmViewController, animated: true)
+    }
+    
+    func biometricApprovalViewControllerSkipBiometricAccess(viewController: BiometricApprovalViewController) {
+        let confirmViewController = ConfirmViewController()
+        confirmViewController.delegate = self
+        navigationController.pushViewController(confirmViewController, animated: true)
     }
     
     

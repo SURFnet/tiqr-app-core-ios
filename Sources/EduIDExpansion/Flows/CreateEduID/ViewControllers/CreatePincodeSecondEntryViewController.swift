@@ -16,13 +16,13 @@ class CreatePincodeSecondEntryViewController: PincodeBaseViewController {
         self.createPincodeViewModel = viewModel
         super.init(viewModel: PinViewModel(), isSecure: true)
         
-        createPincodeViewModel.showUseBiometricScreen = { [weak self] in
+        createPincodeViewModel.showUseBiometricScreenClosure = { [weak self] in
             guard let self = self else { return }
             
             (self.delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowBiometricUsageScreen(viewController: self, viewModel: self.createPincodeViewModel)
         }
         
-        createPincodeViewModel.redoCreatePincode = { [weak self] in
+        createPincodeViewModel.redoCreatePincodeClosure = { [weak self] in
             guard let self = self else { return }
             
             (self.delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerRedoCreatePin(viewController: self)

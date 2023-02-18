@@ -5,38 +5,48 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     
     // - enrollment challenge object
     let enrollmentChallenge: EnrollmentChallenge?
+    // - authentication challenge object
+    let authenticationChallenge: AuthenticationChallenge?
     
     // - entered pincodes
     var firstEnteredPin: [Character] = []
     var secondEnteredPin: [Character] = []
     
-    var showUseBiometricScreen: (() -> Void)?
-    var proceedWithoutBiometric: (() -> Void)?
-    var redoCreatePincode: (() -> Void)?
+    var showUseBiometricScreenClosure: (() -> Void)?
+    var proceedWithoutBiometricClosure: (() -> Void)?
+    var redoCreatePincodeClosure: (() -> Void)?
+    
+    // - show prompt for biometric access
+    var showBiometricNotAvailableClosure: (() -> Void)?
+    var showPromptUseBiometricAccessClosure: (() -> Void)?
+    var showContinueWithoutBiometricAccessClosure: (() -> Void)?
+    var biometricAccessSuccessClosure: (() -> Void)?
+    var biometricAccessFailureClosure: ((Error) -> Void)?
    
     //MARK: - init
-    init(enrollmentChallenge: EnrollmentChallenge? = nil) {
+    init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil) {
         self.enrollmentChallenge = enrollmentChallenge
+        self.authenticationChallenge = authenticationChallenge
         super.init()
     }
     
     func verifyPinSimilarity() {
         if firstEnteredPin == secondEnteredPin {
-            
             // succes
-            showUseBiometricScreen?()
+            showUseBiometricScreenClosure?()
         } else {
-            
             // failure
-            redoCreatePincode?()
+            redoCreatePincodeClosure?()
         }
     }
     
+    //MARK: - biometric access related methods
+    
     func handleCreatePincodeSucces() {
         if ServiceContainer.sharedInstance().secretService.biometricIDAvailable {
-            showUseBiometricScreen?()
+            showUseBiometricScreenClosure?()
         } else {
-            proceedWithoutBiometric?()
+            proceedWithoutBiometricClosure?()
         }
     }
     
@@ -45,13 +55,26 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     }
     
     @objc
-    func setupBiometricAccess() {
+    func promptSetupBiometricAccess() {
         if ServiceContainer.sharedInstance().secretService.biometricIDAvailable {
-            ServiceContainer.sharedInstance().challengeService.complete(enrollmentChallenge!, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { succes, error in
-                print(succes)
-            }
+            showPromptUseBiometricAccessClosure?()
         } else {
-            
+            showBiometricNotAvailableClosure?()
+        }
+    }
+    
+    @objc
+    func setupWithoutBiometricAccess() {
+        showContinueWithoutBiometricAccessClosure?()
+    }
+    
+    func handleUseBiometricAccess() {
+        ServiceContainer.sharedInstance().challengeService.complete(enrollmentChallenge!, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { [weak self] success, error in
+            if success {
+                self?.biometricAccessSuccessClosure?()
+            } else {
+                self?.biometricAccessFailureClosure?(error)
+            }
         }
     }
 }
