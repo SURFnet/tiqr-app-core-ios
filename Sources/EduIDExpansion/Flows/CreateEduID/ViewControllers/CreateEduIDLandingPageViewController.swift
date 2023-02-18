@@ -25,28 +25,26 @@ class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
     
     //MARK: - setupUI
     private func setupUI() {
-        
-        view.backgroundColor = .white
-        
-        //MARK: - add logo
+                
+        // - add logo
         let logo = UIImageView(image: .eduIDLogo)
         logo.height(60)
         logo.width(150)
         
-        //MARK: - add label
+        // - add label
         let posterLabel = UILabel.posterTextLabel(text: "Personal account\nfor Education and Research", size: 24, alignment: .center)
         
-        //MARK: add image
+        // - add image
         let imageView = UIImageView(image: .landingPageImage)
         imageView.contentMode = .scaleAspectFit
         imageView.height(252, priority: .defaultLow)
         imageView.width(141)
         
-        //MARK: - space
+        // - space
         let upperSpaceView = UIView()
         let lowerSpaceView = UIView()
         
-        //MARK: buttons
+        // - buttons
         let signinButton = EduIDButton(type: .primary, buttonTitle: "Sign in")
         signinButton.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
         let scanQRButton = EduIDButton(type: .primary, buttonTitle: "Scan a QR code")
@@ -56,7 +54,7 @@ class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
         //the action for this button is on CreateEduIDBaseViewController superclass
         noEduIDYetButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
         
-        //MARK: - create the stackview
+        // - create the stackview
         stack = AnimatedVStackView(arrangedSubviews: [logo, posterLabel, upperSpaceView, imageView, lowerSpaceView, signinButton, scanQRButton, noEduIDYetButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
