@@ -4,14 +4,14 @@ import TiqrCoreObjC
 
 final class ScanViewModel: NSObject {
     
-    //MARK: - delegate
+    // - delegate
     weak var delegate: ScanViewModelDelegate?
     
-    //MARK: av componenets
+    // - av componenets
     let session = AVCaptureSession()
     let output = AVCaptureMetadataOutput()
     
-    //MARK: - challenge object and type
+    // - challenge object and type
     var challenge: NSObject?
     var challengeType: TIQRChallengeType?
     
@@ -34,7 +34,7 @@ final class ScanViewModel: NSObject {
                 output.metadataObjectTypes = [.qr]
                 output.setMetadataObjectsDelegate(self, queue: .main)
                 
-                //MARK: - set rect of interest
+                // - set rect of interest
                 let screenBounds = UIScreen.main.bounds
                 let interestOrigin = CGPoint(x: (screenBounds.width - frameSize) / 2 / screenBounds.width, y: (screenBounds.height - frameSize) / 2 / screenBounds.height)
                 let interestSize = CGSize(width: frameSize / screenBounds.width, height: frameSize / screenBounds.height)

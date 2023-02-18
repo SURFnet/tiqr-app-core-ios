@@ -3,10 +3,10 @@ import TinyConstraints
 
 class SecurityLandingViewController: UIViewController, ScreenWithScreenType {
     
-    //MARK: screen type
+    // - screen type
     var screenType: ScreenType = .securityLandingScreen
     
-    //MARK: - delegate
+    // - delegate
     weak var delegate: SecurityViewControllerDelegate?
     
     private let scrollView = UIScrollView()
@@ -25,20 +25,21 @@ class SecurityLandingViewController: UIViewController, ScreenWithScreenType {
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(dismissSecurityScreen))
     }
     
+    //MARK: - setup UI
     func setupUI() {
         
-        //MARK: - scroll view
+        // - scroll view
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         scrollView.edges(to: view)
         
-        //MARK: - posterLabel
+        // - posterLabel
         let posterParent = UIView()
         let posterLabel = UILabel.posterTextLabelBicolor(text: "Security settings", size: 24, primary: "Security settings")
         posterParent.addSubview(posterLabel)
         posterLabel.edges(to: posterParent)
         
-        //MARK: - create the textView
+        // - create the textView
         let textLabelParent = UIView()
         let textLabel = UILabel()
         textLabel.numberOfLines = 0
@@ -56,7 +57,7 @@ We provide different methods to sign in to your eduID account.
         
         let spaceView = UIView()
         
-        //MARK: - the info controls
+        // - the info controls
         let firstTitle = NSAttributedString(string: "Sign-in methods", attributes: [.font : UIFont.sourceSansProBold(size: 16), .foregroundColor: UIColor.charcoalColor])
         let firstBodyText = NSMutableAttributedString(string: "Send a magic link to\nedwin.van.de.bospoort@gmail.com", attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.charcoalColor])
         firstBodyText.setAttributeTo(part: "edwin.van.de.bospoort@gmail.com", attributes: [.font: UIFont.sourceSansProLight(size: 12), .foregroundColor: UIColor.charcoalColor])
@@ -76,7 +77,7 @@ We provide different methods to sign in to your eduID account.
         fourthBodyText.setAttributeTo(part: "logged in", attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.charcoalColor])
         let fourthControl = ActionableControlWithBodyAndTitle(attributedTitle: fourthTitle, attributedBodyText: fourthBodyText, iconInBody: UIImage(systemName: "chevron.down")?.withRenderingMode(.alwaysTemplate), isFilled: true, shadow: true)
         
-        //MARK: - create the stackview
+        // - create the stackview
         let stack = UIStackView(arrangedSubviews: [posterParent, textLabelParent, firstControl, secondControl, thirdControl, fourthControl, spaceView])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -85,7 +86,7 @@ We provide different methods to sign in to your eduID account.
         stack.spacing = 20
         scrollView.addSubview(stack)
         
-        //MARK: - add constraints
+        // - add constraints
         stack.edges(to: scrollView, insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: -24))
         stack.width(to: scrollView, offset: -48)
         textLabel.width(to: stack)
@@ -95,7 +96,7 @@ We provide different methods to sign in to your eduID account.
         thirdControl.width(to: stack)
         fourthControl.width(to: stack)
         
-        //MARK: - actions
+        // - actions
         firstControl.addTarget(self, action: #selector(enterEmailFlow), for: .touchUpInside)
         secondControl.addTarget(self, action: #selector(enterChangePasswordFlow), for: .touchUpInside)
     }

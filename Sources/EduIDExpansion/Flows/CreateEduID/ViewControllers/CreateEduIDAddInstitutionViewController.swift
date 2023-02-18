@@ -3,10 +3,10 @@ import TinyConstraints
 
 class CreateEduIDAddInstitutionViewController: CreateEduIDBaseViewController {
 
-    //MARK: - verify button
+    // - verify button
     let continueButton = EduIDButton(type: .primary, buttonTitle: "Continue")
     
-    //MARK: scroll view
+    // - scroll view
     let scrollView = UIScrollView()
     
     //MARK: - lifecycle
@@ -27,10 +27,10 @@ class CreateEduIDAddInstitutionViewController: CreateEduIDBaseViewController {
         view.addSubview(scrollView)
         scrollView.edges(to: view)
         
-        //MARK: - posterLabel
+        // - posterLabel
         let posterLabel = UILabel.posterTextLabelBicolor(text: "Your school/uni\nwas contacted successfully", size: 24, primary: "Your school/uni")
         
-        //MARK: - create the textView
+        // - create the textView
         let textLabelParent = UIView()
         let textLabel = UILabel.plainTextLabelPartlyBold(text: """
 The following information has been added to your eduID and can now be shared.
@@ -39,15 +39,15 @@ The following information has been added to your eduID and can now be shared.
         textLabelParent.addSubview(textLabel)
         textLabel.edges(to: textLabelParent)
         
-        //MARK: institution views
+        // - institution views
         let firstInstitution = InstitutionView(title: "full name", firstText: "R. van Hamersdonksveer", secondText: "Provided by Universiteit van Amsterdam", action: {})
         let secondInstitution = InstitutionView(title: "Proof of being a student", firstText: "🧑‍🎓 Student", secondText: "Provided by Universiteit van Amsterdam", action: {})
         let thirdInstitution = InstitutionView(title: "Your institution", firstText: "‍🏛️ Universiteit van Amsterdam", secondText: "Provided by Universiteit van Amsterdam", action: {})
         
-        //MARK: - Space
+        // - Space
         let spaceView = UIView()
         
-        //MARK: - create the stackview
+        // - create the stackview
         let stack = UIStackView(arrangedSubviews: [posterLabel, textLabelParent, firstInstitution, secondInstitution, thirdInstitution, spaceView, continueButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +56,7 @@ The following information has been added to your eduID and can now be shared.
         stack.spacing = 20
         scrollView.addSubview(stack)
         
-        //MARK: - add constraints
+        // - add constraints
         stack.edges(to: scrollView, insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: -24))
         stack.width(to: scrollView, offset: -48)
         textLabel.width(to: stack)

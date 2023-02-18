@@ -5,7 +5,7 @@ class CreateEduIDExplanationViewController: CreateEduIDBaseViewController {
     
     private var stack: AnimatedVStackView!
     
-    //MARK: -lifecycle
+    //MARK: - lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,13 +24,13 @@ class CreateEduIDExplanationViewController: CreateEduIDBaseViewController {
     //MARK: - setup UI
     func setupUI() {
         
-        //MARK: - create Label
+        // - create Label
         let posterParent = UIView()
         let posterLabel = UILabel.posterTextLabel(text: "Don't have an eduID yet?", size: 24)
         posterParent.addSubview(posterLabel)
         posterLabel.edges(to: posterParent)
         
-        //MARK: - create the textView
+        // - create the textView
         let textLabelParent = UIView()
         let textLabel = UILabel.plainTextLabelPartlyBold(text: """
 eduID is a central account for users\nassociated with Dutch education and\nresearch. It is yours and exists independent\nof an educational institution.\n\n• Use it to login to several services connected to SURFconext.\n• Users without an institution account can also request an eduID.\n• eduID is a lifelong account. It stays validafter you graduate.
@@ -39,16 +39,16 @@ eduID is a central account for users\nassociated with Dutch education and\nresea
         textLabelParent.addSubview(textLabel)
         textLabel.edges(to: textLabelParent)
         
-        //MARK: - create button
+        // - create button
         let button = EduIDButton(type: .primary, buttonTitle: "Create a new eduID")
         
         //the action for this buton is defined in superclass
         button.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
         
-        //MARK: - spacing
+        // - spacing
         let spacerView = UIView()
         
-        //MARK: - create the stackview
+        // - create the stackview
         stack = AnimatedVStackView(arrangedSubviews: [posterParent, textLabelParent, spacerView, button])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +57,7 @@ eduID is a central account for users\nassociated with Dutch education and\nresea
         stack.spacing = 32
         view.addSubview(stack)
         
-        //MARK: - add constraints
+        // - add constraints
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
         
         posterLabel.width(to: stack)

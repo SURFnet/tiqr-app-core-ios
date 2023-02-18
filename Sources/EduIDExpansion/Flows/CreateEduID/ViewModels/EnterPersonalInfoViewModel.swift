@@ -5,7 +5,7 @@ class EnterPersonalInfoViewModel: NSObject {
     
     
     
-    //MARK: - closures that interact with the view controller
+    //- closures that interact with the view controller
     var setRequestButtonEnabled: ((Bool) -> Void)?
     var makeNextTextFieldFirstResponderClosure: ((Int) -> Void)?
     var textFieldBecameFirstResponderClosure: ((Int) -> Void)?
@@ -27,13 +27,7 @@ class EnterPersonalInfoViewModel: NSObject {
     }
     
     func apiCallToCreateEduID() {
-//        (requestBody: [
-//            "givenName"     :   textFieldModels[0].text,
-//            "familyName"    :   textFieldModels[1].text,
-//            "email"         :   textFieldModels[2].text
-//        ]) { data, error in
-//            print(data, error)
-//        }
+        
     }
 }
 

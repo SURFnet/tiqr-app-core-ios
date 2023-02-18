@@ -32,7 +32,7 @@ class VerifyScanResultViewController: BaseViewController {
     }
     //MARK: - setupUI
     func setupUI() {
-        //top poster label
+        // - top poster label
         let posterParent = UIView()
         let posterLabel = UILabel.posterTextLabelBicolor(text: "Request to login", primary: "Request to login")
         posterParent.addSubview(posterLabel)
@@ -40,7 +40,7 @@ class VerifyScanResultViewController: BaseViewController {
         
         let upperspace = UIView()
         
-        // text in middle with organisation name
+        // - text in middle with organisation name
         let middlePosterParent = UIView()
         var middlePosterLabel = UILabel()
         
@@ -74,17 +74,17 @@ class VerifyScanResultViewController: BaseViewController {
         let animatedHStack = AnimatedHStackView(arrangedSubviews: [cancelButton, primaryButton])
         animatedHStack.spacing = 24
         
-        // the stackView
+        // - the stackView
         let stack = BasicStackView(arrangedSubviews: [posterParent, upperspace, middlePosterParent, lowerSpace, animatedHStack])
         view.addSubview(stack)
         
-        //constraints
+        // - constraints
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
         upperspace.height(to: lowerSpace)
         animatedHStack.width(to: stack)
         primaryButton.width(to: cancelButton)
         
-        // actions:
+        // - actions:
         cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
         primaryButton.addTarget(self, action: #selector(primaryAction), for: .touchUpInside)
         

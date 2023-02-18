@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class CreateEduIDEnterPersonalInfoViewController: ScrollingViewControllerWithTextFields {
+class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewController {
     
     weak var delegate: CreateEduIDViewControllerDelegate?
     
@@ -15,7 +15,7 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingViewControllerWithTex
     let requestButton = EduIDButton(type: .primary, buttonTitle: "Request you eduID")
     let emailField = TextFieldViewWithValidationAndTitle(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
     
-    //MARK: - spacing
+    // - spacing
     let spacingView = UIView()
     
     //MARK: - init
@@ -76,31 +76,32 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingViewControllerWithTex
         _ = emailField.becomeFirstResponder()
     }
     
+    //MARK: - setup UI
     private func setupUI() {
-        //MARK: add scrollview to hierarchy
+        // - add scrollview to hierarchy
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         scrollView.edges(to: view)
         
         
-        //MARK: - poster text
+        // - poster text
         let posterLabel = UILabel.posterTextLabel(text: "Request your eduID", size: 24)
         
-        //MARK: - email
+        // - email
         emailField.tag = CreateEduIDEnterPersonalInfoViewController.emailFieldTag
         emailField.delegate = viewModel
         
-        //MARK: - firstname
+        // - firstname
         let firstNameField = TextFieldViewWithValidationAndTitle(title: "First name", placeholder: "e.g. Tim", keyboardType: .default)
         firstNameField.tag = CreateEduIDEnterPersonalInfoViewController.firstNameFieldTag
         firstNameField.delegate = viewModel
         
-        //MARK: - lastName
+        // - lastName
         let lastNameField = TextFieldViewWithValidationAndTitle(title: "Last name", placeholder: "e.g. Berners-Lee", keyboardType: .default)
         lastNameField.tag = CreateEduIDEnterPersonalInfoViewController.lastNameFieldTag
         lastNameField.delegate = viewModel
         
-        //MARK: - check terms
+        // - check terms
         let termsHstack = UIStackView()
         termsHstack.spacing = 10
         termsHstack.axis = .horizontal
@@ -118,11 +119,11 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingViewControllerWithTex
         termsHstack.addArrangedSubview(theSwitch)
         termsHstack.addArrangedSubview(termsLabel)
         
-        //MARK: - requestButton
+        // - requestButton
         requestButton.isEnabled = false
         requestButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
         
-        //MARK: - create the stackview
+        // - create the stackview
         stack = AnimatedVStackView(arrangedSubviews: [posterLabel, emailField, firstNameField, lastNameField, termsHstack, spacingView, requestButton])
         stack.spacing = 32
         stack.setCustomSpacing(24, after: emailField)
@@ -135,7 +136,7 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingViewControllerWithTex
         
         scrollView.addSubview(stack)
         
-        //MARK: - add constraints
+        // - add constraints
         stack.edges(to: scrollView, insets: TinyEdgeInsets(top: inset, left: inset, bottom: inset, right: -inset))
         stack.width(to: scrollView, offset: -(2 * inset))
         

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ScrollingViewControllerWithTextFields: BaseViewController {
+class ScrollingTextFieldsViewController: BaseViewController {
 
     private var keyboardHeight: CGFloat?
     private var isKeyBoardOnScreen = false

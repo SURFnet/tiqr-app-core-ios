@@ -5,10 +5,10 @@ class CreateEduIDEnterPhoneNumberViewController: CreateEduIDBaseViewController, 
     
     var stack: AnimatedVStackView!
     
-    //MARK: - phone textfield
+    // - phone textfield
     let validatedPhoneTextField = TextFieldViewWithValidationAndTitle(title: "Enter your phone number", placeholder: "e.g. 0612345678", keyboardType: .numberPad)
     
-    //MARK: - verify button
+    // - verify button
     let verifyButton = EduIDButton(type: .primary, buttonTitle: "Verify this phone number")
     
     //MARK: - lifecycle
@@ -34,21 +34,22 @@ class CreateEduIDEnterPhoneNumberViewController: CreateEduIDBaseViewController, 
         _ = validatedPhoneTextField.becomeFirstResponder()
     }
     
+    //MARK: - setup UI
     func setupUI() {
         
-        //MARK: - phone textfield delegate
+        // - phone textfield delegate
         validatedPhoneTextField.delegate = self
         
-        //MARK: - button state
+        // - button state
         verifyButton.isEnabled = false
         
-        //MARK: - posterLabel
+        // - posterLabel
         let posterLabel = UILabel.posterTextLabel(text: "Your eduID has been created", size: 24)
         
-        //MARK: - textView Parent
+        // - textView Parent
         let textViewParent = UIView()
         
-        //MARK: - create the textView
+        // - create the textView
         let textLabel = UILabel()
         textLabel.numberOfLines = 0
         textLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -69,10 +70,10 @@ We will text you a code to verify your number.
         textLabel.edges(to: textViewParent)
         textLabel.sizeToFit()
         
-        //MARK: - Space
+        // - Space
         let spaceView = UIView()
         
-        //MARK: - create the stackview
+        // - create the stackview
         stack = AnimatedVStackView(arrangedSubviews: [posterLabel, textViewParent, validatedPhoneTextField, spaceView, verifyButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -81,7 +82,7 @@ We will text you a code to verify your number.
         stack.spacing = 32
         view.addSubview(stack)
         
-        //MARK: - add constraints
+        // - add constraints
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
         textViewParent.width(to: stack)
         posterLabel.height(34)

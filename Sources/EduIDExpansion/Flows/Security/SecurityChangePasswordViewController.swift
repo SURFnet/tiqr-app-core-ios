@@ -1,17 +1,17 @@
 import UIKit
 import TinyConstraints
 
-class SecurityChangePasswordViewController: ScrollingViewControllerWithTextFields {
+class SecurityChangePasswordViewController: ScrollingTextFieldsViewController {
     
     static let tagOfRepeatPasswordField = 4
     
-    //MARK: delegate
+    // - delegate
     weak var delegate: SecurityViewControllerDelegate?
     
-    //MARK: view model
+    // - view model
     var viewModel: ChangePasswordViewModel
     
-    // reset your password button
+    // - reset your password button
     let resetPasswordButton = EduIDButton(type: .primary, buttonTitle: "Reset your password")
     
     //MARK: - init
@@ -42,17 +42,6 @@ class SecurityChangePasswordViewController: ScrollingViewControllerWithTextField
         }
     }
     
-    func nextTextfieldBy(tag: Int) -> Int {
-        switch tag {
-        case 1:
-            return 3
-        case 3:
-            return 4
-        default:
-            return 0
-        }
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -75,23 +64,23 @@ class SecurityChangePasswordViewController: ScrollingViewControllerWithTextField
     
     //MARK: - setup UI
     private func setupUI() {
-        // scrollView
+        // - scrollView
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         scrollView.edges(to: view)
         
-        // poster label
+        // - poster label
         let posterParent = UIView()
         let posterLabel = UILabel.posterTextLabelBicolor(text: "Change password", primary: "Change password")
         posterParent.addSubview(posterLabel)
         posterLabel.edges(to: posterParent)
         
-        // old password textfield
+        // - old password textfield
         let oldPasswordTextField = TextFieldViewWithValidationAndTitle(title: "Your old password", placeholder: "********", keyboardType: .default, isPassword: true)
         oldPasswordTextField.delegate = viewModel
         oldPasswordTextField.tag = 1
         
-        // text
+        // - text
         let textParent = UIView()
         let textLabel = UILabel.plainTextLabelPartlyBold(text:
                                                             """
@@ -101,22 +90,22 @@ Make sure your new password is at least 15 characters OR at least 8 characters i
         textParent.addSubview(textLabel)
         textLabel.edges(to: textParent)
         
-        // new password field
+        // - new password field
         let newPasswordField = TextFieldViewWithValidationAndTitle(title: "Your new password", placeholder: "********", keyboardType: .default, isPassword: true)
         newPasswordField.delegate = viewModel
         newPasswordField.tag = 3
          
-        // repeat password
+        // - repeat password
         let repeatPasswordField = TextFieldViewWithValidationAndTitle(title: "Repeat new password", placeholder: "********", keyboardType: .default, isPassword: true)
         repeatPasswordField.delegate = viewModel
         repeatPasswordField.tag = 4
         
-        // stackview
+        // - stackview
         stack = AnimatedVStackView(arrangedSubviews: [posterParent, oldPasswordTextField, textParent, newPasswordField, repeatPasswordField, resetPasswordButton])
         
         scrollView.addSubview(stack)
         
-        // constraints
+        // - constraints
         stack.edges(to: scrollView, insets: TinyEdgeInsets(top: 24, left: 24, bottom: -24, right: -24))
         stack.width(to: scrollView, offset: -48)
         posterLabel.width(to: stack)
@@ -126,11 +115,22 @@ Make sure your new password is at least 15 characters OR at least 8 characters i
         repeatPasswordField.width(to: stack)
         resetPasswordButton.width(to: stack, offset: -24)
         
-        // actions
+        // - actions
         resetPasswordButton.addTarget(self, action: #selector(resetAction), for: .touchUpInside)
         
         stack.hideAndTriggerAll(onlyThese: [1, 3, 4])
         
+    }
+    
+    func nextTextfieldBy(tag: Int) -> Int {
+        switch tag {
+        case 1:
+            return 3
+        case 3:
+            return 4
+        default:
+            return 0
+        }
     }
 
     @objc

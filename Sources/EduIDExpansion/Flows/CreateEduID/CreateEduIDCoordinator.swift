@@ -36,9 +36,6 @@ final class CreateEduIDCoordinator: CoordinatorType {
 
 extension CreateEduIDCoordinator: ScanCoordinatorDelegate {
     
-    //MARK: - start scan screen
-    
-    
     func scanCoordinatorDismissScanScreen(coordinator: CoordinatorType) {
         navigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 is ScanCoordinator }

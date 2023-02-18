@@ -5,7 +5,7 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
     
     weak var delegate: PinTextFieldDelegate?
     
-    //MARK: - Create the textfield
+    // - Create the textfield
     let textfield = UITextField()
 
     //MARK: - initialize
@@ -16,15 +16,15 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
         
         layer.cornerRadius = 5
         
-        //MARK: setup size
+        // - setup size
         height(50)
         width(50)
         
-        //MARK: - set border properties
+        // - set border properties
         layer.borderWidth = 2
         layer.borderColor = UIColor.clear.cgColor
         
-        //MARK: create parent view
+        // - create parent view
         let parentView = UIView()
         parentView.layer.cornerRadius = 4
         parentView.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +33,7 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
         parentView.layer.borderWidth = 1
         parentView.layer.borderColor = UIColor.tertiaryColor.cgColor
         
-        //MARK: - create textfield
+        // - create textfield
         textfield.translatesAutoresizingMaskIntoConstraints = false
         parentView.addSubview(textfield)
         textfield.width(20)

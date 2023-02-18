@@ -30,7 +30,6 @@ class AlertMessageViewController: BaseViewController {
     }
     
     //MARK: - setup UI
-    
     func setupUI() {
         
         stack.alignment = .center
