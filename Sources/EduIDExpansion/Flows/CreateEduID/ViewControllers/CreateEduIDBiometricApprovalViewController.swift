@@ -3,10 +3,10 @@ import TinyConstraints
 
 class CreateEduIDBiometricApprovalViewController: CreateEduIDBaseViewController {
     
-    let createPincodeViewModel: CreatePincodeViewModel
+    let createPincodeViewModel: CreatePincodeAndBiometricAccessViewModel
     
     //MARK: - init
-    init(viewModel: CreatePincodeViewModel) {
+    init(viewModel: CreatePincodeAndBiometricAccessViewModel) {
         self.createPincodeViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

@@ -10,8 +10,9 @@ final class ScanViewModel: NSObject {
     let session = AVCaptureSession()
     let output = AVCaptureMetadataOutput()
     
-    //MARK: authentication object
-    var authenticationObject: NSObject?
+    //MARK: - challenge object and type
+    var challenge: NSObject?
+    var challengeType: TIQRChallengeType?
     
     let frameSize: CGFloat = 275
     
@@ -60,13 +61,26 @@ final class ScanViewModel: NSObject {
             ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: object.stringValue ?? "") { [weak self] type, challengeObject, error in
                 guard let self = self else { return }
                 
-                if true /* temporarily use dummy flow type != .invalid */ {
-                    self.delegate?.scanViewModelShowVerifyAuthAttempt(viewModel: self)
-                } else {
+                switch type {
+                case .enrollment, .authentication:
+                    self.challengeType = type
+                    self.challenge = challengeObject
+                    self.handleScanResult()
+                case .invalid:
                     self.delegate?.scanViewModelShowErrorAlert(error: error, viewModel: self)
+                default:
+                    break
                 }
             }
         })
+    }
+    
+    func handleScanResult() {
+        delegate?.scanViewModelShowScanAttempt(viewModel: self)
+    }
+    
+    func handleAuthenticationScanResult() {
+        
     }
     
     deinit {

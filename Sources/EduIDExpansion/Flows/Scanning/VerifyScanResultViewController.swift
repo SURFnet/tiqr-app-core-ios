@@ -1,10 +1,11 @@
 import UIKit
+import TiqrCoreObjC
 import TinyConstraints
 
-class VerifyLoginViewController: BaseViewController {
+class VerifyScanResultViewController: BaseViewController {
     
     let viewModel: ScanViewModel
-    weak var delegate: VerifyLoginViewControllerDelegate?
+    weak var delegate: VerifyScanResultViewControllerDelegate?
 
     //MARK: - init
     init(viewModel: ScanViewModel) {
@@ -41,15 +42,26 @@ class VerifyLoginViewController: BaseViewController {
         
         // text in middle with organisation name
         let middlePosterParent = UIView()
-        let middlePosterLabel = UILabel.requestLoginLabel(organisationName: "eduBadges")
+        let middlePosterLabel = UILabel.requestLoginLabel(entityName: (viewModel.challenge as? EnrollmentChallenge)?.identityDisplayName ?? "", challengeType: viewModel.challengeType ?? .invalid)
         middlePosterParent.addSubview(middlePosterLabel)
         middlePosterLabel.edges(to: middlePosterParent)
         
         let lowerSpace = UIView()
         
         let cancelButton = EduIDButton(type: .ghost, buttonTitle: "Cancel")
-        let loginButton = EduIDButton(type: .primary, buttonTitle: "Log in")
-        let animatedHStack = AnimatedHStackView(arrangedSubviews: [cancelButton, loginButton])
+        
+        let primaryButton: EduIDButton
+        
+        switch viewModel.challengeType {
+        case .authentication:
+            primaryButton = EduIDButton(type: .primary, buttonTitle: "Log in")
+        case .enrollment:
+            primaryButton = EduIDButton(type: .primary, buttonTitle: "Sign in")
+        default:
+            primaryButton = EduIDButton(type: .primary, buttonTitle: "")
+        }
+
+        let animatedHStack = AnimatedHStackView(arrangedSubviews: [cancelButton, primaryButton])
         animatedHStack.spacing = 24
         
         // the stackView
@@ -60,11 +72,11 @@ class VerifyLoginViewController: BaseViewController {
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
         upperspace.height(to: lowerSpace)
         animatedHStack.width(to: stack)
-        loginButton.width(to: cancelButton)
+        primaryButton.width(to: cancelButton)
         
         // actions:
         cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
-        loginButton.addTarget(self, action: #selector(loginAction), for: .touchUpInside)
+        primaryButton.addTarget(self, action: #selector(primaryAction), for: .touchUpInside)
         
     }
     
@@ -75,8 +87,15 @@ class VerifyLoginViewController: BaseViewController {
     }
     
     @objc
-    func loginAction() {
-        delegate?.verifyLoginViewControllerLogin(viewController: self, viewModel: viewModel)
+    func primaryAction() {
+        switch viewModel.challengeType {
+        case .enrollment:
+            delegate?.verifyScanResultViewControllerEnroll(viewController: self, viewModel: viewModel)
+        case .authentication:
+            delegate?.verifyScanResultViewControllerLogin(viewController: self, viewModel: viewModel)
+        default:
+            break
+        }
     }
 
 }

@@ -9,10 +9,10 @@ import UIKit
 
 class CreatePincodeSecondEntryViewController: PincodeBaseViewController {
 
-    let createPincodeViewModel: CreatePincodeViewModel
+    let createPincodeViewModel: CreatePincodeAndBiometricAccessViewModel
     
     //MARK: - init
-    init(viewModel: CreatePincodeViewModel) {
+    init(viewModel: CreatePincodeAndBiometricAccessViewModel) {
         self.createPincodeViewModel = viewModel
         super.init(viewModel: PinViewModel(), isSecure: true)
         

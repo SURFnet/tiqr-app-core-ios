@@ -98,9 +98,9 @@ enum ScreenType: Int, CaseIterable {
         case .securityLandingScreen:
             return SecurityLandingViewController()
         case .createPincodefirstEntryScreen:
-            return CreatePincodeFirstEntryViewController(viewModel: CreatePincodeViewModel())
+            return CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel())
         case.createPincodeSecondEntryScreen:
-            return CreatePincodeSecondEntryViewController(viewModel: CreatePincodeViewModel())
+            return CreatePincodeSecondEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel())
         default:
             return nil
         }
