@@ -4,20 +4,20 @@ import TinyConstraints
 
 class PincodeBaseViewController: CreateEduIDBaseViewController {
     
-    //MARK: viewmodel
+    // - viewmodel
     let viewModel: PinViewModel
-    //MARK: verify button
+    // - verify button
     let verifyButton = EduIDButton(type: .primary, buttonTitle: "Verify this pin code")
-    //MARK: pin stack view
+    // - pin stack view
     let pinStack = AnimatedHStackView()
-    //MARK: activity indicator
+    // - activity indicator
     let activity = UIActivityIndicatorView(style: .large)
     
-    //MARK: - configurable labels
+    // - configurable labels
     var posterLabel: UILabel!
     var textLabel: UILabel!
     
-    // flag for secure input
+    // - flag for secure input
     var isSecure = false
     
 
@@ -70,13 +70,13 @@ class PincodeBaseViewController: CreateEduIDBaseViewController {
     
     //MARK: - setup ui
     func setupUI() {
-        //MARK: - posterLabel
+        // - posterLabel
         let posterParent = UIView()
         posterLabel = UILabel.posterTextLabel(text: "Check your messages", size: 24)
         posterParent.addSubview(posterLabel)
         posterLabel.edges(to: posterParent)
         
-        //MARK: - create the textView
+        // - create the textView
         let textLabelParent = UIView()
         textLabel = UILabel.plainTextLabelPartlyBold(text: """
 Enter the six-digit code we sent to your phone to continue
@@ -85,7 +85,7 @@ Enter the six-digit code we sent to your phone to continue
         textLabelParent.addSubview(textLabel)
         textLabel.edges(to: textLabelParent)
         
-        //MARK: pin fields
+        // - pin fields
         
         pinStack.axis = .horizontal
         pinStack.distribution = .equalSpacing
@@ -98,17 +98,17 @@ Enter the six-digit code we sent to your phone to continue
             pinStack.addArrangedSubview(pinField)
         }
         
-        //MARK: - activityIndicatorView
+        // - activityIndicatorView
         activity.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
         activity.tintColor = .gray
         activity.width(100)
         activity.height(100)
         
         
-        //MARK: - Space
+        // - Space
         let spaceView = UIView()
         
-        //MARK: - create the stackview
+        // - create the stackview
         let stack = UIStackView(arrangedSubviews: [posterParent, textLabelParent, pinStack, activity, spaceView, verifyButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -117,7 +117,7 @@ Enter the six-digit code we sent to your phone to continue
         stack.spacing = 32
         view.addSubview(stack)
         
-        //MARK: - add constraints
+        // - add constraints
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
         textLabel.width(to: stack)
         posterLabel.height(34)

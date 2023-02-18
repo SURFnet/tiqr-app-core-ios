@@ -5,10 +5,10 @@ import AVFoundation
 
 class ScanViewController: UIViewController, ScreenWithScreenType {
     
-    //MARK: delegate
+    // - delegate
     weak var delegate: ScanViewControllerDelegate?
     
-    //MARK: - screen type
+    // - screen type
     var screenType: ScreenType = .scanScreen
     
     var overlayView = ScanOverlayView(frame: .zero)
@@ -24,20 +24,20 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: viewmodel
+    // - viewmodel
     private let viewModel: ScanViewModel
     
-    //MARK: flash button
+    // - flash button
     private let flashButton = UIButton()
     private var flashIsON: Bool = false
     
-    //MARK: audio visual components
+    // - audio visual components
     private let previewLayer = AVCaptureVideoPreviewLayer()
     
-    //MARK: middel qr frame view
+    // - middel qr frame view
     private let middelSpaceView = UIImageView(image: .qrFrame)
     
-    //MARK: gradient layer
+    // - gradient layer
     private var gradientLayer: CAGradientLayer?
 
     //MARK: - lifecycle
@@ -89,7 +89,7 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
     }
     
     private func setupScanningFrameUI() {
-        //MARK: - create the dark frame with image
+        // - create the dark frame with image
         let upperDarkView = UIView()
         upperDarkView.backgroundColor = .black.withAlphaComponent(0.5)
         flashButton.setImage(.flashLightOff, for: .normal)
@@ -102,14 +102,14 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
         let middelLeftDarkView = UIView()
         middelLeftDarkView.backgroundColor = .black.withAlphaComponent(0.5)
         
-        //MARK: - the imageview containing the frame lines
+        // - the imageview containing the frame lines
         let middelRightDarkView = UIView()
         middelRightDarkView.backgroundColor = .black.withAlphaComponent(0.5)
         let middelStack = UIStackView(arrangedSubviews: [middelLeftDarkView, middelSpaceView, middelRightDarkView])
         let lowerDarkView = UIView()
         lowerDarkView.backgroundColor = .black.withAlphaComponent(0.5)
         
-        //MARK: - explanationText
+        // - explanationText
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -132,14 +132,14 @@ Scan it here
         lowerDarkView.addSubview(label)
         label.center(in: lowerDarkView)
         
-        //MARK: - the stack view holding the entire frame
+        // - the stack view holding the entire frame
         let vStack = UIStackView(arrangedSubviews: [upperDarkView, middelStack, lowerDarkView])
         vStack.axis = .vertical
         vStack.translatesAutoresizingMaskIntoConstraints = false
         vStack.distribution = .fill
         view.addSubview(vStack)
         
-        //MARK: - constraints
+        // - constraints
         vStack.edgesToSuperview()
         middelSpaceView.size(CGSize(width: 275, height: 275))
         middelRightDarkView.height(to: middelSpaceView)
@@ -171,6 +171,7 @@ Scan it here
     }
 }
 
+//MARK: - handle delegate methods from viemodel
 extension ScanViewController: ScanViewModelDelegate {
     
     func scanViewModelShowErrorAlert(error: Any, viewModel: ScanViewModel) {

@@ -3,10 +3,10 @@ import TinyConstraints
 
 class PersonalInfoViewController: UIViewController, ScreenWithScreenType {
    
-    //MARK: screen type
+    // - screen type
     var screenType: ScreenType = .personalInfoLandingScreen
     
-    //MARK: - delegate
+    // - delegate
     weak var delegate: PersonalInfoViewControllerDelegate?
     
     
@@ -24,18 +24,19 @@ class PersonalInfoViewController: UIViewController, ScreenWithScreenType {
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(dismissInfoScreen))
     }
     
+    //MARK: - setup UI
     func setupUI() {
         
-        //MARK: - scroll view
+        // - scroll view
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         scrollView.edges(to: view)
         
-        //MARK: - posterLabel
+        // - posterLabel
         let posterLabel = UILabel.posterTextLabelBicolor(text: "Your personal info", size: 24, primary: "Your personal info")
         
-        //MARK: - create the textView
+        // - create the textView
         let textLabelParent = UIView()
         let textLabel = UILabel.plainTextLabelPartlyBold(text: """
 When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party.
@@ -45,7 +46,7 @@ When you use eduID to login to other websites, some of your personal information
         
         let spaceView = UIView()
         
-        //MARK: - the info controls
+        // - the info controls
         let firstTitle = NSAttributedString(string: "About you", attributes: [.font : UIFont.sourceSansProBold(size: 16), .foregroundColor: UIColor.charcoalColor])
         let firstBodyText = NSMutableAttributedString(string: "Your full name", attributes: [.font: UIFont.sourceSansProRegular(size: 16), .foregroundColor: UIColor.backgroundColor])
         firstBodyText.setAttributeTo(part: "full name", attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.backgroundColor])
@@ -65,7 +66,7 @@ When you use eduID to login to other websites, some of your personal information
         fourthBodyText.setAttributeTo(part: "link to a school/uni", attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.backgroundColor])
         let fourthControl = ActionableControlWithBodyAndTitle(attributedBodyText: fourthBodyText, iconInBody: UIImage(systemName: "chevron.right")?.withRenderingMode(.alwaysTemplate), isFilled: true)
         
-        //MARK: - create the stackview
+        // - create the stackview
         let stack = UIStackView(arrangedSubviews: [posterLabel, textLabelParent, firstControl, secondControl, thirdControl, fourthControl, spaceView])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +75,7 @@ When you use eduID to login to other websites, some of your personal information
         stack.spacing = 20
         scrollView.addSubview(stack)
         
-        //MARK: - add constraints
+        // - add constraints
         stack.edges(to: scrollView, insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: -24))
         stack.width(to: scrollView, offset: -48)
         textLabel.width(to: stack)
@@ -83,7 +84,6 @@ When you use eduID to login to other websites, some of your personal information
         secondControl.width(to: stack)
         thirdControl.width(to: stack)
         fourthControl.width(to: stack)
-        
     }
     
     @objc

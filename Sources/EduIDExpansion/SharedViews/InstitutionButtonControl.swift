@@ -14,7 +14,7 @@ class InstitutionButtonControl: UIControl {
         
         height(70)
         
-        //MARK: - stackview
+        // - stackview
         let firstLabel = UILabel()
         firstLabel.font = .sourceSansProBold(size: 16)
         firstLabel.textColor = .charcoalColor

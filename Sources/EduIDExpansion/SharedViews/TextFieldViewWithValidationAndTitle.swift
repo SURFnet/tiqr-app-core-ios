@@ -9,10 +9,10 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
     let textField = UITextField()
     weak var delegate: ValidatedTextFieldDelegate?
     
-    //MARK: - cancellables
+    // - cancellables
     var cancellables = Set<AnyCancellable>()
 
-    //MARK: init
+    //MARK: - init
     init(regex: String? = nil, title: String, placeholder: String, keyboardType: UIKeyboardType, isPassword: Bool = false) {
         super.init(frame: .zero)
         
@@ -20,7 +20,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
         axis = .vertical
         spacing = 6
         
-        //MARK: - title
+        // - title
         let label = UILabel()
         label.height(16)
         label.font = .sourceSansProSemiBold(size: 16)
@@ -28,7 +28,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
         label.text = title
         addArrangedSubview(label)
         
-        //MARK: - textfield
+        // - textfield
         
         textField.font = .sourceSansProRegular(size: 16)
         textField.placeholder = placeholder
@@ -56,7 +56,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
             })
             .store(in: &cancellables)
 
-        //MARK: - textfield border
+        // - textfield border
         extraBorderView.layer.borderWidth = 2
         extraBorderView.layer.borderColor = UIColor.clear.cgColor
         extraBorderView.layer.cornerRadius = 8
@@ -76,7 +76,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
         textField.center(in: textFieldParent)
         textField.width(to: self, offset: -24)
         
-        //MARK: - validationMessage
+        // - validationMessage
         validLabel.font = .sourceSansProSemiBold(size: 12)
         validLabel.height(12)
         validLabel.textColor = .red

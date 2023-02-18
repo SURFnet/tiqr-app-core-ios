@@ -4,11 +4,13 @@ class CreateEduIDBaseViewController: BaseViewController {
     
     weak var delegate: NavigationDelegate?
     
+    //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
     
+    //MARK: - obj methods for navigation
     @objc
     override func goBack() {
         delegate?.goBack(viewController: self)
@@ -24,8 +26,4 @@ class CreateEduIDBaseViewController: BaseViewController {
         (delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowScanScreen(viewController: self)
     }
 
-}
-
-protocol ScreenWithScreenType {
-    var screenType: ScreenType { get set }
 }

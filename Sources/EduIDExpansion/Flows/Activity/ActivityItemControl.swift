@@ -6,7 +6,7 @@ class ActivityItemControl: UIControl {
     init(imagePath: String? = nil, image: UIImage? = nil, title: String, date: Date) {
         super.init(frame: .zero)
         
-        // the icon image
+        // - the icon image
         let imageParent = UIView()
         imageParent.size(CGSize(width: 82, height: 82))
         let imageView = UIImageView(image: image)
@@ -17,7 +17,7 @@ class ActivityItemControl: UIControl {
         imageParent.addSubview(imageView)
         imageView.center(in: imageParent)
         
-        // the middle part with title and date
+        // - the middle part with title and date
         let middleParent = UIView()
         let titleLabel = UILabel()
         titleLabel.font = .sourceSansProBold(size: 16)
@@ -35,7 +35,7 @@ class ActivityItemControl: UIControl {
         middleParent.addSubview(middleStack)
         middleStack.edges(to: middleParent, insets: TinyEdgeInsets(top: 14, left: 6, bottom: 14, right: 6))
         
-        // the chevron image
+        // - the chevron image
         let chevronParent = UIView()
         chevronParent.size(CGSize(width: 82, height: 82))
         let chevronView = UIImageView(image: UIImage(systemName: "chevron.down")?.withRenderingMode(.alwaysTemplate))
@@ -46,7 +46,7 @@ class ActivityItemControl: UIControl {
         chevronParent.addSubview(chevronView)
         chevronView.center(in: chevronParent)
         
-        // the master stack
+        // - the master stack
         let stack = UIStackView(arrangedSubviews: [imageParent, middleParent, chevronParent])
         stack.axis = .horizontal
         stack.translatesAutoresizingMaskIntoConstraints = false

@@ -8,7 +8,6 @@ class CheckEmailViewController: CreateEduIDBaseViewController {
         super.viewDidLoad()
         
         screenType = .checkMailScreen
-        
         setupUI()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
@@ -19,16 +18,16 @@ class CheckEmailViewController: CreateEduIDBaseViewController {
     //MARK: - setup UI
     func setupUI() {
         
-        //MARK: - posterLabel
+        // - posterLabel
         let posterLabel = UILabel.posterTextLabel(text: "Check your email", size: 24)
         
-        //MARK: - messageLabel
+        // - messageLabel
         let messageLabel = UILabel.plainTextLabelPartlyBold(text: "To sign in, click the link in the email we sent to juanCarlos02@hotmail.com.", partBold: "juanCarlos02@hotmail.com.")
         let messageParent = UIView()
         messageParent.addSubview(messageLabel)
         messageLabel.edges(to: messageParent)
         
-        //MARK: - activityIndicatorView
+        // - activityIndicatorView
         let activity = UIActivityIndicatorView(style: .large)
         activity.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
         activity.tintColor = .gray
@@ -36,7 +35,7 @@ class CheckEmailViewController: CreateEduIDBaseViewController {
         activity.height(100)
         activity.startAnimating()
         
-        //MARK: - email options buttons
+        // - email options buttons
         let gmailImage = UIImageView(image: .gmail)
         gmailImage.width(30)
         gmailImage.height(30)
@@ -64,10 +63,10 @@ class CheckEmailViewController: CreateEduIDBaseViewController {
         emailOptionsVStack.spacing = 10
         
         
-        //MARK: - Space
+        // - Space
         let spaceView = UIView()
         
-        //MARK: - create the stackview
+        // - create the stackview
         let stack = UIStackView(arrangedSubviews: [posterLabel, messageParent, activity, emailOptionsVStack, spaceView])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -76,7 +75,7 @@ class CheckEmailViewController: CreateEduIDBaseViewController {
         stack.spacing = 32
         view.addSubview(stack)
         
-        //MARK: - add constraints
+        // - add constraints
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
         
         posterLabel.height(34)

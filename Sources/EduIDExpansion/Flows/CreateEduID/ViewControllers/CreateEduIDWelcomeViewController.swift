@@ -3,7 +3,7 @@ import TinyConstraints
 
 class CreateEduIDWelcomeViewController: CreateEduIDBaseViewController {
     
-    //MARK: - attributed texts for numbered list
+    // - attributed texts for numbered list
     var attributedTexts: [NSAttributedString] = []
 
     //MARK: lifecycle
@@ -25,10 +25,10 @@ class CreateEduIDWelcomeViewController: CreateEduIDBaseViewController {
     
     //MARK: setup UI
     func setupUI() {
-        //MARK: - posterLabel
+        // - posterLabel
         let posterLabel = UILabel.posterTextLabel(text: "Welcome! Use this app to", size: 24)
         
-        //MARK: - numbered list stack
+        // - numbered list stack
         let numstack = UIStackView()
         numstack.axis = .vertical
         (1...3).forEach { integerIndex in
@@ -48,20 +48,20 @@ class CreateEduIDWelcomeViewController: CreateEduIDBaseViewController {
             numstack.addArrangedSubview(hStack)
         }
         
-        //MARK: - image
+        // - image
         let image = UIImageView(image: .welcomeInstructions)
         image.contentMode = .scaleAspectFit
         image.width(150)
         image.height(150)
         
-        //MARK: - ok button
+        // - ok button
         let okButton = EduIDButton(type: .primary, buttonTitle: "Ok, Got it!")
         okButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
         
-        //MARK: - Space
+        // - Space
         let spaceView = UIView()
         
-        //MARK: - create the stackview
+        // - create the stackview
         let stack = UIStackView(arrangedSubviews: [posterLabel, numstack, image, spaceView, okButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -70,7 +70,7 @@ class CreateEduIDWelcomeViewController: CreateEduIDBaseViewController {
         stack.spacing = 32
         view.addSubview(stack)
         
-        //MARK: - add constraints
+        // - add constraints
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
         posterLabel.height(34)
         okButton.width(to: stack, offset: -24)

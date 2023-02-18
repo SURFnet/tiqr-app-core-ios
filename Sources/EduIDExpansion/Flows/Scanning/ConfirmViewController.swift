@@ -3,7 +3,7 @@ import TinyConstraints
 
 class ConfirmViewController: BaseViewController {
     
-    //MARK: - delegate
+    // - delegate
     weak var delegate: ConfirmViewControllerDelegate?
 
     //MARK: - life cycle

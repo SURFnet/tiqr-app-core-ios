@@ -34,7 +34,7 @@ class ActivityViewController: BaseViewController {
         scrollView.contentSize = CGSize(width: stack.frame.size.width, height: stack.frame.size.height + view.safeAreaInsets.top)
     }
     
-    //MARK: - setup ui
+    //MARK: - setup UI
     func setupUI() {
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -62,7 +62,7 @@ Each service you accessed through eduID receives certain personal data (attribut
         }
         stack.alignment = .center
         
-        // constraints
+        // - constraints
         scrollView.addSubview(stack)
         stack.edges(to: scrollView, insets: TinyEdgeInsets(top: 24, left: 0, bottom: -24, right: 0))
         stack.width(to: scrollView)

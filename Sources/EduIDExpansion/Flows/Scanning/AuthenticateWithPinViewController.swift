@@ -20,6 +20,6 @@ class AuthenticateWithPinViewController: PincodeBaseViewController {
     }
     
     override func showNextScreen() {
-//        authenticateDelegate?
+
     }
 }
