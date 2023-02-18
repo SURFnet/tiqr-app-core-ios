@@ -82,7 +82,7 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
     private func addGradient() {
         gradientLayer = CAGradientLayer()
         gradientLayer?.colors = [UIColor.black.cgColor, UIColor.clear.cgColor, UIColor.clear.cgColor, UIColor.black.cgColor] as [Any]?
-        gradientLayer?.locations = [NSNumber(value: 0.05), NSNumber(value: 0.15), NSNumber(value: 0.85), NSNumber(value: 0.95)]
+        gradientLayer?.locations = [NSNumber(value: 0.1), NSNumber(value: 0.2), NSNumber(value: 0.8), NSNumber(value: 0.9)]
         gradientLayer?.startPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer?.endPoint = CGPoint(x: 0.5, y: 1)
         view.layer.addSublayer(gradientLayer!)
