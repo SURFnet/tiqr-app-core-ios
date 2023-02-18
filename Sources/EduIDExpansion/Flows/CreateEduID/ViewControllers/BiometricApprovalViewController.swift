@@ -47,6 +47,17 @@ class BiometricApprovalViewController: CreateEduIDBaseViewController {
             
             self.biometricApprovaldelegate?.biometricApprovalViewControllerSkipBiometricAccess(viewController: self)
         }
+        
+        viewModel.showContinueWithoutBiometricAccessClosure = { [weak self] in
+            let alert = UIAlertController(title: "Proceed without using biometric acces?", message: "This permanently disables this feature", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Proceed", style: .destructive) { [weak self] action in
+                (self?.delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: self!)
+            })
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { [weak self] action in
+                alert.dismiss(animated: true)
+            })
+            self?.present(alert, animated: true)
+        }
     }
     
     required init?(coder: NSCoder) {

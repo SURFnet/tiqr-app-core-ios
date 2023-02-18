@@ -66,7 +66,7 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
         (nextViewController as? CreateEduIDBaseViewController)?.delegate = self
         (nextViewController as? CreateEduIDEnterPersonalInfoViewController)?.delegate = self
         navigationController.pushViewController(nextViewController, animated: true)
-        currentScreenType = ScreenType(rawValue: currentScreenType.rawValue + 1) ?? .none
+        currentScreenType = currentScreenType.nextCreateEduIDScreen()
     }
     
     func createEduIDViewControllerShowConfirmPincodeScreen(viewController: CreatePincodeFirstEntryViewController, viewModel: CreatePincodeAndBiometricAccessViewModel) {
