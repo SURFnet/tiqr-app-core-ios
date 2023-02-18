@@ -42,7 +42,17 @@ class VerifyScanResultViewController: BaseViewController {
         
         // text in middle with organisation name
         let middlePosterParent = UIView()
-        let middlePosterLabel = UILabel.requestLoginLabel(entityName: (viewModel.challenge as? EnrollmentChallenge)?.identityDisplayName ?? "", challengeType: viewModel.challengeType ?? .invalid)
+        var middlePosterLabel = UILabel()
+        
+        switch viewModel.challengeType {
+        case .enrollment:
+            middlePosterLabel = UILabel.requestLoginLabel(entityName: (viewModel.challenge as? EnrollmentChallenge)?.identityDisplayName ?? "", challengeType: viewModel.challengeType ?? .invalid)
+        case .authentication:
+            middlePosterLabel = UILabel.requestLoginLabel(entityName: (viewModel.challenge as? AuthenticationChallenge)?.serviceProviderDisplayName ?? "", challengeType: viewModel.challengeType ?? .invalid)
+        default:
+            break
+        }
+        
         middlePosterParent.addSubview(middlePosterLabel)
         middlePosterLabel.edges(to: middlePosterParent)
         
@@ -92,7 +102,7 @@ class VerifyScanResultViewController: BaseViewController {
         case .enrollment:
             delegate?.verifyScanResultViewControllerEnroll(viewController: self, viewModel: viewModel)
         case .authentication:
-            delegate?.verifyScanResultViewControllerLogin(viewController: self, viewModel: viewModel)
+            viewModel.handleAuthenticationScanResult()
         default:
             break
         }

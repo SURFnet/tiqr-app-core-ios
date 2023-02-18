@@ -1,5 +1,6 @@
 import UIKit
 import AVFoundation
+import TiqrCoreObjC
 
 final class ScanViewModel: NSObject {
     
@@ -80,6 +81,20 @@ final class ScanViewModel: NSObject {
     }
     
     func handleAuthenticationScanResult() {
+        guard let challenge = challenge as? AuthenticationChallenge else { return }
+        
+        ServiceContainer.sharedInstance().secretService.secret(for: challenge.identity, touchIDPrompt: "sdfsdfsd") { data in
+            if let data = data {
+                ServiceContainer.sharedInstance().challengeService.complete(challenge, withSecret: data) { [weak self] success, response, error in
+                    guard let self = self else { return }
+                    
+                    self.delegate?.scanViewModelAuthenticateSuccess(viewModel: self)
+                }
+            }
+        } failureHandler: { success in
+            print(success)
+        }
+
         
     }
     

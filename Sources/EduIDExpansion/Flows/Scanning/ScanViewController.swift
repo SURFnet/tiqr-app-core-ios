@@ -197,7 +197,7 @@ extension ScanViewController: ScanViewModelDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
             guard let self = self else { return }
             
-            self.delegate?.promtUserWithVerifyScreen(viewController: self, viewModel: viewModel)
+            self.delegate?.scanViewControllerPromtUserWithVerifyScreen(viewController: self, viewModel: viewModel)
         })
     }
     
@@ -206,5 +206,9 @@ extension ScanViewController: ScanViewModelDelegate {
         for corner in projectedObject.corners {
             overlayView.addPoint(corner)
         }
+    }
+    
+    func scanViewModelAuthenticateSuccess(viewModel: ScanViewModel) {
+        delegate?.scanViewControllerShowConfirmScreen(viewController: self)
     }
 }
