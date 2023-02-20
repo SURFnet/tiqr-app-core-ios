@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class BiometricApprovalViewController: CreateEduIDBaseViewController {
+class BiometricAccessApprovalViewController: CreateEduIDBaseViewController {
     
     weak var biometricApprovaldelegate: BiometricApprovalViewControllerDelegate?
     let createPincodeViewModel: CreatePincodeAndBiometricAccessViewModel
@@ -24,8 +24,9 @@ class BiometricApprovalViewController: CreateEduIDBaseViewController {
             alert.addAction(UIAlertAction(title: "Ok", style: .default) { action in
                 self?.createPincodeViewModel.handleUseBiometricAccess()
             })
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { [weak self] action in
                 alert.dismiss(animated: true)
+                self?.promptSkipBiometricAccess()
             })
             self?.present(alert, animated: true)
         }
@@ -43,20 +44,17 @@ class BiometricApprovalViewController: CreateEduIDBaseViewController {
         }
         
         viewModel.biometricAccessSuccessClosure = { [weak self] in
-            guard let self = self else { return }
             
-            self.biometricApprovaldelegate?.biometricApprovalViewControllerSkipBiometricAccess(viewController: self)
-        }
-        
-        viewModel.showContinueWithoutBiometricAccessClosure = { [weak self] in
-            let alert = UIAlertController(title: "Proceed without using biometric acces?", message: "This permanently disables this feature", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Proceed", style: .destructive) { [weak self] action in
-                (self?.delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: self!)
-            })
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { [weak self] action in
-                alert.dismiss(animated: true)
-            })
+            let alert = UIAlertController(title: "Success", message: "Biometric access setup successful", preferredStyle: .alert)
             self?.present(alert, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                alert.dismiss(animated: true) { [weak self] in
+                    guard let self = self else { return }
+                    
+                    (self.delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: self)
+                }
+            })
+            
         }
     }
     
@@ -94,6 +92,7 @@ Do you want to use your biometrics to access the eduID app more easily?
         let imageParent = UIView()
         let imageView = UIImageView(image: .biometric)
         imageView.aspectRatio(1 / 0.727564102564103)
+        imageView.contentMode = .scaleAspectFit
         imageParent.addSubview(imageView)
         imageView.center(in: imageParent)
         
@@ -116,6 +115,18 @@ Do you want to use your biometrics to access the eduID app more easily?
         
         // actions
         setupButton.addTarget(createPincodeViewModel, action: #selector(createPincodeViewModel.promptSetupBiometricAccess), for: .touchUpInside)
-        skipButton.addTarget(createPincodeViewModel, action: #selector(createPincodeViewModel.setupWithoutBiometricAccess), for: .touchUpInside)
+        skipButton.addTarget(self, action: #selector(promptSkipBiometricAccess), for: .touchUpInside)
+    }
+    
+    //MARK: - actions
+    @objc func promptSkipBiometricAccess() {
+        let alert = UIAlertController(title: "Proceed without using biometric acces?", message: "This permanently disables this feature", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Proceed", style: .destructive) { [weak self] action in
+            (self?.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: self!)
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
+            alert.dismiss(animated: true)
+        })
+        self.present(alert, animated: true)
     }
 }

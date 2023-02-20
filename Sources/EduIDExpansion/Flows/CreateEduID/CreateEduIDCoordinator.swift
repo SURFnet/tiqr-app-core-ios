@@ -1,4 +1,5 @@
 import UIKit
+import TiqrCoreObjC
 
 final class CreateEduIDCoordinator: CoordinatorType {
     
@@ -25,6 +26,7 @@ final class CreateEduIDCoordinator: CoordinatorType {
         landingScreen.delegate = self
         
         let navigationController = UINavigationController(rootViewController: landingScreen)
+        navigationController.isModalInPresentation = true
         navigationController.modalTransitionStyle = .flipHorizontal
         
         self.navigationController = navigationController
@@ -36,9 +38,17 @@ final class CreateEduIDCoordinator: CoordinatorType {
 
 extension CreateEduIDCoordinator: ScanCoordinatorDelegate {
     
-    func scanCoordinatorDismissScanScreen(coordinator: CoordinatorType) {
+    func scanCoordinatorDismissScanScreen(coordinator: ScanCoordinator) {
         navigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 is ScanCoordinator }
+    }
+    
+    func scanCoordinatorJumpToCreatePincodeScreen(coordinator: ScanCoordinator, viewModel: ScanViewModel) {
+        guard let challenge = viewModel.challenge as? EnrollmentChallenge else { return }
+        
+        let pincodeFirstAttemptViewController = CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel(enrollmentChallenge: challenge))
+        pincodeFirstAttemptViewController.delegate = self
+        navigationController.pushViewController(pincodeFirstAttemptViewController, animated: true)
     }
 }
 
@@ -74,8 +84,9 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
     }
     
     func createEduIDViewControllerShowBiometricUsageScreen(viewController: CreatePincodeSecondEntryViewController, viewModel: CreatePincodeAndBiometricAccessViewModel) {
-        let biometricViewController = BiometricApprovalViewController(viewModel: viewModel)
+        let biometricViewController = BiometricAccessApprovalViewController(viewModel: viewModel)
         biometricViewController.delegate = self
+        biometricViewController.biometricApprovaldelegate = self
         navigationController.pushViewController(biometricViewController, animated: true)
         currentScreenType = .biometricApprovalScreen
     }
@@ -90,14 +101,22 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
             self?.navigationController.present(alert, animated: true)
         })
     }
-    
-    
-    
-    //MARK: - back action
+
     @objc
     func goBack(viewController: UIViewController) {
         currentScreenType = ScreenType(rawValue: max(0, currentScreenType.rawValue - 1)) ?? .none
         navigationController.popViewController(animated: true)
+    }
+}
+
+extension CreateEduIDCoordinator: BiometricApprovalViewControllerDelegate {
+    
+    func biometricApprovalViewControllerContinueWithSucces(viewController: BiometricAccessApprovalViewController) {
+        
+    }
+    
+    func biometricApprovalViewControllerSkipBiometricAccess(viewController: BiometricAccessApprovalViewController) {
+    
     }
 }
 

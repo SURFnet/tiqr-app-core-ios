@@ -19,7 +19,6 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     // - show prompt for biometric access
     var showBiometricNotAvailableClosure: (() -> Void)?
     var showPromptUseBiometricAccessClosure: (() -> Void)?
-    var showContinueWithoutBiometricAccessClosure: (() -> Void)?
     var biometricAccessSuccessClosure: (() -> Void)?
     var biometricAccessFailureClosure: ((Error) -> Void)?
    
@@ -63,14 +62,9 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
         }
     }
     
-    @objc
-    func setupWithoutBiometricAccess() {
-        showContinueWithoutBiometricAccessClosure?()
-    }
-    
     func handleUseBiometricAccess() {
         guard enrollmentChallenge != nil else {
-            proceedWithoutBiometricClosure?()
+            fatalError("you can't setup biometrec access without an enrollment challenge")
             return
         }
         

@@ -2,6 +2,6 @@ import UIKit
 
 protocol BiometricApprovalViewControllerDelegate: AnyObject {
     
-    func biometricApprovalViewControllerContinueWithSucces(viewController: BiometricApprovalViewController)
-    func biometricApprovalViewControllerSkipBiometricAccess(viewController: BiometricApprovalViewController)
+    func biometricApprovalViewControllerContinueWithSucces(viewController: BiometricAccessApprovalViewController)
+    func biometricApprovalViewControllerSkipBiometricAccess(viewController: BiometricAccessApprovalViewController)
 }

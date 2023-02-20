@@ -19,6 +19,7 @@ enum ScreenType: Int, CaseIterable {
     case firstTimeDialogScreen
     case addInstitutionScreen
     case biometricApprovalScreen
+    case eduIDCreatedScreen
     
     // scan screens
     case scanScreen
@@ -49,18 +50,18 @@ enum ScreenType: Int, CaseIterable {
         case .enterInfoScreen:
             return .checkMailScreen
         case .checkMailScreen:
-            return .enterPhoneScreen
-        case .enterPhoneScreen:
-            return .pinChallengeScreen
-        case .pinChallengeScreen:
-            return .welcomeScreen
-        case .welcomeScreen:
+            return .eduIDCreatedScreen
+        case .eduIDCreatedScreen:
             return .createPincodefirstEntryScreen
         case .createPincodefirstEntryScreen:
             return .createPincodeSecondEntryScreen
         case .createPincodeSecondEntryScreen:
             return .biometricApprovalScreen
         case .biometricApprovalScreen:
+            return .enterPhoneScreen
+        case .enterPhoneScreen:
+            return .pinChallengeScreen
+        case .pinChallengeScreen:
             return .firstTimeDialogScreen
         case .firstTimeDialogScreen:
             return .addInstitutionScreen
@@ -101,6 +102,8 @@ enum ScreenType: Int, CaseIterable {
             return CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel())
         case.createPincodeSecondEntryScreen:
             return CreatePincodeSecondEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel())
+        case .eduIDCreatedScreen:
+            return CreateEduIDCreatedViewController()
         default:
             return nil
         }
@@ -127,7 +130,7 @@ enum ScreenType: Int, CaseIterable {
             item.rightBarButtonItem = UIBarButtonItem(title: "Log off", style: .plain, target: target, action: action)
             
             // just logo
-        case .confirmScreen, .verifyLoginScreen, .createPincodefirstEntryScreen, .createPincodeSecondEntryScreen:
+        case .confirmScreen, .verifyLoginScreen, .createPincodefirstEntryScreen, .createPincodeSecondEntryScreen, .biometricApprovalScreen, .firstTimeDialogScreen:
             addLogoTo(item: item)
             item.hidesBackButton = true
         default:
