@@ -58,9 +58,9 @@ extension MainCoordinator: HomeViewControllerDelegate  {
     }
 }
 
+//MARK: - personal info methods
 extension MainCoordinator: PersonalInfoCoordinatorDelegate {
     
-    //MARK: - personal info methods
     func personalInfoCoordinatorDismissPersonalInfoFlow(coordinator: CoordinatorType) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 === coordinator }
@@ -68,36 +68,40 @@ extension MainCoordinator: PersonalInfoCoordinatorDelegate {
 }
 
     
+//MARK: - scan screen methods
 extension MainCoordinator: ScanCoordinatorDelegate {
     
-    //MARK: - scan screen methods
-    func scanCoordinatorDismissScanScreen(coordinator: CoordinatorType) {
+    func scanCoordinatorJumpToCreatePincodeScreen(coordinator: ScanCoordinator, viewModel: ScanViewModel) {
+        // not implemented
+    }
+    
+    func scanCoordinatorDismissScanScreen(coordinator: ScanCoordinator) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 === coordinator }
     }
 }
 
+//MARK: - security screen flow
 extension MainCoordinator: SecurityCoordinatorDelegate {
-    
-    //MARK: - security screen flow
+
     func securityCoordinatorDismissSecurityFlow(coordinator: CoordinatorType) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 === coordinator }
     }
 }
-    
+ 
+//MARK: - onboarding delegate
 extension MainCoordinator: CreateEduIDCoordinatorDelegate {
     
-    //MARK: - onboarding delegate
     func createEduIDCoordinatorDismissOnBoarding(coordinator: CoordinatorType) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 === coordinator }
     }
 }
 
+//MARK: - activity flow methods
 extension MainCoordinator: ActivityCoordinatorDelegate {
     
-    //MARK: - activity flow methods
     func activityCoordinatorDismissActivityFlow(coordinator: CoordinatorType) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 === coordinator }

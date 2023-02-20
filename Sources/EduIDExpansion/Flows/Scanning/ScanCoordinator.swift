@@ -22,8 +22,8 @@ final class ScanCoordinator: NSObject, CoordinatorType {
         self.navigationController = navigationController
         navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.pushViewController(scanViewcontroller, animated: false)
-        navigationController.transitioningDelegate = self
-        navigationController.modalPresentationStyle = .custom
+//        navigationController.transitioningDelegate = self
+//        navigationController.modalPresentationStyle = .custom
         
         viewControllerToPresentOn?.present(navigationController, animated: true)
     }
@@ -53,15 +53,19 @@ extension ScanCoordinator: ScanViewControllerDelegate {
 extension ScanCoordinator: VerifyScanResultViewControllerDelegate {
     
     func verifyScanResultViewControllerEnroll(viewController: VerifyScanResultViewController, viewModel: ScanViewModel) {
-        let pincodeFirstEntryViewController = CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel(enrollmentChallenge: viewModel.challenge as? EnrollmentChallenge))
-        pincodeFirstEntryViewController.delegate = self
-        navigationController.pushViewController(pincodeFirstEntryViewController, animated: true)
+        navigationController.dismiss(animated: true)
+        delegate?.scanCoordinatorJumpToCreatePincodeScreen(coordinator: self, viewModel: viewModel)
     }
     
     func verifyScanResultViewControllerLogin(viewController: VerifyScanResultViewController, viewModel: ScanViewModel) {
         let pincodeFirstEntryViewController = CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel(authenticationChallenge: viewModel.challenge as? AuthenticationChallenge))
-        pincodeFirstEntryViewController.delegate = self
+//        pincodeFirstEntryViewController.delegate = self
         navigationController.pushViewController(pincodeFirstEntryViewController, animated: true)
+    }
+    
+    func verifyScanResultViewControllerCancelScanResult(viewController: VerifyScanResultViewController) {
+        navigationController.popToRootViewController(animated: true)
+        (navigationController.viewControllers.first as? ScanViewController)?.viewModel.session.startRunning()
     }
 }
 
@@ -69,7 +73,7 @@ extension ScanCoordinator: VerifyScanResultViewControllerDelegate {
 extension ScanCoordinator: ConfirmViewControllerDelegate {
     
     func confirmViewControllerDismiss(viewController: ConfirmViewController) {
-        navigationController?.dismiss(animated: true)
+        navigationController?.presentingViewController?.dismiss(animated: true)
     }
 }
 
@@ -83,58 +87,4 @@ extension ScanCoordinator: UIViewControllerTransitioningDelegate {
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return QRAnimatedTransition(presenting: false)
     }
-}
-
-//MARK: - delegate methods from create EduID
-extension ScanCoordinator: CreateEduIDViewControllerDelegate {
-    func goBack(viewController: UIViewController) {
-        // not implemented
-    }
-    
-    func createEduIDViewControllerShowNextScreen(viewController: UIViewController) {
-        // not implemented
-    }
-    
-    func createEduIDViewControllerShowScanScreen(viewController: UIViewController) {
-        // not implemented
-    }
-    
-    func createEduIDViewControllerShowConfirmPincodeScreen(viewController: CreatePincodeFirstEntryViewController, viewModel: CreatePincodeAndBiometricAccessViewModel) {
-        let createPincodeSecondEntryViewController = CreatePincodeSecondEntryViewController(viewModel: viewModel)
-        createPincodeSecondEntryViewController.delegate = self
-        navigationController.pushViewController(createPincodeSecondEntryViewController, animated: true)
-    }
-    
-    func createEduIDViewControllerShowBiometricUsageScreen(viewController: CreatePincodeSecondEntryViewController, viewModel: CreatePincodeAndBiometricAccessViewModel) {
-        let biometricViewController = BiometricApprovalViewController(viewModel: viewModel)
-        biometricViewController.biometricApprovaldelegate = self
-        navigationController.pushViewController(biometricViewController, animated: true)
-    }
-    
-    func createEduIDViewControllerRedoCreatePin(viewController: CreatePincodeSecondEntryViewController) {
-        navigationController.popToViewController(navigationController.viewControllers.first { $0 is CreatePincodeFirstEntryViewController}!, animated: true)
-        let alert = UIAlertController(title: "Oops, let's try again", message: "The entered PIN codes were not equal", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default) { action in
-            // no action
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
-            self?.navigationController.present(alert, animated: true)
-        })
-    }
-}
-
-extension ScanCoordinator: BiometricApprovalViewControllerDelegate {
-    func biometricApprovalViewControllerContinueWithSucces(viewController: BiometricApprovalViewController) {
-        let confirmViewController = ConfirmViewController()
-        confirmViewController.delegate = self
-        navigationController.pushViewController(confirmViewController, animated: true)
-    }
-    
-    func biometricApprovalViewControllerSkipBiometricAccess(viewController: BiometricApprovalViewController) {
-        let confirmViewController = ConfirmViewController()
-        confirmViewController.delegate = self
-        navigationController.pushViewController(confirmViewController, animated: true)
-    }
-    
-    
 }

@@ -93,7 +93,16 @@ class VerifyScanResultViewController: BaseViewController {
     //MARK: - button actions
     @objc
     func cancelAction() {
-        
+        let alert = UIAlertController(title: "Are you sure?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes I'm sure", style: .cancel) { [weak self] action in
+            guard let self = self else { return }
+            
+            self.delegate?.verifyScanResultViewControllerCancelScanResult(viewController: self)
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default) { action in
+            alert.dismiss(animated: true)
+        })
+        present(alert, animated: true)
     }
     
     @objc

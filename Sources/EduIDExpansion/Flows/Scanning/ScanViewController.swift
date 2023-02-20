@@ -25,7 +25,7 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
     }
     
     // - viewmodel
-    private let viewModel: ScanViewModel
+    let viewModel: ScanViewModel
     
     // - flash button
     private let flashButton = UIButton()
