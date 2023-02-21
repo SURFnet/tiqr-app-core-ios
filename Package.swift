@@ -14,6 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/roberthein/TinyConstraints.git", from: "4.0.0"),
+        .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.0"),
     ],
     targets: [
         .target(
@@ -22,7 +23,7 @@ let package = Package(
         ),
         .target(
             name: "EduIDExpansion",
-            dependencies: ["TiqrCoreObjC", "TinyConstraints"]
+            dependencies: ["TiqrCoreObjC", "TinyConstraints", "OpenAPIClient"]
         ),
         .target(
             name: "TiqrCore"
@@ -36,6 +37,10 @@ let package = Package(
             cSettings: [
                     .headerSearchPath("Internal"), // 5
                  ]
+        ),
+        .target(
+            name: "OpenAPIClient",
+            dependencies: ["AnyCodable"]
         )
     ]
 )

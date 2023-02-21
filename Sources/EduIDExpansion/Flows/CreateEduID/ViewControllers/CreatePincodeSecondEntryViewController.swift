@@ -42,6 +42,7 @@ class CreatePincodeSecondEntryViewController: PincodeBaseViewController {
         verifyButton.buttonTitle = "Confirm"
         textLabel.text = "Enter your PIN code again"
         posterLabel.text = "Repeat your PINcode"
+        verifyButton.isEnabled = false
     }
     
     override func showNextScreen() {

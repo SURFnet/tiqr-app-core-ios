@@ -23,6 +23,7 @@ class CreatePincodeFirstEntryViewController: PincodeBaseViewController {
         posterLabel.text = "Select a PIN code"
         textLabel.text = "To use the eduID app you need a PIN code."
         verifyButton.buttonTitle = "Next"
+        verifyButton.isEnabled = false
         
     }
     

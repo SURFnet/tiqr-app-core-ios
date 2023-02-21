@@ -130,7 +130,7 @@ enum ScreenType: Int, CaseIterable {
             item.rightBarButtonItem = UIBarButtonItem(title: "Log off", style: .plain, target: target, action: action)
             
             // just logo
-        case .confirmScreen, .verifyLoginScreen, .createPincodefirstEntryScreen, .createPincodeSecondEntryScreen, .biometricApprovalScreen, .firstTimeDialogScreen:
+        case .confirmScreen, .verifyLoginScreen, .createPincodefirstEntryScreen, .createPincodeSecondEntryScreen, .biometricApprovalScreen, .firstTimeDialogScreen, .eduIDCreatedScreen, .checkMailScreen:
             addLogoTo(item: item)
             item.hidesBackButton = true
         default:
