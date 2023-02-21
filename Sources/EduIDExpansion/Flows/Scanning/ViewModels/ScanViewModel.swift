@@ -84,12 +84,13 @@ final class ScanViewModel: NSObject {
         guard let challenge = challenge as? AuthenticationChallenge else { return }
         
         ServiceContainer.sharedInstance().secretService.secret(for: challenge.identity, touchIDPrompt: "sdfsdfsd") { data in
-            if let data = data {
-                ServiceContainer.sharedInstance().challengeService.complete(challenge, withSecret: data) { [weak self] success, response, error in
-                    guard let self = self else { return }
-                    
-                    self.delegate?.scanViewModelAuthenticateSuccess(viewModel: self)
-                }
+            guard let data = data else { return }
+            
+            ServiceContainer.sharedInstance().challengeService.complete(challenge, withSecret: data) { [weak self] success, response, error in
+                guard let self = self else { return }
+                
+                self.delegate?.scanViewModelAuthenticateSuccess(viewModel: self)
+                
             }
         } failureHandler: { success in
             print(success)
@@ -108,9 +109,9 @@ final class ScanViewModel: NSObject {
 extension ScanViewModel: AVCaptureMetadataOutputObjectsDelegate {
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        if metadataObjects.count > 0 {
+        if metadataObjects.count > 0, let firstObject = metadataObjects.first as? AVMetadataMachineReadableCodeObject {
             self.session.stopRunning()
-            self.processMetaDataObject(object: metadataObjects.first as! AVMetadataMachineReadableCodeObject)
+            self.processMetaDataObject(object: firstObject)
         }
     }
 }

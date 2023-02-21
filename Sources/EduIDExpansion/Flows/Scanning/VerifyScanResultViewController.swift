@@ -112,7 +112,7 @@ class VerifyScanResultViewController: BaseViewController {
             delegate?.verifyScanResultViewControllerEnroll(viewController: self, viewModel: viewModel)
         case .authentication:
             viewModel.handleAuthenticationScanResult()
-        default:
+        case .invalid, .none, .some(_):
             break
         }
     }
