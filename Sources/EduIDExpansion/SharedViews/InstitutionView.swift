@@ -21,7 +21,7 @@ class InstitutionView: UIView {
         control.addTarget(self, action: #selector(didTapControl), for: .touchUpInside)
         control.setShadow(opacity: 0.3, color: .black, radius: 4, offset: CGSize(width: 3, height: 3))
         
-        //MARK: - stackview
+        // - stackview
         let stack = UIStackView(arrangedSubviews: [titleLabel, control])
         stack.axis = .vertical
         stack.spacing = 12

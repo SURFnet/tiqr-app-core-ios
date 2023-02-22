@@ -14,21 +14,22 @@ class ActionableControlWithBodyAndTitle: UIControl {
         }
     }
 
+    //MARK: - init
     init(attributedTitle: NSAttributedString? = nil, attributedBodyText: NSAttributedString, iconInTitle: UIImage? = nil, iconInBody: UIImage? = nil, isFilled: Bool, shadow: Bool = false) {
         super.init(frame: .zero)
                 
         backgroundColor = .white
         translatesAutoresizingMaskIntoConstraints = false
         
-        //MARK: set height
+        // - set height
         attributedTitle != nil ? height(105) : height(70)
         
-        //MARK: the title label
+        // - the title label
         let titleLabel = UILabel()
         titleLabel.height(35)
         titleLabel.attributedText = attributedTitle
         
-        //MARK: the control view
+        // - the control view
         view.height(70)
         view.backgroundColor = .white
         if shadow {
@@ -57,7 +58,7 @@ class ActionableControlWithBodyAndTitle: UIControl {
         view.addSubview(bodyStack)
         bodyStack.edges(to: view, insets: TinyEdgeInsets(top: 6, left: 18, bottom: 6, right: 18))
         
-        //MARK: - super stack
+        // - super stack
         let stack = UIStackView(arrangedSubviews: [titleLabel, view])
         stack.isUserInteractionEnabled = false
         stack.translatesAutoresizingMaskIntoConstraints = false

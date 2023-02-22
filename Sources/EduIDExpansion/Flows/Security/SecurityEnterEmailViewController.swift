@@ -3,20 +3,21 @@ import TinyConstraints
 
 class SecurityEnterEmailViewController: UIViewController, ScreenWithScreenType, ValidatedTextFieldDelegate {
 
-    //MARK: - screen type
+    // - screen type
     var screenType: ScreenType = .addInstitutionScreen
     
-    //MARK: - delegate
+    // - delegate
     weak var delegate: SecurityViewControllerDelegate?
     
     var stack: AnimatedVStackView!
     
-    //MARK: - phone textfield
+    // - phone textfield
     let validatedEmailTextField = TextFieldViewWithValidationAndTitle(title: "Your new email address", placeholder: "e.g. jairo@egeniq.com", keyboardType: .emailAddress)
     
-    //MARK: - verify button
+    // - verify button
     let verifyButton = EduIDButton(type: .primary, buttonTitle: "Verify email address")
     
+    //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,24 +42,25 @@ class SecurityEnterEmailViewController: UIViewController, ScreenWithScreenType, 
         _ = validatedEmailTextField.becomeFirstResponder()
     }
     
+    //MARK: - setup UI
     func setupUI() {
         
-        //MARK: - phone textfield delegate
+        // - phone textfield delegate
         validatedEmailTextField.delegate = self
         
-        //MARK: - button state
+        // - button state
         verifyButton.isEnabled = false
         
-        //MARK: - posterLabel
+        // - posterLabel
         let posterParent = UIView()
         let posterLabel = UILabel.posterTextLabelBicolor(text: "Email", size: 24, primary: "Email", alignment: .left)
         posterParent.addSubview(posterLabel)
         posterLabel.edges(to: posterParent)
         
-        //MARK: - textView Parent
+        // - textView Parent
         let textViewParent = UIView()
         
-        //MARK: - create the textView
+        // - create the textView
         let textLabel = UILabel()
         textLabel.numberOfLines = 0
         textLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -75,10 +77,10 @@ Please enter your new email address. A verification mail will be sent to this ad
         textLabel.edges(to: textViewParent)
         textLabel.sizeToFit()
         
-        //MARK: - Space
+        // - Space
         let spaceView = UIView()
         
-        //MARK: - create the stackview
+        // - create the stackview
         stack = AnimatedVStackView(arrangedSubviews: [posterParent, textViewParent, validatedEmailTextField, spaceView, verifyButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -87,7 +89,7 @@ Please enter your new email address. A verification mail will be sent to this ad
         stack.spacing = 32
         view.addSubview(stack)
         
-        //MARK: - add constraints
+        // - add constraints
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
         textViewParent.width(to: stack)
         verifyButton.width(to: stack, offset: -24)
@@ -97,9 +99,9 @@ Please enter your new email address. A verification mail will be sent to this ad
         stack.hideAndTriggerAll(onlyThese: [2])
     }
     
-    //MARK: - textfield validation method
-    func updateValidation(with value: Bool, from tag: Int) {
-        verifyButton.isEnabled = value
+    //MARK: - textfield methods
+    func updateValidation(with value: String, isValid: Bool, from tag: Int) {
+        verifyButton.isEnabled = isValid
     }
     
     func keyBoardDidReturn(tag: Int) {

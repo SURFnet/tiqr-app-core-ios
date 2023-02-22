@@ -1,10 +1,10 @@
 import UIKit
 
-final class ScanCoordinator: CoordinatorType {
+final class ScanCoordinator: NSObject, CoordinatorType {
     
     weak var viewControllerToPresentOn: UIViewController?
     
-    weak var navigationController: UINavigationController?
+    weak var navigationController: UINavigationController!
     weak var delegate: ScanCoordinatorDelegate?
     
     //MARK: - init
@@ -14,20 +14,77 @@ final class ScanCoordinator: CoordinatorType {
     
     //MARK: - start
     func start() {
-        let scanViewcontroller = ScanViewController(viewModel: ScanViewModel())
+        let viewModel = ScanViewModel()
+        let scanViewcontroller = ScanViewController(viewModel: viewModel)
+        viewModel.delegate = scanViewcontroller
         scanViewcontroller.delegate = self
         let navigationController = UINavigationController()
         self.navigationController = navigationController
         navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.pushViewController(scanViewcontroller, animated: false)
+//        navigationController.transitioningDelegate = self
+//        navigationController.modalPresentationStyle = .custom
         
         viewControllerToPresentOn?.present(navigationController, animated: true)
     }
 }
     
+//MARK: methods from the scan screen
 extension ScanCoordinator: ScanViewControllerDelegate {
-        
-    func scanViewControllerDismissScanFlow(viewController: UIViewController) {
+       
+    func scanViewControllerDismissScanFlow(viewController: ScanViewController) {
         delegate?.scanCoordinatorDismissScanScreen(coordinator: self)
+    }
+    
+    func scanViewControllerPromtUserWithVerifyScreen(viewController: ScanViewController, viewModel: ScanViewModel) {
+        let verifyViewController = VerifyScanResultViewController(viewModel: viewModel)
+        verifyViewController.delegate = self
+        navigationController.pushViewController(verifyViewController, animated: true)
+    }
+    
+    func scanViewControllerShowConfirmScreen(viewController: ScanViewController) {
+        let confirmViewController = ConfirmViewController()
+        confirmViewController.delegate = self
+        navigationController.pushViewController(confirmViewController, animated: true)
+    }
+}
+
+//MARK: - enroll a user using a qr code
+extension ScanCoordinator: VerifyScanResultViewControllerDelegate {
+    
+    func verifyScanResultViewControllerEnroll(viewController: VerifyScanResultViewController, viewModel: ScanViewModel) {
+        navigationController.dismiss(animated: true)
+        delegate?.scanCoordinatorJumpToCreatePincodeScreen(coordinator: self, viewModel: viewModel)
+    }
+    
+    func verifyScanResultViewControllerLogin(viewController: VerifyScanResultViewController, viewModel: ScanViewModel) {
+        let pincodeFirstEntryViewController = CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel(authenticationChallenge: viewModel.challenge as? AuthenticationChallenge))
+//        pincodeFirstEntryViewController.delegate = self
+        navigationController.pushViewController(pincodeFirstEntryViewController, animated: true)
+    }
+    
+    func verifyScanResultViewControllerCancelScanResult(viewController: VerifyScanResultViewController) {
+        navigationController.popToRootViewController(animated: true)
+        (navigationController.viewControllers.first as? ScanViewController)?.viewModel.session.startRunning()
+    }
+}
+
+//MARK: - confirm login and dismiss flow
+extension ScanCoordinator: ConfirmViewControllerDelegate {
+    
+    func confirmViewControllerDismiss(viewController: ConfirmViewController) {
+        navigationController?.presentingViewController?.dismiss(animated: true)
+    }
+}
+
+//MARK: transition setup
+extension ScanCoordinator: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return QRAnimatedTransition(presenting: true)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return QRAnimatedTransition(presenting: false)
     }
 }

@@ -10,7 +10,18 @@ final class EduIDButton: UIButton {
     }
 
     var type: ButtonType
-    var buttonTitle: String
+    var buttonTitle: String {
+        didSet {
+            switch type {
+            case .primary:
+                setupWithPrimaryStyle()
+            case .ghost:
+                setupWithGhostStyle()
+            case .naked:
+                setupWithNakedStyle()
+            }
+        }
+    }
     
     override var isEnabled: Bool {
         didSet {
@@ -77,7 +88,7 @@ final class EduIDButton: UIButton {
         let attributedTitleNormal = NSAttributedString(string: buttonTitle, attributes: [.font : UIFont.sourceSansProRegular(size: 16), .foregroundColor: UIColor.grayGhost])
         setAttributedTitle(attributedTitleNormal, for: .normal)
         
-        layer.borderWidth = 2
+        layer.borderWidth = 1
         layer.borderColor = UIColor.grayGhost.cgColor
     }
     

@@ -2,5 +2,6 @@ import UIKit
 
 protocol ScanCoordinatorDelegate: AnyObject {
     
-    func scanCoordinatorDismissScanScreen(coordinator: CoordinatorType)
+    func scanCoordinatorDismissScanScreen(coordinator: ScanCoordinator)
+    func scanCoordinatorJumpToCreatePincodeScreen(coordinator: ScanCoordinator, viewModel: ScanViewModel)
 }

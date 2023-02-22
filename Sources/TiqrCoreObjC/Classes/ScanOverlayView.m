@@ -80,7 +80,9 @@
 	CGFloat white[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	CGContextSetStrokeColor(context, white);
 	CGContextSetFillColor(context, white);
-	[self drawRect:self.cropRect inContext:context];
+    
+    //TODO: find out why this is commented out
+//	[self drawRect:self.cropRect inContext:context];
 	
 	if (self.points != nil) {
 		CGFloat green[4] = { 0.0f, 1.0f, 0.0f, 1.0f };

@@ -14,11 +14,16 @@ enum ScreenType: Int, CaseIterable {
     case enterPhoneScreen
     case pinChallengeScreen
     case welcomeScreen
+    case createPincodefirstEntryScreen
+    case createPincodeSecondEntryScreen
     case firstTimeDialogScreen
     case addInstitutionScreen
+    case biometricApprovalScreen
+    case eduIDCreatedScreen
     
-    // scan screen
+    // scan screens
     case scanScreen
+    case verifyLoginScreen
     
     // personal info screens
     case personalInfoLandingScreen
@@ -31,9 +36,12 @@ enum ScreenType: Int, CaseIterable {
     // activity screens
     case activityLandingScreen
     
+    case confirmScreen
+    case pincodeScreen
+    
     case none
     
-    func nextOnBoardingScreen() -> ScreenType {
+    func nextCreateEduIDScreen() -> ScreenType {
         switch self {
         case .landingScreen:
             return .explanationScreen
@@ -42,12 +50,18 @@ enum ScreenType: Int, CaseIterable {
         case .enterInfoScreen:
             return .checkMailScreen
         case .checkMailScreen:
+            return .eduIDCreatedScreen
+        case .eduIDCreatedScreen:
+            return .createPincodefirstEntryScreen
+        case .createPincodefirstEntryScreen:
+            return .createPincodeSecondEntryScreen
+        case .createPincodeSecondEntryScreen:
+            return .biometricApprovalScreen
+        case .biometricApprovalScreen:
             return .enterPhoneScreen
         case .enterPhoneScreen:
             return .pinChallengeScreen
         case .pinChallengeScreen:
-            return .welcomeScreen
-        case .welcomeScreen:
             return .firstTimeDialogScreen
         case .firstTimeDialogScreen:
             return .addInstitutionScreen
@@ -59,21 +73,21 @@ enum ScreenType: Int, CaseIterable {
     func viewController() -> UIViewController? {
         switch self {
         case .landingScreen:
-            return OnBoardingLandingPageViewController()
+            return CreateEduIDLandingPageViewController()
         case .explanationScreen:
-            return OnBoardingExplanationViewController()
+            return CreateEduIDExplanationViewController()
         case .enterInfoScreen:
-            return OnBoardingEnterPersonalInfoViewController(viewModel: EnterPersonalInfoViewModel())
+            return CreateEduIDEnterPersonalInfoViewController(viewModel: EnterPersonalInfoViewModel())
         case .checkMailScreen:
             return CheckEmailViewController()
         case .enterPhoneScreen:
-            return OnBoardingEnterPhoneNumberViewController()
+            return CreateEduIDEnterPhoneNumberViewController()
         case .pinChallengeScreen:
-            return OnBoardingEnterPinViewController(viewModel: EnterPinViewModel())
+            return CreateEduIDEnterPinViewController(viewModel: PinViewModel(), isSecure: false)
         case .welcomeScreen:
-            return OnBoardingWelcomeViewController()
+            return CreateEduIDWelcomeViewController()
         case .addInstitutionScreen:
-            return OnBoardingAddInstitutionViewController()
+            return CreateEduIDAddInstitutionViewController()
         case .homeScreen:
             return HomeViewController()
         case .scanScreen:
@@ -81,9 +95,15 @@ enum ScreenType: Int, CaseIterable {
         case .personalInfoLandingScreen:
             return PersonalInfoViewController()
         case .firstTimeDialogScreen:
-            return OnBoardingFirstTimeDialogViewController()
+            return CreateEduIDFirstTimeDialogViewController()
         case .securityLandingScreen:
             return SecurityLandingViewController()
+        case .createPincodefirstEntryScreen:
+            return CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel())
+        case.createPincodeSecondEntryScreen:
+            return CreatePincodeSecondEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel())
+        case .eduIDCreatedScreen:
+            return CreateEduIDCreatedViewController()
         default:
             return nil
         }
@@ -91,32 +111,40 @@ enum ScreenType: Int, CaseIterable {
     
     func configureNavigationItem(item: UINavigationItem, target: Any? = nil, action: Selector? = nil) {
         switch self {
+            // logo and cross to dismiss
         case .personalInfoLandingScreen, .securityLandingScreen, .activityLandingScreen:
-            let logo = UIImageView(image: UIImage.eduIDLogo)
-            logo.width(92)
-            logo.height(36)
-            item.titleView = logo
+            addLogoTo(item: item)
             item.hidesBackButton = true
             item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: target, action: action)
             item.rightBarButtonItem?.tintColor = .backgroundColor
+        
+            // logo and white back arrow
         case .scanScreen:
-            let logo = UIImageView(image: UIImage.eduIDLogo)
-            logo.width(92)
-            logo.height(36)
-            item.titleView = logo
+            addLogoTo(item: item)
             item.hidesBackButton = true
             item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: target, action: action)
             item.rightBarButtonItem?.tintColor = .white
+            
         case .homeScreen:
             item.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: target, action: action)
+            item.rightBarButtonItem = UIBarButtonItem(title: "Log off", style: .plain, target: target, action: action)
+            
+            // just logo
+        case .confirmScreen, .verifyLoginScreen, .createPincodefirstEntryScreen, .createPincodeSecondEntryScreen, .biometricApprovalScreen, .firstTimeDialogScreen, .eduIDCreatedScreen, .checkMailScreen:
+            addLogoTo(item: item)
+            item.hidesBackButton = true
         default:
-            let logo = UIImageView(image: UIImage.eduIDLogo)
-            logo.width(92)
-            logo.height(36)
-            item.titleView = logo
+            addLogoTo(item: item)
             item.hidesBackButton = true
             item.leftBarButtonItem = UIBarButtonItem(image: UIImage.arrowBack, style: .plain, target: target, action: action)
             item.leftBarButtonItem?.tintColor = .backgroundColor
         }
+    }
+    
+    func addLogoTo(item: UINavigationItem) {
+        let logo = UIImageView(image: .eduIDLogo)
+        logo.width(92)
+        logo.height(36)
+        item.titleView = logo
     }
 }

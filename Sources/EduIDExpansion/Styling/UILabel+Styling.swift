@@ -5,6 +5,7 @@
 //  Created by Jairo Bambang Oetomo on 19/01/2023.
 //
 import UIKit
+import TiqrCoreObjC
 
 extension UILabel {
     static func posterTextLabel(text: String, size: CGFloat = 24, alignment: NSTextAlignment = .left) -> UILabel {
@@ -52,6 +53,29 @@ extension UILabel {
         let attributedString = NSMutableAttributedString(string: text, attributes: [.font: UIFont.sourceSansProRegular(size: 16), .foregroundColor: UIColor.charcoalColor, .paragraphStyle: paragraphStyle])
         attributedString.setAttributeTo(part: partBold, attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.charcoalColor, .paragraphStyle: paragraphStyle])
         label.attributedText = attributedString
+        return label
+    }
+    
+    static func requestLoginLabel(entityName: String, challengeType: TIQRChallengeType) -> UILabel {
+        var paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 16
+        
+        var labelString = ""
+        switch challengeType {
+        case .enrollment:
+            labelString = "Request enrollment for user:\n"
+        case .authentication:
+            labelString = "Request login for:\n"
+        default:
+            break
+        }
+        
+        let attributedString = NSMutableAttributedString(string: "\(labelString)\(entityName)", attributes: [.font: UIFont.sourceSansProSemiBold(size: 24), .foregroundColor: UIColor.primaryColor, .paragraphStyle: paragraphStyle])
+        attributedString.setAttributeTo(part: entityName, attributes: [.foregroundColor: UIColor.charcoalColor, .font: UIFont.sourceSansProSemiBold(size: 36), .paragraphStyle: paragraphStyle])
+        let label = UILabel()
+        label.attributedText = attributedString
+        label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }
 }

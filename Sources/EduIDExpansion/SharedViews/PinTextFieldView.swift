@@ -5,26 +5,26 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
     
     weak var delegate: PinTextFieldDelegate?
     
-    //MARK: - Create the textfield
+    // - Create the textfield
     let textfield = UITextField()
 
     //MARK: - initialize
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(isSecure: Bool) {
+        super.init(frame: .zero)
         
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
         
         layer.cornerRadius = 5
         
-        //MARK: setup size
+        // - setup size
         height(50)
         width(50)
         
-        //MARK: - set border properties
+        // - set border properties
         layer.borderWidth = 2
         layer.borderColor = UIColor.clear.cgColor
         
-        //MARK: create parent view
+        // - create parent view
         let parentView = UIView()
         parentView.layer.cornerRadius = 4
         parentView.translatesAutoresizingMaskIntoConstraints = false
@@ -33,12 +33,13 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
         parentView.layer.borderWidth = 1
         parentView.layer.borderColor = UIColor.tertiaryColor.cgColor
         
-        //MARK: - create textfield
+        // - create textfield
         textfield.translatesAutoresizingMaskIntoConstraints = false
         parentView.addSubview(textfield)
         textfield.width(20)
         textfield.height(20)
         textfield.tintColor = .clear
+        textfield.isSecureTextEntry = isSecure
         textfield.keyboardType = .numberPad
         textfield.center(in: parentView)
         textfield.textAlignment = .center
@@ -63,7 +64,7 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         textField.text = string
-        delegate?.didEnterPinNumber(tag: tag)
+        delegate?.didEnterPinNumber(tag: tag, value: string.first ?? "0")
         return true
     }
     
@@ -90,5 +91,5 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
 }
 
 protocol PinTextFieldDelegate: AnyObject {
-    func didEnterPinNumber(tag: Int)
+    func didEnterPinNumber(tag: Int, value: Character)
 }

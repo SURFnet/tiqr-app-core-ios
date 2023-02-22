@@ -12,7 +12,7 @@ final class ActivityCoordinator: CoordinatorType {
     weak var navigationController: UINavigationController?
     weak var delegate: ActivityCoordinatorDelegate?
     
-    //MARK: start
+    //MARK: - start
     func start() {
         let activityViewController = ActivityViewController()
         activityViewController.delegate = self
@@ -25,6 +25,7 @@ final class ActivityCoordinator: CoordinatorType {
     }
 }
 
+//MARK: - activity view controller delegate
 extension ActivityCoordinator: ActivityViewControllerDelegate {
     
     func activityViewControllerDismissActivityFlow(viewController: UIViewController) {

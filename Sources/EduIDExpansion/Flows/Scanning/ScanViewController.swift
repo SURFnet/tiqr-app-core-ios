@@ -1,14 +1,17 @@
 import UIKit
 import TinyConstraints
+import TiqrCoreObjC
 import AVFoundation
 
 class ScanViewController: UIViewController, ScreenWithScreenType {
     
-    //MARK: delegate
+    // - delegate
     weak var delegate: ScanViewControllerDelegate?
     
-    //MARK: - screen type
+    // - screen type
     var screenType: ScreenType = .scanScreen
+    
+    var overlayView = ScanOverlayView(frame: .zero)
     
     init(viewModel: ScanViewModel) {
         self.viewModel = viewModel
@@ -21,28 +24,31 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: viewmodel
-    private let viewModel: ScanViewModel
+    // - viewmodel
+    let viewModel: ScanViewModel
     
-    //MARK: flash button
+    // - flash button
     private let flashButton = UIButton()
     private var flashIsON: Bool = false
     
-    //MARK: audio visual components
+    // - audio visual components
     private let previewLayer = AVCaptureVideoPreviewLayer()
     
-    //MARK: middel qr frame view
+    // - middel qr frame view
     private let middelSpaceView = UIImageView(image: .qrFrame)
     
-    //MARK: gradient layer
+    // - gradient layer
     private var gradientLayer: CAGradientLayer?
 
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        overlayView.translatesAutoresizingMaskIntoConstraints = false
+        
         view.backgroundColor = .black
         view.layer.addSublayer(previewLayer)
+        view.addSubview(overlayView)
         addGradient()
         setupScanningFrameUI()
         
@@ -54,6 +60,8 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
         super.viewWillAppear(animated)
         
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(dismissScanScreen))
+        overlayView.points = nil
+        overlayView.backgroundColor = .clear
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,6 +74,7 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
         super.viewWillLayoutSubviews()
         
         previewLayer.frame = view.bounds
+        overlayView.frame = view.bounds
         gradientLayer?.frame = view.bounds
     }
     
@@ -73,14 +82,14 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
     private func addGradient() {
         gradientLayer = CAGradientLayer()
         gradientLayer?.colors = [UIColor.black.cgColor, UIColor.clear.cgColor, UIColor.clear.cgColor, UIColor.black.cgColor] as [Any]?
-        gradientLayer?.locations = [NSNumber(value: 0.05), NSNumber(value: 0.15), NSNumber(value: 0.85), NSNumber(value: 0.95)]
+        gradientLayer?.locations = [NSNumber(value: 0.1), NSNumber(value: 0.2), NSNumber(value: 0.8), NSNumber(value: 0.9)]
         gradientLayer?.startPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer?.endPoint = CGPoint(x: 0.5, y: 1)
         view.layer.addSublayer(gradientLayer!)
     }
     
     private func setupScanningFrameUI() {
-        //MARK: - create the dark frame with image
+        // - create the dark frame with image
         let upperDarkView = UIView()
         upperDarkView.backgroundColor = .black.withAlphaComponent(0.5)
         flashButton.setImage(.flashLightOff, for: .normal)
@@ -93,14 +102,14 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
         let middelLeftDarkView = UIView()
         middelLeftDarkView.backgroundColor = .black.withAlphaComponent(0.5)
         
-        //MARK: - the imageview containing the frame lines
+        // - the imageview containing the frame lines
         let middelRightDarkView = UIView()
         middelRightDarkView.backgroundColor = .black.withAlphaComponent(0.5)
         let middelStack = UIStackView(arrangedSubviews: [middelLeftDarkView, middelSpaceView, middelRightDarkView])
         let lowerDarkView = UIView()
         lowerDarkView.backgroundColor = .black.withAlphaComponent(0.5)
         
-        //MARK: - explanationText
+        // - explanationText
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -123,14 +132,14 @@ Scan it here
         lowerDarkView.addSubview(label)
         label.center(in: lowerDarkView)
         
-        //MARK: - the stack view holding the entire frame
+        // - the stack view holding the entire frame
         let vStack = UIStackView(arrangedSubviews: [upperDarkView, middelStack, lowerDarkView])
         vStack.axis = .vertical
         vStack.translatesAutoresizingMaskIntoConstraints = false
         vStack.distribution = .fill
         view.addSubview(vStack)
         
-        //MARK: - constraints
+        // - constraints
         vStack.edgesToSuperview()
         middelSpaceView.size(CGSize(width: 275, height: 275))
         middelRightDarkView.height(to: middelSpaceView)
@@ -159,5 +168,48 @@ Scan it here
     @objc
     func dismissScanScreen() {
         delegate?.scanViewControllerDismissScanFlow(viewController: self)
+    }
+}
+
+//MARK: - handle delegate methods from viemodel
+extension ScanViewController: ScanViewModelDelegate {
+    
+    func scanViewModelShowErrorAlert(error: Any, viewModel: ScanViewModel) {
+        
+        // present a dialog sheet with reason text
+        let sheet = UIAlertController(title: "Error", message: (error as? Error)?.localizedDescription, preferredStyle: .actionSheet)
+        
+        // action to continue scanning - start session
+        sheet.addAction(UIAlertAction(title: "Ok", style: .default) { [weak self] action in
+            sheet.dismiss(animated: true)
+            
+            // remove marker points
+            self?.overlayView.points = []
+            
+            // restart the av session
+            DispatchQueue.global(qos: .background).async { [weak self] in
+                self?.viewModel.session.startRunning()
+            }
+        })
+        present(sheet, animated: true)
+    }
+    
+    func scanViewModelShowScanAttempt(viewModel: ScanViewModel) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
+            guard let self = self else { return }
+            
+            self.delegate?.scanViewControllerPromtUserWithVerifyScreen(viewController: self, viewModel: viewModel)
+        })
+    }
+    
+    func scanViewModelAddPoints(_for object: AVMetadataMachineReadableCodeObject, viewModel: ScanViewModel) {
+        let projectedObject = previewLayer.transformedMetadataObject(for: object) as! AVMetadataMachineReadableCodeObject
+        for corner in projectedObject.corners {
+            overlayView.addPoint(corner)
+        }
+    }
+    
+    func scanViewModelAuthenticateSuccess(viewModel: ScanViewModel) {
+        delegate?.scanViewControllerShowConfirmScreen(viewController: self)
     }
 }
