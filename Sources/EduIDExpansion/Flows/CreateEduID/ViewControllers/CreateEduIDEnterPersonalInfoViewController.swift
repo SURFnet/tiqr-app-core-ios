@@ -12,7 +12,7 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
     static let firstNameFieldTag = 2
     static let emailFieldTag = 1
    
-    let requestButton = EduIDButton(type: .primary, buttonTitle: "Request you eduID")
+    var requestButton: EduIDButton!
     let emailField = TextFieldViewWithValidationAndTitle(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
     
     // - spacing
@@ -78,6 +78,10 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
     
     //MARK: - setup UI
     private func setupUI() {
+        
+        let localizedString1 = NSLocalizedString(LocalizedKey.Login.requestEduIdButton, bundle: Bundle.module, comment: "")
+        requestButton = EduIDButton(type: .primary, buttonTitle: localizedString1)
+        
         // - add scrollview to hierarchy
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
