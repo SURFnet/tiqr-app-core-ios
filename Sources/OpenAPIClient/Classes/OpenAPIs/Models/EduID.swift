@@ -19,9 +19,9 @@ public struct EduID: Codable, JSONEncodable, Hashable {
     public var serviceLogoUrl: String?
     public var serviceHomeUrl: String?
     public var serviceInstutionGuid: String?
-    public var createdAt: Date?
+    public var createdAt: Int64?
 
-    public init(serviceProviderEntityId: String? = nil, value: String? = nil, serviceName: String? = nil, serviceNameNl: String? = nil, serviceLogoUrl: String? = nil, serviceHomeUrl: String? = nil, serviceInstutionGuid: String? = nil, createdAt: Date? = nil) {
+    public init(serviceProviderEntityId: String? = nil, value: String? = nil, serviceName: String? = nil, serviceNameNl: String? = nil, serviceLogoUrl: String? = nil, serviceHomeUrl: String? = nil, serviceInstutionGuid: String? = nil, createdAt: Int64? = nil) {
         self.serviceProviderEntityId = serviceProviderEntityId
         self.value = value
         self.serviceName = serviceName

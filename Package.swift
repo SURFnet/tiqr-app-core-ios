@@ -36,7 +36,7 @@ let package = Package(
                 .process("Resources/Audio/cowbell.wav"),
                 .process("Resources/Views/HTML/start.html")],
             cSettings: [
-                    .headerSearchPath("Internal"), // 5
+                    .headerSearchPath("Internal"), 
                  ]
         ),
         .target(

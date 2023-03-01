@@ -52,6 +52,212 @@ open class UserControllerAPI {
     }
 
     /**
+     Create eduID account
+     
+     - parameter createAccount: (body)  
+     - returns: Void
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createEduIDAccount(createAccount: CreateAccount) async throws {
+        return try await createEduIDAccountWithRequestBuilder(createAccount: createAccount).execute().body
+    }
+
+    /**
+     Create eduID account
+     - POST /mobile/api/idp/create
+     - Create an eduID account and sent a verification mail to the user to confirm the ownership of the email. <br/>Link in the validation email is <a href=\"\">https://login.{environment}.eduid.nl/mobile/api/create-from-mobile-api?h=={{hash}}</a><br/>After the account is validated the user is logged in and the server redirects to <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/created</a>
+     - parameter createAccount: (body)  
+     - returns: RequestBuilder<Void> 
+     */
+    open class func createEduIDAccountWithRequestBuilder(createAccount: CreateAccount) -> RequestBuilder<Void> {
+        let localVariablePath = "/mobile/api/idp/create"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: createAccount)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Void>.Type = OpenAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Delete
+     
+     - returns: String
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteUser() async throws -> String {
+        return try await deleteUserWithRequestBuilder().execute().body
+    }
+
+    /**
+     Delete
+     - DELETE /mobile/api/sp/delete
+     - Delete the current logged in user
+     - returns: RequestBuilder<String> 
+     */
+    open class func deleteUserWithRequestBuilder() -> RequestBuilder<String> {
+        let localVariablePath = "/mobile/api/sp/delete"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Forget me
+     
+     - returns: Int64
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func forgetMe() async throws -> Int64 {
+        return try await forgetMeWithRequestBuilder().execute().body
+    }
+
+    /**
+     Forget me
+     - DELETE /mobile/api/sp/forget
+     - Delete the long remember-me login for the current user
+     - returns: RequestBuilder<Int64> 
+     */
+    open class func forgetMeWithRequestBuilder() -> RequestBuilder<Int64> {
+        let localVariablePath = "/mobile/api/sp/forget"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Int64>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     All institutional domains
+     
+     - returns: Set<String>
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func institutionalDomains() async throws -> Set<String> {
+        return try await institutionalDomainsWithRequestBuilder().execute().body
+    }
+
+    /**
+     All institutional domains
+     - GET /mobile/api/sp/create-from-institution/domain/institutional
+     - All institutional domains which will generate a warning if a user enters an email at this domain
+     - returns: RequestBuilder<Set<String>> 
+     */
+    open class func institutionalDomainsWithRequestBuilder() -> RequestBuilder<Set<String>> {
+        let localVariablePath = "/mobile/api/sp/create-from-institution/domain/institutional"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Set<String>>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     All institutional domains
+     
+     - returns: Set<String>
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func institutionalDomains1() async throws -> Set<String> {
+        return try await institutionalDomains1WithRequestBuilder().execute().body
+    }
+
+    /**
+     All institutional domains
+     - GET /mobile/api/idp/email/domain/institutional
+     - All institutional domains which will generate a warning if a user enters an email at this domain
+     - returns: RequestBuilder<Set<String>> 
+     */
+    open class func institutionalDomains1WithRequestBuilder() -> RequestBuilder<Set<String>> {
+        let localVariablePath = "/mobile/api/idp/email/domain/institutional"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Set<String>>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Logout
+     
+     - returns: String
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func logout() async throws -> String {
+        return try await logoutWithRequestBuilder().execute().body
+    }
+
+    /**
+     Logout
+     - GET /mobile/api/sp/logout
+     - Logout the current logged in user
+     - returns: RequestBuilder<String> 
+     */
+    open class func logoutWithRequestBuilder() -> RequestBuilder<String> {
+        let localVariablePath = "/mobile/api/sp/logout"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      User details
      
      - returns: UserResponse
@@ -81,6 +287,289 @@ open class UserControllerAPI {
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
         let localVariableRequestBuilder: RequestBuilder<UserResponse>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Get all outstanding change-emails-requests
+     
+     - returns: Bool
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func outstandingEmailLinks() async throws -> Bool {
+        return try await outstandingEmailLinksWithRequestBuilder().execute().body
+    }
+
+    /**
+     Get all outstanding change-emails-requests
+     - GET /mobile/api/sp/outstanding-email-links
+     - Get all outstanding change-emails-requests for the logged in user
+     - returns: RequestBuilder<Bool> 
+     */
+    open class func outstandingEmailLinksWithRequestBuilder() -> RequestBuilder<Bool> {
+        let localVariablePath = "/mobile/api/sp/outstanding-email-links"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Bool>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Get personal data
+     
+     - returns: String
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func personal() async throws -> String {
+        return try await personalWithRequestBuilder().execute().body
+    }
+
+    /**
+     Get personal data
+     - GET /mobile/api/sp/personal
+     - Get personal data for download
+     - returns: RequestBuilder<String> 
+     */
+    open class func personalWithRequestBuilder() -> RequestBuilder<String> {
+        let localVariablePath = "/mobile/api/sp/personal"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Remove user tokens
+     
+     - parameter deleteServiceTokens: (body)  
+     - returns: UserResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func removeTokens(deleteServiceTokens: DeleteServiceTokens) async throws -> UserResponse {
+        return try await removeTokensWithRequestBuilder(deleteServiceTokens: deleteServiceTokens).execute().body
+    }
+
+    /**
+     Remove user tokens
+     - PUT /mobile/api/sp/tokens
+     - Remove user token for a service
+     - parameter deleteServiceTokens: (body)  
+     - returns: RequestBuilder<UserResponse> 
+     */
+    open class func removeTokensWithRequestBuilder(deleteServiceTokens: DeleteServiceTokens) -> RequestBuilder<UserResponse> {
+        let localVariablePath = "/mobile/api/sp/tokens"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: deleteServiceTokens)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<UserResponse>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Remove linked account
+     
+     - parameter linkedAccount: (body)  
+     - returns: UserResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func removeUserLinkedAccounts(linkedAccount: LinkedAccount) async throws -> UserResponse {
+        return try await removeUserLinkedAccountsWithRequestBuilder(linkedAccount: linkedAccount).execute().body
+    }
+
+    /**
+     Remove linked account
+     - PUT /mobile/api/sp/institution
+     - Remove linked account for a logged in user
+     - parameter linkedAccount: (body)  
+     - returns: RequestBuilder<UserResponse> 
+     */
+    open class func removeUserLinkedAccountsWithRequestBuilder(linkedAccount: LinkedAccount) -> RequestBuilder<UserResponse> {
+        let localVariablePath = "/mobile/api/sp/institution"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: linkedAccount)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<UserResponse>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Remove user service
+     
+     - parameter deleteServiceTokens: (body)  
+     - returns: UserResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func removeUserService(deleteServiceTokens: DeleteServiceTokens) async throws -> UserResponse {
+        return try await removeUserServiceWithRequestBuilder(deleteServiceTokens: deleteServiceTokens).execute().body
+    }
+
+    /**
+     Remove user service
+     - PUT /mobile/api/sp/service
+     - Remove user service
+     - parameter deleteServiceTokens: (body)  
+     - returns: RequestBuilder<UserResponse> 
+     */
+    open class func removeUserServiceWithRequestBuilder(deleteServiceTokens: DeleteServiceTokens) -> RequestBuilder<UserResponse> {
+        let localVariablePath = "/mobile/api/sp/service"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: deleteServiceTokens)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<UserResponse>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Validate password hash
+     
+     - parameter hash: (query)  
+     - returns: Bool
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func resetPasswordHashValid(hash: String) async throws -> Bool {
+        return try await resetPasswordHashValidWithRequestBuilder(hash: hash).execute().body
+    }
+
+    /**
+     Validate password hash
+     - GET /mobile/api/sp/password-reset-hash-valid
+     - Check if a password change hash is valid and not expired
+     - parameter hash: (query)  
+     - returns: RequestBuilder<Bool> 
+     */
+    open class func resetPasswordHashValidWithRequestBuilder(hash: String) -> RequestBuilder<Bool> {
+        let localVariablePath = "/mobile/api/sp/password-reset-hash-valid"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "hash": (wrappedValue: hash.encodeToJSON(), isExplode: true),
+        ])
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Bool>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Reset password link
+     
+     - returns: UserResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func resetPasswordLink() async throws -> UserResponse {
+        return try await resetPasswordLinkWithRequestBuilder().execute().body
+    }
+
+    /**
+     Reset password link
+     - PUT /mobile/api/sp/reset-password-link
+     - Sent the user a mail with a link for the user to change his / hers password. <br/>Link in the validation email is <a href=\"\">https://mijn.{environment}.eduid.nl/reset-password?h=={{hash}}</a>
+     - returns: RequestBuilder<UserResponse> 
+     */
+    open class func resetPasswordLinkWithRequestBuilder() -> RequestBuilder<UserResponse> {
+        let localVariablePath = "/mobile/api/sp/reset-password-link"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<UserResponse>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Get all OpenID Connect tokens
+     
+     - returns: Void
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func tokens() async throws {
+        return try await tokensWithRequestBuilder().execute().body
+    }
+
+    /**
+     Get all OpenID Connect tokens
+     - GET /mobile/api/sp/tokens
+     - Get all OpenID Connect tokens for the logged in user
+     - returns: RequestBuilder<Void> 
+     */
+    open class func tokensWithRequestBuilder() -> RequestBuilder<Void> {
+        let localVariablePath = "/mobile/api/sp/tokens"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Void>.Type = OpenAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -122,6 +611,42 @@ open class UserControllerAPI {
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
         let localVariableRequestBuilder: RequestBuilder<String>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Update password
+     
+     - parameter updateUserSecurityRequest: (body)  
+     - returns: UserResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func updateUserPassword(updateUserSecurityRequest: UpdateUserSecurityRequest) async throws -> UserResponse {
+        return try await updateUserPasswordWithRequestBuilder(updateUserSecurityRequest: updateUserSecurityRequest).execute().body
+    }
+
+    /**
+     Update password
+     - PUT /mobile/api/sp/update-password
+     - Update or delete the user's password using the hash from the 'h' query param in the validation email. If 'newPassword' is null / empty than the password is removed.
+     - parameter updateUserSecurityRequest: (body)  
+     - returns: RequestBuilder<UserResponse> 
+     */
+    open class func updateUserPasswordWithRequestBuilder(updateUserSecurityRequest: UpdateUserSecurityRequest) -> RequestBuilder<UserResponse> {
+        let localVariablePath = "/mobile/api/sp/update-password"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: updateUserSecurityRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<UserResponse>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
