@@ -15,9 +15,9 @@ public struct PublicKeyCredentials: Codable, JSONEncodable, Hashable {
     public var identifier: String?
     public var credential: String?
     public var name: String?
-    public var createdAt: Date?
+    public var createdAt: Int64?
 
-    public init(identifier: String? = nil, credential: String? = nil, name: String? = nil, createdAt: Date? = nil) {
+    public init(identifier: String? = nil, credential: String? = nil, name: String? = nil, createdAt: Int64? = nil) {
         self.identifier = identifier
         self.credential = credential
         self.name = name
