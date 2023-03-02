@@ -631,4 +631,5 @@ struct LocalizedKey {
         static let warning = "subContent-warning"
         static let confirmLabel = "subContent-confirmLabel"
         static let cancelLabel = "subContent-cancelLabel"
-    }}
+    }
+}
