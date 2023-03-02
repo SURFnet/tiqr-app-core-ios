@@ -48,7 +48,7 @@ final class EduIDButton: UIButton {
         }
     }
     
-    init(type: ButtonType, buttonTitle: String) {
+    init(type: ButtonType, buttonTitle: String, isDelete: Bool = false) {
         self.type = type
         self.buttonTitle = buttonTitle
         super.init(frame: .zero)
@@ -62,7 +62,7 @@ final class EduIDButton: UIButton {
         case .primary:
             setupWithPrimaryStyle()
         case .ghost:
-            setupWithGhostStyle()
+            setupWithGhostStyle(isDelete: isDelete)
         case .naked:
             setupWithNakedStyle()
         }
@@ -82,14 +82,14 @@ final class EduIDButton: UIButton {
         
     }
     
-    private func setupWithGhostStyle() {
+    private func setupWithGhostStyle(isDelete: Bool = false) {
         backgroundColor = .white
         
-        let attributedTitleNormal = NSAttributedString(string: buttonTitle, attributes: [.font : UIFont.sourceSansProRegular(size: 16), .foregroundColor: UIColor.grayGhost])
+        let attributedTitleNormal = NSAttributedString(string: buttonTitle, attributes: [.font : UIFont.sourceSansProRegular(size: 16), .foregroundColor: isDelete ? UIColor.red : UIColor.grayGhost])
         setAttributedTitle(attributedTitleNormal, for: .normal)
         
         layer.borderWidth = 1
-        layer.borderColor = UIColor.grayGhost.cgColor
+        layer.borderColor = isDelete ? UIColor.red.cgColor : UIColor.grayGhost.cgColor
     }
     
     private func setupWithNakedStyle() {

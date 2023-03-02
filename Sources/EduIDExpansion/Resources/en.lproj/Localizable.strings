@@ -34,7 +34,7 @@
 "profile-affiliations" = "Affiliation(s)";
 "profile-expires" = "Link expires";
 "profile-expiresValue" = "{{date}}";
-"profile-verifiedAt" = "Verified by <strong>{{name}}</strong> on {{date}}";
+"profile-verifiedAt" = "Verified by %@ on %@";
 "profile-proceed" = "Proceed";
 "verifyFirstAndLastName-addInstitution" = "Verify name";
 "verifyFirstAndLastName-addInstitutionConfirmation" = "When you proceed you will be asked to login at the institution you want to link to your eduID. First, select which institution you want to connect; then, login at that institution.<br/><br/>After a successful login you will come back here.";

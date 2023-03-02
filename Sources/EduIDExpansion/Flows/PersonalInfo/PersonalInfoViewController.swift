@@ -62,12 +62,10 @@ When you use eduID to login to other websites, some of your personal information
         thirdBodyText.setAttributeTo(part: "not available yet", attributes: [.font: UIFont.sourceSansProLight(size: 12)])
         let thirdControl = ActionableControlWithBodyAndTitle(attributedTitle: thirdTitle, attributedBodyText: thirdBodyText, iconInBody: UIImage(systemName: "chevron.right")?.withRenderingMode(.alwaysTemplate), isFilled: false)
         
-        let fourthBodyText = NSMutableAttributedString(string: "Your link to a school/uni", attributes: [.font: UIFont.sourceSansProRegular(size: 16), .foregroundColor: UIColor.backgroundColor])
-        fourthBodyText.setAttributeTo(part: "link to a school/uni", attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.backgroundColor])
-        let fourthControl = ActionableControlWithBodyAndTitle(attributedBodyText: fourthBodyText, iconInBody: UIImage(systemName: "chevron.right")?.withRenderingMode(.alwaysTemplate), isFilled: true)
+        let institutionControl = ActionableControlWithCollapsibleBody(role: .employee, institution: "uva.nl", verifiedAt: Date(), affiliation: "Universiteit", expires: Date())
         
         // - create the stackview
-        let stack = UIStackView(arrangedSubviews: [posterLabel, textLabelParent, firstControl, secondControl, thirdControl, fourthControl, spaceView])
+        let stack = UIStackView(arrangedSubviews: [posterLabel, textLabelParent, firstControl, secondControl, thirdControl, institutionControl, spaceView])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
@@ -83,7 +81,7 @@ When you use eduID to login to other websites, some of your personal information
         firstControl.width(to: stack)
         secondControl.width(to: stack)
         thirdControl.width(to: stack)
-        fourthControl.width(to: stack)
+        institutionControl.width(to: stack)
     }
     
     @objc

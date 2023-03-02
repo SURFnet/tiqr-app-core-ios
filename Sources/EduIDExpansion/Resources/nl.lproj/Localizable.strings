@@ -34,7 +34,7 @@
 "profile-affiliations" = "Betrekking(en)";
 "profile-expires" = "Koppeling verloopt";
 "profile-expiresValue" = "{{date}}";
-"profile-verifiedAt" = "Geverifieerd door <strong>{{name}}</strong> op {{date}}";
+"profile-verifiedAt" = "Geverifieerd door %@ op %@";
 "profile-proceed" = "Doorgaan";
 "verifyFirstAndLastName-addInstitution" = "Verifieer naam";
 "verifyFirstAndLastName-addInstitutionConfirmation" = "Als je doorgaat word je gevraagd in te loggen via de onderwijsinstelling die je wilt koppelen. Selecteer eerst welke instelling je wilt koppelen en log daarna in.<br/> <br/>Nadat je succesvol bent ingelogd kom je hier weer terug.";
