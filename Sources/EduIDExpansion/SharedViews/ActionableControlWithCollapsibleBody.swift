@@ -23,13 +23,15 @@ class ActionableControlWithCollapsibleBody: UIControl {
     //MARK: - setup UI
     func setupUI(role: Role, institution: String, verifiedAt: Date, affiliation: String, expires: Date) {
         
+        backgroundColor = .disabledGrayBackground
+        
         //body stackview
         let attributedStringBody = NSMutableAttributedString()
         let iconEmoji = role == .employee ? "🏢️" : "🧑‍🎓"
-        attributedStringBody.append(NSAttributedString(string: "\(iconEmoji) \(role.rawValue.capitalized)", attributes: AttributedStringHelper.attributesSemiBoldSecondaryColor))
+        attributedStringBody.append(NSAttributedString(string: "\(iconEmoji) \(role.rawValue.capitalized)", attributes: AttributedStringHelper.attributes(font: .sourceSansProSemiBold(size: 14), color: .secondaryColor, lineSpacing: 6)))
         attributedStringBody.append(NSAttributedString(string: "\n"))
-        attributedStringBody.append(NSAttributedString(string: "At ", attributes: AttributedStringHelper.attributesRegularSecondaryColor))
-        attributedStringBody.append(NSAttributedString(string: institution, attributes: [.font: UIFont.sourceSansProSemiBold(size: 16), .foregroundColor: UIColor.backgroundColor]))
+        attributedStringBody.append(NSAttributedString(string: "At ", attributes: AttributedStringHelper.attributes(font: .sourceSansProRegular(size: 14), color: .secondaryColor, lineSpacing: 6)))
+        attributedStringBody.append(NSAttributedString(string: institution, attributes:AttributedStringHelper.attributes(font: .sourceSansProSemiBold(size: 16), color: .backgroundColor, lineSpacing: 6)))
         let bodyParent = UIView()
         let bodyLabel = UILabel()
         bodyParent.addSubview(bodyLabel)
@@ -38,7 +40,7 @@ class ActionableControlWithCollapsibleBody: UIControl {
         bodyLabel.attributedText = attributedStringBody
         
         let chevronImage = UIImageView(image: UIImage(systemName: "chevron.down")?.withRenderingMode(.alwaysTemplate))
-        chevronImage.tintColor = .secondaryColor
+        chevronImage.tintColor = .backgroundColor
         chevronImage.size(CGSize(width: 24, height: 24))
         
         let bodyStack = UIStackView(arrangedSubviews: [bodyParent, chevronImage])
@@ -48,25 +50,26 @@ class ActionableControlWithCollapsibleBody: UIControl {
         // verfied by
         let verifiedParent = UIView()
         let verifiedLabel = UILabel()
+        verifiedLabel.numberOfLines = 0
         verifiedParent.addSubview(verifiedLabel)
         verifiedLabel.edges(to: verifiedParent)
         let verifiedFormatted = String(format: NSLocalizedString(LocalizedKey.Profile.verifiedAt, bundle: .module, comment: ""), locale: nil, institution, ActionableControlWithCollapsibleBody.dateFormatter.string(from: verifiedAt))
-        let verifiedAttributedString = NSMutableAttributedString(string: verifiedFormatted, attributes: AttributedStringHelper.attributesRegularSecondaryColor)
-        verifiedAttributedString.setAttributeTo(part: institution, attributes: AttributedStringHelper.attributesSemiBoldSecondaryColor)
+        let verifiedAttributedString = NSMutableAttributedString(string: verifiedFormatted, attributes: AttributedStringHelper.attributes(font: .sourceSansProRegular(size: 14), color: .secondaryColor, lineSpacing: 6))
+        verifiedAttributedString.setAttributeTo(part: institution, attributes: AttributedStringHelper.attributes(font: .sourceSansProRegular(size: 14), color: .secondaryColor, lineSpacing: 6))
         verifiedLabel.attributedText = verifiedAttributedString
         
         // line 2
         let line2 = UIView()
         line2.height(1)
-        line2.backgroundColor = .secondaryColor
+        line2.backgroundColor = .backgroundColor
         
         // institution
         let institutionlabelLabel = UILabel()
-        let institutionlabelAttributedString = NSAttributedString(string: NSLocalizedString(LocalizedKey.Profile.institution, bundle: .module, comment: ""), attributes: AttributedStringHelper.attributesRegularSecondaryColor)
+        let institutionlabelAttributedString = NSAttributedString(string: NSLocalizedString(LocalizedKey.Profile.institution, bundle: .module, comment: ""), attributes: AttributedStringHelper.attributes(font: .sourceSansProRegular(size: 14), color: .secondaryColor, lineSpacing: 6))
         institutionlabelLabel.attributedText = institutionlabelAttributedString
         
         let institutionLabel = UILabel()
-        let institutionLabelAttributedString = NSAttributedString(string: institution, attributes: AttributedStringHelper.attributesSemiBoldSecondaryColor)
+        let institutionLabelAttributedString = NSAttributedString(string: institution, attributes: AttributedStringHelper.attributes(font: .sourceSansProSemiBold(size: 14), color: .secondaryColor, lineSpacing: 6))
         institutionLabel.attributedText = institutionLabelAttributedString
         
         let institutionStack = UIStackView(arrangedSubviews: [institutionlabelLabel, institutionLabel])
@@ -76,15 +79,15 @@ class ActionableControlWithCollapsibleBody: UIControl {
         // line 3
         let line3 = UIView()
         line3.height(1)
-        line3.backgroundColor = .secondaryColor
+        line3.backgroundColor = .backgroundColor
         
         // affiliations
         let affiliationslabelLabel = UILabel()
-        let affiliationslabelAttributedString = NSAttributedString(string: NSLocalizedString(LocalizedKey.Profile.affiliations, bundle: .module, comment: ""), attributes: AttributedStringHelper.attributesRegularSecondaryColor)
+        let affiliationslabelAttributedString = NSAttributedString(string: NSLocalizedString(LocalizedKey.Profile.affiliations, bundle: .module, comment: ""), attributes: AttributedStringHelper.attributes(font: .sourceSansProRegular(size: 14), color: .secondaryColor, lineSpacing: 6))
         affiliationslabelLabel.attributedText = affiliationslabelAttributedString
         
         let affiliationsLabel = UILabel()
-        let affiliationsLabelAttributedString = NSAttributedString(string: affiliation, attributes: AttributedStringHelper.attributesSemiBoldSecondaryColor)
+        let affiliationsLabelAttributedString = NSAttributedString(string: affiliation, attributes: AttributedStringHelper.attributes(font: .sourceSansProSemiBold(size: 14), color: .secondaryColor, lineSpacing: 6))
         affiliationsLabel.attributedText = affiliationsLabelAttributedString
         
         let affiliationsStack = UIStackView(arrangedSubviews: [affiliationslabelLabel, affiliationsLabel])
@@ -94,15 +97,15 @@ class ActionableControlWithCollapsibleBody: UIControl {
         // line 4
         let line4 = UIView()
         line4.height(1)
-        line4.backgroundColor = .secondaryColor
+        line4.backgroundColor = .backgroundColor
         
         // link expires
         let expireslabelLabel = UILabel()
-        let expireslabelAttributedString = NSAttributedString(string: NSLocalizedString(LocalizedKey.Profile.expires, bundle: .module, comment: ""), attributes: AttributedStringHelper.attributesRegularSecondaryColor)
+        let expireslabelAttributedString = NSAttributedString(string: NSLocalizedString(LocalizedKey.Profile.expires, bundle: .module, comment: ""), attributes: AttributedStringHelper.attributes(font: .sourceSansProRegular(size: 14), color: .secondaryColor, lineSpacing: 6))
         expireslabelLabel.attributedText = expireslabelAttributedString
         
         let expiresLabel = UILabel()
-        let expiresLabelAttributedString = NSAttributedString(string: ActionableControlWithCollapsibleBody.dateFormatter.string(from: expires), attributes: AttributedStringHelper.attributesSemiBoldSecondaryColor)
+        let expiresLabelAttributedString = NSAttributedString(string: ActionableControlWithCollapsibleBody.dateFormatter.string(from: expires), attributes: AttributedStringHelper.attributes(font: .sourceSansProSemiBold(size: 14), color: .secondaryColor, lineSpacing: 6))
         expiresLabel.attributedText = expiresLabelAttributedString
         
         let expiresStack = UIStackView(arrangedSubviews: [expireslabelLabel, expiresLabel])
@@ -112,7 +115,7 @@ class ActionableControlWithCollapsibleBody: UIControl {
         // line 5
         let line5 = UIView()
         line5.height(1)
-        line5.backgroundColor = .secondaryColor
+        line5.backgroundColor = .backgroundColor
         
         // remove button
         let button = EduIDButton(type: .ghost, buttonTitle: NSLocalizedString(LocalizedKey.Institution.delete, bundle: .module, comment: ""), isDelete: true)
@@ -133,7 +136,7 @@ class ActionableControlWithCollapsibleBody: UIControl {
         // initially contract elements
         for i in (1..<stack.arrangedSubviews.count) {
             stack.arrangedSubviews[i].isHidden = true
-            stack.arrangedSubviews[i].alpha = 0 
+            stack.arrangedSubviews[i].alpha = 0
         }
     }
     

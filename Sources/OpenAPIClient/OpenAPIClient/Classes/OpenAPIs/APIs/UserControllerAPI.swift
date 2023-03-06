@@ -156,6 +156,45 @@ open class UserControllerAPI {
     }
 
     /**
+     Institution displaynames
+     
+     - parameter schacHome: (query)  
+     - returns: IdentityProvider
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func institutionNames(schacHome: String) async throws -> IdentityProvider {
+        return try await institutionNamesWithRequestBuilder(schacHome: schacHome).execute().body
+    }
+
+    /**
+     Institution displaynames
+     - GET /mobile/api/sp/institution/names
+     - Retrieve the displayNames of the Institution by the schac_home value
+     - parameter schacHome: (query)  
+     - returns: RequestBuilder<IdentityProvider> 
+     */
+    open class func institutionNamesWithRequestBuilder(schacHome: String) -> RequestBuilder<IdentityProvider> {
+        let localVariablePath = "/mobile/api/sp/institution/names"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "schac_home": (wrappedValue: schacHome.encodeToJSON(), isExplode: true),
+        ])
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<IdentityProvider>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      All institutional domains
      
      - returns: Set<String>
