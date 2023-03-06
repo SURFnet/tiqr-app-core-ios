@@ -19,18 +19,14 @@ extension RangeExpression where Bound == String.Index  {
 }
 
 struct AttributedStringHelper {
-    static let attributesRegularSecondaryColor: [NSAttributedString.Key: Any] = [
-        .font: UIFont.sourceSansProRegular(size: 16),
-        .foregroundColor: UIColor.secondaryColor
-    ]
     
-    static let attributesSemiBoldSecondaryColor: [NSAttributedString.Key: Any] = [
-        .font: UIFont.sourceSansProSemiBold(size: 16),
-        .foregroundColor: UIColor.secondaryColor
-    ]
-    
-    static let attributesBoldSecondaryColor: [NSAttributedString.Key: Any] = [
-        .font: UIFont.sourceSansProBold(size: 16),
-        .foregroundColor: UIColor.secondaryColor
-    ]
+    static func attributes(font: UIFont, color: UIColor, lineSpacing: CGFloat) -> [NSAttributedString.Key: Any] {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        return [
+            .font: font,
+            .foregroundColor: color,
+            .paragraphStyle: paragraphStyle
+        ]
+    }
 }
