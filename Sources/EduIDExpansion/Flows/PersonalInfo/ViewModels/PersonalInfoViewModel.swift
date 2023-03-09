@@ -4,9 +4,11 @@ import OpenAPIClient
 class PersonalInfoViewModel: NSObject {
     
     var userResponse: UserResponse?
-    var dataAvailableCallback: ((PersonalInfoDataCallbackModel) -> Void)?
     
-    
+    // - closures
+    var dataAvailableClosure: ((PersonalInfoDataCallbackModel) -> Void)?
+    var serviceRemovedClosure: ((LinkedAccount) -> Void)?
+    var dataFetchErrorClosure: ((Error) -> Void)?
     
     override init() {
         super.init()
@@ -22,6 +24,10 @@ class PersonalInfoViewModel: NSObject {
                 DispatchQueue.main.async { [weak self] in
                     self?.processUserData()
                 }
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.dataFetchErrorClosure?(error)
+                }
             }
         }
     }
@@ -32,7 +38,7 @@ class PersonalInfoViewModel: NSObject {
         if userResponse.linkedAccounts?.isEmpty ?? true {
             let name = "\(userResponse.givenName?.first ?? "X"). \(userResponse.familyName ?? "")"
             let nameProvidedBy = "me"
-            dataAvailableCallback?(PersonalInfoDataCallbackModel(userResponse: userResponse, name: name, nameProvidedBy: nameProvidedBy, isNameProvidedByInstitution: false))
+            dataAvailableClosure?(PersonalInfoDataCallbackModel(userResponse: userResponse, name: name, nameProvidedBy: nameProvidedBy, isNameProvidedByInstitution: false))
         } else {
             guard let firstLinkedAccount = userResponse.linkedAccounts?.first else { return }
             
@@ -40,7 +46,20 @@ class PersonalInfoViewModel: NSObject {
             let nameProvidedBy = firstLinkedAccount.schacHomeOrganization ?? ""
             let model = PersonalInfoDataCallbackModel(userResponse: userResponse, name: name, nameProvidedBy: nameProvidedBy, isNameProvidedByInstitution: true)
             
-            dataAvailableCallback?(model)
+            dataAvailableClosure?(model)
+        }
+    }
+    
+    func removeLinkedAccount(linkedAccount: LinkedAccount) {
+        Task {
+            do {
+                let result = try await UserControllerAPI.removeUserLinkedAccounts(linkedAccount: linkedAccount)
+                if !(result.linkedAccounts?.contains(linkedAccount) ?? true) {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.serviceRemovedClosure?(linkedAccount)
+                    }
+                }
+            }
         }
     }
 }

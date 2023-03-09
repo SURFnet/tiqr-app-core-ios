@@ -27,9 +27,15 @@
 "profile-student" = "Proof of student";
 "profile-studentInfo" = "You have not yet proven that you are a student in the Netherlands.";
 "profile-prove" = "Prove";
+"profile-prompt-remove-service-title" = "Are you sure";
+"profile-prompt-remove-service" = "The service will be permanently be removed.";
+"profile-provided-by" = "provided by";
+"profile-add-role-institution" = "Add role & Institution";
+"profile-info-text" = "When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party.";
 "profile-trusted" = "Link with third party";
 "profile-trustedInfo" = "You eduID account is not yet linked to a third party";
 "profile-link" = "Link";
+"profile-me" = "me";
 "profile-institution" = "Institution";
 "profile-affiliations" = "Affiliation(s)";
 "profile-expires" = "Link expires";
