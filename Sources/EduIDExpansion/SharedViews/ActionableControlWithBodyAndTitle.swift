@@ -54,7 +54,6 @@ class ActionableControlWithBodyAndTitle: UIControl {
         bodyStack.spacing = 12
         bodyStack.alignment = .center
         bodyStack.distribution = .equalSpacing
-        iconInBodyView.isHidden = iconInBody == nil
         view.addSubview(bodyStack)
         bodyStack.edges(to: view, insets: TinyEdgeInsets(top: 6, left: 18, bottom: 6, right: 18))
         

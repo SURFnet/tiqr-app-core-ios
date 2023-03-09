@@ -1,18 +1,18 @@
 import UIKit
 import TinyConstraints
 
-enum Role: String {
-    case student
-    case employee
-}
-
 class ActionableControlWithCollapsibleBody: UIControl {
 
     private var stack: UIStackView!
     private var isExpanded = false
+    private var removeAction: () -> Void
+    
+    var institution: String
     
     //MARK: - init
-    init(role: Role, institution: String, verifiedAt: Date, affiliation: String, expires: Date) {
+    init(role: Affiliation, institution: String, verifiedAt: Date, affiliation: String, expires: Date, removeAction: @escaping () -> Void) {
+        self.institution = institution
+        self.removeAction = removeAction
         super.init(frame: .zero)
         
         setupUI(role: role, institution: institution, verifiedAt: verifiedAt, affiliation: affiliation, expires: expires)
@@ -21,7 +21,7 @@ class ActionableControlWithCollapsibleBody: UIControl {
     }
             
     //MARK: - setup UI
-    func setupUI(role: Role, institution: String, verifiedAt: Date, affiliation: String, expires: Date) {
+    func setupUI(role: Affiliation, institution: String, verifiedAt: Date, affiliation: String, expires: Date) {
         
         backgroundColor = .disabledGrayBackground
         
@@ -119,6 +119,7 @@ class ActionableControlWithCollapsibleBody: UIControl {
         
         // remove button
         let button = EduIDButton(type: .ghost, buttonTitle: NSLocalizedString(LocalizedKey.Institution.delete, bundle: .module, comment: ""), isDelete: true)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
         stack = UIStackView(arrangedSubviews: [bodyStack, verifiedParent, line2, institutionStack, line3, affiliationsStack, line4, expiresStack, line5, button])
         stack.axis = .vertical
@@ -126,14 +127,14 @@ class ActionableControlWithCollapsibleBody: UIControl {
         stack.spacing = 18
         
         addSubview(stack)
-        stack.edges(to: self, insets: TinyEdgeInsets(top: 16, left: 18, bottom: 16, right: 18))
+        stack.edges(to: self, insets: TinyEdgeInsets(top: 12, left: 18, bottom: 12, right: 18))
         
         //border
         layer.borderWidth = 3
         layer.borderColor = UIColor.backgroundColor.cgColor
         layer.cornerRadius = 6
         
-        // initially contract elements
+        // initially hide elements
         for i in (1..<stack.arrangedSubviews.count) {
             stack.arrangedSubviews[i].isHidden = true
             stack.arrangedSubviews[i].alpha = 0
@@ -152,13 +153,18 @@ class ActionableControlWithCollapsibleBody: UIControl {
         isExpanded.toggle()
     }
     
+    @objc
+    func buttonAction() {
+        removeAction()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     static var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, MMM d, yyyy"
+        formatter.dateStyle = .full
         return formatter
     }
     
