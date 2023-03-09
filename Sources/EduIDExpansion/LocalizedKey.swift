@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Jairo Bambang Oetomo on 01/03/2023.
-//
-
 import Foundation
 
 struct LocalizedKey {
@@ -637,5 +630,11 @@ struct LocalizedKey {
         static let warning = "subContent-warning"
         static let confirmLabel = "subContent-confirmLabel"
         static let cancelLabel = "subContent-cancelLabel"
+    }
+}
+
+extension String {
+    var localized: String {
+        NSLocalizedString(self, bundle: .module, comment: "")
     }
 }
