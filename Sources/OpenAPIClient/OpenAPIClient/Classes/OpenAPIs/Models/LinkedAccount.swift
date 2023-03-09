@@ -19,10 +19,10 @@ public struct LinkedAccount: Codable, JSONEncodable, Hashable {
     public var givenName: String?
     public var familyName: String?
     public var eduPersonAffiliations: [String]?
-    public var createdAt: Date?
-    public var expiresAt: Date?
+    public var createdAt: Int64?
+    public var expiresAt: Int64?
 
-    public init(institutionIdentifier: String? = nil, schacHomeOrganization: String? = nil, eduPersonPrincipalName: String? = nil, subjectId: String? = nil, givenName: String? = nil, familyName: String? = nil, eduPersonAffiliations: [String]? = nil, createdAt: Date? = nil, expiresAt: Date? = nil) {
+    public init(institutionIdentifier: String? = nil, schacHomeOrganization: String? = nil, eduPersonPrincipalName: String? = nil, subjectId: String? = nil, givenName: String? = nil, familyName: String? = nil, eduPersonAffiliations: [String]? = nil, createdAt: Int64? = nil, expiresAt: Int64? = nil) {
         self.institutionIdentifier = institutionIdentifier
         self.schacHomeOrganization = schacHomeOrganization
         self.eduPersonPrincipalName = eduPersonPrincipalName
