@@ -5,7 +5,7 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
     
     weak var delegate: CreateEduIDViewControllerDelegate?
     
-    private var viewModel: EnterPersonalInfoViewModel
+    private var viewModel: CreateEduIDEnterPersonalInfoViewModel
     private let inset: CGFloat = 24
     
     static let lastNameFieldTag = 3
@@ -13,13 +13,16 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
     static let emailFieldTag = 1
    
     var requestButton: EduIDButton!
+    
+    var firstNameField: TextFieldViewWithValidationAndTitle!
+    var lastNameField: TextFieldViewWithValidationAndTitle!
     let emailField = TextFieldViewWithValidationAndTitle(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
     
     // - spacing
     let spacingView = UIView()
     
     //MARK: - init
-    init(viewModel: EnterPersonalInfoViewModel) {
+    init(viewModel: CreateEduIDEnterPersonalInfoViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
@@ -96,12 +99,12 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         emailField.delegate = viewModel
         
         // - firstname
-        let firstNameField = TextFieldViewWithValidationAndTitle(title: "First name", placeholder: "e.g. Tim", keyboardType: .default)
+        firstNameField = TextFieldViewWithValidationAndTitle(title: "First name", placeholder: "e.g. Tim", keyboardType: .default)
         firstNameField.tag = CreateEduIDEnterPersonalInfoViewController.firstNameFieldTag
         firstNameField.delegate = viewModel
         
         // - lastName
-        let lastNameField = TextFieldViewWithValidationAndTitle(title: "Last name", placeholder: "e.g. Berners-Lee", keyboardType: .default)
+        lastNameField = TextFieldViewWithValidationAndTitle(title: "Last name", placeholder: "e.g. Berners-Lee", keyboardType: .default)
         lastNameField.tag = CreateEduIDEnterPersonalInfoViewController.lastNameFieldTag
         lastNameField.delegate = viewModel
         
@@ -125,7 +128,7 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         
         // - requestButton
         requestButton.isEnabled = false
-        requestButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
+        requestButton.addTarget(self, action: #selector(createEduIDAction), for: .touchUpInside)
         
         // - create the stackview
         stack = AnimatedVStackView(arrangedSubviews: [posterLabel, emailField, firstNameField, lastNameField, termsHstack, spacingView, requestButton])
@@ -154,9 +157,8 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
     }
 
     @objc
-    func showNextScreen() {
-        delegate?.createEduIDViewControllerShowNextScreen(viewController: self)
-//        viewModel.apiCallToCreateEduID()
+    func createEduIDAction() {
+        viewModel.createEduID(familiyName: <#T##String#>, givenName: <#T##String#>, email: <#T##String#>)
     }
     
     override func goBack() {
