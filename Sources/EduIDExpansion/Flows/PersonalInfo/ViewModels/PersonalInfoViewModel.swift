@@ -13,21 +13,19 @@ class PersonalInfoViewModel: NSObject {
     override init() {
         super.init()
         
-        getData()
+        Task{
+            await getData()
+        }
     }
     
+    @MainActor
     func getData() {
         Task {
             do {
                 try await userResponse = UserControllerAPI.me()
-                
-                DispatchQueue.main.async { [weak self] in
-                    self?.processUserData()
-                }
+                processUserData()
             } catch {
-                DispatchQueue.main.async { [weak self] in
-                    self?.dataFetchErrorClosure?(error)
-                }
+                dataFetchErrorClosure?(error)
             }
         }
     }

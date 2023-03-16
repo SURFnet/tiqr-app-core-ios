@@ -1,5 +1,6 @@
 import UIKit
 import TiqrCoreObjC
+import OpenAPIClient
 
 final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     
@@ -73,6 +74,24 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
                 self?.biometricAccessSuccessClosure?()
             } else {
                 self?.biometricAccessFailureClosure?(error)
+            }
+        }
+    }
+    
+    @MainActor
+    func requestTiqrEnroll() {
+        Task {
+            do{
+                let enrollment = try await TiqrControllerAPI.startEnrollment()
+                ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrollment.url ?? "") { [weak self] type, object, error in
+                    ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: true, withPIN: self?.pinToString(pinArray: self?.secondEnteredPin ?? []) ?? "") { [weak self] success, error in
+                        if success {
+                            self?.biometricAccessSuccessClosure?()
+                        } else {
+                            self?.biometricAccessFailureClosure?(error)
+                        }
+                    }
+                }
             }
         }
     }

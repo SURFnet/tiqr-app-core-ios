@@ -41,7 +41,7 @@ let package = Package(
         ),
         .target(
             name: "OpenAPIClient",
-            dependencies: ["AnyCodable"]
+            dependencies: ["AnyCodable", .product(name: "AppAuth", package: "AppAuth-iOS")]
         )
     ]
 )

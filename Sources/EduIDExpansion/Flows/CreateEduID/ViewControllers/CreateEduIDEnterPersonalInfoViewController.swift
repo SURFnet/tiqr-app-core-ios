@@ -48,6 +48,18 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
             guard Date().timeIntervalSince(loadedTime) > 1 else { return }
             self?.scrollViewToTextField(index: tag)
         }
+        
+        viewModel.createEduIDErrorClosure = { [weak self] error in
+            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
+                alert.dismiss(animated: true)
+            })
+            self?.present(alert, animated: true)
+        }
+        
+        viewModel.createEduIDSuccessClosure = { [weak self] in
+            self?.showNextScreen()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -158,10 +170,14 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
 
     @objc
     func createEduIDAction() {
-        viewModel.createEduID(familiyName: <#T##String#>, givenName: <#T##String#>, email: <#T##String#>)
+        viewModel.createEduID(familiyName: lastNameField.textField.text ?? "", givenName: firstNameField.textField.text ?? "", email: emailField.textField.text ?? "")
     }
     
     override func goBack() {
         delegate?.goBack(viewController: self)
+    }
+    
+    func showNextScreen() {
+        delegate?.createEduIDViewControllerShowNextScreen(viewController: self)
     }
 }

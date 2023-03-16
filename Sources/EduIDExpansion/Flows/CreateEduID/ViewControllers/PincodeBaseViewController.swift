@@ -27,7 +27,7 @@ class PincodeBaseViewController: CreateEduIDBaseViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
-        screenType = .pinChallengeScreen
+        screenType = .smsChallengeScreen
         
         viewModel.focusPinField = { [weak self] tag in
             (self?.pinStack.arrangedSubviews[tag + 1] as? PinTextFieldView)?.focus()

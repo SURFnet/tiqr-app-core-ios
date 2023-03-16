@@ -1,5 +1,6 @@
 import UIKit
 import TinyConstraints
+import OpenAPIClient
 
 class CreateEduIDWelcomeViewController: CreateEduIDBaseViewController {
     
