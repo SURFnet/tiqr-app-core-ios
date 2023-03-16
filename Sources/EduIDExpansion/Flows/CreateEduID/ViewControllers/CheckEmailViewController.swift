@@ -10,9 +10,7 @@ class CheckEmailViewController: CreateEduIDBaseViewController {
         screenType = .checkMailScreen
         setupUI()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
-            self?.showNextScreen()
-        })
+        NotificationCenter.default.addObserver(self, selector: #selector(showNextScreen), name: .createEduIDDidReturnFromMagicLink, object: nil)
     }
     
     //MARK: - setup UI

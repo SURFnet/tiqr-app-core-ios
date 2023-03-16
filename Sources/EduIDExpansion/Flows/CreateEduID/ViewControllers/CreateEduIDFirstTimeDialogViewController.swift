@@ -12,6 +12,28 @@ class CreateEduIDFirstTimeDialogViewController: CreateEduIDBaseViewController {
     // - scroll view
     var scrollView = UIScrollView()
     
+    var viewModel: CreateEduIDFirstTimeDialogViewViewModel
+    
+    //MARK: - init
+    init(viewModel: CreateEduIDFirstTimeDialogViewViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        
+        viewModel.addInstitutionsCompletion = { [weak self] urlString in
+            guard let url = URL(string: urlString) else { return }
+            
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url) { [weak self] finished in
+                    self?.showNextScreen()
+                }
+            }
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +41,7 @@ class CreateEduIDFirstTimeDialogViewController: CreateEduIDBaseViewController {
         screenType = .firstTimeDialogScreen
         
         setupUI()
-        connectButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
+        connectButton.addTarget(self, action: #selector(launchAddInstitutions), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -95,5 +117,10 @@ You must therefore add the following information to your eduID:
         
         stack.hideAndTriggerAll(onlyThese: [4, 5])
         
+    }
+    
+    @objc
+    func launchAddInstitutions() {
+        viewModel.gotoAddInstitutionsInBrowser()
     }
 }

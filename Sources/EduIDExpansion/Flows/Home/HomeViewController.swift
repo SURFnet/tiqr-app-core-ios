@@ -1,5 +1,6 @@
 import UIKit
 import TinyConstraints
+import OpenAPIClient
 
 class HomeViewController: UIViewController, ScreenWithScreenType {
     
@@ -21,6 +22,12 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
         
         buttonStack.animate()
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen))
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+//        AppAuthController.shared.authorize(viewController: self)
     }
     
     func setupUI() {

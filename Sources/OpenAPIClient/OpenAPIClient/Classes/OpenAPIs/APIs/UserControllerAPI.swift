@@ -26,7 +26,7 @@ open class UserControllerAPI {
     /**
      Confirm email change
      - GET /mobile/api/sp/confirm-email
-     - Confirm the user has clicked on the link in the email sent after requesting to change the users email
+     - Confirm the user has clicked on the link in the email sent after requesting to change the users email<br/>A confirmation email is sent to notify the user of the security change with a link to the security settings <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/security</a>. <br/>If this URL is not properly intercepted by the eduID app, then the browser app redirects to <a href=\"\">eduid://client/mobile/security</a>
      - parameter h: (query) The hash obtained from the query parameter &#39;h&#39; in the URL sent to the user in the update-email 
      - returns: RequestBuilder<UserResponse> 
      */
@@ -65,7 +65,7 @@ open class UserControllerAPI {
     /**
      Create eduID account
      - POST /mobile/api/idp/create
-     - Create an eduID account and sent a verification mail to the user to confirm the ownership of the email. <br/>Link in the validation email is <a href=\"\">https://login.{environment}.eduid.nl/mobile/api/create-from-mobile-api?h=={{hash}}</a><br/>After the account is validated the user is logged in and the server redirects to <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/created</a>
+     - Create an eduID account and sent a verification mail to the user to confirm the ownership of the email. <br/>Link in the validation email is <a href=\"\">https://login.{environment}.eduid.nl/mobile/api/create-from-mobile-api?h=={{hash}}</a> whichmust NOT be captured by the eduID app.<br/>After the account is finalized server-side the user is logged in and the server redirects to <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/created</a><br/>If the URL is not properly intercepted by the eduID app, then the browser app redirects to <a href=\"\">eduid://client/mobile/created?new=true</a>
      - parameter createAccount: (body)  
      - returns: RequestBuilder<Void> 
      */
@@ -558,7 +558,7 @@ open class UserControllerAPI {
     /**
      Reset password link
      - PUT /mobile/api/sp/reset-password-link
-     - Sent the user a mail with a link for the user to change his / hers password. <br/>Link in the validation email is <a href=\"\">https://mijn.{environment}.eduid.nl/reset-password?h=={{hash}}</a>
+     - Sent the user a mail with a link for the user to change his / hers password. <br/>Link in the validation email is <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/reset-password?h=={{hash}}</a> if the user already had a password, otherwise <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/add-password?h=={{hash}}</a><br/>If the URL is not properly intercepted by the eduID app, then the browser app redirects to <a href=\"\">eduid://client/mobile/reset-password?h={{hash}}</a>
      - returns: RequestBuilder<UserResponse> 
      */
     open class func resetPasswordLinkWithRequestBuilder() -> RequestBuilder<UserResponse> {
@@ -628,7 +628,7 @@ open class UserControllerAPI {
     /**
      Change email
      - PUT /mobile/api/sp/email
-     - Request to change the email of the user. A validation email will be send containing an URL with an unique 'h' query param
+     - Request to change the email of the user. The link in the validation email is <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/update-email?h=={{hash}}</a>with an unique 'h' query param which must be used in 'mobile/api/sp/confirm-email' to confirm the update.<br/>If the URL is not properly intercepted by the eduID app, then the browser app redirects to <a href=\"\">eduid://client/mobile/confirm-email?h={{hash}}</a>
      - parameter updateEmailRequest: (body)  
      - parameter force: (query)  (optional, default to false)
      - returns: RequestBuilder<String> 

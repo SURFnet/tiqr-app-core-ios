@@ -15,17 +15,20 @@ public struct CreateAccount: Codable, JSONEncodable, Hashable {
     public var email: String
     public var givenName: String
     public var familyName: String
+    public var relyingPartClientId: String
 
-    public init(email: String, givenName: String, familyName: String) {
+    public init(email: String, givenName: String, familyName: String, relyingPartClientId: String) {
         self.email = email
         self.givenName = givenName
         self.familyName = familyName
+        self.relyingPartClientId = relyingPartClientId
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case email
         case givenName
         case familyName
+        case relyingPartClientId
     }
 
     // Encodable protocol methods
@@ -35,6 +38,7 @@ public struct CreateAccount: Codable, JSONEncodable, Hashable {
         try container.encode(email, forKey: .email)
         try container.encode(givenName, forKey: .givenName)
         try container.encode(familyName, forKey: .familyName)
+        try container.encode(relyingPartClientId, forKey: .relyingPartClientId)
     }
 }
 

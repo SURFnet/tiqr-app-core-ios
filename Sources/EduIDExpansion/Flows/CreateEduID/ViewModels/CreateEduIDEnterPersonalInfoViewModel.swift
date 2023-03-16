@@ -31,10 +31,11 @@ class CreateEduIDEnterPersonalInfoViewModel: NSObject {
         super.init()
     }
     
+    @MainActor
     func createEduID(familiyName: String, givenName: String, email: String) {
         Task {
             do {
-                try await UserControllerAPI.createEduIDAccount(createAccount: CreateAccount(email: email, givenName: givenName, familyName: familiyName))
+                try await UserControllerAPI.createEduIDAccount(createAccount: CreateAccount(email: email, givenName: givenName, familyName: familiyName, relyingPartClientId: AppAuthController.clientID))
                 createEduIDSuccessClosure?()
             } catch {
                 createEduIDErrorClosure?(error)
