@@ -4,7 +4,7 @@ import OpenAPIClient
 class CreateEduIDFirstTimeDialogViewViewModel: NSObject {
     
     //MARK: - closures
-    var addInstitutionsCompletion: ((String) -> Void)?
+    var addInstitutionsCompletion: ((AuthorizationURL) -> Void)?
     
     @MainActor
     func gotoAddInstitutionsInBrowser() {
