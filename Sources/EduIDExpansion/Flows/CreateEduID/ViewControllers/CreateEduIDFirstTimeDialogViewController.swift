@@ -19,12 +19,12 @@ class CreateEduIDFirstTimeDialogViewController: CreateEduIDBaseViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
-        viewModel.addInstitutionsCompletion = { [weak self] urlString in
-            guard let url = URL(string: urlString) else { return }
+        viewModel.addInstitutionsCompletion = { [weak self] urlAuthorization in
+            guard let url = URL(string: urlAuthorization.url ?? "") else { return }
             
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url) { [weak self] finished in
-                    self?.showNextScreen()
+//                    self?.showNextScreen()
                 }
             }
         }

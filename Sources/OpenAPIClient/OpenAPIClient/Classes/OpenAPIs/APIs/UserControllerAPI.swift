@@ -55,10 +55,10 @@ open class UserControllerAPI {
      Create eduID account
      
      - parameter createAccount: (body)  
-     - returns: Void
+     - returns: StatusResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func createEduIDAccount(createAccount: CreateAccount) async throws {
+    open class func createEduIDAccount(createAccount: CreateAccount) async throws -> StatusResponse {
         return try await createEduIDAccountWithRequestBuilder(createAccount: createAccount).execute().body
     }
 
@@ -67,9 +67,9 @@ open class UserControllerAPI {
      - POST /mobile/api/idp/create
      - Create an eduID account and sent a verification mail to the user to confirm the ownership of the email. <br/>Link in the validation email is <a href=\"\">https://login.{environment}.eduid.nl/mobile/api/create-from-mobile-api?h=={{hash}}</a> whichmust NOT be captured by the eduID app.<br/>After the account is finalized server-side the user is logged in and the server redirects to <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/created</a><br/>If the URL is not properly intercepted by the eduID app, then the browser app redirects to <a href=\"\">eduid://client/mobile/created?new=true</a>
      - parameter createAccount: (body)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<StatusResponse> 
      */
-    open class func createEduIDAccountWithRequestBuilder(createAccount: CreateAccount) -> RequestBuilder<Void> {
+    open class func createEduIDAccountWithRequestBuilder(createAccount: CreateAccount) -> RequestBuilder<StatusResponse> {
         let localVariablePath = "/mobile/api/idp/create"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: createAccount)
@@ -82,7 +82,7 @@ open class UserControllerAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = OpenAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<StatusResponse>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -90,10 +90,10 @@ open class UserControllerAPI {
     /**
      Delete
      
-     - returns: String
+     - returns: StatusResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func deleteUser() async throws -> String {
+    open class func deleteUser() async throws -> StatusResponse {
         return try await deleteUserWithRequestBuilder().execute().body
     }
 
@@ -101,9 +101,9 @@ open class UserControllerAPI {
      Delete
      - DELETE /mobile/api/sp/delete
      - Delete the current logged in user
-     - returns: RequestBuilder<String> 
+     - returns: RequestBuilder<StatusResponse> 
      */
-    open class func deleteUserWithRequestBuilder() -> RequestBuilder<String> {
+    open class func deleteUserWithRequestBuilder() -> RequestBuilder<StatusResponse> {
         let localVariablePath = "/mobile/api/sp/delete"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -116,7 +116,7 @@ open class UserControllerAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<String>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<StatusResponse>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -265,10 +265,10 @@ open class UserControllerAPI {
     /**
      Logout
      
-     - returns: String
+     - returns: StatusResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func logout() async throws -> String {
+    open class func logout() async throws -> StatusResponse {
         return try await logoutWithRequestBuilder().execute().body
     }
 
@@ -276,9 +276,9 @@ open class UserControllerAPI {
      Logout
      - GET /mobile/api/sp/logout
      - Logout the current logged in user
-     - returns: RequestBuilder<String> 
+     - returns: RequestBuilder<StatusResponse> 
      */
-    open class func logoutWithRequestBuilder() -> RequestBuilder<String> {
+    open class func logoutWithRequestBuilder() -> RequestBuilder<StatusResponse> {
         let localVariablePath = "/mobile/api/sp/logout"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -291,7 +291,7 @@ open class UserControllerAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<String>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<StatusResponse>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -367,10 +367,10 @@ open class UserControllerAPI {
     /**
      Get personal data
      
-     - returns: String
+     - returns: User
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func personal() async throws -> String {
+    open class func personal() async throws -> User {
         return try await personalWithRequestBuilder().execute().body
     }
 
@@ -378,9 +378,9 @@ open class UserControllerAPI {
      Get personal data
      - GET /mobile/api/sp/personal
      - Get personal data for download
-     - returns: RequestBuilder<String> 
+     - returns: RequestBuilder<User> 
      */
-    open class func personalWithRequestBuilder() -> RequestBuilder<String> {
+    open class func personalWithRequestBuilder() -> RequestBuilder<User> {
         let localVariablePath = "/mobile/api/sp/personal"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -393,7 +393,7 @@ open class UserControllerAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<String>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<User>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -582,10 +582,10 @@ open class UserControllerAPI {
     /**
      Get all OpenID Connect tokens
      
-     - returns: Void
+     - returns: [Token]
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func tokens() async throws {
+    open class func tokens() async throws -> [Token] {
         return try await tokensWithRequestBuilder().execute().body
     }
 
@@ -593,9 +593,9 @@ open class UserControllerAPI {
      Get all OpenID Connect tokens
      - GET /mobile/api/sp/tokens
      - Get all OpenID Connect tokens for the logged in user
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<[Token]> 
      */
-    open class func tokensWithRequestBuilder() -> RequestBuilder<Void> {
+    open class func tokensWithRequestBuilder() -> RequestBuilder<[Token]> {
         let localVariablePath = "/mobile/api/sp/tokens"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -608,7 +608,7 @@ open class UserControllerAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = OpenAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<[Token]>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -618,10 +618,10 @@ open class UserControllerAPI {
      
      - parameter updateEmailRequest: (body)  
      - parameter force: (query)  (optional, default to false)
-     - returns: String
+     - returns: UserResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func updateEmail(updateEmailRequest: UpdateEmailRequest, force: Bool? = nil) async throws -> String {
+    open class func updateEmail(updateEmailRequest: UpdateEmailRequest, force: Bool? = nil) async throws -> UserResponse {
         return try await updateEmailWithRequestBuilder(updateEmailRequest: updateEmailRequest, force: force).execute().body
     }
 
@@ -631,9 +631,9 @@ open class UserControllerAPI {
      - Request to change the email of the user. The link in the validation email is <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/update-email?h=={{hash}}</a>with an unique 'h' query param which must be used in 'mobile/api/sp/confirm-email' to confirm the update.<br/>If the URL is not properly intercepted by the eduID app, then the browser app redirects to <a href=\"\">eduid://client/mobile/confirm-email?h={{hash}}</a>
      - parameter updateEmailRequest: (body)  
      - parameter force: (query)  (optional, default to false)
-     - returns: RequestBuilder<String> 
+     - returns: RequestBuilder<UserResponse> 
      */
-    open class func updateEmailWithRequestBuilder(updateEmailRequest: UpdateEmailRequest, force: Bool? = nil) -> RequestBuilder<String> {
+    open class func updateEmailWithRequestBuilder(updateEmailRequest: UpdateEmailRequest, force: Bool? = nil) -> RequestBuilder<UserResponse> {
         let localVariablePath = "/mobile/api/sp/email"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: updateEmailRequest)
@@ -649,7 +649,7 @@ open class UserControllerAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<String>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<UserResponse>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
