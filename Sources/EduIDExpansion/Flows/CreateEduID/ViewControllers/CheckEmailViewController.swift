@@ -20,7 +20,7 @@ class CheckEmailViewController: CreateEduIDBaseViewController {
         let posterLabel = UILabel.posterTextLabel(text: "Check your email", size: 24)
         
         // - messageLabel
-        let messageLabel = UILabel.plainTextLabelPartlyBold(text: "To sign in, click the link in the email we sent to juanCarlos02@hotmail.com.", partBold: "juanCarlos02@hotmail.com.")
+        let messageLabel = UILabel.plainTextLabelPartlyBold(text: "To sign in, click the link in the email we sent to \(UserDefaults.standard.value(forKey: CreateEduIDEnterPersonalInfoViewController.emailKeyUserDefaults) as? String  ?? "")", partBold: UserDefaults.standard.value(forKey: CreateEduIDEnterPersonalInfoViewController.emailKeyUserDefaults) as? String  ?? "")
         let messageParent = UIView()
         messageParent.addSubview(messageLabel)
         messageLabel.edges(to: messageParent)

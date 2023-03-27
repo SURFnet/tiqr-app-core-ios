@@ -22,8 +22,12 @@ class BiometricAccessApprovalViewController: CreateEduIDBaseViewController {
         viewModel.showPromptUseBiometricAccessClosure = { [weak self] in
             let alert = UIAlertController(title: "Use biometric access?", message: "Would you like to use biometric access in stead of using a PINcode", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default) { action in
-                self?.createPincodeViewModel.requestTiqrEnroll()
-//                self?.createPincodeViewModel.handleUseBiometricAccess()
+                if viewModel.enrollmentChallenge != nil {
+                    self?.createPincodeViewModel.handleUseBiometricAccess()
+                } else {
+                    self?.createPincodeViewModel.requestTiqrEnroll()
+                }
+                
             })
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { [weak self] action in
                 alert.dismiss(animated: true)

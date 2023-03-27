@@ -8,5 +8,7 @@
 import Foundation
 
 extension Notification.Name {
+    
     public static let createEduIDDidReturnFromMagicLink = Notification.Name("createEduIDDidReturnFromMagicLink")
+    public static let didAddLinkedAccounts = Notification.Name("didAddLinkedAccounts")
 }

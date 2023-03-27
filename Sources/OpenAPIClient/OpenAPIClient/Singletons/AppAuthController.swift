@@ -39,7 +39,7 @@ public class AppAuthController: NSObject {
     //MARK: - URI's
     static let authEndpointString = "https://connect.test2.surfconext.nl/oidc/authorize"
     static let tokenEndpointString = "https://connect.test2.surfconext.nl/oidc/token"
-    static let redirectURIString = "eduid://client/mobile/oauth-redirect"
+    static let redirectURIString = "https://login.test2.eduid.nl/client/mobile/oauth-redirect"
     public static let clientID = "dev.egeniq.nl"
     
     //MARK: - init
@@ -71,13 +71,15 @@ public class AppAuthController: NSObject {
         
     }
     
-    public func authorize(viewController: UIViewController) {
+    public func authorize(viewController: UIViewController, completion: (() -> Void)? = nil) {
         let externalUserAgent = OIDExternalUserAgentIOSSafari(presentingViewController: viewController)
         currentAuthorizationFlow = OIDAuthState.authState(byPresenting: request, externalUserAgent: externalUserAgent) { [weak self] authState, error in
             if let authState = authState {
                 self?.authState = authState
                 self?.accessToken = authState.lastTokenResponse?.accessToken ?? ""
                 self?.refreshToken = authState.lastTokenResponse?.refreshToken ?? ""
+                
+                completion?()
             } else {
                 fatalError("authorization failed")
             }

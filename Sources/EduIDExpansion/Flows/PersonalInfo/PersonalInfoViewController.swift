@@ -26,7 +26,7 @@ class PersonalInfoViewController: UIViewController, ScreenWithScreenType {
         
         viewModel.serviceRemovedClosure = { [weak self] account in
             let views = self?.stack.arrangedSubviews.filter { view in
-                (view as? ActionableControlWithCollapsibleBody)?.institution == account.schacHomeOrganization
+                (view as? InstitutionControlCollapsible)?.institution == account.schacHomeOrganization
             } as? [UIView] ?? []
             UIView.animate(withDuration: 0.2, delay: 0, animations: {
                 views.forEach { view in
@@ -118,7 +118,7 @@ class PersonalInfoViewController: UIViewController, ScreenWithScreenType {
         // - add institutions
         for (i, linkedAccount) in (model.userResponse.linkedAccounts?.enumerated() ?? [].enumerated()) {
             for affiliation in linkedAccount.eduPersonAffiliations ?? [] {
-                let actionableControl = ActionableControlWithCollapsibleBody(role: Affiliation(rawValue: affiliation) ?? .employee, institution: linkedAccount.schacHomeOrganization ?? "", verifiedAt: Date(timeIntervalSince1970: Double(linkedAccount.createdAt ?? 0)), affiliation: linkedAccount.eduPersonAffiliations?.first ?? "", expires: Date(timeIntervalSince1970: Double(linkedAccount.expiresAt ?? 0))) { [weak self] in
+                let actionableControl = InstitutionControlCollapsible(role: Affiliation(rawValue: affiliation) ?? .employee, institution: linkedAccount.schacHomeOrganization ?? "", verifiedAt: Date(timeIntervalSince1970: Double(linkedAccount.createdAt ?? 0)), affiliation: linkedAccount.eduPersonAffiliations?.first ?? "", expires: Date(timeIntervalSince1970: Double(linkedAccount.expiresAt ?? 0))) { [weak self] in
                     
                     // - alert to confirm service removal
                     let alert = UIAlertController(title: LocalizedKey.Profile.removeServiceTitle.localized, message: LocalizedKey.Profile.removeServicePrompt.localized, preferredStyle: .alert)

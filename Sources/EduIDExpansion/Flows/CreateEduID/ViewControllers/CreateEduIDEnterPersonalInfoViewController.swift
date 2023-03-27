@@ -3,6 +3,8 @@ import TinyConstraints
 
 class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewController {
     
+    static var emailKeyUserDefaults = "emailKeyUserDefaults"
+    
     weak var delegate: CreateEduIDViewControllerDelegate?
     
     private var viewModel: CreateEduIDEnterPersonalInfoViewModel
@@ -13,10 +15,17 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
     static let emailFieldTag = 1
    
     var requestButton: EduIDButton!
+    let theSwitch = UISwitch()
     
     var firstNameField: TextFieldViewWithValidationAndTitle!
     var lastNameField: TextFieldViewWithValidationAndTitle!
     let emailField = TextFieldViewWithValidationAndTitle(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
+    
+    var textFieldsAreValid: Bool = false {
+        didSet {
+            requestButton.isEnabled = textFieldsAreValid && theSwitch.isOn
+        }
+    }
     
     // - spacing
     let spacingView = UIView()
@@ -41,7 +50,7 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         }
         
         viewModel.setRequestButtonEnabled = { [weak self] isEnabled in
-            self?.requestButton.isEnabled = isEnabled
+            self?.textFieldsAreValid = isEnabled
         }
         
         viewModel.textFieldBecameFirstResponderClosure = { [weak self] tag in
@@ -126,8 +135,8 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         termsHstack.axis = .horizontal
         termsHstack.height(36)
         
-        let theSwitch = UISwitch()
         theSwitch.onTintColor = .primaryColor
+        theSwitch.addTarget(self, action: #selector(switchToggled), for: .valueChanged)
         
         let termsLabel = UILabel()
         termsLabel.font = .sourceSansProRegular(size: 12)
@@ -167,9 +176,16 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         
         stack.hideAndTriggerAll(onlyThese: [1, 2, 3, 4, 6])
     }
+    
+    //MARK: - actions
+    @objc
+    func switchToggled() {
+        requestButton.isEnabled = theSwitch.isOn && textFieldsAreValid
+    }
 
     @objc
     func createEduIDAction() {
+        UserDefaults.standard.set(emailField.textField.text, forKey: CreateEduIDEnterPersonalInfoViewController.emailKeyUserDefaults)
         viewModel.createEduID(familiyName: lastNameField.textField.text ?? "", givenName: firstNameField.textField.text ?? "", email: emailField.textField.text ?? "")
     }
     

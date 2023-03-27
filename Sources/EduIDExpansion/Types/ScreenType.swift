@@ -87,7 +87,7 @@ enum ScreenType: Int, CaseIterable {
         case .welcomeScreen:
             return CreateEduIDWelcomeViewController()
         case .addInstitutionScreen:
-            return CreateEduIDAddInstitutionViewController()
+            return CreateEduIDAddInstitutionViewController(viewModel: PersonalInfoViewModel())
         case .homeScreen:
             return HomeViewController()
         case .scanScreen:
