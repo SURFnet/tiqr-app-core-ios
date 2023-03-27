@@ -14,7 +14,7 @@ final class ActivityCoordinator: CoordinatorType {
     
     //MARK: - start
     func start() {
-        let activityViewController = ActivityViewController()
+        let activityViewController = ActivityViewController(viewModel: ActivityViewModel())
         activityViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: activityViewController)
         self.navigationController = navigationController

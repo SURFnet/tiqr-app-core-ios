@@ -3,23 +3,33 @@ import TinyConstraints
 
 class ActivityViewController: BaseViewController {
     
-    var dataModel: [(UIImage, String, Date)] = [
-        (UIImage.eduIDLogo, "edubadges", Date()),
-        (UIImage.surfLogo, "SURF wiki", Date()),
-        (UIImage.eduIDLogo, "RIO", Date()),
-        (UIImage.surfLogo, "service provider X", Date())
-    ]
+    let viewModel: ActivityViewModel
     
     var stack: AnimatedVStackView!
     let scrollView = UIScrollView()
     weak var delegate: ActivityViewControllerDelegate?
 
+    //MARK: - init
+    init(viewModel: ActivityViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        
+        viewModel.dataAvailableClosure = { [weak self] model in
+            self?.setupUI(model: model)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         screenType = .activityLandingScreen
-        setupUI()
+        viewModel.loadData()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,14 +38,8 @@ class ActivityViewController: BaseViewController {
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(dismissActivityScreen))
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        scrollView.contentSize = CGSize(width: stack.frame.size.width, height: stack.frame.size.height + view.safeAreaInsets.top)
-    }
-    
     //MARK: - setup UI
-    func setupUI() {
+    func setupUI(model: PersonalInfoDataCallbackModel) {
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
@@ -53,11 +57,17 @@ Each service you accessed through eduID receives certain personal data (attribut
         textParent.addSubview(textLabel)
         textLabel.edges(to: textParent)
         
+        
+        
         stack = AnimatedVStackView(arrangedSubviews: [posterParent, textParent])
-        for item in dataModel {
-            let control = ActivityItemControl(image: item.0, title: item.1, date: item.2)
-            stack.addArrangedSubview(control)
-            control.width(to: stack)
+        
+        if let keys = model.userResponse.eduIdPerServiceProvider?.keys {
+            
+            for key in keys {
+                let eduID = model.userResponse.eduIdPerServiceProvider?[key]
+                let control = ActivityControlCollapsible(logoImageURL: eduID?.serviceLogoUrl ?? "", institutionTitle: eduID?.serviceName ?? "", date: Date(timeIntervalSince1970: Double(eduID?.createdAt ?? 0)), uniqueId: eduID?.serviceProviderEntityId ?? "", removeAction: {})
+                stack.addArrangedSubview(control)
+            }
             
         }
         stack.alignment = .center
