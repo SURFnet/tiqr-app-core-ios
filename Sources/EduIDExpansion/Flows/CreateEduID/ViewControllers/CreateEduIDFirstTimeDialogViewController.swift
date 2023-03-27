@@ -23,11 +23,13 @@ class CreateEduIDFirstTimeDialogViewController: CreateEduIDBaseViewController {
             guard let url = URL(string: urlAuthorization.url ?? "") else { return }
             
             if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url) { [weak self] finished in
-//                    self?.showNextScreen()
+                UIApplication.shared.open(url) { fin in
+                    print(fin)
                 }
             }
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showNextScreen), name: .didAddLinkedAccounts, object: nil)
     }
     
     required init?(coder: NSCoder) {

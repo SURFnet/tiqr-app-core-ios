@@ -1,7 +1,7 @@
 import UIKit
 import TinyConstraints
 
-class ActionableControlWithCollapsibleBody: UIControl {
+class ActivityControlCollapsible: UIControl {
 
     private var stack: UIStackView!
     private var isExpanded = false
@@ -53,7 +53,7 @@ class ActionableControlWithCollapsibleBody: UIControl {
         verifiedLabel.numberOfLines = 0
         verifiedParent.addSubview(verifiedLabel)
         verifiedLabel.edges(to: verifiedParent)
-        let verifiedFormatted = String(format: NSLocalizedString(LocalizedKey.Profile.verifiedAt, bundle: .module, comment: ""), locale: nil, institution, ActionableControlWithCollapsibleBody.dateFormatter.string(from: verifiedAt))
+        let verifiedFormatted = String(format: NSLocalizedString(LocalizedKey.Profile.verifiedAt, bundle: .module, comment: ""), locale: nil, institution, InstitutionControlCollapsible.dateFormatter.string(from: verifiedAt))
         let verifiedAttributedString = NSMutableAttributedString(string: verifiedFormatted, attributes: AttributedStringHelper.attributes(font: .sourceSansProRegular(size: 14), color: .secondaryColor, lineSpacing: 6))
         verifiedAttributedString.setAttributeTo(part: institution, attributes: AttributedStringHelper.attributes(font: .sourceSansProRegular(size: 14), color: .secondaryColor, lineSpacing: 6))
         verifiedLabel.attributedText = verifiedAttributedString
@@ -105,7 +105,7 @@ class ActionableControlWithCollapsibleBody: UIControl {
         expireslabelLabel.attributedText = expireslabelAttributedString
         
         let expiresLabel = UILabel()
-        let expiresLabelAttributedString = NSAttributedString(string: ActionableControlWithCollapsibleBody.dateFormatter.string(from: expires), attributes: AttributedStringHelper.attributes(font: .sourceSansProSemiBold(size: 14), color: .secondaryColor, lineSpacing: 6))
+        let expiresLabelAttributedString = NSAttributedString(string: InstitutionControlCollapsible.dateFormatter.string(from: expires), attributes: AttributedStringHelper.attributes(font: .sourceSansProSemiBold(size: 14), color: .secondaryColor, lineSpacing: 6))
         expiresLabel.attributedText = expiresLabelAttributedString
         
         let expiresStack = UIStackView(arrangedSubviews: [expireslabelLabel, expiresLabel])

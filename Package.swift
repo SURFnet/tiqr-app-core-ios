@@ -15,7 +15,8 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/roberthein/TinyConstraints.git", from: "4.0.0"),
         .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.0"),
-        .package(url: "https://github.com/openid/AppAuth-iOS.git", .upToNextMajor(from: "1.3.0"))
+        .package(url: "https://github.com/openid/AppAuth-iOS.git", .upToNextMajor(from: "1.3.0")),
+        .package(url: "https://github.com/evgenyneu/keychain-swift.git", branch: "master")
     ],
     targets: [
         .target(
@@ -24,7 +25,7 @@ let package = Package(
         ),
         .target(
             name: "EduIDExpansion",
-            dependencies: ["TiqrCoreObjC", "TinyConstraints", "OpenAPIClient", .product(name: "AppAuth", package: "AppAuth-iOS")]
+            dependencies: ["TiqrCoreObjC", "TinyConstraints", "OpenAPIClient", .product(name: "AppAuth", package: "AppAuth-iOS"), .product(name: "KeychainSwift", package: "keychain-swift")]
         ),
         .target(
             name: "TiqrCore"
