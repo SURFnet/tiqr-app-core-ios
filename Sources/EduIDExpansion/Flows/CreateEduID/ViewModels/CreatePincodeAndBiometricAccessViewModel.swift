@@ -71,7 +71,13 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
         
         ServiceContainer.sharedInstance().challengeService.complete(enrollmentChallenge!, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { [weak self] success, error in
             if success {
+                
+                //write "existingUserWithSecret" to Userdefaults
+                UserDefaults.standard.set(OnboardingFlowType.mfaOnly.rawValue, forKey: OnboardingManager.userdefaultsFlowTypeKey)
+                
+                //UI can proceed to next screen
                 self?.biometricAccessSuccessClosure?()
+                
             } else {
                 self?.biometricAccessFailureClosure?(error)
             }
@@ -86,7 +92,13 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
                 ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrollment.url ?? "") { [weak self] type, object, error in
                     ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: true, withPIN: self?.pinToString(pinArray: self?.secondEnteredPin ?? []) ?? "") { [weak self] success, error in
                         if success {
+                            
+                            //write "existingUserWithSecret" to Userdefaults
+                            UserDefaults.standard.set(OnboardingFlowType.existingUserWithSecret.rawValue, forKey: OnboardingManager.userdefaultsFlowTypeKey)
+                            
+                            //UI can proceed to next screen
                             self?.biometricAccessSuccessClosure?()
+                            
                         } else {
                             self?.biometricAccessFailureClosure?(error)
                         }

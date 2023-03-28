@@ -1,6 +1,6 @@
 import UIKit
 import TinyConstraints
-import AppAuth
+import OpenAPIClient
 
 class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
     
@@ -79,7 +79,7 @@ class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
     
     @objc
     func signInTapped() {
-        //not implemented
+        AppAuthController.shared.authorize(viewController: self)
     }
 
 }
