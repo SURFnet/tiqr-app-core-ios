@@ -12,7 +12,7 @@ enum ScreenType: Int, CaseIterable {
     case enterInfoScreen
     case checkMailScreen
     case enterPhoneScreen
-    case pinChallengeScreen
+    case smsChallengeScreen
     case welcomeScreen
     case createPincodefirstEntryScreen
     case createPincodeSecondEntryScreen
@@ -60,8 +60,8 @@ enum ScreenType: Int, CaseIterable {
         case .biometricApprovalScreen:
             return .enterPhoneScreen
         case .enterPhoneScreen:
-            return .pinChallengeScreen
-        case .pinChallengeScreen:
+            return .smsChallengeScreen
+        case .smsChallengeScreen:
             return .firstTimeDialogScreen
         case .firstTimeDialogScreen:
             return .addInstitutionScreen
@@ -77,17 +77,17 @@ enum ScreenType: Int, CaseIterable {
         case .explanationScreen:
             return CreateEduIDExplanationViewController()
         case .enterInfoScreen:
-            return CreateEduIDEnterPersonalInfoViewController(viewModel: EnterPersonalInfoViewModel())
+            return CreateEduIDEnterPersonalInfoViewController(viewModel: CreateEduIDEnterPersonalInfoViewModel())
         case .checkMailScreen:
             return CheckEmailViewController()
         case .enterPhoneScreen:
-            return CreateEduIDEnterPhoneNumberViewController()
-        case .pinChallengeScreen:
-            return CreateEduIDEnterPinViewController(viewModel: PinViewModel(), isSecure: false)
+            return CreateEduIDEnterPhoneNumberViewController(viewModel: CreateEduIDEnterPhoneNumberViewModel())
+        case .smsChallengeScreen:
+            return CreateEduIDEnterSMSViewController(viewModel: PinViewModel(), isSecure: false)
         case .welcomeScreen:
             return CreateEduIDWelcomeViewController()
         case .addInstitutionScreen:
-            return CreateEduIDAddInstitutionViewController()
+            return CreateEduIDAddInstitutionViewController(viewModel: PersonalInfoViewModel())
         case .homeScreen:
             return HomeViewController()
         case .scanScreen:
@@ -95,7 +95,7 @@ enum ScreenType: Int, CaseIterable {
         case .personalInfoLandingScreen:
             return PersonalInfoViewController(viewModel: PersonalInfoViewModel())
         case .firstTimeDialogScreen:
-            return CreateEduIDFirstTimeDialogViewController()
+            return CreateEduIDFirstTimeDialogViewController(viewModel: CreateEduIDFirstTimeDialogViewViewModel())
         case .securityLandingScreen:
             return SecurityLandingViewController()
         case .createPincodefirstEntryScreen:

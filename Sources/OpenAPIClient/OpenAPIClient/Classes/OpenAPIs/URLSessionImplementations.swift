@@ -94,6 +94,7 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
 
         headers.forEach { key, value in
             originalRequest.setValue(value, forHTTPHeaderField: key)
+            originalRequest.setValue("Bearer " + AppAuthController.shared.accessToken, forHTTPHeaderField: "Authorization")
         }
 
         buildHeaders().forEach { key, value in

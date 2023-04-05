@@ -1,5 +1,6 @@
 import UIKit
 import TinyConstraints
+import OpenAPIClient
 
 class CreateEduIDCreatedViewController: CreateEduIDBaseViewController {
 
@@ -9,6 +10,13 @@ class CreateEduIDCreatedViewController: CreateEduIDBaseViewController {
         
         screenType = .eduIDCreatedScreen
         setupUI()
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
     }
     
     //MARK: - setup ui
@@ -52,7 +60,13 @@ To safely use this app, we need you to set a pincode and provide a phonenumber i
         continueButton.width(to: stack, offset: -24)
         
         // actions
-        continueButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
+        continueButton.addTarget(self, action: #selector(authorize), for: .touchUpInside)
+    }
+    
+    @objc
+    func authorize() {
+        AppAuthController.shared.authorize(viewController: self)
+        showNextScreen()
     }
 
 }

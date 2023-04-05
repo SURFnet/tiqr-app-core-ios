@@ -3,6 +3,8 @@ import TiqrCoreObjC
 
 final class CreateEduIDCoordinator: CoordinatorType {
     
+    public static var userdefaultsOnboardingTypeKey = "userdefaultsOnboardingTypeKey"
+    
     weak var viewControllerToPresentOn: UIViewController?
     
     weak var navigationController: UINavigationController!
@@ -16,6 +18,13 @@ final class CreateEduIDCoordinator: CoordinatorType {
     //MARK: - init
     required init(viewControllerToPresentOn: UIViewController?) {
         self.viewControllerToPresentOn = viewControllerToPresentOn
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(startExistingUserWithoutSecretFlow), name: .firstTimeAuthorizationComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(startExistingUserWithSecretFlow), name: .firstTimeAuthorizationCompleteWithSecretPresent, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - start
@@ -32,7 +41,19 @@ final class CreateEduIDCoordinator: CoordinatorType {
         self.navigationController = navigationController
         
         // the next line is responsible for presenting the onboarding and is sometimes commented out for development purposes
-//        viewControllerToPresentOn?.present(self.navigationController, animated: false)
+        viewControllerToPresentOn?.present(self.navigationController, animated: false)
+    }
+    
+    @objc
+    func startExistingUserWithoutSecretFlow() {
+        currentScreenType = .eduIDCreatedScreen
+        createEduIDViewControllerShowNextScreen(viewController: UIViewController())
+    }
+    
+    @objc
+    func startExistingUserWithSecretFlow() {
+        currentScreenType = .smsChallengeScreen
+        createEduIDViewControllerShowNextScreen(viewController: UIViewController())
     }
 }
 
@@ -65,11 +86,27 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
     func createEduIDViewControllerShowNextScreen(viewController: UIViewController) {
         if currentScreenType == .addInstitutionScreen {
             delegate?.createEduIDCoordinatorDismissOnBoarding(coordinator: self)
+            
+            // - write onboarding flow state to user defaults
+            UserDefaults.standard.set(OnboardingFlowType.onboard.rawValue, forKey: OnboardingManager.userdefaultsFlowTypeKey)
             return
         }
         
+        // - this is the end of the onboarding in case the user has scannes the enrollment qr from the web
+        if let onboardingTypeString = UserDefaults.standard.value(forKey: OnboardingManager.userdefaultsFlowTypeKey) as? String, OnboardingFlowType(rawValue: onboardingTypeString) == .mfaOnly {
+            if currentScreenType == .biometricApprovalScreen {
+                
+                // - signal the coordinator to end the create flow
+                delegate?.createEduIDCoordinatorDismissOnBoarding(coordinator: self)
+                
+                // - write onboarding flow state to user defaults
+                UserDefaults.standard.set(OnboardingFlowType.onboard.rawValue, forKey: OnboardingManager.userdefaultsFlowTypeKey)
+                
+                return
+            }
+        }
+        
         guard let nextViewController = currentScreenType.nextCreateEduIDScreen().viewController() else { return }
-        // TODO: add sensible comment
         (nextViewController as? CreateEduIDBaseViewController)?.delegate = self
         (nextViewController as? CreateEduIDEnterPersonalInfoViewController)?.delegate = self
         navigationController.pushViewController(nextViewController, animated: true)

@@ -11,6 +11,22 @@ class CreateEduIDEnterPhoneNumberViewController: CreateEduIDBaseViewController, 
     // - verify button
     let verifyButton = EduIDButton(type: .primary, buttonTitle: "Verify this phone number")
     
+    private var viewModel: CreateEduIDEnterPhoneNumberViewModel
+    
+    //MARK: - init
+    init(viewModel: CreateEduIDEnterPhoneNumberViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        
+        viewModel.phoneNumberReceivedClosure = { [weak self] result in
+            self?.showNextScreen2()
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,4 +125,11 @@ We will text you a code to verify your number.
         _ = validatedPhoneTextField.resignFirstResponder()
     }
     
+    override func showNextScreen() {
+        viewModel.sendPhoneNumber(number: validatedPhoneTextField.textField.text ?? "")
+    }
+    
+    func showNextScreen2() {
+        (delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: self)
+    }
 }

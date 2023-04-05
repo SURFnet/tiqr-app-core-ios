@@ -25,9 +25,12 @@ class ActionableControlWithBodyAndTitle: UIControl {
         attributedTitle != nil ? height(105) : height(70)
         
         // - the title label
+        let titleParent = UIView()
         let titleLabel = UILabel()
         titleLabel.height(35)
         titleLabel.attributedText = attributedTitle
+        titleParent.addSubview(titleLabel)
+        titleLabel.edges(to: titleParent)
         
         // - the control view
         view.height(70)
@@ -58,13 +61,13 @@ class ActionableControlWithBodyAndTitle: UIControl {
         bodyStack.edges(to: view, insets: TinyEdgeInsets(top: 6, left: 18, bottom: 6, right: 18))
         
         // - super stack
-        let stack = UIStackView(arrangedSubviews: [titleLabel, view])
+        let stack = UIStackView(arrangedSubviews: [titleParent, view])
         stack.isUserInteractionEnabled = false
         stack.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.isHidden = attributedTitle == nil
+        titleParent.isHidden = attributedTitle == nil
         stack.axis = .vertical
         stack.spacing = 0
-        stack.distribution = .equalSpacing
+        stack.distribution = .fill
         addSubview(stack)
         stack.edges(to: self)
     }

@@ -1,7 +1,7 @@
 import UIKit
 import OpenAPIClient
 
-class PersonalInfoViewModel: NSObject {
+class ActivityViewModel: NSObject {
     
     var userResponse: UserResponse?
     
@@ -12,7 +12,9 @@ class PersonalInfoViewModel: NSObject {
     
     override init() {
         super.init()
-        
+    }
+    
+    func loadData() {
         Task{
             await getData()
         }
@@ -60,11 +62,4 @@ class PersonalInfoViewModel: NSObject {
             }
         }
     }
-}
-
-struct PersonalInfoDataCallbackModel {
-    var userResponse: UserResponse
-    var name: String
-    var nameProvidedBy: String
-    var isNameProvidedByInstitution: Bool
 }

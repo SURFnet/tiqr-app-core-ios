@@ -14,7 +14,7 @@ public final class EduIDExpansion: NSObject {
         return mainCoordinator.homeNavigationController
     }
     
-    public func run() {
+    public func run(option: OnboardingFlowType) {
         mainCoordinator.start()
     }
 }

@@ -5,7 +5,7 @@ class InstitutionView: UIView {
     
     var action: () -> Void
 
-    init(title: String, firstText: String, secondText: String, action: @escaping () -> Void ) {
+    init(title: String, firstText: String, secondText: String, isValidated: Bool, action: @escaping () -> Void ) {
         self.action = action
         super.init(frame: .zero)
         
@@ -25,7 +25,13 @@ class InstitutionView: UIView {
         let stack = UIStackView(arrangedSubviews: [titleLabel, control])
         stack.axis = .vertical
         stack.spacing = 12
-        addSubview(stack)
+        
+        let shieldImage = UIImageView(image: .shield)
+        shieldImage.size(CGSize(width: 36, height: 36))
+        let parentStack = UIStackView(arrangedSubviews: [stack, shieldImage])
+        shieldImage.isHidden = !isValidated
+        
+        addSubview(parentStack)
         stack.edges(to: self)
         
         control.width(to: self)

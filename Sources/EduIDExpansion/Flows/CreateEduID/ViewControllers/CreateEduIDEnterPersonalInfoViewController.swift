@@ -3,9 +3,11 @@ import TinyConstraints
 
 class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewController {
     
+    static var emailKeyUserDefaults = "emailKeyUserDefaults"
+    
     weak var delegate: CreateEduIDViewControllerDelegate?
     
-    private var viewModel: EnterPersonalInfoViewModel
+    private var viewModel: CreateEduIDEnterPersonalInfoViewModel
     private let inset: CGFloat = 24
     
     static let lastNameFieldTag = 3
@@ -13,13 +15,23 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
     static let emailFieldTag = 1
    
     var requestButton: EduIDButton!
+    let theSwitch = UISwitch()
+    
+    var firstNameField: TextFieldViewWithValidationAndTitle!
+    var lastNameField: TextFieldViewWithValidationAndTitle!
     let emailField = TextFieldViewWithValidationAndTitle(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
+    
+    var textFieldsAreValid: Bool = false {
+        didSet {
+            requestButton.isEnabled = textFieldsAreValid && theSwitch.isOn
+        }
+    }
     
     // - spacing
     let spacingView = UIView()
     
     //MARK: - init
-    init(viewModel: EnterPersonalInfoViewModel) {
+    init(viewModel: CreateEduIDEnterPersonalInfoViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
@@ -38,12 +50,24 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         }
         
         viewModel.setRequestButtonEnabled = { [weak self] isEnabled in
-            self?.requestButton.isEnabled = isEnabled
+            self?.textFieldsAreValid = isEnabled
         }
         
         viewModel.textFieldBecameFirstResponderClosure = { [weak self] tag in
             guard Date().timeIntervalSince(loadedTime) > 1 else { return }
             self?.scrollViewToTextField(index: tag)
+        }
+        
+        viewModel.createEduIDErrorClosure = { [weak self] error in
+            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
+                alert.dismiss(animated: true)
+            })
+            self?.present(alert, animated: true)
+        }
+        
+        viewModel.createEduIDSuccessClosure = { [weak self] in
+            self?.showNextScreen()
         }
     }
     
@@ -96,12 +120,12 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         emailField.delegate = viewModel
         
         // - firstname
-        let firstNameField = TextFieldViewWithValidationAndTitle(title: "First name", placeholder: "e.g. Tim", keyboardType: .default)
+        firstNameField = TextFieldViewWithValidationAndTitle(title: "First name", placeholder: "e.g. Tim", keyboardType: .default)
         firstNameField.tag = CreateEduIDEnterPersonalInfoViewController.firstNameFieldTag
         firstNameField.delegate = viewModel
         
         // - lastName
-        let lastNameField = TextFieldViewWithValidationAndTitle(title: "Last name", placeholder: "e.g. Berners-Lee", keyboardType: .default)
+        lastNameField = TextFieldViewWithValidationAndTitle(title: "Last name", placeholder: "e.g. Berners-Lee", keyboardType: .default)
         lastNameField.tag = CreateEduIDEnterPersonalInfoViewController.lastNameFieldTag
         lastNameField.delegate = viewModel
         
@@ -111,8 +135,8 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         termsHstack.axis = .horizontal
         termsHstack.height(36)
         
-        let theSwitch = UISwitch()
         theSwitch.onTintColor = .primaryColor
+        theSwitch.addTarget(self, action: #selector(switchToggled), for: .valueChanged)
         
         let termsLabel = UILabel()
         termsLabel.font = .sourceSansProRegular(size: 12)
@@ -125,7 +149,7 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         
         // - requestButton
         requestButton.isEnabled = false
-        requestButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
+        requestButton.addTarget(self, action: #selector(createEduIDAction), for: .touchUpInside)
         
         // - create the stackview
         stack = AnimatedVStackView(arrangedSubviews: [posterLabel, emailField, firstNameField, lastNameField, termsHstack, spacingView, requestButton])
@@ -152,14 +176,24 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         
         stack.hideAndTriggerAll(onlyThese: [1, 2, 3, 4, 6])
     }
+    
+    //MARK: - actions
+    @objc
+    func switchToggled() {
+        requestButton.isEnabled = theSwitch.isOn && textFieldsAreValid
+    }
 
     @objc
-    func showNextScreen() {
-        delegate?.createEduIDViewControllerShowNextScreen(viewController: self)
-//        viewModel.apiCallToCreateEduID()
+    func createEduIDAction() {
+        UserDefaults.standard.set(emailField.textField.text, forKey: CreateEduIDEnterPersonalInfoViewController.emailKeyUserDefaults)
+        viewModel.createEduID(familiyName: lastNameField.textField.text ?? "", givenName: firstNameField.textField.text ?? "", email: emailField.textField.text ?? "")
     }
     
     override func goBack() {
         delegate?.goBack(viewController: self)
+    }
+    
+    func showNextScreen() {
+        delegate?.createEduIDViewControllerShowNextScreen(viewController: self)
     }
 }

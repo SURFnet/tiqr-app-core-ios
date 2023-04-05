@@ -1,5 +1,6 @@
 import UIKit
 import TinyConstraints
+import OpenAPIClient
 
 class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
     
@@ -20,7 +21,6 @@ class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen))
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
     }
     
     //MARK: - setupUI
@@ -79,7 +79,7 @@ class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
     
     @objc
     func signInTapped() {
-        //not implemented
+        AppAuthController.shared.authorize(viewController: self)
     }
 
 }

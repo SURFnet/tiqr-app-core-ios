@@ -1,9 +1,7 @@
 import UIKit
 import OpenAPIClient
 
-class EnterPersonalInfoViewModel: NSObject {
-    
-    
+class CreateEduIDEnterPersonalInfoViewModel: NSObject {
     
     //- closures that interact with the view controller
     var setRequestButtonEnabled: ((Bool) -> Void)?
@@ -26,13 +24,28 @@ class EnterPersonalInfoViewModel: NSObject {
         }
     }
     
-    func apiCallToCreateEduID() {
-        
+    var createEduIDErrorClosure: ((Error) -> Void)?
+    var createEduIDSuccessClosure: (() -> Void)?
+    
+    override init() {
+        super.init()
+    }
+    
+    @MainActor
+    func createEduID(familiyName: String, givenName: String, email: String) {
+        Task {
+            do {
+                try await UserControllerAPI.createEduIDAccount(createAccount: CreateAccount(email: email, givenName: givenName, familyName: familiyName, relyingPartClientId: AppAuthController.clientID))
+                createEduIDSuccessClosure?()
+            } catch {
+                createEduIDErrorClosure?(error)
+            }
+        }
     }
 }
 
 //MARK: - textfield delegate
-extension EnterPersonalInfoViewModel: ValidatedTextFieldDelegate {
+extension CreateEduIDEnterPersonalInfoViewModel: ValidatedTextFieldDelegate {
     
     func updateValidation(with value: String, isValid: Bool, from tag: Int) {
         if let index = textFieldModels.firstIndex(where: { $0.tag == tag }) {
