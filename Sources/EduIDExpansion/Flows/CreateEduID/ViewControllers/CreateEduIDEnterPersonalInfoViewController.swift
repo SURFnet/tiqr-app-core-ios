@@ -181,6 +181,7 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
     @objc
     func switchToggled() {
         requestButton.isEnabled = theSwitch.isOn && textFieldsAreValid
+        self.view.endEditing(true)
     }
 
     @objc
