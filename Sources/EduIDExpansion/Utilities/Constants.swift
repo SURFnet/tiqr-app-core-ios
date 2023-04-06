@@ -11,9 +11,9 @@ enum Constants {
     
     enum RegEx {
         static let emailRegex = #"^(?=.{6,})[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"#
-        static let nameRegex = #"^[a-zA-Z' ]+$"#
+        static let nameRegex = #"^[a-zA-Z]+(?:-[a-zA-Z]+)*$"#
         static let passwordRegex = #"(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}"#
-        static let phoneRegex = #"^(?=[+0])[+\d\s]*(?:\d\s*){10,}$"#
+        static let phoneRegex = #"^(?=[+0\d])(?:\+?\d{1,2}\s?)?\(?(?:\d{3}[\s-]?\d{3}[\s-]?\d{4}|\d{10})\)?$"#
     }
     
     enum InvalidInput {
