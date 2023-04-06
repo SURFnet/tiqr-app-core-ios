@@ -92,7 +92,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
     
     //MARK: - textfield validation
     func validateText(with validationType: TextFieldValidationType, and stringValue: String) {
-        let textFieldIsValid = textField.isValid(with: validationType, with: stringValue)
+        let textFieldIsValid = textField.isValid(with: validationType, with: validationType == .phone ? stringValue.replacingOccurrences(of: " ", with: "") : stringValue)
         validLabel.alpha = textFieldIsValid ? .zero : 1
         delegate?.updateValidation(with:"", isValid: textFieldIsValid, from: tag)
     }
