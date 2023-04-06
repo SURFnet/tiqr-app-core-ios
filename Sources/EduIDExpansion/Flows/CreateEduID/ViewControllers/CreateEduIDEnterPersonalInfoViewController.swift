@@ -19,7 +19,7 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
     
     var firstNameField: TextFieldViewWithValidationAndTitle!
     var lastNameField: TextFieldViewWithValidationAndTitle!
-    let emailField = TextFieldViewWithValidationAndTitle(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", keyboardType: .emailAddress)
+    let emailField = TextFieldViewWithValidationAndTitle(title: "Your email address", placeholder: "e.g. timbernerslee@gmail.com", field: .email, keyboardType: .emailAddress)
     
     var textFieldsAreValid: Bool = false {
         didSet {
@@ -120,12 +120,12 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         emailField.delegate = viewModel
         
         // - firstname
-        firstNameField = TextFieldViewWithValidationAndTitle(title: "First name", placeholder: "e.g. Tim", keyboardType: .default)
+        firstNameField = TextFieldViewWithValidationAndTitle(title: "First name", placeholder: "e.g. Tim", field: .name, keyboardType: .default)
         firstNameField.tag = CreateEduIDEnterPersonalInfoViewController.firstNameFieldTag
         firstNameField.delegate = viewModel
         
         // - lastName
-        lastNameField = TextFieldViewWithValidationAndTitle(title: "Last name", placeholder: "e.g. Berners-Lee", keyboardType: .default)
+        lastNameField = TextFieldViewWithValidationAndTitle(title: "Last name", placeholder: "e.g. Berners-Lee", field: .name, keyboardType: .default)
         lastNameField.tag = CreateEduIDEnterPersonalInfoViewController.lastNameFieldTag
         lastNameField.delegate = viewModel
         
