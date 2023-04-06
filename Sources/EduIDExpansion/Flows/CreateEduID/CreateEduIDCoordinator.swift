@@ -106,10 +106,13 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
             }
         }
         
-        guard let nextViewController = currentScreenType.nextCreateEduIDScreen().viewController() else { return }
+        guard let navController = navigationController, let nextViewController = currentScreenType.nextCreateEduIDScreen().viewController() else {
+            return
+            
+        }
         (nextViewController as? CreateEduIDBaseViewController)?.delegate = self
         (nextViewController as? CreateEduIDEnterPersonalInfoViewController)?.delegate = self
-        navigationController.pushViewController(nextViewController, animated: true)
+        navController.pushViewController(nextViewController, animated: true)
         currentScreenType = currentScreenType.nextCreateEduIDScreen()
     }
     
