@@ -80,7 +80,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
         validLabel.font = .sourceSansProSemiBold(size: 12)
         validLabel.height(12)
         validLabel.textColor = .red
-        validLabel.text = "The input doesn't follow regex"
+        validLabel.text = provideCorrectError(for: validationType)
         validLabel.alpha = 0
         validLabel.clipsToBounds = false
         addArrangedSubview(validLabel)
@@ -91,7 +91,6 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
     }
     
     //MARK: - textfield validation
-    
     func validateText(with validationType: TextFieldValidationType, and stringValue: String) {
         let textFieldIsValid = textField.isValid(with: validationType, with: stringValue)
         validLabel.alpha = textFieldIsValid ? .zero : 1
@@ -102,6 +101,15 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         extraBorderView.layer.borderColor = UIColor.textfieldFocusColor.cgColor
         delegate?.didBecomeFirstResponder(tag: tag)
+    }
+    
+    private func provideCorrectError(for validationType: TextFieldValidationType) -> String {
+        switch validationType {
+        case .email: return Constants.InvalidInput.email
+        case .name: return Constants.InvalidInput.name
+        case .password: return Constants.InvalidInput.password
+        case .phone: return Constants.InvalidInput.phone
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {

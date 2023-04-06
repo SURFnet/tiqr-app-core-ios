@@ -16,4 +16,12 @@ enum Constants {
         static let phoneRegex = #"^(?=[+0])[+\d\s]*(?:\d\s*){10,}$"#
     }
     
+    enum InvalidInput {
+        static let revise = ". Please revise your input"
+        static let email = "Invalid email format\(revise)"
+        static let name = "Invalid name format\(revise)"
+        static let password = "A password must be 8 characters, contain an uppercase letter, and a special character."
+        static let phone = "Invalid phone format\(revise)"
+    }
+    
 }
