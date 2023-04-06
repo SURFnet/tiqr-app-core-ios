@@ -13,7 +13,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
     var cancellables = Set<AnyCancellable>()
 
     //MARK: - init
-    init(regex: String? = nil, title: String, placeholder: String, keyboardType: UIKeyboardType, isPassword: Bool = false) {
+    init(title: String, placeholder: String, with validationType: TextFieldValidationType, keyboardType: UIKeyboardType, isPassword: Bool = false) {
         super.init(frame: .zero)
         
         extraBorderView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
@@ -39,7 +39,6 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
         textField.autocorrectionType = .no
         textField.enablesReturnKeyAutomatically = true
         textField.returnKeyType = .continue
-        
         textField.isSecureTextEntry = isPassword
         
         let textFieldPublisher = NotificationCenter.default
@@ -52,7 +51,8 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
             .receive(on: RunLoop.main)
             .debounce(for: 1, scheduler: RunLoop.main)
             .sink(receiveValue: { [weak self] value in
-                self?.validateText()
+                guard let self else { return }
+                self.validateText(with: validationType, and: self.textField.text ?? "")
             })
             .store(in: &cancellables)
 
@@ -82,6 +82,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
         validLabel.textColor = .red
         validLabel.text = "The input doesn't follow regex"
         validLabel.alpha = 0
+        validLabel.clipsToBounds = false
         addArrangedSubview(validLabel)
     }
     
@@ -90,14 +91,11 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
     }
     
     //MARK: - textfield validation
-    func validateText() {
-        if textField.text?.count ?? 0 < 3 || textField.text?.count ?? 0 > 20 {
-            validLabel.alpha = 1
-            delegate?.updateValidation(with: textField.text ?? "", isValid: false, from: tag)
-        } else {
-            validLabel.alpha = 0
-            delegate?.updateValidation(with: textField.text ?? "", isValid: true, from: tag)
-        }
+    
+    func validateText(with validationType: TextFieldValidationType, and stringValue: String) {
+        let textFieldIsValid = textField.isValid(with: validationType, with: stringValue)
+        validLabel.alpha = textFieldIsValid ? .zero : 1
+        delegate?.updateValidation(with:"", isValid: textFieldIsValid, from: tag)
     }
     
     //MARK: - texfield delegate methods
