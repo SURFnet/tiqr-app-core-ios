@@ -13,7 +13,7 @@ class TextFieldViewWithValidationAndTitle: UIStackView, UITextFieldDelegate {
     var cancellables = Set<AnyCancellable>()
 
     //MARK: - init
-    init(title: String, placeholder: String, with validationType: TextFieldValidationType, keyboardType: UIKeyboardType, isPassword: Bool = false) {
+    init(title: String, placeholder: String, field validationType: TextFieldValidationType, keyboardType: UIKeyboardType, isPassword: Bool = false) {
         super.init(frame: .zero)
         
         extraBorderView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))

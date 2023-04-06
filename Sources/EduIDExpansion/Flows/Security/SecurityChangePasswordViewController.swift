@@ -76,7 +76,7 @@ class SecurityChangePasswordViewController: ScrollingTextFieldsViewController {
         posterLabel.edges(to: posterParent)
         
         // - old password textfield
-        let oldPasswordTextField = TextFieldViewWithValidationAndTitle(title: "Your old password", placeholder: "********", with: .password, keyboardType: .default, isPassword: true)
+        let oldPasswordTextField = TextFieldViewWithValidationAndTitle(title: "Your old password", placeholder: "********", field: .password, keyboardType: .default, isPassword: true)
         oldPasswordTextField.delegate = viewModel
         oldPasswordTextField.tag = 1
         
@@ -91,12 +91,12 @@ Make sure your new password is at least 15 characters OR at least 8 characters i
         textLabel.edges(to: textParent)
         
         // - new password field
-        let newPasswordField = TextFieldViewWithValidationAndTitle(title: "Your new password", placeholder: "********", with: .password, keyboardType: .default, isPassword: true)
+        let newPasswordField = TextFieldViewWithValidationAndTitle(title: "Your new password", placeholder: "********", field: .password, keyboardType: .default, isPassword: true)
         newPasswordField.delegate = viewModel
         newPasswordField.tag = 3
          
         // - repeat password
-        let repeatPasswordField = TextFieldViewWithValidationAndTitle(title: "Repeat new password", placeholder: "********", with: .password, keyboardType: .default, isPassword: true)
+        let repeatPasswordField = TextFieldViewWithValidationAndTitle(title: "Repeat new password", placeholder: "********", field: .password, keyboardType: .default, isPassword: true)
         repeatPasswordField.delegate = viewModel
         repeatPasswordField.tag = 4
         
