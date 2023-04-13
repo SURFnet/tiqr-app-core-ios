@@ -7,8 +7,6 @@ final class CreateEduIDCoordinator: CoordinatorType {
     
     weak var viewControllerToPresentOn: UIViewController?
     
-    private let defaults = UserDefaults.standard
-    
     weak var navigationController: UINavigationController!
     weak var delegate: CreateEduIDCoordinatorDelegate?
     
@@ -32,14 +30,11 @@ final class CreateEduIDCoordinator: CoordinatorType {
     func start() {
         
         let landingScreen = CreateEduIDLandingPageViewController()
-        landingScreen.screenType = .landingScreen
         landingScreen.delegate = self
-        
         let navigationController = UINavigationController(rootViewController: landingScreen)
         navigationController.isModalInPresentation = true
         navigationController.modalPresentationStyle = .fullScreen
         self.navigationController = navigationController
-        
         // the next line is responsible for presenting the onboarding and is sometimes commented out for development purposes
         viewControllerToPresentOn?.present(self.navigationController, animated: false)
     }
@@ -86,6 +81,9 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
     func createEduIDViewControllerShowNextScreen(viewController: UIViewController) {
         if currentScreenType == .addInstitutionScreen {
             delegate?.createEduIDCoordinatorDismissOnBoarding(coordinator: self)
+            
+            // - write onboarding flow state to user defaults
+            UserDefaults.standard.set(OnboardingFlowType.onboard.rawValue, forKey: OnboardingManager.userdefaultsFlowTypeKey)
             return
         }
         
@@ -95,6 +93,10 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
                 
                 // - signal the coordinator to end the create flow
                 delegate?.createEduIDCoordinatorDismissOnBoarding(coordinator: self)
+                
+                // - write onboarding flow state to user defaults
+                UserDefaults.standard.set(OnboardingFlowType.onboard.rawValue, forKey: OnboardingManager.userdefaultsFlowTypeKey)
+                
                 return
             }
         }
