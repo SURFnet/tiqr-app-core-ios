@@ -40,10 +40,10 @@ class PinViewModel: NSObject {
 //MARK: - pin textfield delegate
 extension PinViewModel: PinTextFieldDelegate {
 
-    func didEnterPinNumber(tag: Int, value: Character) {
+    func didEnterPinNumber(range: Int, tag: Int, value: Character) {
         pinValue[tag] = value
         pinIsEnteredOnTextFieldIndex[tag] = true
-        guard tag != 5 else {
+        guard tag != range else {
             resignKeyboardFocus?()
             return }
             

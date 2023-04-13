@@ -4,14 +4,16 @@ import TinyConstraints
 class PinTextFieldView: UIView, UITextFieldDelegate {
     
     weak var delegate: PinTextFieldDelegate?
+    var screenType: ScreenType
     
     // - Create the textfield
     let textfield = UITextField()
 
     //MARK: - initialize
-    init(isSecure: Bool) {
-        super.init(frame: .zero)
+    init(isSecure: Bool, screenType: ScreenType) {
+        self.screenType = screenType
         
+        super.init(frame: .zero)
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
         
         layer.cornerRadius = 5
@@ -64,7 +66,7 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         textField.text = string
-        delegate?.didEnterPinNumber(tag: tag, value: string.first ?? "0")
+        delegate?.didEnterPinNumber(range: screenType == .pincodeScreen ? 3 : 5, tag: tag, value: string.first ?? "0")
         return true
     }
     
@@ -91,5 +93,5 @@ class PinTextFieldView: UIView, UITextFieldDelegate {
 }
 
 protocol PinTextFieldDelegate: AnyObject {
-    func didEnterPinNumber(tag: Int, value: Character)
+    func didEnterPinNumber(range: Int, tag: Int, value: Character)
 }

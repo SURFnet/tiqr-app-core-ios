@@ -8,6 +8,7 @@ class CreatePincodeFirstEntryViewController: PincodeBaseViewController {
     init(viewModel: CreatePincodeAndBiometricAccessViewModel) {
         self.createPincodeViewModel = viewModel
         super.init(viewModel: PinViewModel(), isSecure: true)
+        screenType = .pincodeScreen
     }
     
     required init?(coder: NSCoder) {
