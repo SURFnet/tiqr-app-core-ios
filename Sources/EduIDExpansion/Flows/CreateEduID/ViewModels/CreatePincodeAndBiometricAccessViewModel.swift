@@ -23,13 +23,13 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     var showPromptUseBiometricAccessClosure: (() -> Void)?
     var biometricAccessSuccessClosure: (() -> Void)?
     var biometricAccessFailureClosure: ((Error) -> Void)?
-    
+
     private let biometricService = BiometricService()
     
     var viewController: BiometricAccessApprovalViewController?
     
     private let defaults = UserDefaults.standard
-   
+    
     //MARK: - init
     init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil) {
         self.enrollmentChallenge = enrollmentChallenge
@@ -70,50 +70,47 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     }
     
     func handleUseBiometricAccess() {
-        guard enrollmentChallenge != nil else {
-            fatalError("you can't setup biometrec access without an enrollment challenge")
-            return
-        }
-        
-        ServiceContainer.sharedInstance().challengeService.complete(enrollmentChallenge!, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { [weak self] success, error in
-            if success {
-                
-                //write "existingUserWithSecret" to Userdefaults
-                UserDefaults.standard.set(OnboardingFlowType.mfaOnly.rawValue, forKey: OnboardingManager.userdefaultsFlowTypeKey)
-                
-                //UI can proceed to next screen
-                self?.biometricAccessSuccessClosure?()
-                
-            } else {
-                self?.biometricAccessFailureClosure?(error)
-            }
-        }
+//        guard enrollmentChallenge != nil else {
+//            fatalError("you can't setup biometrec access without an enrollment challenge")
+//            return
+//        }
+//
+//        ServiceContainer.sharedInstance().challengeService.complete(enrollmentChallenge!, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { [weak self] success, error in
+//            if success {
+//
+//                //write "existingUserWithSecret" to Userdefaults
+//
+//                //UI can proceed to next screen
+//                self?.biometricAccessSuccessClosure?()
+//
+//            } else {
+//                self?.biometricAccessFailureClosure?(error)
+//            }
+//        }
     }
     
     @MainActor
     func requestTiqrEnroll() {
-        Task {
-            do{
-                let enrollment = try await TiqrControllerAPI.startEnrollment()
-                ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrollment.url ?? "") { [weak self] type, object, error in
-                    ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: true, withPIN: self?.pinToString(pinArray: self?.secondEnteredPin ?? []) ?? "") { [weak self] success, error in
-                        if success {
-                            
-                            //write "existingUserWithSecret" to Userdefaults
-                            UserDefaults.standard.set(OnboardingFlowType.existingUserWithSecret.rawValue, forKey: OnboardingManager.userdefaultsFlowTypeKey)
-                            
-                            //UI can proceed to next screen
-                            self?.biometricAccessSuccessClosure?()
-                            
-                        } else {
-                            self?.biometricAccessFailureClosure?(error)
-                        }
-                    }
-                }
-            } catch let error as NSError {
-                print("Request Failed Error: \(error)")
-            }
-        }
+//        Task {
+//            do{
+//                let enrollment = try await TiqrControllerAPI.startEnrollment()
+//                ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrollment.url ?? "") { [weak self] type, object, error in
+//                    ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: true, withPIN: self?.pinToString(pinArray: self?.secondEnteredPin ?? []) ?? "") { [weak self] success, error in
+//                        if success {
+//
+//                            //write "existingUserWithSecret" to Userdefaults
+//                            //UI can proceed to next screen
+//                            self?.biometricAccessSuccessClosure?()
+//
+//                        } else {
+//                            self?.biometricAccessFailureClosure?(error)
+//                        }
+//                    }
+//                }
+//            } catch let error as NSError {
+//                print("Request Failed Error: \(error)")
+//            }
+//        }
     }
 }
 
@@ -123,13 +120,11 @@ extension CreatePincodeAndBiometricAccessViewModel {
         guard let viewController = self.viewController else { return }
         biometricService.useOnDeviceBiometricFeature { [weak self] success, error in
             guard let self else { return }
-            guard error == nil else {
-                self.handleBiometric(error)
-                return
-            }
             if success {
                 self.defaults.setValue(true, forKey: Constants.BiometricDefaults.key)
                 (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
+            } else {
+                self.handleBiometric(error)
             }
         }
     }
@@ -138,9 +133,7 @@ extension CreatePincodeAndBiometricAccessViewModel {
         guard let err = error else { return }
         switch err.code {
         case .userCancel, .biometryNotAvailable:
-            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
-            }
+            self.promptSkipBiometricAccess()
         default:
             break
         }
@@ -149,22 +142,18 @@ extension CreatePincodeAndBiometricAccessViewModel {
     //MARK: - actions
     @objc func promptSkipBiometricAccess() {
         guard let viewController = self.viewController else { return }
-        
-        DispatchQueue.main.async {
-            
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
             let alert = UIAlertController(title: Constants.AlertTiles.skipUsingBiometricsTitle, message: Constants.AlertMessages.skipUsingBiometricsMessage, preferredStyle: .alert)
-            
             alert.addAction(UIAlertAction(
                 title: Constants.ButtonTitles.proceed, style: .destructive) { [weak self] _ in
-                guard let self else { return }
-                self.defaults.setValue(false, forKey: Constants.BiometricDefaults.key)
-                (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
-            })
-            
+                    guard let self else { return }
+                    self.defaults.setValue(false, forKey: Constants.BiometricDefaults.key)
+                    (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
+                })
             alert.addAction(UIAlertAction(title: Constants.ButtonTitles.cancel, style: .cancel) { action in
                 alert.dismiss(animated: true)
             })
-            
             viewController.present(alert, animated: true)
         }
     }

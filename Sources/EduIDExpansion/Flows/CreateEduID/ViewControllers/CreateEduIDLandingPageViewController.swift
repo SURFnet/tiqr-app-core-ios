@@ -9,7 +9,6 @@ class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         screenType = .landingScreen
         setupUI()
     }
