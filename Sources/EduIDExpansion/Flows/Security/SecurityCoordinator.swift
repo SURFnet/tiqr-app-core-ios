@@ -18,7 +18,6 @@ class SecurityCoordinator: CoordinatorType, SecurityViewControllerDelegate {
         securityLandingViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: securityLandingViewController)
         self.navigationController = navigationController
-        navigationController.modalTransitionStyle = .flipHorizontal
         navigationController.isModalInPresentation = true
         
         viewControllerToPresentOn?.present(navigationController, animated: true)
