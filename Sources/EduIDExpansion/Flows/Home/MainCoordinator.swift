@@ -18,11 +18,22 @@ class MainCoordinator: CoordinatorType {
         homeViewController.delegate = self
     }
     
-    func start() {
-        let onboardingCoordinator = CreateEduIDCoordinator(viewControllerToPresentOn: homeNavigationController)
-        children.append(onboardingCoordinator)
-        onboardingCoordinator.delegate = self
-        onboardingCoordinator.start()
+    func start(option: OnboardingFlowType) {
+        if option == .newUser {
+            let onboardingCoordinator = CreateEduIDCoordinator(viewControllerToPresentOn: homeNavigationController)
+            children.append(onboardingCoordinator)
+            onboardingCoordinator.delegate = self
+            onboardingCoordinator.start()
+        }
+        createProtectionView()
+        homeNavigationController.setNavigationBarHidden(true, animated: false)
+        biometricService.useOnDeviceBiometricFeature { [weak self] success, _ in
+            guard let self else { return }
+            if success {
+                self.homeNavigationController.setNavigationBarHidden(false, animated: true)
+                self.removeProtectionView()
+            }
+        }
     }
     
     func showActivityScreen() {}
@@ -102,7 +113,6 @@ extension MainCoordinator: CreateEduIDCoordinatorDelegate {
 
 //MARK: - activity flow methods
 extension MainCoordinator: ActivityCoordinatorDelegate {
-    
     func activityCoordinatorDismissActivityFlow(coordinator: CoordinatorType) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 === coordinator }

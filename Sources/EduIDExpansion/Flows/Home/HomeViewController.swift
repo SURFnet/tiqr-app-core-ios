@@ -12,14 +12,12 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
         setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         buttonStack.animate()
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen))
     }
