@@ -46,7 +46,6 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
             redoCreatePincodeClosure?()
         }
     }
-    
     //MARK: - biometric access related methods
     
     func handleCreatePincodeSucces() {

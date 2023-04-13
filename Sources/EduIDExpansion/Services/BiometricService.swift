@@ -33,16 +33,4 @@ class BiometricService {
             completion(true, error as? LAError)
         }
     }
-    
-    func rePromptBiometryUsage(completion: @escaping((Bool) -> Void)) {
-//        DispatchQueue.main.async { [weak self] in
-//            guard let self else { return }
-            self.laContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Authenticate to access the app") { success, error in
-                print("THIS IS LACONTEXT \(self.laContext)")
-                if success {
-                    completion(true)
-                }
-//            }
-        }
-    }
 }
