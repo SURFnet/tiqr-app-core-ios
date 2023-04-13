@@ -18,7 +18,6 @@ final class ActivityCoordinator: CoordinatorType {
         activityViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: activityViewController)
         self.navigationController = navigationController
-        navigationController.modalTransitionStyle = .flipHorizontal
         navigationController.isModalInPresentation = true
         
         viewControllerToPresentOn?.present(navigationController, animated: true)

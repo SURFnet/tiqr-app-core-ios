@@ -18,7 +18,6 @@ final class CreateEduIDCoordinator: CoordinatorType {
     //MARK: - init
     required init(viewControllerToPresentOn: UIViewController?) {
         self.viewControllerToPresentOn = viewControllerToPresentOn
-        
         NotificationCenter.default.addObserver(self, selector: #selector(startExistingUserWithoutSecretFlow), name: .firstTimeAuthorizationComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(startExistingUserWithSecretFlow), name: .firstTimeAuthorizationCompleteWithSecretPresent, object: nil)
     }
@@ -36,8 +35,7 @@ final class CreateEduIDCoordinator: CoordinatorType {
         
         let navigationController = UINavigationController(rootViewController: landingScreen)
         navigationController.isModalInPresentation = true
-        navigationController.modalTransitionStyle = .flipHorizontal
-        
+        navigationController.modalPresentationStyle = .fullScreen
         self.navigationController = navigationController
         
         // the next line is responsible for presenting the onboarding and is sometimes commented out for development purposes

@@ -18,7 +18,6 @@ class PersonalInfoCoordinator: CoordinatorType, PersonalInfoViewControllerDelega
         let editPersonalInfoViewcontroller = PersonalInfoViewController(viewModel: PersonalInfoViewModel())
         editPersonalInfoViewcontroller.delegate = self
         
-        navigationController.modalTransitionStyle = .flipHorizontal
         navigationController.isModalInPresentation = true
         navigationController.pushViewController(editPersonalInfoViewcontroller, animated: false)
         
