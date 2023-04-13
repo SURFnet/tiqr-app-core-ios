@@ -24,14 +24,15 @@ class MainCoordinator: CoordinatorType {
             children.append(onboardingCoordinator)
             onboardingCoordinator.delegate = self
             onboardingCoordinator.start()
-        }
-        createProtectionView()
-        homeNavigationController.setNavigationBarHidden(true, animated: false)
-        biometricService.useOnDeviceBiometricFeature { [weak self] success, _ in
-            guard let self else { return }
-            if success {
-                self.homeNavigationController.setNavigationBarHidden(false, animated: true)
-                self.removeProtectionView()
+        } else {
+            createProtectionView()
+            homeNavigationController.setNavigationBarHidden(true, animated: false)
+            biometricService.useOnDeviceBiometricFeature { [weak self] success, _ in
+                guard let self else { return }
+                if success {
+                    self.homeNavigationController.setNavigationBarHidden(false, animated: true)
+                    self.removeProtectionView()
+                }
             }
         }
     }
