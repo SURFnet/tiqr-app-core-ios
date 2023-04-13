@@ -15,22 +15,18 @@ class BiometricService {
         var error: NSError?
         if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             laContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Authenticate to access the app") { success, error in
-                guard error == nil else {
-                    completion(false, error as? LAError)
-                    return
-                }
                 DispatchQueue.main.async {
                     if success {
                         completion(true, nil)
                     } else {
                         if let err = error as? LAError {
-                            completion(true, err)
+                            completion(false, err)
                         }
                     }
                 }
             }
         } else {
-            completion(true, error as? LAError)
+            completion(false, error as? LAError)
         }
     }
 }

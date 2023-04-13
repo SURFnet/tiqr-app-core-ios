@@ -5,6 +5,7 @@ public class OnboardingManager: NSObject {
     
     //MARK: - singleton instance
     public static var shared = OnboardingManager()
+    private let defaults = UserDefaults.standard
     
     static var userdefaultsFlowTypeKey = "userdefaultsFlowTypeKey"
     

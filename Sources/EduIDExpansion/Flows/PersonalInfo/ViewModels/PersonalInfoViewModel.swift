@@ -9,6 +9,10 @@ class PersonalInfoViewModel: NSObject {
     var dataAvailableClosure: ((PersonalInfoDataCallbackModel) -> Void)?
     var serviceRemovedClosure: ((LinkedAccount) -> Void)?
     var dataFetchErrorClosure: ((Error) -> Void)?
+    private let defaults = UserDefaults.standard
+    
+    var viewController: CreateEduIDAddInstitutionViewController?
+    
     
     override init() {
         super.init()
@@ -59,6 +63,19 @@ class PersonalInfoViewModel: NSObject {
                 }
             }
         }
+    }
+}
+
+extension PersonalInfoViewModel {
+    
+    @objc func createAccount() {
+        guard let viewController = self.viewController else { return }
+        viewController.showNextScreen()
+        let biometryStatus = defaults.bool(forKey: Constants.BiometricDefaults.key)
+            defaults.set(biometryStatus ? OnboardingFlowType.existingUserWithSecret.rawValue
+                         : OnboardingFlowType.existingUserWithSecret.rawValue,
+                         forKey: OnboardingManager.userdefaultsFlowTypeKey)
+        
     }
 }
 

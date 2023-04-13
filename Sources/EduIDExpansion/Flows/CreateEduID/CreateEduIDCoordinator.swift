@@ -7,6 +7,8 @@ final class CreateEduIDCoordinator: CoordinatorType {
     
     weak var viewControllerToPresentOn: UIViewController?
     
+    private let defaults = UserDefaults.standard
+    
     weak var navigationController: UINavigationController!
     weak var delegate: CreateEduIDCoordinatorDelegate?
     
@@ -84,9 +86,6 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
     func createEduIDViewControllerShowNextScreen(viewController: UIViewController) {
         if currentScreenType == .addInstitutionScreen {
             delegate?.createEduIDCoordinatorDismissOnBoarding(coordinator: self)
-            
-            // - write onboarding flow state to user defaults
-            UserDefaults.standard.set(OnboardingFlowType.onboard.rawValue, forKey: OnboardingManager.userdefaultsFlowTypeKey)
             return
         }
         
@@ -96,10 +95,6 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
                 
                 // - signal the coordinator to end the create flow
                 delegate?.createEduIDCoordinatorDismissOnBoarding(coordinator: self)
-                
-                // - write onboarding flow state to user defaults
-                UserDefaults.standard.set(OnboardingFlowType.onboard.rawValue, forKey: OnboardingManager.userdefaultsFlowTypeKey)
-                
                 return
             }
         }
