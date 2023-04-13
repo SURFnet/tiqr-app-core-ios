@@ -11,25 +11,38 @@ class BiometricService {
     
     private let laContext = LAContext()
     
-    func useOnDeviceBiometricFeature(completion: @escaping((Bool) -> Void)) {
+    func useOnDeviceBiometricFeature(completion: @escaping((Bool, LAError?) -> Void)) {
         var error: NSError?
         if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             laContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Authenticate to access the app") { success, error in
                 guard error == nil else {
-                    completion(false)
+                    completion(false, error as? LAError)
                     return
                 }
                 DispatchQueue.main.async {
                     if success {
-                        completion(true)
+                        completion(true, nil)
                     } else {
-                        completion(false)
+                        if let err = error as? LAError {
+                            completion(true, err)
+                        }
                     }
                 }
             }
         } else {
-            completion(false)
+            completion(true, error as? LAError)
         }
     }
     
+    func rePromptBiometryUsage(completion: @escaping((Bool) -> Void)) {
+//        DispatchQueue.main.async { [weak self] in
+//            guard let self else { return }
+            self.laContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Authenticate to access the app") { success, error in
+                print("THIS IS LACONTEXT \(self.laContext)")
+                if success {
+                    completion(true)
+                }
+//            }
+        }
+    }
 }
