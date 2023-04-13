@@ -19,12 +19,7 @@ public class OnboardingManager: NSObject {
         if let onboardingFlowTypeString = UserDefaults.standard.value(forKey: OnboardingManager.userdefaultsFlowTypeKey) as? String, let onboardingFlowType = OnboardingFlowType(rawValue: onboardingFlowTypeString) {
             return onboardingFlowType
         } else {
-            if ServiceContainer.sharedInstance().identityService.identityCount() > 0 {
-                return .existingUserWithSecret
-            }
-            
             //TODO: find out how to know if there's a secret without biometric data
-            
             return .newUser
         }
     }
