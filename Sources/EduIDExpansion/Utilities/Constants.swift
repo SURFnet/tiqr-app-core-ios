@@ -18,6 +18,22 @@ import Foundation
 
 enum Constants {
     
+    enum ButtonTitles {
+        static let approve = "Approve"
+        static let cancel = "Cancel"
+        static let next = "Next"
+        static let proceed = "Proceed"
+    }
+    
+    enum AlertTiles {
+        static let skipUsingBiometricsTitle = "Proceed without using biometric access?"
+        
+    }
+    
+    enum AlertMessages {
+        static let skipUsingBiometricsMessage = "This permanently disables this feature"
+    }
+    
     enum RegEx {
         static let emailRegex = #"^(?=.{6,})[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"#
         static let nameRegex = #"^[a-zA-Z]+(?:-[a-zA-Z]+)*$"#
@@ -31,6 +47,10 @@ enum Constants {
         static let name = "Invalid name format\(revise)"
         static let password = "A password must be 8 characters, contain an uppercase letter, and a special character."
         static let phone = "Invalid phone format\(revise)"
+    }
+    
+    enum BiometricDefaults {
+        static let key = "USER_HAS_SETUP_BIOMETRICS"
     }
     
 }

@@ -1,6 +1,7 @@
 import UIKit
 import TiqrCoreObjC
 import OpenAPIClient
+import LocalAuthentication
 
 final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     
@@ -22,6 +23,12 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     var showPromptUseBiometricAccessClosure: (() -> Void)?
     var biometricAccessSuccessClosure: (() -> Void)?
     var biometricAccessFailureClosure: ((Error) -> Void)?
+    
+    private let biometricService = BiometricService()
+    
+    var viewController: BiometricAccessApprovalViewController?
+    
+    private let defaults = UserDefaults.standard
    
     //MARK: - init
     init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil) {
@@ -104,7 +111,62 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
                         }
                     }
                 }
+            } catch let error as NSError {
+                print("Request Failed Error: \(error)")
             }
+        }
+    }
+}
+
+extension CreatePincodeAndBiometricAccessViewModel {
+    
+    @objc func requestBiometricAccess() {
+        guard let viewController = self.viewController else { return }
+        biometricService.useOnDeviceBiometricFeature { [weak self] success, error in
+            guard let self else { return }
+            guard error == nil else {
+                self.handleBiometric(error)
+                return
+            }
+            if success {
+                self.defaults.setValue(true, forKey: Constants.BiometricDefaults.key)
+                (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
+            }
+        }
+    }
+    
+    private func handleBiometric(_ error: LAError?) {
+        guard let err = error else { return }
+        switch err.code {
+        case .userCancel, .biometryNotAvailable:
+            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+            }
+        default:
+            break
+        }
+    }
+    
+    //MARK: - actions
+    @objc func promptSkipBiometricAccess() {
+        guard let viewController = self.viewController else { return }
+        
+        DispatchQueue.main.async {
+            
+            let alert = UIAlertController(title: Constants.AlertTiles.skipUsingBiometricsTitle, message: Constants.AlertMessages.skipUsingBiometricsMessage, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(
+                title: Constants.ButtonTitles.proceed, style: .destructive) { [weak self] _ in
+                guard let self else { return }
+                self.defaults.setValue(false, forKey: Constants.BiometricDefaults.key)
+                (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
+            })
+            
+            alert.addAction(UIAlertAction(title: Constants.ButtonTitles.cancel, style: .cancel) { action in
+                alert.dismiss(animated: true)
+            })
+            
+            viewController.present(alert, animated: true)
         }
     }
 }
