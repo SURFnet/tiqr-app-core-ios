@@ -19,7 +19,6 @@ final class ActivityCoordinator: CoordinatorType {
         let navigationController = UINavigationController(rootViewController: activityViewController)
         self.navigationController = navigationController
         navigationController.isModalInPresentation = true
-        
         viewControllerToPresentOn?.present(navigationController, animated: true)
     }
 }

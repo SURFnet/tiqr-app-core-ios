@@ -6,11 +6,12 @@ class MainCoordinator: CoordinatorType {
     
     var children: [CoordinatorType] = []
     weak var homeNavigationController: UINavigationController!
+    var protectionViewLayer: UIView?
+    private let biometricService = BiometricService()
     
     //MARK: - init
     required init(viewControllerToPresentOn: UIViewController?) {
         self.viewControllerToPresentOn = viewControllerToPresentOn
-        
         let homeViewController = HomeViewController()
         let homeNavigationController = UINavigationController(rootViewController: homeViewController)
         self.homeNavigationController = homeNavigationController
@@ -106,4 +107,34 @@ extension MainCoordinator: ActivityCoordinatorDelegate {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 === coordinator }
     }
+}
+
+//MARK: - Add protection layer when launching app
+extension MainCoordinator {
+    
+    func createProtectionView() {
+        guard let view = mainView() else { return }
+        self.protectionViewLayer = UIView(frame: view.bounds)
+        protectionViewLayer?.backgroundColor = .clear
+        view.addSubview(protectionViewLayer!)
+        protectionViewLayer?.center = view.center
+        let blurLayer = UIVisualEffectView(frame: view.bounds)
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+        blurLayer.effect = blurEffect
+        protectionViewLayer?.addSubview(blurLayer)
+        blurLayer.center = protectionViewLayer!.center
+    }
+    
+    func removeProtectionView() {
+        guard mainView() != nil, protectionViewLayer != nil else { return }
+        homeNavigationController.setNavigationBarHidden(false, animated: true)
+        protectionViewLayer?.removeFromSuperview()
+    }
+    
+    private func mainView() -> UIView? {
+        guard let navController = homeNavigationController else { return nil}
+        guard let firstController = navController.viewControllers.first else { return nil }
+        return firstController.view
+    }
+    
 }
