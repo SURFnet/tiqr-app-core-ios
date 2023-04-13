@@ -46,7 +46,6 @@ class CreateEduIDEnterPhoneNumberViewController: CreateEduIDBaseViewController, 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         _ = validatedPhoneTextField.becomeFirstResponder()
     }
     

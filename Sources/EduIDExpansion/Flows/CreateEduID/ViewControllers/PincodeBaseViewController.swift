@@ -97,7 +97,6 @@ class PincodeBaseViewController: CreateEduIDBaseViewController {
             pinField.delegate = viewModel
             pinStack.addArrangedSubview(pinField)
         }
-        
         // - activityIndicatorView
         activity.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
         activity.tintColor = .gray
