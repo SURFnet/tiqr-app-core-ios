@@ -109,7 +109,7 @@ enum ScreenType: Int, CaseIterable {
         }
     }
     
-    func configureNavigationItem(item: UINavigationItem, target: Any? = nil, action: Selector? = nil) {
+    func configureNavigationItem(item: UINavigationItem, target: Any? = nil, action: Selector? = nil, secondaryAction: Selector? = nil) {
         switch self {
             // logo and cross to dismiss
         case .personalInfoLandingScreen, .securityLandingScreen, .activityLandingScreen:
@@ -127,7 +127,7 @@ enum ScreenType: Int, CaseIterable {
             
         case .homeScreen:
             item.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: target, action: action)
-            item.rightBarButtonItem = UIBarButtonItem(title: "Log off", style: .plain, target: target, action: action)
+            item.rightBarButtonItem = UIBarButtonItem(title: "Log off", style: .plain, target: target, action: secondaryAction)
             
             // just logo
         case .confirmScreen, .verifyLoginScreen, .createPincodefirstEntryScreen, .createPincodeSecondEntryScreen, .biometricApprovalScreen, .firstTimeDialogScreen, .eduIDCreatedScreen, .checkMailScreen, .enterPhoneScreen, .addInstitutionScreen:

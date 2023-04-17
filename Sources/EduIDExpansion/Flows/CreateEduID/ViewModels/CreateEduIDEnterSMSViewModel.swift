@@ -1,5 +1,6 @@
 import Foundation
 import OpenAPIClient
+import UIKit
 
 class CreateEduIDEnterSMSViewModel: NSObject {
     
@@ -9,6 +10,7 @@ class CreateEduIDEnterSMSViewModel: NSObject {
     func enterSMS(code: String) {
         Task {
             do {
+                
                 let result = try await TiqrControllerAPI.spVerifyPhoneCode(phoneVerification: PhoneVerification(phoneVerification: code))
                 smsEntryWasCorrect?(result)
             } catch {

@@ -17,11 +17,10 @@ class CreateEduIDEnterPhoneNumberViewModel: NSObject {
             do {
                 let result = try await TiqrControllerAPI.sendPhoneCodeForSp(phoneCode: PhoneCode(phoneNumber: number))
                 phoneNumberReceivedClosure?(result)
-            } catch {
-                
+            } catch let error as NSError {
+                assertionFailure("\(error.localizedDescription)")
             }
         }
-        
     }
     
 }

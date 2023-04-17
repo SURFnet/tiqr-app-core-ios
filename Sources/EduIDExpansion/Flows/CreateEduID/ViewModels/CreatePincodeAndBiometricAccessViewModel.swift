@@ -69,48 +69,51 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
         }
     }
     
+    //Flipping the boolean value of the 
     func handleUseBiometricAccess() {
-//        guard enrollmentChallenge != nil else {
-//            fatalError("you can't setup biometrec access without an enrollment challenge")
-//            return
-//        }
-//
-//        ServiceContainer.sharedInstance().challengeService.complete(enrollmentChallenge!, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { [weak self] success, error in
-//            if success {
-//
-//                //write "existingUserWithSecret" to Userdefaults
-//
-//                //UI can proceed to next screen
-//                self?.biometricAccessSuccessClosure?()
-//
-//            } else {
-//                self?.biometricAccessFailureClosure?(error)
-//            }
-//        }
+        guard enrollmentChallenge != nil else {
+            fatalError("you can't setup biometrec access without an enrollment challenge")
+            return
+        }
+
+        ServiceContainer.sharedInstance().challengeService.complete(enrollmentChallenge!, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { [weak self] success, error in
+            if success {
+
+                //write "existingUserWithSecret" to Userdefaults
+
+                //UI can proceed to next screen
+                self?.biometricAccessSuccessClosure?()
+
+            } else {
+                self?.biometricAccessFailureClosure?(error)
+            }
+        }
     }
     
+    //run After the second pin
     @MainActor
     func requestTiqrEnroll() {
-//        Task {
-//            do{
-//                let enrollment = try await TiqrControllerAPI.startEnrollment()
-//                ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrollment.url ?? "") { [weak self] type, object, error in
-//                    ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: true, withPIN: self?.pinToString(pinArray: self?.secondEnteredPin ?? []) ?? "") { [weak self] success, error in
-//                        if success {
-//
-//                            //write "existingUserWithSecret" to Userdefaults
-//                            //UI can proceed to next screen
-//                            self?.biometricAccessSuccessClosure?()
-//
-//                        } else {
-//                            self?.biometricAccessFailureClosure?(error)
-//                        }
-//                    }
-//                }
-//            } catch let error as NSError {
-//                print("Request Failed Error: \(error)")
-//            }
-//        }
+        Task {
+            do{
+                let enrollment = try await TiqrControllerAPI.startEnrollment()
+                ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrollment.url ?? "") { [weak self] type, object, error in
+                    ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: false, withPIN: self?.pinToString(pinArray: self?.secondEnteredPin ?? []) ?? "") { [weak self] success, error in
+                        if success {
+
+                            //write "existingUserWithSecret" to Userdefaults
+                            //UI can proceed to next screen
+                            self?.biometricAccessSuccessClosure?()
+                            //NEXT STEP
+
+                        } else {
+                            self?.biometricAccessFailureClosure?(error)
+                        }
+                    }
+                }
+            } catch let error as NSError {
+                print("Request Failed Error: \(error)")
+            }
+        }
     }
 }
 
