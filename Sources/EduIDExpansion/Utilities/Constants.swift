@@ -14,7 +14,7 @@ import Foundation
 //  Created by Yasser Farahi on 06/04/2023.
 //
 
-import Foundation
+import UIKit
 
 enum Constants {
     
@@ -23,6 +23,7 @@ enum Constants {
         static let cancel = "Cancel"
         static let next = "Next"
         static let proceed = "Proceed"
+        static let delete = "Delete"
     }
     
     enum AlertTiles {
@@ -51,6 +52,14 @@ enum Constants {
     
     enum BiometricDefaults {
         static let key = "USER_HAS_SETUP_BIOMETRICS"
+    }
+    
+    enum KeyChain {
+        static let keyPrefix = Bundle.main.bundleIdentifier ?? "nl.eduid"
+        static let challenge = "Challenge"
+        static let oidAuthState = "EDU_ID_OIDAuthState"
+        static let refreshToken = "EDU_ID_RefreshToken"
+        static let accessToken = "EDU_ID_AccessToken"
     }
     
 }

@@ -71,15 +71,15 @@ public class AppAuthController: NSObject {
         
     }
     
-    public func authorize(viewController: UIViewController, completion: (() -> Void)? = nil) {
+    public func authorize(viewController: UIViewController, completion: ((OIDAuthState,_ accessToken: String, _ refreshToken: String) -> Void)? = nil) {
         let externalUserAgent = OIDExternalUserAgentIOSSafari(presentingViewController: viewController)
-        currentAuthorizationFlow = OIDAuthState.authState(byPresenting: request, externalUserAgent: externalUserAgent) { [weak self] authState, error in
-            if let authState = authState {
-                self?.authState = authState
-                self?.accessToken = authState.lastTokenResponse?.accessToken ?? ""
-                self?.refreshToken = authState.lastTokenResponse?.refreshToken ?? ""
-                
-                completion?()
+        currentAuthorizationFlow = OIDAuthState.authState(byPresenting: request, externalUserAgent: externalUserAgent) { [weak self] authStateObject, error in
+            guard let self else { return }
+            if let authState = authStateObject {
+                self.authState = authState
+                self.accessToken = authState.lastTokenResponse?.accessToken ?? ""
+                self.refreshToken = authState.lastTokenResponse?.refreshToken ?? ""
+                completion?(authState, self.accessToken, self.refreshToken)
             } else {
                 fatalError("authorization failed")
             }
@@ -88,8 +88,9 @@ public class AppAuthController: NSObject {
     
     func refresh(completionHandler: (() -> Void)?) {
         OIDAuthorizationService.perform(tokenRefreshRequest, originalAuthorizationResponse: nil) { [weak self] tokenResponse, error in
-            self?.accessToken = tokenResponse?.accessToken ?? ""
-            self?.refreshToken = tokenResponse?.refreshToken ?? ""
+            guard let self else { return }
+            self.accessToken = tokenResponse?.accessToken ?? ""
+            self.refreshToken = tokenResponse?.refreshToken ?? ""
             completionHandler?()
         }
     }

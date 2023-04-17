@@ -19,7 +19,7 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         buttonStack.animate()
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen), secondaryAction: #selector(logOff))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -115,6 +115,10 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     }
     
     //MARK: - action buttons
+    
+    @objc func logOff() {
+        
+    }
     
     @objc
     func showScanScreen() {
