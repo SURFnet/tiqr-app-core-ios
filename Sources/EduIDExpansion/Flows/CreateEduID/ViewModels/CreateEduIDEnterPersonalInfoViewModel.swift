@@ -31,6 +31,7 @@ class CreateEduIDEnterPersonalInfoViewModel: NSObject {
     
     override init() {
         super.init()
+        
     }
     
     @MainActor

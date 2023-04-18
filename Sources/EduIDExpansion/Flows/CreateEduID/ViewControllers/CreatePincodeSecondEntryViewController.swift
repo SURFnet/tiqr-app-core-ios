@@ -24,7 +24,6 @@ class CreatePincodeSecondEntryViewController: PincodeBaseViewController {
         
         createPincodeViewModel.redoCreatePincodeClosure = { [weak self] in
             guard let self = self else { return }
-            
             (self.delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerRedoCreatePin(viewController: self)
         }
     }
