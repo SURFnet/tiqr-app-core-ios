@@ -54,4 +54,8 @@ enum Constants {
         static let accessToken = "EDU_ID_AccessToken"
     }
     
+    enum Headers {
+        static let authorization = "Authorization"
+    }
+    
 }

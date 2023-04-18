@@ -30,6 +30,8 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     
     private let defaults = UserDefaults.standard
     
+    private let keychain = KeyChainService()
+    
     //MARK: - init
     init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil) {
         self.enrollmentChallenge = enrollmentChallenge
@@ -92,10 +94,14 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     
     //run After the second pin
     @MainActor
-    func requestTiqrEnroll() {
+    func requestTiqrEnroll(completion: @escaping ((Bool) -> Void)) {
         Task {
             do{
-                let enrollment = try await TiqrControllerAPI.startEnrollment()
+                let enrollment = try await TiqrControllerAPI.startEnrollmentWithRequestBuilder()
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .execute()
+                    .body
+                
                 ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrollment.url ?? "") { [weak self] type, object, error in
                     ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: false, withPIN: self?.pinToString(pinArray: self?.secondEnteredPin ?? []) ?? "") { [weak self] success, error in
                         if success {
@@ -103,7 +109,8 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
                             //write "existingUserWithSecret" to Userdefaults
                             //UI can proceed to next screen
                             self?.biometricAccessSuccessClosure?()
-                            //NEXT STEP
+                            completion(true)
+                            
 
                         } else {
                             self?.biometricAccessFailureClosure?(error)
@@ -111,7 +118,8 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
                     }
                 }
             } catch let error as NSError {
-                print("Request Failed Error: \(error)")
+                print(error.localizedDescription)
+                completion(false)
             }
         }
     }
@@ -126,9 +134,16 @@ extension CreatePincodeAndBiometricAccessViewModel {
             if success {
                 self.defaults.setValue(true, forKey: Constants.BiometricDefaults.key)
                 Task {
-                    await self.requestTiqrEnroll()
+                    await self.requestTiqrEnroll { success in
+                        if success {
+                            DispatchQueue.main.async {
+                                (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
+                            }
+                        } else {
+                            print("Something went wrong")
+                        }
+                    }
                 }
-            (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
             } else {
                 self.handleBiometric(error)
             }

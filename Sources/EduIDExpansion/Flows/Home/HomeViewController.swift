@@ -127,19 +127,16 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     
     @objc
     func securityTapped() {
-        AppAuthController.shared.authorize(viewController: self)
         delegate?.homeViewControllerShowSecurityScreen(viewController: self)
     }
     
     @objc
     func personalInfoTapped() {
-        AppAuthController.shared.authorize(viewController: self)
         delegate?.homeViewControllerShowPersonalInfoScreen(viewController: self)
     }
     
     @objc
     func activityTapped() {
-        AppAuthController.shared.authorize(viewController: self)
         delegate?.homeViewControllerShowActivityScreen(viewController: self)
     }
 }
