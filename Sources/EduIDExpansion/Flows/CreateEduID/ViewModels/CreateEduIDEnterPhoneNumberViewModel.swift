@@ -5,6 +5,7 @@ class CreateEduIDEnterPhoneNumberViewModel: NSObject {
     
     //MARK: - closures
     var phoneNumberReceivedClosure: ((FinishEnrollment) -> Void)?
+    private let keychain = KeyChainService()
     
     //MARK: - init
     override init() {
@@ -13,10 +14,12 @@ class CreateEduIDEnterPhoneNumberViewModel: NSObject {
     
     @MainActor
     func sendPhoneNumber(number: String) {
-        OpenAPIClientAPI.customHeaders = ["Authorization": "Bearer " + AppAuthController.shared.accessToken]
         Task {
             do {
-                let result = try await TiqrControllerAPI.sendPhoneCodeForSp(phoneCode: PhoneCode(phoneNumber: number))
+                let result = try await TiqrControllerAPI.sendPhoneCodeForSpWithRequestBuilder(phoneCode: PhoneCode(phoneNumber: number))
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .execute()
+                    .body
                 phoneNumberReceivedClosure?(result)
             } catch let error {
                 print("ERROR WHILE SAVING PHONE: \(error.localizedDescription)")
