@@ -32,6 +32,8 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     
     private let keychain = KeyChainService()
     
+    static var NSOBJECT: NSObject?
+    
     //MARK: - init
     init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil) {
         self.enrollmentChallenge = enrollmentChallenge
@@ -41,8 +43,14 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     
     func verifyPinSimilarity() {
         if firstEnteredPin == secondEnteredPin {
-            // succes
-            showUseBiometricScreenClosure?()
+            Task {
+                await requestTiqrEnroll(withBiometrics: false) { [weak self] success in
+                    guard let self else { return }
+                    if success {
+                        self.showUseBiometricScreenClosure?()
+                    }
+                }
+            }
         } else {
             // failure
             redoCreatePincodeClosure?()
@@ -71,49 +79,23 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
         }
     }
     
-    //Flipping the boolean value of the 
-    func handleUseBiometricAccess() {
-        guard enrollmentChallenge != nil else {
-            fatalError("you can't setup biometrec access without an enrollment challenge")
-            return
-        }
-
-        ServiceContainer.sharedInstance().challengeService.complete(enrollmentChallenge!, usingBiometricID: true, withPIN: pinToString(pinArray: secondEnteredPin)) { [weak self] success, error in
-            if success {
-
-                //write "existingUserWithSecret" to Userdefaults
-
-                //UI can proceed to next screen
-                self?.biometricAccessSuccessClosure?()
-
-            } else {
-                self?.biometricAccessFailureClosure?(error)
-            }
-        }
-    }
-    
     //run After the second pin
     @MainActor
-    func requestTiqrEnroll(completion: @escaping ((Bool) -> Void)) {
+    func requestTiqrEnroll(withBiometrics: Bool, completion: @escaping ((Bool) -> Void)) {
         Task {
             do{
-                let enrollment = try await TiqrControllerAPI.startEnrollmentWithRequestBuilder()
+                let enrolment = try await TiqrControllerAPI.startEnrollmentWithRequestBuilder()
                     .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
                     .execute()
                     .body
                 
-                ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrollment.url ?? "") { [weak self] type, object, error in
-                    ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: false, withPIN: self?.pinToString(pinArray: self?.secondEnteredPin ?? []) ?? "") { [weak self] success, error in
+                ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrolment.url ?? "") { [weak self] type, object, error in
+                    guard let self else { return }
+                    ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: withBiometrics, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { success, error in
                         if success {
-
-                            //write "existingUserWithSecret" to Userdefaults
-                            //UI can proceed to next screen
-                            self?.biometricAccessSuccessClosure?()
                             completion(true)
-                            
-
                         } else {
-                            self?.biometricAccessFailureClosure?(error)
+                            completion(false)
                         }
                     }
                 }
@@ -127,22 +109,13 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
 
 extension CreatePincodeAndBiometricAccessViewModel {
     
+    //TODO: Should enable biometrics on the challenge
     @objc func requestBiometricAccess() {
         guard let viewController = self.viewController else { return }
         biometricService.useOnDeviceBiometricFeature { [weak self] success, error in
             guard let self else { return }
             if success {
-                self.defaults.setValue(true, forKey: Constants.BiometricDefaults.key)
-                Task {
-                    await self.requestTiqrEnroll { success in
-                        if success {
-                            DispatchQueue.main.async {
-                                (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
-                            }
-                        } else {
-                            print("Something went wrong")
-                        }
-                    }
+                (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
                 }
             } else {
                 self.handleBiometric(error)
@@ -154,7 +127,8 @@ extension CreatePincodeAndBiometricAccessViewModel {
         guard let err = error else { return }
         switch err.code {
         case .userCancel, .biometryNotAvailable:
-            self.promptSkipBiometricAccess()
+            guard let viewController = self.viewController else { break }
+            (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
         default:
             break
         }
@@ -163,13 +137,10 @@ extension CreatePincodeAndBiometricAccessViewModel {
     //MARK: - actions
     @objc func promptSkipBiometricAccess() {
         guard let viewController = self.viewController else { return }
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
+        DispatchQueue.main.async {
             let alert = UIAlertController(title: Constants.AlertTiles.skipUsingBiometricsTitle, message: Constants.AlertMessages.skipUsingBiometricsMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(
-                title: Constants.ButtonTitles.proceed, style: .destructive) { [weak self] _ in
-                    guard let self else { return }
-                    self.defaults.setValue(false, forKey: Constants.BiometricDefaults.key)
+                title: Constants.ButtonTitles.proceed, style: .destructive) {  _ in
                     (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
                 })
             alert.addAction(UIAlertAction(title: Constants.ButtonTitles.cancel, style: .cancel) { action in

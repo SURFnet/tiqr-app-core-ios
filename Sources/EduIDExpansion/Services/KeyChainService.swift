@@ -20,11 +20,7 @@ public class KeyChainService {
     }
     
     public func setData(_ data: Data, for key: String) {
-        if let unarchivedObject = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) {
-            if let authState = unarchivedObject as? OIDAuthState {
-                print("AUTH OBJECT: \(authState)")
-            }
-        }
+        print("SAVING DATA:\(data)")
         keychain.set(data, forKey: key)
     }
     
@@ -41,6 +37,7 @@ public class KeyChainService {
     }
     
     public func getData(for key: String) -> Data? {
+        print("RETURNING DATA: \(keychain.getData(key))")
         return keychain.getData(key) ?? nil
     }
     

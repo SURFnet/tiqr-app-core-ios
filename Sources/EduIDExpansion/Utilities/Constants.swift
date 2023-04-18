@@ -45,6 +45,10 @@ enum Constants {
         static let key = "USER_HAS_SETUP_BIOMETRICS"
     }
     
+    enum Enrolment {
+        static let challenge = "EnrollmentChallenge"
+    }
+    
     enum KeyChain {
         static let keyPrefix = Bundle.main.bundleIdentifier ?? "nl.eduid"
         static let challenge = "Challenge"
