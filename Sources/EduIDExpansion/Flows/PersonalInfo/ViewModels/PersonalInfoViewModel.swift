@@ -13,6 +13,7 @@ class PersonalInfoViewModel: NSObject {
     
     var viewController: CreateEduIDAddInstitutionViewController?
     
+    private let keychain = KeyChainService()
     
     override init() {
         super.init()
@@ -26,7 +27,10 @@ class PersonalInfoViewModel: NSObject {
     func getData() {
         Task {
             do {
-                try await userResponse = UserControllerAPI.me()
+                try await userResponse = UserControllerAPI.meWithRequestBuilder()
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .execute()
+                    .body
                 processUserData()
             } catch {
                 dataFetchErrorClosure?(error)
@@ -55,10 +59,15 @@ class PersonalInfoViewModel: NSObject {
     func removeLinkedAccount(linkedAccount: LinkedAccount) {
         Task {
             do {
-                let result = try await UserControllerAPI.removeUserLinkedAccounts(linkedAccount: linkedAccount)
+                let result = try await UserControllerAPI.removeUserLinkedAccountsWithRequestBuilder(linkedAccount: linkedAccount)
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .execute()
+                    .body
+                
                 if !(result.linkedAccounts?.contains(linkedAccount) ?? true) {
                     DispatchQueue.main.async { [weak self] in
-                        self?.serviceRemovedClosure?(linkedAccount)
+                        guard let self else { return }
+                        self.serviceRemovedClosure?(linkedAccount)
                     }
                 }
             }

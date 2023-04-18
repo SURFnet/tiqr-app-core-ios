@@ -425,7 +425,6 @@ open class TiqrControllerAPI {
      - returns: RequestBuilder<VerifyPhoneCode> 
      */
     open class func spVerifyPhoneCodeWithRequestBuilder(phoneVerification: PhoneVerification) -> RequestBuilder<VerifyPhoneCode> {
-        print("VERIFYING PHONE CODE: \(OpenAPIClientAPI.customHeaders)" )
         let localVariablePath = "/mobile/tiqr/sp/verify-phone-code"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: phoneVerification)
