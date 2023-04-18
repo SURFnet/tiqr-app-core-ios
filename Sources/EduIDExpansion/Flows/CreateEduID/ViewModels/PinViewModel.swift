@@ -31,7 +31,7 @@ class PinViewModel: NSObject {
                 let result = try await TiqrControllerAPI.spVerifyPhoneCode(phoneVerification: PhoneVerification(phoneVerification: code))
                 smsEntryWasCorrect?(result)
             } catch let error {
-                print(error.localizedDescription)
+                print("SMS VERIFICATION ERROR: \(error.localizedDescription)")
             }
         }
     }

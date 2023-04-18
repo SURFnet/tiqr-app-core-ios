@@ -125,7 +125,10 @@ extension CreatePincodeAndBiometricAccessViewModel {
             guard let self else { return }
             if success {
                 self.defaults.setValue(true, forKey: Constants.BiometricDefaults.key)
-                (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
+                Task {
+                    await self.requestTiqrEnroll()
+                }
+            (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
             } else {
                 self.handleBiometric(error)
             }

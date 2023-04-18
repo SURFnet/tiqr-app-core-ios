@@ -33,7 +33,7 @@ Method | HTTP request | Description
 
 Confirm email change
 
-Confirm the user has clicked on the link in the email sent after requesting to change the users email
+Confirm the user has clicked on the link in the email sent after requesting to change the users email<br/>A confirmation email is sent to notify the user of the security change with a link to the security settings <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/security</a>. <br/>If this URL is not properly intercepted by the eduID app, then the browser app redirects to <a href=\"\">eduid://client/mobile/security</a>
 
 ### Example
 ```swift
@@ -78,19 +78,19 @@ No authorization required
 
 # **createEduIDAccount**
 ```swift
-    open class func createEduIDAccount(createAccount: CreateAccount, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func createEduIDAccount(createAccount: CreateAccount, completion: @escaping (_ data: StatusResponse?, _ error: Error?) -> Void)
 ```
 
 Create eduID account
 
-Create an eduID account and sent a verification mail to the user to confirm the ownership of the email. <br/>Link in the validation email is <a href=\"\">https://login.{environment}.eduid.nl/mobile/api/create-from-mobile-api?h=={{hash}}</a><br/>After the account is validated the user is logged in and the server redirects to <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/created</a>
+Create an eduID account and sent a verification mail to the user to confirm the ownership of the email. <br/>Link in the validation email is <a href=\"\">https://login.{environment}.eduid.nl/mobile/api/create-from-mobile-api?h=={{hash}}</a> whichmust NOT be captured by the eduID app.<br/>After the account is finalized server-side the user is logged in and the server redirects to <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/created</a><br/>If the URL is not properly intercepted by the eduID app, then the browser app redirects to <a href=\"\">eduid://client/mobile/created?new=true</a>
 
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import OpenAPIClient
 
-let createAccount = CreateAccount(email: "email_example", givenName: "givenName_example", familyName: "familyName_example") // CreateAccount | 
+let createAccount = CreateAccount(email: "email_example", givenName: "givenName_example", familyName: "familyName_example", relyingPartClientId: "relyingPartClientId_example") // CreateAccount | 
 
 // Create eduID account
 UserControllerAPI.createEduIDAccount(createAccount: createAccount) { (response, error) in
@@ -113,7 +113,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**StatusResponse**](StatusResponse.md)
 
 ### Authorization
 
@@ -128,7 +128,7 @@ No authorization required
 
 # **deleteUser**
 ```swift
-    open class func deleteUser(completion: @escaping (_ data: String?, _ error: Error?) -> Void)
+    open class func deleteUser(completion: @escaping (_ data: StatusResponse?, _ error: Error?) -> Void)
 ```
 
 Delete
@@ -159,7 +159,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**String**
+[**StatusResponse**](StatusResponse.md)
 
 ### Authorization
 
@@ -362,7 +362,7 @@ No authorization required
 
 # **logout**
 ```swift
-    open class func logout(completion: @escaping (_ data: String?, _ error: Error?) -> Void)
+    open class func logout(completion: @escaping (_ data: StatusResponse?, _ error: Error?) -> Void)
 ```
 
 Logout
@@ -393,7 +393,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**String**
+[**StatusResponse**](StatusResponse.md)
 
 ### Authorization
 
@@ -500,7 +500,7 @@ No authorization required
 
 # **personal**
 ```swift
-    open class func personal(completion: @escaping (_ data: String?, _ error: Error?) -> Void)
+    open class func personal(completion: @escaping (_ data: User?, _ error: Error?) -> Void)
 ```
 
 Get personal data
@@ -531,7 +531,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**String**
+[**User**](User.md)
 
 ### Authorization
 
@@ -558,7 +558,7 @@ Remove user token for a service
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import OpenAPIClient
 
-let deleteServiceTokens = DeleteServiceTokens(eduId: "eduId_example", tokens: [TokenRepresentation(id: "id_example", type: "type_example")]) // DeleteServiceTokens | 
+let deleteServiceTokens = DeleteServiceTokens(tokens: [TokenRepresentation(id: "id_example", type: "type_example")]) // DeleteServiceTokens | 
 
 // Remove user tokens
 UserControllerAPI.removeTokens(deleteServiceTokens: deleteServiceTokens) { (response, error) in
@@ -646,22 +646,22 @@ No authorization required
 
 # **removeUserService**
 ```swift
-    open class func removeUserService(deleteServiceTokens: DeleteServiceTokens, completion: @escaping (_ data: UserResponse?, _ error: Error?) -> Void)
+    open class func removeUserService(deleteService: DeleteService, completion: @escaping (_ data: UserResponse?, _ error: Error?) -> Void)
 ```
 
 Remove user service
 
-Remove user service
+Remove user service by the eduID value
 
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import OpenAPIClient
 
-let deleteServiceTokens = DeleteServiceTokens(eduId: "eduId_example", tokens: [TokenRepresentation(id: "id_example", type: "type_example")]) // DeleteServiceTokens | 
+let deleteService = DeleteService(serviceProviderEntityId: "serviceProviderEntityId_example", tokens: [TokenRepresentation(id: "id_example", type: "type_example")]) // DeleteService | 
 
 // Remove user service
-UserControllerAPI.removeUserService(deleteServiceTokens: deleteServiceTokens) { (response, error) in
+UserControllerAPI.removeUserService(deleteService: deleteService) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -677,7 +677,7 @@ UserControllerAPI.removeUserService(deleteServiceTokens: deleteServiceTokens) { 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **deleteServiceTokens** | [**DeleteServiceTokens**](DeleteServiceTokens.md) |  | 
+ **deleteService** | [**DeleteService**](DeleteService.md) |  | 
 
 ### Return type
 
@@ -751,7 +751,7 @@ No authorization required
 
 Reset password link
 
-Sent the user a mail with a link for the user to change his / hers password. <br/>Link in the validation email is <a href=\"\">https://mijn.{environment}.eduid.nl/reset-password?h=={{hash}}</a>
+Sent the user a mail with a link for the user to change his / hers password. <br/>Link in the validation email is <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/reset-password?h=={{hash}}</a> if the user already had a password, otherwise <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/add-password?h=={{hash}}</a><br/>If the URL is not properly intercepted by the eduID app, then the browser app redirects to <a href=\"\">eduid://client/mobile/reset-password?h={{hash}}</a>
 
 ### Example
 ```swift
@@ -792,7 +792,7 @@ No authorization required
 
 # **tokens**
 ```swift
-    open class func tokens(completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func tokens(completion: @escaping (_ data: [Token]?, _ error: Error?) -> Void)
 ```
 
 Get all OpenID Connect tokens
@@ -823,7 +823,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-Void (empty response body)
+[**[Token]**](Token.md)
 
 ### Authorization
 
@@ -838,12 +838,12 @@ No authorization required
 
 # **updateEmail**
 ```swift
-    open class func updateEmail(updateEmailRequest: UpdateEmailRequest, force: Bool? = nil, completion: @escaping (_ data: String?, _ error: Error?) -> Void)
+    open class func updateEmail(updateEmailRequest: UpdateEmailRequest, force: Bool? = nil, completion: @escaping (_ data: UserResponse?, _ error: Error?) -> Void)
 ```
 
 Change email
 
-Request to change the email of the user. A validation email will be send containing an URL with an unique 'h' query param
+Request to change the email of the user. The link in the validation email is <a href=\"\">https://login.{environment}.eduid.nl/client/mobile/update-email?h=={{hash}}</a>with an unique 'h' query param which must be used in 'mobile/api/sp/confirm-email' to confirm the update.<br/>If the URL is not properly intercepted by the eduID app, then the browser app redirects to <a href=\"\">eduid://client/mobile/confirm-email?h={{hash}}</a>
 
 ### Example
 ```swift
@@ -875,7 +875,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**String**
+[**UserResponse**](UserResponse.md)
 
 ### Authorization
 
