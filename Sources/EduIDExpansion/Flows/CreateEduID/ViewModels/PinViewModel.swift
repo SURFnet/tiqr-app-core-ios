@@ -30,9 +30,10 @@ class PinViewModel: NSObject {
         Task {
             do {
                 let result = try await TiqrControllerAPI.spVerifyPhoneCodeWithRequestBuilder(phoneVerification: PhoneVerification(phoneVerification: code))
-                    .addHeader(name: Constants.Headers.authorization, value: Constants.KeyChain.accessToken)
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
                     .execute()
                     .body
+                
                 smsEntryWasCorrect?(result)
             } catch let error {
                 print("SMS VERIFICATION ERROR: \(error.localizedDescription)")
