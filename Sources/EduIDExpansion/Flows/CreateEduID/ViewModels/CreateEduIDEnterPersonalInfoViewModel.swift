@@ -8,6 +8,8 @@ class CreateEduIDEnterPersonalInfoViewModel: NSObject {
     var makeNextTextFieldFirstResponderClosure: ((Int) -> Void)?
     var textFieldBecameFirstResponderClosure: ((Int) -> Void)?
     
+    private let keychain = KeyChainService()
+    
     var textFieldModels: [TextFieldModelWithTagAndValid] = [
         TextFieldModelWithTagAndValid(tag: CreateEduIDEnterPersonalInfoViewController.emailFieldTag, text: "", isValid: false),
         TextFieldModelWithTagAndValid(tag: CreateEduIDEnterPersonalInfoViewController.firstNameFieldTag, text: "", isValid: false),
@@ -32,10 +34,14 @@ class CreateEduIDEnterPersonalInfoViewModel: NSObject {
     }
     
     @MainActor
-    func createEduID(familiyName: String, givenName: String, email: String) {
+    func createEduID(familyName: String, givenName: String, email: String) {
         Task {
             do {
-                try await UserControllerAPI.createEduIDAccount(createAccount: CreateAccount(email: email, givenName: givenName, familyName: familiyName, relyingPartClientId: AppAuthController.clientID))
+                let account = CreateAccount(email: email, givenName: givenName, familyName: familyName, relyingPartClientId: AppAuthController.clientID)
+                try await UserControllerAPI.createEduIDAccountWithRequestBuilder(createAccount: account)
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .execute()
+                    .body
                 createEduIDSuccessClosure?()
             } catch {
                 createEduIDErrorClosure?(error)
