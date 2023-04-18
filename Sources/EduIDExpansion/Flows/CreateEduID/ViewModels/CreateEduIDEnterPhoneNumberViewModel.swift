@@ -13,12 +13,13 @@ class CreateEduIDEnterPhoneNumberViewModel: NSObject {
     
     @MainActor
     func sendPhoneNumber(number: String) {
+        OpenAPIClientAPI.customHeaders = ["Authorization": "Bearer " + AppAuthController.shared.accessToken]
         Task {
             do {
                 let result = try await TiqrControllerAPI.sendPhoneCodeForSp(phoneCode: PhoneCode(phoneNumber: number))
                 phoneNumberReceivedClosure?(result)
-            } catch let error as NSError {
-                assertionFailure("\(error.localizedDescription)")
+            } catch let error {
+                print("ERROR WHILE SAVING PHONE: \(error.localizedDescription)")
             }
         }
     }

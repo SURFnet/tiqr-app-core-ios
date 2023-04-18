@@ -68,16 +68,18 @@ To safely use this app, we need you to set a pincode and provide a phonenumber i
     
     @objc
     func authorize() {
-        AppAuthController.shared.authorize(viewController: self) { [weak self] oidAuthState, accessToken, refreshToken in
-            guard let self else { return }
-            do {
-                let data = try NSKeyedArchiver.archivedData(withRootObject: oidAuthState, requiringSecureCoding: false)
-                self.keyChain.setData(data, for: Constants.KeyChain.oidAuthState)
-            } catch let error {
-                print(error.localizedDescription)
-            }
-            self.keyChain.set(accessToken, for: Constants.KeyChain.accessToken)
-            self.keyChain.set(refreshToken, for: Constants.KeyChain.refreshToken)
+        AppAuthController.shared.authorize(viewController: self) {  accessToken in
+//            guard let self else { return }
+//            do {
+//                let data = try NSKeyedArchiver.archivedData(withRootObject: oidAuthState, requiringSecureCoding: false)
+//                self.keyChain.setData(data, for: Constants.KeyChain.oidAuthState)
+//            } catch let error {
+//                print(error.localizedDescription)
+//            }
+//            self.keyChain.set(accessToken, for: Constants.KeyChain.accessToken)
+//            self.keyChain.set(refreshToken, for: Constants.KeyChain.refreshToken)
+            
+            UserDefaults.standard.set(accessToken, forKey: "ACCESSTOKEN")
         }
         showNextScreen()
     }

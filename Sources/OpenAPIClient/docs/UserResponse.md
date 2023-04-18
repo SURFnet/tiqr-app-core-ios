@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **created** | **Int64** |  | [optional] 
 **eduIdPerServiceProvider** | [String: EduID] |  | [optional] 
 **loginOptions** | **[String]** |  | [optional] 
-**registration** | [String: AnyCodable] |  | [optional] 
+**registration** | **[String: AnyCodable]** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -36,6 +36,10 @@ public class KeyChainService {
         return keychain.getBool(key) ?? false
     }
     
+    public func getString(for key: String) -> String {
+        return keychain.get(key) ?? "ACCESS_TOKEN"
+    }
+    
     public func getData(for key: String) -> Data? {
         return keychain.getData(key) ?? nil
     }

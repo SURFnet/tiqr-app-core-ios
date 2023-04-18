@@ -59,6 +59,7 @@ enum Constants {
         static let challenge = "Challenge"
         static let oidAuthState = "EDU_ID_OIDAuthState"
         static let refreshToken = "EDU_ID_RefreshToken"
+        static let uuid = UUID()
         static let accessToken = "EDU_ID_AccessToken"
     }
     
