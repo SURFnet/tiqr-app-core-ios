@@ -32,7 +32,6 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     
     private let keychain = KeyChainService()
     
-    static var NSOBJECT: NSObject?
     
     //MARK: - init
     init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil) {
