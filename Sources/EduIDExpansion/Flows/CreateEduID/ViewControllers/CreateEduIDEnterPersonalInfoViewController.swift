@@ -37,7 +37,7 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         
         screenType = .enterInfoScreen
         
-        var loadedTime = Date()
+        let loadedTime = Date()
         
         viewModel.makeNextTextFieldFirstResponderClosure = { [weak self] tag in
             guard tag != CreateEduIDEnterPersonalInfoViewController.lastNameFieldTag else {
@@ -187,7 +187,7 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
     @objc
     func createEduIDAction() {
         UserDefaults.standard.set(emailField.textField.text, forKey: CreateEduIDEnterPersonalInfoViewController.emailKeyUserDefaults)
-        viewModel.createEduID(familiyName: lastNameField.textField.text ?? "", givenName: firstNameField.textField.text ?? "", email: emailField.textField.text ?? "")
+        viewModel.createEduID(familyName: lastNameField.textField.text ?? "", givenName: firstNameField.textField.text ?? "", email: emailField.textField.text ?? "")
     }
     
     override func goBack() {

@@ -1,4 +1,5 @@
 import UIKit
+import TinyConstraints
 
 class MainCoordinator: CoordinatorType {
     
@@ -6,22 +7,25 @@ class MainCoordinator: CoordinatorType {
     
     var children: [CoordinatorType] = []
     weak var homeNavigationController: UINavigationController!
+    var protectionViewLayer: UIView?
+    private let biometricService = BiometricService()
     
     //MARK: - init
     required init(viewControllerToPresentOn: UIViewController?) {
         self.viewControllerToPresentOn = viewControllerToPresentOn
-        
         let homeViewController = HomeViewController()
         let homeNavigationController = UINavigationController(rootViewController: homeViewController)
         self.homeNavigationController = homeNavigationController
         homeViewController.delegate = self
     }
     
-    func start() {
-        let onboardingCoordinator = CreateEduIDCoordinator(viewControllerToPresentOn: homeNavigationController)
-        children.append(onboardingCoordinator)
-        onboardingCoordinator.delegate = self
-        onboardingCoordinator.start()
+    func start(option: OnboardingFlowType) {
+        if option == .newUser {
+            let onboardingCoordinator = CreateEduIDCoordinator(viewControllerToPresentOn: homeNavigationController)
+            children.append(onboardingCoordinator)
+            onboardingCoordinator.delegate = self
+            onboardingCoordinator.start()
+        }
     }
     
     func showActivityScreen() {}
@@ -101,7 +105,6 @@ extension MainCoordinator: CreateEduIDCoordinatorDelegate {
 
 //MARK: - activity flow methods
 extension MainCoordinator: ActivityCoordinatorDelegate {
-    
     func activityCoordinatorDismissActivityFlow(coordinator: CoordinatorType) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 === coordinator }

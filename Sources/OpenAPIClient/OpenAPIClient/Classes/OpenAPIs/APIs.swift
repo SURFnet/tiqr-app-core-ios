@@ -59,7 +59,6 @@ open class RequestBuilder<T> {
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     @discardableResult
     open func execute() async throws -> Response<T> {
-        headers["Authorization"] = "Bearer " + AppAuthController.shared.accessToken
         return try await withTaskCancellationHandler {
             try Task.checkCancellation()
             return try await withCheckedThrowingContinuation { continuation in
@@ -67,22 +66,12 @@ open class RequestBuilder<T> {
                   continuation.resume(throwing: CancellationError())
                   return
                 }
-
                 self.execute { result in
                     switch result {
                     case let .success(response):
                         continuation.resume(returning: response)
-                    case .failure(_):
-                        AppAuthController.shared.refresh {
-                            self.execute { result in
-                                switch result {
-                                case let .success(response):
-                                    continuation.resume(returning: response)
-                                case let .failure(error):
-                                    continuation.resume(throwing: error)
-                                }
-                            }
-                        }
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
                     }
                 }
             }

@@ -12,22 +12,18 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
         setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         buttonStack.animate()
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen), secondaryAction: #selector(logOff))
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-//        AppAuthController.shared.authorize(viewController: self)
     }
     
     func setupUI() {
@@ -119,6 +115,10 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     }
     
     //MARK: - action buttons
+    
+    @objc func logOff() {
+        
+    }
     
     @objc
     func showScanScreen() {

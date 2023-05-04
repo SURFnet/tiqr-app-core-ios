@@ -5,62 +5,13 @@ class BiometricAccessApprovalViewController: CreateEduIDBaseViewController {
     
     weak var biometricApprovaldelegate: BiometricApprovalViewControllerDelegate?
     let createPincodeViewModel: CreatePincodeAndBiometricAccessViewModel
+    private let biometricService = BiometricService()
     
     //MARK: - init
     init(viewModel: CreatePincodeAndBiometricAccessViewModel) {
         self.createPincodeViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
-        viewModel.showBiometricNotAvailableClosure = { [weak self] in
-            let alert = UIAlertController(title: "Biometrics not available", message: "Please skip this step", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default) { action in
-                alert.dismiss(animated: true)
-            })
-            self?.present(alert, animated: true)
-        }
-        
-        viewModel.showPromptUseBiometricAccessClosure = { [weak self] in
-            let alert = UIAlertController(title: "Use biometric access?", message: "Would you like to use biometric access in stead of using a PINcode", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default) { action in
-                if viewModel.enrollmentChallenge != nil {
-                    self?.createPincodeViewModel.handleUseBiometricAccess()
-                } else {
-                    self?.createPincodeViewModel.requestTiqrEnroll()
-                }
-                
-            })
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { [weak self] action in
-                alert.dismiss(animated: true)
-                self?.promptSkipBiometricAccess()
-            })
-            self?.present(alert, animated: true)
-        }
-        
-        viewModel.proceedWithoutBiometricClosure = { [weak self] in
-            guard let self = self else { return }
-            
-            self.biometricApprovaldelegate?.biometricApprovalViewControllerSkipBiometricAccess(viewController: self)
-        }
-        
-        viewModel.biometricAccessFailureClosure = { [weak self] error in
-            let alert = UIAlertController(title: "Error", message: "Biometric access request failed (\(error.localizedDescription), please try again or skip this step.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default))
-            self?.present(alert, animated: true)
-        }
-        
-        viewModel.biometricAccessSuccessClosure = { [weak self] in
-            
-            let alert = UIAlertController(title: "Success", message: "Biometric access setup successful", preferredStyle: .alert)
-            self?.present(alert, animated: true)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-                alert.dismiss(animated: true) { [weak self] in
-                    guard let self = self else { return }
-                    
-                    (self.delegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: self)
-                }
-            })
-            
-        }
+        self.createPincodeViewModel.viewController = self
     }
     
     required init?(coder: NSCoder) {
@@ -70,14 +21,12 @@ class BiometricAccessApprovalViewController: CreateEduIDBaseViewController {
     //MARK: - setup lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         screenType = .biometricApprovalScreen
         setupUI()
     }
     
     //MARK: - setup ui
     func setupUI() {
-        
         //poster label
         let posterParent = UIView()
         let posterLabel = UILabel.posterTextLabel(text: "Biometric approval")
@@ -119,19 +68,8 @@ Do you want to use your biometrics to access the eduID app more easily?
         skipButton.width(to: stack, offset: -24)
         
         // actions
-        setupButton.addTarget(createPincodeViewModel, action: #selector(createPincodeViewModel.promptSetupBiometricAccess), for: .touchUpInside)
-        skipButton.addTarget(self, action: #selector(promptSkipBiometricAccess), for: .touchUpInside)
+        setupButton.addTarget(createPincodeViewModel, action: #selector(createPincodeViewModel.requestBiometricAccess), for: .touchUpInside)
+        skipButton.addTarget(createPincodeViewModel, action: #selector(createPincodeViewModel.promptSkipBiometricAccess), for: .touchUpInside)
     }
     
-    //MARK: - actions
-    @objc func promptSkipBiometricAccess() {
-        let alert = UIAlertController(title: "Proceed without using biometric acces?", message: "This permanently disables this feature", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Proceed", style: .destructive) { [weak self] action in
-            (self?.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: self!)
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
-            alert.dismiss(animated: true)
-        })
-        self.present(alert, animated: true)
-    }
 }

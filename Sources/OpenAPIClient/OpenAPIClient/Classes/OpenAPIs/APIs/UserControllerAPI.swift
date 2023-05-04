@@ -473,25 +473,25 @@ open class UserControllerAPI {
     /**
      Remove user service
      
-     - parameter deleteServiceTokens: (body)  
+     - parameter deleteService: (body)  
      - returns: UserResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func removeUserService(deleteServiceTokens: DeleteServiceTokens) async throws -> UserResponse {
-        return try await removeUserServiceWithRequestBuilder(deleteServiceTokens: deleteServiceTokens).execute().body
+    open class func removeUserService(deleteService: DeleteService) async throws -> UserResponse {
+        return try await removeUserServiceWithRequestBuilder(deleteService: deleteService).execute().body
     }
 
     /**
      Remove user service
      - PUT /mobile/api/sp/service
-     - Remove user service
-     - parameter deleteServiceTokens: (body)  
+     - Remove user service by the eduID value
+     - parameter deleteService: (body)  
      - returns: RequestBuilder<UserResponse> 
      */
-    open class func removeUserServiceWithRequestBuilder(deleteServiceTokens: DeleteServiceTokens) -> RequestBuilder<UserResponse> {
+    open class func removeUserServiceWithRequestBuilder(deleteService: DeleteService) -> RequestBuilder<UserResponse> {
         let localVariablePath = "/mobile/api/sp/service"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: deleteServiceTokens)
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: deleteService)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 

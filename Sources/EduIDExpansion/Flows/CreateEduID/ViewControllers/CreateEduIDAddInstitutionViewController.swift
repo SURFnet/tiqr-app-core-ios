@@ -18,7 +18,7 @@ class CreateEduIDAddInstitutionViewController: CreateEduIDBaseViewController {
     init(viewModel: PersonalInfoViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
+        viewModel.viewController = self
         viewModel.dataAvailableClosure = { [weak self] model in
             self?.setupUI(model: model)
         }
@@ -39,9 +39,8 @@ class CreateEduIDAddInstitutionViewController: CreateEduIDBaseViewController {
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         screenType = .addInstitutionScreen        
-        continueButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
+        continueButton.addTarget(viewModel, action: #selector(viewModel.createAccount), for: .touchUpInside)
     }
     
     //MARK: - setup UI

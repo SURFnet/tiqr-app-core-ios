@@ -78,26 +78,25 @@ class PincodeBaseViewController: CreateEduIDBaseViewController {
         
         // - create the textView
         let textLabelParent = UIView()
-        textLabel = UILabel.plainTextLabelPartlyBold(text: """
-Enter the six-digit code we sent to your phone to continue
-"""
-                                                         , partBold: "six-digit")
+        textLabel = UILabel.plainTextLabelPartlyBold(text:
+        """
+        Enter the six-digit code we sent to your phone to continue
+        """, partBold: "six-digit")
+        
         textLabelParent.addSubview(textLabel)
         textLabel.edges(to: textLabelParent)
         
         // - pin fields
         
         pinStack.axis = .horizontal
-        pinStack.distribution = .equalSpacing
+        pinStack.distribution = .equalCentering
         pinStack.height(50)
-        
-        (0...5).forEach { integer in
-            let pinField = PinTextFieldView(isSecure: isSecure)
+        ((screenType == .pincodeScreen) ? 0...3 : 0...5).forEach { integer in
+            let pinField = PinTextFieldView(isSecure: isSecure, screenType: screenType)
             pinField.tag = integer
             pinField.delegate = viewModel
             pinStack.addArrangedSubview(pinField)
         }
-        
         // - activityIndicatorView
         activity.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
         activity.tintColor = .gray

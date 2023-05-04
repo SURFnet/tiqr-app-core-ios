@@ -15,6 +15,6 @@ public final class EduIDExpansion: NSObject {
     }
     
     public func run(option: OnboardingFlowType) {
-        mainCoordinator.start()
+        mainCoordinator.start(option: option)
     }
 }

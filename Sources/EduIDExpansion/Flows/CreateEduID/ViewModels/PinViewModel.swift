@@ -6,6 +6,7 @@ class PinViewModel: NSObject {
     var resignKeyboardFocus: (() -> Void)?
     var enableVerifyButton: ((Bool) -> Void)?
     var focusPinField: ((Int) -> Void)?
+    private let keychain = KeyChainService()
     
     var pinValue: [Character] = ["0", "0", "0", "0", "0", "0"]
     
@@ -28,10 +29,14 @@ class PinViewModel: NSObject {
     func enterSMS(code: String) {
         Task {
             do {
-                let result = try await TiqrControllerAPI.spVerifyPhoneCode(phoneVerification: PhoneVerification(phoneVerification: code))
+                let result = try await TiqrControllerAPI.spVerifyPhoneCodeWithRequestBuilder(phoneVerification: PhoneVerification(phoneVerification: code))
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .execute()
+                    .body
+                
                 smsEntryWasCorrect?(result)
-            } catch {
-                print(error)
+            } catch let error {
+                print("SMS VERIFICATION ERROR: \(error.localizedDescription)")
             }
         }
     }
@@ -40,10 +45,10 @@ class PinViewModel: NSObject {
 //MARK: - pin textfield delegate
 extension PinViewModel: PinTextFieldDelegate {
 
-    func didEnterPinNumber(tag: Int, value: Character) {
+    func didEnterPinNumber(range: Int, tag: Int, value: Character) {
         pinValue[tag] = value
         pinIsEnteredOnTextFieldIndex[tag] = true
-        guard tag != 5 else {
+        guard tag != range else {
             resignKeyboardFocus?()
             return }
             

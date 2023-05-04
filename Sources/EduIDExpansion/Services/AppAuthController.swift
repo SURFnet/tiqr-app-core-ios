@@ -5,6 +5,7 @@ public class AppAuthController: NSObject {
     
     //MARK: - signleton
     public static var shared = AppAuthController()
+    private let keychain = KeyChainService()
     
     //MARK: - properties of AppAuth
     public var currentAuthorizationFlow: OIDExternalUserAgentSession?
@@ -74,23 +75,20 @@ public class AppAuthController: NSObject {
     public func authorize(viewController: UIViewController, completion: (() -> Void)? = nil) {
         let externalUserAgent = OIDExternalUserAgentIOSSafari(presentingViewController: viewController)
         currentAuthorizationFlow = OIDAuthState.authState(byPresenting: request, externalUserAgent: externalUserAgent) { [weak self] authState, error in
+            guard let self else { return }
             if let authState = authState {
-                self?.authState = authState
-                self?.accessToken = authState.lastTokenResponse?.accessToken ?? ""
-                self?.refreshToken = authState.lastTokenResponse?.refreshToken ?? ""
-                
-                completion?()
+                self.authState = authState
+                if let newAccessToken = authState.lastTokenResponse?.accessToken {
+                    self.keychain.set("Bearer " + newAccessToken, for: Constants.KeyChain.accessToken)
+                    if let newRefreshToken = authState.lastTokenResponse?.refreshToken {
+                        self.keychain.set(newRefreshToken, for: Constants.KeyChain.refreshToken)
+                    }
+                    completion?()
+                }
             } else {
                 fatalError("authorization failed")
             }
         }
     }
     
-    func refresh(completionHandler: (() -> Void)?) {
-        OIDAuthorizationService.perform(tokenRefreshRequest, originalAuthorizationResponse: nil) { [weak self] tokenResponse, error in
-            self?.accessToken = tokenResponse?.accessToken ?? ""
-            self?.refreshToken = tokenResponse?.refreshToken ?? ""
-            completionHandler?()
-        }
-    }
 }
