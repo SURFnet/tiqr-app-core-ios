@@ -23,7 +23,7 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     var showPromptUseBiometricAccessClosure: (() -> Void)?
     var biometricAccessSuccessClosure: (() -> Void)?
     var biometricAccessFailureClosure: ((Error) -> Void)?
-
+    
     private let biometricService = BiometricService()
     
     var viewController: BiometricAccessApprovalViewController?
@@ -116,7 +116,6 @@ extension CreatePincodeAndBiometricAccessViewModel {
             guard let self else { return }
             if success {
                 (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
-                }
             } else {
                 self.handleBiometric(error)
             }
