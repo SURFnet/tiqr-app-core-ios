@@ -149,18 +149,24 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     }
     
     @objc func securityTapped() {
+        askForAuthorisationIfNeeded()
         delegate?.homeViewControllerShowSecurityScreen(viewController: self)
     }
     
     @objc func personalInfoTapped() {
+        askForAuthorisationIfNeeded()
         delegate?.homeViewControllerShowPersonalInfoScreen(viewController: self)
     }
     
     @objc func activityTapped() {
+        askForAuthorisationIfNeeded()
+        delegate?.homeViewControllerShowActivityScreen(viewController: self)
+    }
+    
+    private func askForAuthorisationIfNeeded() {
         let keychain = KeyChainService()
         if keychain.getString(for: Constants.KeyChain.accessToken) == nil {
             AppAuthController.shared.authorize(viewController: self)
         }
-        delegate?.homeViewControllerShowActivityScreen(viewController: self)
     }
 }

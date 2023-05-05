@@ -9,17 +9,14 @@ class CreateEduIDEnterSMSViewModel: NSObject {
     
     func enterSMS(code: String) {
         Task {
-            //TODO: Check ACCESS TOKEN CHECK
-            if let accessToken = keychain.getString(for: Constants.KeyChain.accessToken) {
-                do {
-                    let result = try await TiqrControllerAPI.spVerifyPhoneCodeWithRequestBuilder(phoneVerification: PhoneVerification(phoneVerification: code))
-                        .addHeader(name: Constants.Headers.authorization, value: accessToken)
-                        .execute()
-                        .body
-                    smsEntryWasCorrect?(result)
-                } catch {
-                    assertionFailure(error.localizedDescription)
-                }
+            do {
+                let result = try await TiqrControllerAPI.spVerifyPhoneCodeWithRequestBuilder(phoneVerification: PhoneVerification(phoneVerification: code))
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
+                    .execute()
+                    .body
+                smsEntryWasCorrect?(result)
+            } catch {
+                assertionFailure(error.localizedDescription)
             }
         }
     }

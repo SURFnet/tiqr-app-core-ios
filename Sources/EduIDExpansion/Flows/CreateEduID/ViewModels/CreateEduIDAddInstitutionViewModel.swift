@@ -10,18 +10,15 @@ class CreateEduIDFirstTimeDialogViewViewModel: NSObject {
     @MainActor
     func gotoAddInstitutionsInBrowser() {
         Task {
-            //TODO: Check ACCESS TOKEN CHECK
-            if let accessToken = keychain.getString(for: Constants.KeyChain.accessToken) {
-                do {
-                    let result = try await AccountLinkerControllerAPI.startSPLinkAccountFlowWithRequestBuilder()
-                        .addHeader(name: Constants.Headers.authorization, value: accessToken)
-                        .execute()
-                        .body
-                    
-                    addInstitutionsCompletion?(result)
-                } catch {
-                    print(error)
-                }
+            do {
+                let result = try await AccountLinkerControllerAPI.startSPLinkAccountFlowWithRequestBuilder()
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
+                    .execute()
+                    .body
+                
+                addInstitutionsCompletion?(result)
+            } catch {
+                assertionFailure(error.localizedDescription)
             }
         }
     }
