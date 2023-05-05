@@ -6,7 +6,7 @@ import LocalAuthentication
 final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     
     // - enrollment challenge object
-    let enrollmentChallenge: EnrollmentChallenge?
+    var enrollmentChallenge: EnrollmentChallenge?
     // - authentication challenge object
     let authenticationChallenge: AuthenticationChallenge?
     
@@ -27,7 +27,6 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     private let biometricService = BiometricService()
     var viewController: BiometricAccessApprovalViewController?
     private let keychain = KeyChainService()
-    
     
     //MARK: - init
     init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil) {
@@ -65,8 +64,7 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
         return pinArray.map { String($0) }.joined() as String
     }
     
-    @objc
-    func promptSetupBiometricAccess() {
+    @objc func promptSetupBiometricAccess() {
         if ServiceContainer.sharedInstance().secretService.biometricIDAvailable {
             showPromptUseBiometricAccessClosure?()
         } else {
@@ -78,7 +76,6 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     @MainActor
     func requestTiqrEnroll(withBiometrics: Bool, completion: @escaping ((Bool) -> Void)) {
         Task {
-            //TODO: Check ACCESS TOKEN CHECK
             do{
                 let enrolment = try await TiqrControllerAPI.startEnrollmentWithRequestBuilder()
                     .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
@@ -89,6 +86,7 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
                     guard let self else { return }
                     ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: withBiometrics, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { success, error in
                         if success {
+                            self.enrollmentChallenge = (object as? EnrollmentChallenge)
                             completion(true)
                         } else {
                             completion(false)
@@ -111,7 +109,17 @@ extension CreatePincodeAndBiometricAccessViewModel {
         biometricService.useOnDeviceBiometricFeature { [weak self] success, error in
             guard let self else { return }
             if success {
-                (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
+                if let enrolment = self.enrollmentChallenge {
+                    if let managedObject = enrolment.identity.managedObjectContext {
+                        enrolment.identity.biometricIDEnabled = NSNumber(value: 1)
+                        do {
+                            try managedObject.save()
+                            (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
+                        } catch let error {
+                            assertionFailure(error.localizedDescription)
+                        }
+                    }
+                }
             } else {
                 self.handleBiometric(error)
             }
