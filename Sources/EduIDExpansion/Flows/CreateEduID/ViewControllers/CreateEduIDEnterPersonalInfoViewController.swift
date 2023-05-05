@@ -69,8 +69,6 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
         viewModel.createEduIDSuccessClosure = { [weak self] in
             self?.showNextScreen()
         }
-        
-        autoFillTestOnly()
     }
     
     required init?(coder: NSCoder) {
@@ -199,23 +197,5 @@ class CreateEduIDEnterPersonalInfoViewController: ScrollingTextFieldsViewControl
     func showNextScreen() {
         delegate?.createEduIDViewControllerShowNextScreen(viewController: self)
     }
-    
-    
-    private func autoFillTestOnly() {
-        let email = "yasser+\(UUID())@egeniq.com"
-        let name = "Yasser"
-        let lastName = "Farahi"
-        
-        DispatchQueue.main.async {
-            self.emailField.textField.text = email
-            self.firstNameField.textField.text = name
-            self.lastNameField.textField.text = lastName
-            
-            self.createEduIDAction()
-        }
-        
-    }
-    
-    
 }
 
