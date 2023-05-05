@@ -64,7 +64,7 @@ extension MainCoordinator: HomeViewControllerDelegate  {
 
 //MARK: - personal info methods
 extension MainCoordinator: PersonalInfoCoordinatorDelegate {
-    
+
     func personalInfoCoordinatorDismissPersonalInfoFlow(coordinator: CoordinatorType) {
         homeNavigationController.presentedViewController?.dismiss(animated: true)
         children.removeAll { $0 === coordinator }

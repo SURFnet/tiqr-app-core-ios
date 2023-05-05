@@ -79,27 +79,25 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     func requestTiqrEnroll(withBiometrics: Bool, completion: @escaping ((Bool) -> Void)) {
         Task {
             //TODO: Check ACCESS TOKEN CHECK
-            if let accessToken = keychain.getString(for: Constants.KeyChain.accessToken) {
-                do{
-                    let enrolment = try await TiqrControllerAPI.startEnrollmentWithRequestBuilder()
-                        .addHeader(name: Constants.Headers.authorization, value: accessToken)
-                        .execute()
-                        .body
-                    
-                    ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrolment.url ?? "") { [weak self] type, object, error in
-                        guard let self else { return }
-                        ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: withBiometrics, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { success, error in
-                            if success {
-                                completion(true)
-                            } else {
-                                completion(false)
-                            }
+            do{
+                let enrolment = try await TiqrControllerAPI.startEnrollmentWithRequestBuilder()
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
+                    .execute()
+                    .body
+                
+                ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrolment.url ?? "") { [weak self] type, object, error in
+                    guard let self else { return }
+                    ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: withBiometrics, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { success, error in
+                        if success {
+                            completion(true)
+                        } else {
+                            completion(false)
                         }
                     }
-                } catch let error as NSError {
-                    assertionFailure(error.localizedDescription)
-                    completion(false)
                 }
+            } catch let error as NSError {
+                assertionFailure(error.localizedDescription)
+                completion(false)
             }
         }
     }
