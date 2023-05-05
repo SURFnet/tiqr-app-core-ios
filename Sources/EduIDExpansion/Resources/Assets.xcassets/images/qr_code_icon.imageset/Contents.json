@@ -1,15 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "ready_for_use.svg",
+      "filename" : "qr_code_icon.svg",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

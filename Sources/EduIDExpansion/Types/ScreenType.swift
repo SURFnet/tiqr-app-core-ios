@@ -126,7 +126,10 @@ enum ScreenType: Int, CaseIterable {
             item.rightBarButtonItem?.tintColor = .white
             
         case .homeScreen:
-            item.leftBarButtonItem = UIBarButtonItem(image: .qrLogo.withRenderingMode(.alwaysOriginal), style: .done, target: target, action: action)
+            let eduIdLogo = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)))
+            eduIdLogo.image = UIImage.eduIDLogo
+            eduIdLogo.contentMode = .scaleAspectFit
+            item.titleView = eduIdLogo
             item.rightBarButtonItem = UIBarButtonItem(title: "Log off", style: .plain, target: target, action: secondaryAction)
             
             // just logo

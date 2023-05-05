@@ -4,9 +4,6 @@ import OpenAPIClient
 
 class CreateEduIDCreatedViewController: CreateEduIDBaseViewController {
 
-    
-    private let keyChain = KeyChainService()
-    
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
