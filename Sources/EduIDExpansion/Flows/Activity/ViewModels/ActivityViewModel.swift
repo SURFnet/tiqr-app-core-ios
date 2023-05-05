@@ -24,15 +24,18 @@ class ActivityViewModel: NSObject {
     @MainActor
     func getData() {
         Task {
-            do {
-                try await userResponse = UserControllerAPI.meWithRequestBuilder()
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
-                    .execute()
-                    .body
-                
-                processUserData()
-            } catch {
-                dataFetchErrorClosure?(error)
+            //TODO: Check ACCESS TOKEN CHECK
+            if let accessToken = keychain.getString(for: Constants.KeyChain.accessToken) {
+                do {
+                    try await userResponse = UserControllerAPI.meWithRequestBuilder()
+                        .addHeader(name: Constants.Headers.authorization, value: accessToken)
+                        .execute()
+                        .body
+                    
+                    processUserData()
+                } catch {
+                    dataFetchErrorClosure?(error)
+                }
             }
         }
     }
@@ -57,17 +60,19 @@ class ActivityViewModel: NSObject {
     
     func removeLinkedAccount(linkedAccount: LinkedAccount) {
         Task {
-            do {
-                
-                let result = try await UserControllerAPI.removeUserLinkedAccountsWithRequestBuilder(linkedAccount: linkedAccount)
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
-                    .execute()
-                    .body
-                
-                if !(result.linkedAccounts?.contains(linkedAccount) ?? true) {
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self else { return }
-                        self.serviceRemovedClosure?(linkedAccount)
+            //TODO: Check ACCESS TOKEN CHECK
+            if let accessToken = keychain.getString(for: Constants.KeyChain.accessToken) {
+                do {
+                    let result = try await UserControllerAPI.removeUserLinkedAccountsWithRequestBuilder(linkedAccount: linkedAccount)
+                        .addHeader(name: Constants.Headers.authorization, value: accessToken)
+                        .execute()
+                        .body
+                    
+                    if !(result.linkedAccounts?.contains(linkedAccount) ?? true) {
+                        DispatchQueue.main.async { [weak self] in
+                            guard let self else { return }
+                            self.serviceRemovedClosure?(linkedAccount)
+                        }
                     }
                 }
             }

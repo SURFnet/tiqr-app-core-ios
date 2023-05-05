@@ -40,7 +40,7 @@ class CreateEduIDEnterPersonalInfoViewModel: NSObject {
             do {
                 let account = CreateAccount(email: email, givenName: givenName, familyName: familyName, relyingPartClientId: AppAuthController.clientID)
                 try await UserControllerAPI.createEduIDAccountWithRequestBuilder(createAccount: account)
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
                     .execute()
                     .body
                 createEduIDSuccessClosure?()

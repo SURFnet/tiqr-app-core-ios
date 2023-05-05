@@ -10,6 +10,7 @@ extension UIImage {
     static let readyForUse = UIImage(named: "ready_for_use", in: Bundle.module, with: nil)!
     static let qrLogo = UIImage(named: "qr_logo", in: Bundle.module, with: nil)!
     static let security = UIImage(named: "security", in: Bundle.module, with: nil)!
+    static let qrCodeIcon = UIImage(named: "qr_code_icon", in: Bundle.module, with: nil)!
     static let personalInfo = UIImage(named: "personal_info", in: Bundle.module, with: nil)!
     static let activity = UIImage(named: "activity", in: Bundle.module, with: nil)!
     static let qrFrame = UIImage(named: "qr_frame", in: Bundle.module, with: nil)!

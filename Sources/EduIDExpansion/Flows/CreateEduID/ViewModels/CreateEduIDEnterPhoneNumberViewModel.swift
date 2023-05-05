@@ -15,14 +15,17 @@ class CreateEduIDEnterPhoneNumberViewModel: NSObject {
     @MainActor
     func sendPhoneNumber(number: String) {
         Task {
-            do {
-                let result = try await TiqrControllerAPI.sendPhoneCodeForSpWithRequestBuilder(phoneCode: PhoneCode(phoneNumber: number))
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
-                    .execute()
-                    .body
-                phoneNumberReceivedClosure?(result)
-            } catch let error {
-                print("ERROR WHILE SAVING PHONE: \(error.localizedDescription)")
+            //TODO: Check ACCESS TOKEN CHECK
+            if let accessToken = keychain.getString(for: Constants.KeyChain.accessToken) {
+                do {
+                    let result = try await TiqrControllerAPI.sendPhoneCodeForSpWithRequestBuilder(phoneCode: PhoneCode(phoneNumber: number))
+                        .addHeader(name: Constants.Headers.authorization, value: accessToken)
+                        .execute()
+                        .body
+                    phoneNumberReceivedClosure?(result)
+                } catch let error {
+                    assertionFailure(error.localizedDescription)
+                }
             }
         }
     }
