@@ -84,9 +84,11 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
                 
                 ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrolment.url ?? "") { [weak self] type, object, error in
                     guard let self else { return }
+                    self.secondEnteredPin.removeLast(2)
                     ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: withBiometrics, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { success, error in
                         if success {
                             self.enrollmentChallenge = (object as? EnrollmentChallenge)
+                            print("PINCODE IS \(self.secondEnteredPin)")
                             completion(true)
                         } else {
                             completion(false)
@@ -102,8 +104,6 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
 }
 
 extension CreatePincodeAndBiometricAccessViewModel {
-    
-    //TODO: Should enable biometrics on the challenge
     @objc func requestBiometricAccess() {
         guard let viewController = self.viewController else { return }
         biometricService.useOnDeviceBiometricFeature { [weak self] success, error in
