@@ -38,7 +38,9 @@ class ActivityViewModel: NSObject {
     }
     
     private func processUserData() {
-        guard let userResponse = userResponse else { return }
+        guard let userResponse = userResponse else {
+            return
+        }
         
         if userResponse.linkedAccounts?.isEmpty ?? true {
             let name = "\(userResponse.givenName?.first ?? "X"). \(userResponse.familyName ?? "")"

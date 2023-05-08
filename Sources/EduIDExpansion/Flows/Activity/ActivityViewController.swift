@@ -13,10 +13,6 @@ class ActivityViewController: BaseViewController {
     init(viewModel: ActivityViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
-        viewModel.dataAvailableClosure = { [weak self] model in
-            self?.setupUI(model: model)
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -33,6 +29,9 @@ class ActivityViewController: BaseViewController {
         super.viewWillAppear(animated)
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(dismissActivityScreen))
         viewModel.loadData()
+        viewModel.dataAvailableClosure = { [weak self] model in
+            self?.setupUI(model: model)
+        }
     }
     
     //MARK: - setup UI
@@ -81,5 +80,4 @@ Each service you accessed through eduID receives certain personal data (attribut
     func dismissActivityScreen() {
         delegate?.activityViewControllerDismissActivityFlow(viewController: self)
     }
-    
 }
