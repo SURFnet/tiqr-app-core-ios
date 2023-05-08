@@ -24,10 +24,10 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     var biometricAccessSuccessClosure: (() -> Void)?
     var biometricAccessFailureClosure: ((Error) -> Void)?
     
+    var nextScreenDelegate: ShowNextScreenDelegate?
     private let biometricService = BiometricService()
-    var viewController: BiometricAccessApprovalViewController?
     private let keychain = KeyChainService()
-    
+
     //MARK: - init
     init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil) {
         self.enrollmentChallenge = enrollmentChallenge
@@ -104,7 +104,6 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
 
 extension CreatePincodeAndBiometricAccessViewModel {
     @objc func requestBiometricAccess() {
-        guard let viewController = self.viewController else { return }
         biometricService.useOnDeviceBiometricFeature { [weak self] success, error in
             guard let self else { return }
             if success {
@@ -113,7 +112,7 @@ extension CreatePincodeAndBiometricAccessViewModel {
                         enrolment.identity.biometricIDEnabled = NSNumber(value: 1)
                         do {
                             try managedObject.save()
-                            (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
+                            self.nextScreenDelegate?.nextScreen()
                         } catch let error {
                             assertionFailure(error.localizedDescription)
                         }
@@ -129,26 +128,10 @@ extension CreatePincodeAndBiometricAccessViewModel {
         guard let err = error else { return }
         switch err.code {
         case .userCancel, .biometryNotAvailable:
-            guard let viewController = self.viewController else { break }
-            (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
+            nextScreenDelegate?.nextScreen()
         default:
             break
         }
     }
-    
-    //MARK: - actions
-    @objc func promptSkipBiometricAccess() {
-        guard let viewController = self.viewController else { return }
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: Constants.AlertTiles.skipUsingBiometricsTitle, message: Constants.AlertMessages.skipUsingBiometricsMessage, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(
-                title: Constants.ButtonTitles.proceed, style: .destructive) {  _ in
-                    (viewController.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: viewController)
-                })
-            alert.addAction(UIAlertAction(title: Constants.ButtonTitles.cancel, style: .cancel) { action in
-                alert.dismiss(animated: true)
-            })
-            viewController.present(alert, animated: true)
-        }
-    }
 }
+

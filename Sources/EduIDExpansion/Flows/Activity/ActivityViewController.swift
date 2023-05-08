@@ -32,10 +32,7 @@ class ActivityViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(dismissActivityScreen))
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.viewModel.loadData()
-        }
+        viewModel.loadData()
     }
     
     //MARK: - setup UI
