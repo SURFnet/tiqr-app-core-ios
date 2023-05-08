@@ -81,10 +81,16 @@ final class ScanViewModel: NSObject {
     }
     
     func handleAuthenticationScanResult() {
-        guard let challenge = challenge as? AuthenticationChallenge else { return }
+        guard let challenge = challenge as? AuthenticationChallenge else {
+            return
+            
+        }
         
         ServiceContainer.sharedInstance().secretService.secret(for: challenge.identity, touchIDPrompt: "sdfsdfsd") { data in
-            guard let data = data else { return }
+            guard let data = data else {
+                return
+                
+            }
             
             ServiceContainer.sharedInstance().challengeService.complete(challenge, withSecret: data) { [weak self] success, response, error in
                 guard let self = self else { return }

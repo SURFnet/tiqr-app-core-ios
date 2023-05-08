@@ -95,7 +95,7 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
                     }
                 }
             } catch let error as NSError {
-                assertionFailure(error.localizedDescription)
+                dump(error)
                 completion(false)
             }
         }

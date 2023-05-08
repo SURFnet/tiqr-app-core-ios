@@ -58,7 +58,7 @@ extension MainCoordinator: HomeViewControllerDelegate  {
         let scanCoordinator = ScanCoordinator(viewControllerToPresentOn: homeNavigationController)
         scanCoordinator.delegate = self
         children.append(scanCoordinator)
-        scanCoordinator.start()
+        scanCoordinator.start(for: .login)
     }
 }
 
