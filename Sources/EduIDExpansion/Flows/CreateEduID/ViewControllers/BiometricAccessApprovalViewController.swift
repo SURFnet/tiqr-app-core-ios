@@ -69,22 +69,20 @@ Do you want to use your biometrics to access the eduID app more easily?
         
         // actions
         setupButton.addTarget(createPincodeViewModel, action: #selector(createPincodeViewModel.requestBiometricAccess), for: .touchUpInside)
-        skipButton.addTarget(createPincodeViewModel, action: #selector(promptSkipBiometricAccess), for: .touchUpInside)
+        skipButton.addTarget(self, action: #selector(promptSkipBiometricAccess), for: .touchUpInside)
     }
     
     @objc func promptSkipBiometricAccess() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
             let alert = UIAlertController(title: Constants.AlertTiles.skipUsingBiometricsTitle, message: Constants.AlertMessages.skipUsingBiometricsMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(
-                title: Constants.ButtonTitles.proceed, style: .destructive) {  _ in
-                    (self.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: self)
+                title: Constants.ButtonTitles.proceed, style: .destructive) { [weak self] _ in
+                    guard let self else { return }
+                    self.nextScreen()
                 })
             alert.addAction(UIAlertAction(title: Constants.ButtonTitles.cancel, style: .cancel) { action in
                 alert.dismiss(animated: true)
             })
-            self.present(alert, animated: true)
-        }
+            present(alert, animated: true)
     }
     
 }
