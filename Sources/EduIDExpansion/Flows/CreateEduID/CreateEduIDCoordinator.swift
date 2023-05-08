@@ -60,7 +60,9 @@ extension CreateEduIDCoordinator: ScanCoordinatorDelegate {
     }
     
     func scanCoordinatorJumpToCreatePincodeScreen(coordinator: ScanCoordinator, viewModel: ScanViewModel) {
-        guard let challenge = viewModel.challenge as? EnrollmentChallenge else { return }
+        guard let challenge = viewModel.challenge as? EnrollmentChallenge else {
+            return
+        }
         
         let pincodeFirstAttemptViewController = CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel(enrollmentChallenge: challenge))
         pincodeFirstAttemptViewController.delegate = self
