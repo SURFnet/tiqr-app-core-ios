@@ -1,6 +1,5 @@
 import UIKit
 import TinyConstraints
-import OpenAPIClient
 
 class CreateEduIDEnterSMSViewController: PincodeBaseViewController {
     

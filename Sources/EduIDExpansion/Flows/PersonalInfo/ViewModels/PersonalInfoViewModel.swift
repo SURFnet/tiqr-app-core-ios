@@ -28,7 +28,7 @@ class PersonalInfoViewModel: NSObject {
         Task {
             do {
                 try await userResponse = UserControllerAPI.meWithRequestBuilder()
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
                     .execute()
                     .body
                 processUserData()
@@ -40,7 +40,6 @@ class PersonalInfoViewModel: NSObject {
     
     private func processUserData() {
         guard let userResponse = userResponse else { return }
-        
         if userResponse.linkedAccounts?.isEmpty ?? true {
             let name = "\(userResponse.givenName?.first ?? "X"). \(userResponse.familyName ?? "")"
             let nameProvidedBy = LocalizedKey.Profile.me.localized
@@ -60,7 +59,7 @@ class PersonalInfoViewModel: NSObject {
         Task {
             do {
                 let result = try await UserControllerAPI.removeUserLinkedAccountsWithRequestBuilder(linkedAccount: linkedAccount)
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
                     .execute()
                     .body
                 
@@ -70,6 +69,8 @@ class PersonalInfoViewModel: NSObject {
                         self.serviceRemovedClosure?(linkedAccount)
                     }
                 }
+            } catch let error {
+                assertionFailure(error.localizedDescription)
             }
         }
     }
@@ -81,9 +82,9 @@ extension PersonalInfoViewModel {
         guard let viewController = self.viewController else { return }
         viewController.showNextScreen()
         let biometryStatus = defaults.bool(forKey: Constants.BiometricDefaults.key)
-            defaults.set(biometryStatus ? OnboardingFlowType.existingUserWithSecret.rawValue
-                         : OnboardingFlowType.existingUserWithSecret.rawValue,
-                         forKey: OnboardingManager.userdefaultsFlowTypeKey)
+        defaults.set(biometryStatus ? OnboardingFlowType.existingUserWithSecret.rawValue
+                     : OnboardingFlowType.existingUserWithSecret.rawValue,
+                     forKey: OnboardingManager.userdefaultsFlowTypeKey)
         
     }
 }

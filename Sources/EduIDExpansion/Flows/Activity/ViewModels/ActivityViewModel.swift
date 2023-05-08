@@ -26,7 +26,7 @@ class ActivityViewModel: NSObject {
         Task {
             do {
                 try await userResponse = UserControllerAPI.meWithRequestBuilder()
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "" )
                     .execute()
                     .body
                 
@@ -38,7 +38,9 @@ class ActivityViewModel: NSObject {
     }
     
     private func processUserData() {
-        guard let userResponse = userResponse else { return }
+        guard let userResponse = userResponse else {
+            return
+        }
         
         if userResponse.linkedAccounts?.isEmpty ?? true {
             let name = "\(userResponse.givenName?.first ?? "X"). \(userResponse.familyName ?? "")"
@@ -58,9 +60,8 @@ class ActivityViewModel: NSObject {
     func removeLinkedAccount(linkedAccount: LinkedAccount) {
         Task {
             do {
-                
                 let result = try await UserControllerAPI.removeUserLinkedAccountsWithRequestBuilder(linkedAccount: linkedAccount)
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
                     .execute()
                     .body
                 
@@ -70,6 +71,8 @@ class ActivityViewModel: NSObject {
                         self.serviceRemovedClosure?(linkedAccount)
                     }
                 }
+            } catch let error {
+                assertionFailure(error.localizedDescription)
             }
         }
     }

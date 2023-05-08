@@ -12,13 +12,13 @@ class CreateEduIDFirstTimeDialogViewViewModel: NSObject {
         Task {
             do {
                 let result = try await AccountLinkerControllerAPI.startSPLinkAccountFlowWithRequestBuilder()
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
                     .execute()
                     .body
                 
                 addInstitutionsCompletion?(result)
             } catch {
-                print(error)
+                assertionFailure(error.localizedDescription)
             }
         }
     }

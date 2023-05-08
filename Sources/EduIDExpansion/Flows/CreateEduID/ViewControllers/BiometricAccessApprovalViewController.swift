@@ -11,7 +11,7 @@ class BiometricAccessApprovalViewController: CreateEduIDBaseViewController {
     init(viewModel: CreatePincodeAndBiometricAccessViewModel) {
         self.createPincodeViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.createPincodeViewModel.viewController = self
+        self.createPincodeViewModel.nextScreenDelegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -69,7 +69,26 @@ Do you want to use your biometrics to access the eduID app more easily?
         
         // actions
         setupButton.addTarget(createPincodeViewModel, action: #selector(createPincodeViewModel.requestBiometricAccess), for: .touchUpInside)
-        skipButton.addTarget(createPincodeViewModel, action: #selector(createPincodeViewModel.promptSkipBiometricAccess), for: .touchUpInside)
+        skipButton.addTarget(self, action: #selector(promptSkipBiometricAccess), for: .touchUpInside)
     }
     
+    @objc func promptSkipBiometricAccess() {
+            let alert = UIAlertController(title: Constants.AlertTiles.skipUsingBiometricsTitle, message: Constants.AlertMessages.skipUsingBiometricsMessage, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(
+                title: Constants.ButtonTitles.proceed, style: .destructive) { [weak self] _ in
+                    guard let self else { return }
+                    self.nextScreen()
+                })
+            alert.addAction(UIAlertAction(title: Constants.ButtonTitles.cancel, style: .cancel) { action in
+                alert.dismiss(animated: true)
+            })
+            present(alert, animated: true)
+    }
+    
+}
+
+extension BiometricAccessApprovalViewController: ShowNextScreenDelegate {
+    func nextScreen() {
+        (self.biometricApprovaldelegate as? CreateEduIDViewControllerDelegate)?.createEduIDViewControllerShowNextScreen(viewController: self)
+    }
 }

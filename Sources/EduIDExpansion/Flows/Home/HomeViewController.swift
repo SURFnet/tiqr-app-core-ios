@@ -1,29 +1,33 @@
 import UIKit
 import TinyConstraints
 import OpenAPIClient
+import KeychainSwift
 
 class HomeViewController: UIViewController, ScreenWithScreenType {
     
     //MARK: - screen type
     var screenType: ScreenType = .homeScreen
-    
     weak var delegate: HomeViewControllerDelegate?
     var buttonStack: AnimatedHStackView!
+    private var childScreenMode: HomeViewChildScreensType = .none
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        NotificationCenter.default.addObserver(self, selector: #selector(loadViewWhenReceivingNotification), name: .firstTimeAuthorizationCompleteWithSecretPresent, object: nil)
         setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         buttonStack.animate()
-        screenType.configureNavigationItem(item: navigationItem, target: self, action: #selector(showScanScreen), secondaryAction: #selector(logOff))
+        screenType.configureNavigationItem(item: navigationItem, target: self, action: nil, secondaryAction: #selector(logOff))
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: .firstTimeAuthorizationCompleteWithSecretPresent, object: nil)
     }
     
     func setupUI() {
@@ -33,7 +37,7 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
         view.addSubview(posterLabel)
         posterLabel.width(to: view)
         posterLabel.centerX(to: view)
-        posterLabel.top(to: view, offset: 125)
+        posterLabel.top(to: view, offset: 250)
         
         //MARK: - blue bottom view
         let blueBottomView = UIView()
@@ -67,10 +71,10 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
         securityLabel.textAlignment = .center
         securityLabel.width(100)
         securityLabel.textColor = .white
-        let firstVStack = UIStackView(arrangedSubviews: [securityButton, securityLabel])
-        firstVStack.axis = .vertical
-        firstVStack.width(100)
-        firstVStack.spacing = 3
+        let securityStack = UIStackView(arrangedSubviews: [securityButton, securityLabel])
+        securityStack.axis = .vertical
+        securityStack.width(100)
+        securityStack.spacing = 3
         
         let personalInfoButton = UIButton()
         personalInfoButton.setImage(.personalInfo, for: .normal)
@@ -82,10 +86,10 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
         personalInfoLabel.text = "Personal info"
         personalInfoLabel.textAlignment = .center
         personalInfoLabel.textColor = .white
-        let secondVStack = UIStackView(arrangedSubviews: [personalInfoButton, personalInfoLabel])
-        secondVStack.axis = .vertical
-        secondVStack.width(100)
-        secondVStack.spacing = 3
+        let personalInfoStack = UIStackView(arrangedSubviews: [personalInfoButton, personalInfoLabel])
+        personalInfoStack.axis = .vertical
+        personalInfoStack.width(100)
+        personalInfoStack.spacing = 3
         
         let activityButton = UIButton()
         activityButton.setImage(.activity, for: .normal)
@@ -97,14 +101,30 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
         activityLabel.textAlignment = .center
         activityLabel.font = .nunitoBold(size: 14)
         activityLabel.textColor = .white
-        let thirdVStack = UIStackView(arrangedSubviews: [activityButton, activityLabel])
-        thirdVStack.axis = .vertical
-        thirdVStack.width(100)
-        thirdVStack.spacing = 3
+        let activityStack = UIStackView(arrangedSubviews: [activityButton, activityLabel])
+        activityStack.axis = .vertical
+        activityStack.width(100)
+        activityStack.spacing = 3
         
-        buttonStack = AnimatedHStackView(arrangedSubviews: [firstVStack, secondVStack, thirdVStack])
+        let qrCodeButton = UIButton()
+        qrCodeButton.setImage(.qrCodeIcon, for: .normal)
+        qrCodeButton.contentMode = .scaleAspectFit
+        qrCodeButton.height(51)
+        qrCodeButton.addTarget(self, action: #selector(showScanScreen), for: .touchUpInside)
+        let qrCodeLabel = UILabel()
+        qrCodeLabel.font = .nunitoBold(size: 14)
+        qrCodeLabel.text = "Scan QR"
+        qrCodeLabel.textAlignment = .center
+        qrCodeLabel.width(100)
+        qrCodeLabel.textColor = .white
+        let qrStack = UIStackView(arrangedSubviews: [qrCodeButton, qrCodeLabel])
+        qrStack.axis = .vertical
+        qrStack.width(100)
+        qrStack.spacing = 3
+        
+        buttonStack = AnimatedHStackView(arrangedSubviews: [qrStack, personalInfoStack, securityStack, activityStack])
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
-        buttonStack.spacing = 0
+        buttonStack.spacing = -15
         view.addSubview(buttonStack)
         buttonStack.centerX(to: view)
         buttonStack.bottom(to: view, offset: -60)
@@ -117,26 +137,66 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     //MARK: - action buttons
     
     @objc func logOff() {
-        
+        testFuncRemoveAccessToken()
     }
     
-    @objc
-    func showScanScreen() {
+    private func testFuncRemoveAccessToken() {
+        //TODO: REMOVE ACCESS TOKEN
+        UserDefaults.standard.set("nil", forKey: OnboardingManager.userdefaultsFlowTypeKey)
+        let keychain = KeyChainService()
+        keychain.delete(for: Constants.KeyChain.accessToken)
+    }
+    
+    @objc func showScanScreen() {
         delegate?.homeViewControllerShowScanScreen(viewController: self)
     }
     
-    @objc
-    func securityTapped() {
-        delegate?.homeViewControllerShowSecurityScreen(viewController: self)
+    @objc func securityTapped() {
+        presentView(for: .security)
     }
     
-    @objc
-    func personalInfoTapped() {
-        delegate?.homeViewControllerShowPersonalInfoScreen(viewController: self)
+    @objc func personalInfoTapped() {
+        presentView(for: .personalInfo)
     }
     
-    @objc
-    func activityTapped() {
-        delegate?.homeViewControllerShowActivityScreen(viewController: self)
+    @objc func activityTapped() {
+        presentView(for: .activity)
     }
+    
+    private func askForAuthorisationIfNeeded() -> Bool {
+        let keychain = KeyChainService()
+        if keychain.getString(for: Constants.KeyChain.accessToken) == nil {
+            AppAuthController.shared.authorize(viewController: self)
+            return true
+        }
+        return false
+    }
+    
+    fileprivate func presentView(for childScreen: HomeViewChildScreensType) {
+        if askForAuthorisationIfNeeded(){
+            childScreenMode = childScreen
+        } else {
+            load(childScreen)
+        }
+    }
+    
+    private func load(_ screen: HomeViewChildScreensType) {
+        switch screen {
+        case .activity:
+            delegate?.homeViewControllerShowActivityScreen(viewController: self)
+        case .security:
+            delegate?.homeViewControllerShowSecurityScreen(viewController: self)
+        case .personalInfo:
+            delegate?.homeViewControllerShowPersonalInfoScreen(viewController: self)
+        default: break
+        }
+    }
+    
+    @objc private func loadViewWhenReceivingNotification() {
+        load(childScreenMode)
+    }
+}
+
+enum HomeViewChildScreensType {
+    case activity, security, personalInfo, none
 }

@@ -17,12 +17,12 @@ class CreateEduIDEnterPhoneNumberViewModel: NSObject {
         Task {
             do {
                 let result = try await TiqrControllerAPI.sendPhoneCodeForSpWithRequestBuilder(phoneCode: PhoneCode(phoneNumber: number))
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken))
+                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
                     .execute()
                     .body
                 phoneNumberReceivedClosure?(result)
             } catch let error {
-                print("ERROR WHILE SAVING PHONE: \(error.localizedDescription)")
+                assertionFailure(error.localizedDescription)
             }
         }
     }
