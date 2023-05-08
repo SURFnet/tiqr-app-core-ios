@@ -7,13 +7,15 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     
     //MARK: - screen type
     var screenType: ScreenType = .homeScreen
-    
     weak var delegate: HomeViewControllerDelegate?
     var buttonStack: AnimatedHStackView!
+    private var childScreenMode: HomeViewChildScreensType = .none
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        NotificationCenter.default.addObserver(self, selector: #selector(loadViewWhenReceivingNotification), name: .firstTimeAuthorizationCompleteWithSecretPresent, object: nil)
         setupUI()
     }
     
@@ -23,8 +25,9 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
         screenType.configureNavigationItem(item: navigationItem, target: self, action: nil, secondaryAction: #selector(logOff))
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: .firstTimeAuthorizationCompleteWithSecretPresent, object: nil)
     }
     
     func setupUI() {
@@ -149,24 +152,51 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     }
     
     @objc func securityTapped() {
-        askForAuthorisationIfNeeded()
-        delegate?.homeViewControllerShowSecurityScreen(viewController: self)
+        presentView(for: .security)
     }
     
     @objc func personalInfoTapped() {
-        askForAuthorisationIfNeeded()
-        delegate?.homeViewControllerShowPersonalInfoScreen(viewController: self)
+        presentView(for: .personalInfo)
     }
     
     @objc func activityTapped() {
-        askForAuthorisationIfNeeded()
-        delegate?.homeViewControllerShowActivityScreen(viewController: self)
+        presentView(for: .activity)
     }
     
-    private func askForAuthorisationIfNeeded() {
+    private func askForAuthorisationIfNeeded() -> Bool {
         let keychain = KeyChainService()
         if keychain.getString(for: Constants.KeyChain.accessToken) == nil {
             AppAuthController.shared.authorize(viewController: self)
+            return true
+        }
+        return false
+    }
+    
+    fileprivate func presentView(for childScreen: HomeViewChildScreensType) {
+        if askForAuthorisationIfNeeded(){
+            childScreenMode = childScreen
+        } else {
+            load(childScreen)
         }
     }
+    
+    private func load(_ screen: HomeViewChildScreensType) {
+        switch screen {
+        case .activity:
+            delegate?.homeViewControllerShowActivityScreen(viewController: self)
+        case .security:
+            delegate?.homeViewControllerShowSecurityScreen(viewController: self)
+        case .personalInfo:
+            delegate?.homeViewControllerShowPersonalInfoScreen(viewController: self)
+        default: break
+        }
+    }
+    
+    @objc private func loadViewWhenReceivingNotification() {
+        load(childScreenMode)
+    }
+}
+
+enum HomeViewChildScreensType {
+    case activity, security, personalInfo, none
 }
