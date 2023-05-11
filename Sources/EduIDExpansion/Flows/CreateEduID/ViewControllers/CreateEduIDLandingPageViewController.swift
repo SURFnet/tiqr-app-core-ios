@@ -44,8 +44,8 @@ class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
         let lowerSpaceView = UIView()
         
         // - buttons
-        let signinButton = EduIDButton(type: .primary, buttonTitle: "Sign in")
-        signinButton.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
+        let signInButton = EduIDButton(type: .primary, buttonTitle: "Sign in")
+        signInButton.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
         let scanQRButton = EduIDButton(type: .primary, buttonTitle: "Scan a QR code")
         scanQRButton.addTarget(self, action: #selector(showScanScreen), for: .touchUpInside)
         let noEduIDYetButton = EduIDButton(type: .naked, buttonTitle: "I don't have an eduId")
@@ -54,7 +54,7 @@ class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
         noEduIDYetButton.addTarget(self, action: #selector(showNextScreen), for: .touchUpInside)
         
         // - create the stackview
-        stack = AnimatedVStackView(arrangedSubviews: [logo, posterLabel, upperSpaceView, imageView, lowerSpaceView, signinButton, scanQRButton, noEduIDYetButton])
+        stack = AnimatedVStackView(arrangedSubviews: [logo, posterLabel, upperSpaceView, imageView, lowerSpaceView, signInButton, scanQRButton, noEduIDYetButton])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
@@ -63,12 +63,12 @@ class CreateEduIDLandingPageViewController: CreateEduIDBaseViewController {
         upperSpaceView.height(to: lowerSpaceView)
         
         stack.edgesToSuperview(insets: TinyEdgeInsets(top: 24, left: 24, bottom: 24, right: 24), usingSafeArea: true)
-        signinButton.width(to: stack, offset: -24)
+        signInButton.width(to: stack, offset: -24)
         scanQRButton.width(to: stack, offset: -24)
         noEduIDYetButton.width(to: stack, offset: -24)
         posterLabel.width(to: stack)
         
-        stack.setCustomSpacing(24, after: signinButton)
+        stack.setCustomSpacing(24, after: signInButton)
         stack.setCustomSpacing(24, after: scanQRButton)
         
         stack.hideAndTriggerAll(onlyThese: [3, 4, 5])

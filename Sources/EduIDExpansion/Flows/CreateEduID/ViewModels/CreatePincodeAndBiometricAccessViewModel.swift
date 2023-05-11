@@ -27,18 +27,21 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     var nextScreenDelegate: ShowNextScreenDelegate?
     private let biometricService = BiometricService()
     private let keychain = KeyChainService()
-
+    
+    var isQrEnrolment: Bool?
+    
     //MARK: - init
-    init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil) {
+    init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil, isQrEnrolment: Bool? = nil) {
         self.enrollmentChallenge = enrollmentChallenge
         self.authenticationChallenge = authenticationChallenge
+        self.isQrEnrolment = isQrEnrolment
         super.init()
     }
     
     func verifyPinSimilarity() {
         if firstEnteredPin == secondEnteredPin {
             Task {
-                await requestTiqrEnroll(withBiometrics: false) { [weak self] success in
+                await requestTiqrEnroll() { [weak self] success in
                     guard let self else { return }
                     if success {
                         self.showUseBiometricScreenClosure?()
@@ -74,29 +77,40 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     
     //run After the second pin
     @MainActor
-    func requestTiqrEnroll(withBiometrics: Bool, completion: @escaping ((Bool) -> Void)) {
-        Task {
-            do{
-                let enrolment = try await TiqrControllerAPI.startEnrollmentWithRequestBuilder()
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
-                    .execute()
-                    .body
-                
-                ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrolment.url ?? "") { [weak self] type, object, error in
-                    guard let self else { return }
-                    self.secondEnteredPin.removeLast(2)
-                    ServiceContainer.sharedInstance().challengeService.complete(object as! EnrollmentChallenge, usingBiometricID: withBiometrics, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { success, error in
-                        if success {
-                            self.enrollmentChallenge = (object as? EnrollmentChallenge)
-                            completion(true)
-                        } else {
-                            completion(false)
-                        }
+    func requestTiqrEnroll(completion: @escaping ((Bool) -> Void)) {
+        if enrollmentChallenge == nil {
+            Task {
+                do{
+                    let enrolment = try await TiqrControllerAPI.startEnrollmentWithRequestBuilder()
+                        .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
+                        .execute()
+                        .body
+                    
+                    ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrolment.url ?? "") { [weak self] type, object, error in
+                        guard let self else { return }
+                        self.secondEnteredPin.removeLast(2)
+                        self.createIdentity(for: object as? EnrollmentChallenge, completion: completion)
                     }
+                } catch let error as NSError {
+                    assertionFailure(error.description)
+                    completion(false)
                 }
-            } catch let error as NSError {
-                assertionFailure(error.localizedDescription)
-                completion(false)
+            }
+        } else {
+            self.createIdentity(for: self.enrollmentChallenge, completion: completion)
+        }
+    }
+    
+    private func createIdentity(for challenge: EnrollmentChallenge?, completion: @escaping ((Bool) -> Void)) {
+        if let enrolChallenge = challenge {
+            self.secondEnteredPin.removeLast(2)
+            ServiceContainer.sharedInstance().challengeService.complete(enrolChallenge, usingBiometricID: false, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { success, error in
+                if success {
+                    self.enrollmentChallenge = enrolChallenge
+                    completion(true)
+                } else {
+                    completion(false)
+                }
             }
         }
     }
@@ -112,7 +126,11 @@ extension CreatePincodeAndBiometricAccessViewModel {
                         enrolment.identity.biometricIDEnabled = NSNumber(value: 1)
                         do {
                             try managedObject.save()
-                            self.nextScreenDelegate?.nextScreen()
+                            self.enrollmentChallenge = nil
+                            self.nextScreenDelegate?.nextScreen(
+                                for: self.isQrEnrolment != nil
+                                ? .registerWithoutRecovery
+                                : .none)
                         } catch let error {
                             assertionFailure(error.localizedDescription)
                         }
@@ -128,10 +146,9 @@ extension CreatePincodeAndBiometricAccessViewModel {
         guard let err = error else { return }
         switch err.code {
         case .userCancel, .biometryNotAvailable:
-            nextScreenDelegate?.nextScreen()
+            nextScreenDelegate?.nextScreen(for: self.enrollmentChallenge != nil ? .registerWithoutRecovery : .none )
         default:
             break
         }
     }
 }
-

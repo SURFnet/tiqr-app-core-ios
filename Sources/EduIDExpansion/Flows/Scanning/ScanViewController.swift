@@ -13,10 +13,12 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
     
     var overlayView = ScanOverlayView(frame: .zero)
     
-    init(viewModel: ScanViewModel) {
+    private var scanMode: ScanType = .none
+    
+    init(viewModel: ScanViewModel, for mode: ScanType) {
         self.viewModel = viewModel
+        self.scanMode = mode
         super.init(nibName: nil, bundle: nil)
-        
         view.backgroundColor = .black
     }
     
@@ -51,7 +53,6 @@ class ScanViewController: UIViewController, ScreenWithScreenType {
         view.addSubview(overlayView)
         addGradient()
         setupScanningFrameUI()
-        
         previewLayer.session = viewModel.session
         viewModel.setupCaptureSession()
     }
@@ -197,8 +198,12 @@ extension ScanViewController: ScanViewModelDelegate {
     func scanViewModelShowScanAttempt(viewModel: ScanViewModel) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
             guard let self = self else { return }
-            
-            self.delegate?.scanViewControllerPromtUserWithVerifyScreen(viewController: self, viewModel: viewModel)
+            switch self.scanMode {
+            case .enrol:
+                self.delegate?.verifyScanResultForEnroll(viewController: self, viewModel: viewModel)
+            case .login: self.delegate?.scanViewControllerPromptUserWithVerifyScreen(viewController: self, viewModel: viewModel)
+            default: break
+            }
         })
     }
     
@@ -212,4 +217,8 @@ extension ScanViewController: ScanViewModelDelegate {
     func scanViewModelAuthenticateSuccess(viewModel: ScanViewModel) {
         delegate?.scanViewControllerShowConfirmScreen(viewController: self)
     }
+}
+
+enum ScanType {
+    case enrol, login, none
 }

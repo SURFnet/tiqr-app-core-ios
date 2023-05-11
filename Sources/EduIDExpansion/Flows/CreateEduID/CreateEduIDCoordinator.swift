@@ -60,9 +60,12 @@ extension CreateEduIDCoordinator: ScanCoordinatorDelegate {
     }
     
     func scanCoordinatorJumpToCreatePincodeScreen(coordinator: ScanCoordinator, viewModel: ScanViewModel) {
-        guard let challenge = viewModel.challenge as? EnrollmentChallenge else { return }
+        guard let challenge = viewModel.challenge as? EnrollmentChallenge else {
+            return
+        }
         
-        let pincodeFirstAttemptViewController = CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel(enrollmentChallenge: challenge))
+        let pincodeFirstAttemptViewController = CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel(enrollmentChallenge: challenge, isQrEnrolment: true))
+        
         pincodeFirstAttemptViewController.delegate = self
         navigationController.pushViewController(pincodeFirstAttemptViewController, animated: true)
     }
@@ -74,7 +77,7 @@ extension CreateEduIDCoordinator: CreateEduIDViewControllerDelegate {
         let scanCoordinator = ScanCoordinator(viewControllerToPresentOn: navigationController)
         scanCoordinator.delegate = self
         children.append(scanCoordinator)
-        scanCoordinator.start()
+        scanCoordinator.start(for: .enrol)
     }
     
     //MARK: - show next screen

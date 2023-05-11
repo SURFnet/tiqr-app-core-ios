@@ -91,7 +91,7 @@ enum ScreenType: Int, CaseIterable {
         case .homeScreen:
             return HomeViewController()
         case .scanScreen:
-            return ScanViewController(viewModel: ScanViewModel())
+            return ScanViewController(viewModel: ScanViewModel(), for: .none)
         case .personalInfoLandingScreen:
             return PersonalInfoViewController(viewModel: PersonalInfoViewModel())
         case .firstTimeDialogScreen:

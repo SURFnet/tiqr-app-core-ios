@@ -13,18 +13,15 @@ final class ScanCoordinator: NSObject, CoordinatorType {
     }
     
     //MARK: - start
-    func start() {
+    func start(for mode: ScanType) {
         let viewModel = ScanViewModel()
-        let scanViewcontroller = ScanViewController(viewModel: viewModel)
+        let scanViewcontroller = ScanViewController(viewModel: viewModel, for: mode)
         viewModel.delegate = scanViewcontroller
         scanViewcontroller.delegate = self
         let navigationController = UINavigationController()
         self.navigationController = navigationController
         navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.pushViewController(scanViewcontroller, animated: false)
-//        navigationController.transitioningDelegate = self
-//        navigationController.modalPresentationStyle = .custom
-        
         viewControllerToPresentOn?.present(navigationController, animated: true)
     }
 }
@@ -36,7 +33,7 @@ extension ScanCoordinator: ScanViewControllerDelegate {
         delegate?.scanCoordinatorDismissScanScreen(coordinator: self)
     }
     
-    func scanViewControllerPromtUserWithVerifyScreen(viewController: ScanViewController, viewModel: ScanViewModel) {
+    func scanViewControllerPromptUserWithVerifyScreen(viewController: ScanViewController, viewModel: ScanViewModel) {
         let verifyViewController = VerifyScanResultViewController(viewModel: viewModel)
         verifyViewController.delegate = self
         navigationController.pushViewController(verifyViewController, animated: true)
@@ -46,6 +43,11 @@ extension ScanCoordinator: ScanViewControllerDelegate {
         let confirmViewController = ConfirmViewController()
         confirmViewController.delegate = self
         navigationController.pushViewController(confirmViewController, animated: true)
+    }
+    
+    func verifyScanResultForEnroll(viewController: ScanViewController, viewModel: ScanViewModel) {
+        navigationController.dismiss(animated: true)
+        delegate?.scanCoordinatorJumpToCreatePincodeScreen(coordinator: self, viewModel: viewModel)
     }
 }
 
@@ -59,7 +61,6 @@ extension ScanCoordinator: VerifyScanResultViewControllerDelegate {
     
     func verifyScanResultViewControllerLogin(viewController: VerifyScanResultViewController, viewModel: ScanViewModel) {
         let pincodeFirstEntryViewController = CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel(authenticationChallenge: viewModel.challenge as? AuthenticationChallenge))
-//        pincodeFirstEntryViewController.delegate = self
         navigationController.pushViewController(pincodeFirstEntryViewController, animated: true)
     }
     
