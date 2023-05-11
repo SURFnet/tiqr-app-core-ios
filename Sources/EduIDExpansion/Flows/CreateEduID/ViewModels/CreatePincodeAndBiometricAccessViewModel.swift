@@ -92,7 +92,7 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
                         self.createIdentity(for: object as? EnrollmentChallenge, completion: completion)
                     }
                 } catch let error as NSError {
-                    dump(error)
+                    assertionFailure(error.description)
                     completion(false)
                 }
             }
