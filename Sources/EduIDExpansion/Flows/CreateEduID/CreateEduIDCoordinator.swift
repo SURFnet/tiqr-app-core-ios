@@ -64,7 +64,8 @@ extension CreateEduIDCoordinator: ScanCoordinatorDelegate {
             return
         }
         
-        let pincodeFirstAttemptViewController = CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel(enrollmentChallenge: challenge))
+        let pincodeFirstAttemptViewController = CreatePincodeFirstEntryViewController(viewModel: CreatePincodeAndBiometricAccessViewModel(enrollmentChallenge: challenge, isQrEnrolment: true))
+        
         pincodeFirstAttemptViewController.delegate = self
         navigationController.pushViewController(pincodeFirstAttemptViewController, animated: true)
     }
