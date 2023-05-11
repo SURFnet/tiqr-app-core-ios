@@ -28,10 +28,13 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     private let biometricService = BiometricService()
     private let keychain = KeyChainService()
     
+    var isQrEnrolment: Bool?
+    
     //MARK: - init
-    init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil) {
+    init(enrollmentChallenge: EnrollmentChallenge? = nil, authenticationChallenge: AuthenticationChallenge? = nil, isQrEnrolment: Bool? = nil) {
         self.enrollmentChallenge = enrollmentChallenge
         self.authenticationChallenge = authenticationChallenge
+        self.isQrEnrolment = isQrEnrolment
         super.init()
     }
     
@@ -98,11 +101,12 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
         }
     }
     
-    private func createIdentity(for challange: EnrollmentChallenge?, completion: @escaping ((Bool) -> Void)) {
-        if let enrolChallange = challange {
+    private func createIdentity(for challenge: EnrollmentChallenge?, completion: @escaping ((Bool) -> Void)) {
+        if let enrolChallenge = challenge {
             self.secondEnteredPin.removeLast(2)
-            ServiceContainer.sharedInstance().challengeService.complete(enrolChallange, usingBiometricID: false, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { success, error in
+            ServiceContainer.sharedInstance().challengeService.complete(enrolChallenge, usingBiometricID: false, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { success, error in
                 if success {
+                    self.enrollmentChallenge = enrolChallenge
                     completion(true)
                 } else {
                     completion(false)
@@ -122,8 +126,11 @@ extension CreatePincodeAndBiometricAccessViewModel {
                         enrolment.identity.biometricIDEnabled = NSNumber(value: 1)
                         do {
                             try managedObject.save()
+                            self.enrollmentChallenge = nil
                             self.nextScreenDelegate?.nextScreen(
-                                for: self.enrollmentChallenge != nil ? .oneB : .none)
+                                for: self.isQrEnrolment != nil
+                                ? .registerWithoutRecovery
+                                : .none)
                         } catch let error {
                             assertionFailure(error.localizedDescription)
                         }
@@ -139,10 +146,9 @@ extension CreatePincodeAndBiometricAccessViewModel {
         guard let err = error else { return }
         switch err.code {
         case .userCancel, .biometryNotAvailable:
-            nextScreenDelegate?.nextScreen(for: self.enrollmentChallenge != nil ? .oneB : .none )
+            nextScreenDelegate?.nextScreen(for: self.enrollmentChallenge != nil ? .registerWithoutRecovery : .none )
         default:
             break
         }
     }
 }
-

@@ -199,7 +199,8 @@ extension ScanViewController: ScanViewModelDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
             guard let self = self else { return }
             switch self.scanMode {
-            case .enrol: self.delegate?.verifyScanResultForEnroll(viewController: self, viewModel: viewModel)
+            case .enrol:
+                self.delegate?.verifyScanResultForEnroll(viewController: self, viewModel: viewModel)
             case .login: self.delegate?.scanViewControllerPromptUserWithVerifyScreen(viewController: self, viewModel: viewModel)
             default: break
             }

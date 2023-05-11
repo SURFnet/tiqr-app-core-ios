@@ -11,5 +11,5 @@ protocol ShowNextScreenDelegate {
 }
 
 enum NextScreenFlowType {
-    case oneB, none
+    case registerWithoutRecovery, none
 }
