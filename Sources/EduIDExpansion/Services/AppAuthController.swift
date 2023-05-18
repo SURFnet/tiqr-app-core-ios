@@ -3,12 +3,12 @@ import AppAuth
 
 public class AppAuthController: NSObject {
     
-    //MARK: - signleton
+    //MARK: - singleton
     public static var shared = AppAuthController()
-    private let keychain = KeyChainService()
     
     //MARK: - properties of AppAuth
-    public var currentAuthorizationFlow: OIDExternalUserAgentSession?
+    private var currentAuthorizationFlow: OIDExternalUserAgentSession?
+    private let keychain = KeyChainService()
     var authState: OIDAuthState!
     var request: OIDAuthorizationRequest!
     var tokenRefreshRequest: OIDTokenRequest {
@@ -70,6 +70,34 @@ public class AppAuthController: NSObject {
             additionalParameters: nil
         )
         
+    }
+    
+    public func isRedirectURI(_ uri: URL) -> Bool {
+        let expectedRedirectPath = URLComponents(string: AppAuthController.redirectURIString)?.path
+        let inputPath = URLComponents(string: uri.absoluteString)?.path
+        return expectedRedirectPath != nil &&
+            inputPath != nil &&
+            inputPath!.caseInsensitiveCompare(expectedRedirectPath!) == .orderedSame
+    }
+    
+    public func tryResumeAuthorizationFlow(with uri: URL) -> Bool {
+        if let authFlow = currentAuthorizationFlow,
+           isRedirectURI(uri) {
+            // Normalize URL, because it might be a custom scheme one
+            currentAuthorizationFlow = nil
+            guard var normalizedUrl = URLComponents(string: uri.absoluteString) else {
+                return false
+            }
+            if normalizedUrl.scheme == "eduid" {
+                let expectedUrlComponents = URLComponents(string: AppAuthController.redirectURIString)!
+                normalizedUrl.scheme = expectedUrlComponents.scheme
+                normalizedUrl.host = expectedUrlComponents.host
+            }
+            return authFlow.resumeExternalUserAgentFlow(with: normalizedUrl.url!)
+        } else {
+            currentAuthorizationFlow = nil
+            return false
+        }
     }
     
     public func authorize(viewController: UIViewController, completion: (() -> Void)? = nil) {
