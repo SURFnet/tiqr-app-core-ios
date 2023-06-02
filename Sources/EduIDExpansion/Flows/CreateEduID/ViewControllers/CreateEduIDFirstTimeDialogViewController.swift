@@ -98,7 +98,7 @@ You must therefore add the following information to your eduID:
         
         // - skip button
         let skipButton = EduIDButton(type: .ghost, buttonTitle: "Skip this")
-        skipButton.addTarget(self, action: #selector(skipAction), for: .allEvents)
+        skipButton.addTarget(self, action: #selector(skipAction), for: .touchUpInside)
         skipButton.isEnabled = true
         
         // - create the stackview
