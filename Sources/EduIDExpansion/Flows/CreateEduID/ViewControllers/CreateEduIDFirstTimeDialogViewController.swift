@@ -98,7 +98,8 @@ You must therefore add the following information to your eduID:
         
         // - skip button
         let skipButton = EduIDButton(type: .ghost, buttonTitle: "Skip this")
-        skipButton.isEnabled = false
+        skipButton.addTarget(self, action: #selector(skipAction), for: .touchUpInside)
+        skipButton.isEnabled = true
         
         // - create the stackview
         stack = AnimatedVStackView(arrangedSubviews: [posterParent, textView, spaceView, labelParent, connectButton, skipButton])
@@ -121,8 +122,11 @@ You must therefore add the following information to your eduID:
         
     }
     
-    @objc
-    func launchAddInstitutions() {
+    @objc func skipAction() {
+        showNextScreen()
+    }
+    
+    @objc func launchAddInstitutions() {
         viewModel.gotoAddInstitutionsInBrowser()
     }
 }
