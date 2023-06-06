@@ -1,10 +1,3 @@
-//
-//  AuthenticateWithPinViewController.swift
-//  
-//
-//  Created by Jairo Bambang Oetomo on 18/02/2023.
-//
-
 import UIKit
 
 class AuthenticateWithPinViewController: PincodeBaseViewController {

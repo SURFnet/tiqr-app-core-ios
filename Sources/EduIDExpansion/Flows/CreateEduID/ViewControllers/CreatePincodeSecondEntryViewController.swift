@@ -1,10 +1,3 @@
-//
-//  CofirmPincodeViewController.swift
-//  
-//
-//  Created by Jairo Bambang Oetomo on 14/02/2023.
-//
-
 import UIKit
 
 class CreatePincodeSecondEntryViewController: PincodeBaseViewController {

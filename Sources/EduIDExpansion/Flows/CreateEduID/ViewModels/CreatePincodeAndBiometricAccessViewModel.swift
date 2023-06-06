@@ -107,6 +107,7 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
             ServiceContainer.sharedInstance().challengeService.complete(enrolChallenge, usingBiometricID: false, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { success, error in
                 if success {
                     self.enrollmentChallenge = enrolChallenge
+                
                     completion(true)
                 } else {
                     completion(false)

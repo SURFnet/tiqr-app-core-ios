@@ -1,10 +1,3 @@
-//
-//  BaseViewControllerWithNavigationbarAppearance.m
-//  
-//
-//  Created by Jairo Bambang Oetomo on 04/11/2022.
-//
-
 #import "BaseViewControllerWithNavigationbarAppearance.h"
 @import TiqrCore;
 

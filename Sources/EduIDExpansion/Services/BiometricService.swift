@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Yasser Farahi on 13/04/2023.
-//
-
 import LocalAuthentication
 
 class BiometricService {

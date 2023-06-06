@@ -111,11 +111,31 @@ class VerifyScanResultViewController: BaseViewController {
         case .enrollment:
             delegate?.verifyScanResultViewControllerEnroll(viewController: self, viewModel: viewModel)
         case .authentication:
-            Task {
-                await viewModel.handleAuthenticationScanResult()
-            }
+            signIn()
         case .invalid, .none, .some(_):
             break
+        }
+    }
+    
+    private func signIn() {
+        guard let challenge = viewModel.challenge as? AuthenticationChallenge else {
+            return
+        }
+        switch challenge.identity.biometricIDEnabled {
+        case 1:
+            
+            break
+ 
+        default:
+            let pinCodeViewModel = VerifyPinViewModel()
+            let pinCodeVC = VerifyPinCodeViewController(viewModel: pinCodeViewModel) { [weak self] in
+                guard let self else { return }
+                //TODO: Authorising
+            }
+            pinCodeVC.screenType = .pincodeScreen
+            pinCodeVC.modalPresentationStyle = .fullScreen
+            present(pinCodeVC, animated: true)
+
         }
     }
 

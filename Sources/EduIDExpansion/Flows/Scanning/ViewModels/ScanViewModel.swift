@@ -84,35 +84,6 @@ final class ScanViewModel: NSObject {
     }
     
     func handleAuthenticationScanResult() async {
-        guard let challenge = challenge as? AuthenticationChallenge else { return }
-        switch challenge.identity.biometricIDEnabled {
-        case 1:
-            break
-//            ServiceContainer.sharedInstance().secretService.secret(for: challenge.identity, touchIDPrompt: "touchIDPrompt") { data in
-//                guard let data = data else { return }
-//
-//                ServiceContainer.sharedInstance().challengeService.complete(challenge, withSecret: data) { [weak self] success, response, error in
-//                    guard let self = self else { return }
-//                    self.delegate?.scanViewModelAuthenticateSuccess(viewModel: self)
-//
-//                }
-//            } failureHandler: { success in
-//                print(success)
-//            }
-            
-        default:
-
-            do {
-                let authentication = try await TiqrControllerAPI.startAuthenticationForSP()
-                
-                dump(authentication)
-            } catch let error {
-                print(error.localizedDescription)
-            }
-            
-            break
-//            ServiceContainer.sharedInstance().secretService.secret(for: challenge.identity, withPIN: "0000", salt: challenge.identity.salt, initializationVector: challenge.identity.initializationVector)
-        }
 
     }
     
@@ -124,7 +95,6 @@ final class ScanViewModel: NSObject {
 
 //MARK: - preview layer delegate
 extension ScanViewModel: AVCaptureMetadataOutputObjectsDelegate {
-    
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         if metadataObjects.count > 0, let firstObject = metadataObjects.first as? AVMetadataMachineReadableCodeObject {
             self.session.stopRunning()
