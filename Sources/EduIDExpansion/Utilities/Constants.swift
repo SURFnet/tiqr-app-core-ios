@@ -60,6 +60,7 @@ enum Constants {
     
     enum Headers {
         static let authorization = "Authorization"
+        static let authentication = "Authentication"
     }
     
 }

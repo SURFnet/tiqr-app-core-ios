@@ -54,11 +54,11 @@ extension MainCoordinator: HomeViewControllerDelegate  {
         activityCoordinator.start()
     }
     
-    func homeViewControllerShowScanScreen(viewController: HomeViewController) {
+    func homeViewControllerShowScanScreen(for type: ScanType) {
         let scanCoordinator = ScanCoordinator(viewControllerToPresentOn: homeNavigationController)
         scanCoordinator.delegate = self
         children.append(scanCoordinator)
-        scanCoordinator.start(for: .login)
+        scanCoordinator.start(for: type)
     }
 }
 

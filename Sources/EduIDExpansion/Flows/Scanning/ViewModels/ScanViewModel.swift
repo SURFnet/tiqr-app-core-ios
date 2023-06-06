@@ -1,6 +1,7 @@
 import UIKit
 import AVFoundation
 import TiqrCoreObjC
+import OpenAPIClient
 
 final class ScanViewModel: NSObject {
     
@@ -16,6 +17,8 @@ final class ScanViewModel: NSObject {
     var challengeType: TIQRChallengeType?
     
     let frameSize: CGFloat = 275
+    
+    private let keychain = KeyChainService()
     
     //MARK: - setup the av camera session
     func setupCaptureSession() {
@@ -80,29 +83,37 @@ final class ScanViewModel: NSObject {
         delegate?.scanViewModelShowScanAttempt(viewModel: self)
     }
     
-    func handleAuthenticationScanResult() {
-        guard let challenge = challenge as? AuthenticationChallenge else {
-            return
+    func handleAuthenticationScanResult() async {
+        guard let challenge = challenge as? AuthenticationChallenge else { return }
+        switch challenge.identity.biometricIDEnabled {
+        case 1:
+            break
+//            ServiceContainer.sharedInstance().secretService.secret(for: challenge.identity, touchIDPrompt: "touchIDPrompt") { data in
+//                guard let data = data else { return }
+//
+//                ServiceContainer.sharedInstance().challengeService.complete(challenge, withSecret: data) { [weak self] success, response, error in
+//                    guard let self = self else { return }
+//                    self.delegate?.scanViewModelAuthenticateSuccess(viewModel: self)
+//
+//                }
+//            } failureHandler: { success in
+//                print(success)
+//            }
             
-        }
-        
-        ServiceContainer.sharedInstance().secretService.secret(for: challenge.identity, touchIDPrompt: "sdfsdfsd") { data in
-            guard let data = data else {
-                return
+        default:
+
+            do {
+                let authentication = try await TiqrControllerAPI.startAuthenticationForSP()
                 
+                dump(authentication)
+            } catch let error {
+                print(error.localizedDescription)
             }
             
-            ServiceContainer.sharedInstance().challengeService.complete(challenge, withSecret: data) { [weak self] success, response, error in
-                guard let self = self else { return }
-                
-                self.delegate?.scanViewModelAuthenticateSuccess(viewModel: self)
-                
-            }
-        } failureHandler: { success in
-            print(success)
+            break
+//            ServiceContainer.sharedInstance().secretService.secret(for: challenge.identity, withPIN: "0000", salt: challenge.identity.salt, initializationVector: challenge.identity.initializationVector)
         }
 
-        
     }
     
     deinit {

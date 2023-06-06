@@ -148,7 +148,7 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     }
     
     @objc func showScanScreen() {
-        delegate?.homeViewControllerShowScanScreen(viewController: self)
+        delegate?.homeViewControllerShowScanScreen(for: .login)
     }
     
     @objc func securityTapped() {

@@ -111,7 +111,9 @@ class VerifyScanResultViewController: BaseViewController {
         case .enrollment:
             delegate?.verifyScanResultViewControllerEnroll(viewController: self, viewModel: viewModel)
         case .authentication:
-            viewModel.handleAuthenticationScanResult()
+            Task {
+                await viewModel.handleAuthenticationScanResult()
+            }
         case .invalid, .none, .some(_):
             break
         }
