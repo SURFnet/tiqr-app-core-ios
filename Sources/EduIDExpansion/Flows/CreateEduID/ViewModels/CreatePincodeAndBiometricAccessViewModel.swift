@@ -88,7 +88,6 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
                     
                     ServiceContainer.sharedInstance().challengeService.startChallenge(fromScanResult: enrolment.url ?? "") { [weak self] type, object, error in
                         guard let self else { return }
-                        self.secondEnteredPin.removeLast(2)
                         self.createIdentity(for: object as? EnrollmentChallenge, completion: completion)
                     }
                 } catch let error as NSError {
@@ -104,10 +103,11 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
     private func createIdentity(for challenge: EnrollmentChallenge?, completion: @escaping ((Bool) -> Void)) {
         if let enrolChallenge = challenge {
             self.secondEnteredPin.removeLast(2)
-            ServiceContainer.sharedInstance().challengeService.complete(enrolChallenge, usingBiometricID: false, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { success, error in
+            ServiceContainer.sharedInstance().challengeService.complete(enrolChallenge, usingBiometricID: false, withPIN: self.pinToString(pinArray: self.secondEnteredPin)) { [weak self] success, error in
+                guard let self else { return }
                 if success {
                     self.enrollmentChallenge = enrolChallenge
-                
+                    self.keychain.set(self.pinToString(pinArray: self.secondEnteredPin), for: Constants.KeyChain.userPin)
                     completion(true)
                 } else {
                     completion(false)

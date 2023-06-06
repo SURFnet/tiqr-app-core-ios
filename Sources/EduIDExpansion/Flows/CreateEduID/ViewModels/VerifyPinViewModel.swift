@@ -3,9 +3,14 @@ import TiqrCoreObjC
 
 class VerifyPinViewModel: NSObject {
     
-    let userPin: String = {
-        //TODO: Get user pin-code from Identity
-        return "1234"
-    }()
+    var userPin: String = ""
+    private let keyChain = KeyChainService()
     
+    init(challenge: AuthenticationChallenge) {
+        if challenge.identity != nil {
+            if let pinCode = keyChain.getString(for: Constants.KeyChain.userPin) {
+                userPin = pinCode
+            }
+        }
+    }
 }

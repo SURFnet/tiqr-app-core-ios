@@ -127,7 +127,7 @@ class VerifyScanResultViewController: BaseViewController {
             break
  
         default:
-            let pinCodeViewModel = VerifyPinViewModel()
+            let pinCodeViewModel = VerifyPinViewModel(challenge: challenge)
             let pinCodeVC = VerifyPinCodeViewController(viewModel: pinCodeViewModel) { [weak self] in
                 guard let self else { return }
                 //TODO: Authorising

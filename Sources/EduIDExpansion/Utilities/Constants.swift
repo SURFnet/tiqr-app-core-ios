@@ -49,6 +49,7 @@ enum Constants {
         static let refreshToken = "EDU_ID_RefreshToken"
         static let uuid = UUID()
         static let accessToken = "EDU_ID_AccessToken"
+        static let userPin = "EDU_ID_User_Pin"
     }
     
     enum Headers {
