@@ -82,7 +82,6 @@ final class CreatePincodeAndBiometricAccessViewModel: NSObject {
             Task {
                 do{
                     let enrolment = try await TiqrControllerAPI.startEnrollmentWithRequestBuilder()
-                        .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
                         .execute()
                         .body
                     
