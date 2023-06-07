@@ -61,15 +61,11 @@ enum Constants {
     enum KeyChain {
         static let keyPrefix = Bundle.main.bundleIdentifier ?? "nl.eduid"
         static let challenge = "Challenge"
-        static let oidAuthState = "EDU_ID_OIDAuthState"
-        static let refreshToken = "EDU_ID_RefreshToken"
         static let uuid = UUID()
-        static let accessToken = "EDU_ID_AccessToken"
     }
     
     enum Headers {
         static let authorization = "Authorization"
-    }
-    
+    }    
 }
 >>>>>>> 7946759 (EDURED-54: The input doesn't follow regex)

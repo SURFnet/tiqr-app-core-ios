@@ -28,7 +28,6 @@ class PersonalInfoViewModel: NSObject {
         Task {
             do {
                 try await userResponse = UserControllerAPI.meWithRequestBuilder()
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
                     .execute()
                     .body
                 processUserData()
@@ -59,7 +58,6 @@ class PersonalInfoViewModel: NSObject {
         Task {
             do {
                 let result = try await UserControllerAPI.removeUserLinkedAccountsWithRequestBuilder(linkedAccount: linkedAccount)
-                    .addHeader(name: Constants.Headers.authorization, value: keychain.getString(for: Constants.KeyChain.accessToken) ?? "")
                     .execute()
                     .body
                 
