@@ -143,8 +143,7 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     private func testFuncRemoveAccessToken() {
         //TODO: REMOVE ACCESS TOKEN
         UserDefaults.standard.set("nil", forKey: OnboardingManager.userdefaultsFlowTypeKey)
-        let keychain = KeyChainService()
-        keychain.delete(for: Constants.KeyChain.accessToken)
+        AppAuthController.shared.clearAuthState()
     }
     
     @objc func showScanScreen() {
@@ -164,8 +163,7 @@ class HomeViewController: UIViewController, ScreenWithScreenType {
     }
     
     private func askForAuthorisationIfNeeded() -> Bool {
-        let keychain = KeyChainService()
-        if keychain.getString(for: Constants.KeyChain.accessToken) == nil {
+        if !AppAuthController.shared.isLoggedIn() {
             AppAuthController.shared.authorize(viewController: self)
             return true
         }

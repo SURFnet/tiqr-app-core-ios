@@ -1,4 +1,5 @@
 import UIKit
+import OpenAPIClient
 
 public final class EduIDExpansion: NSObject {
     
@@ -7,6 +8,7 @@ public final class EduIDExpansion: NSObject {
     private var mainCoordinator: MainCoordinator!
     private override init() {
         super.init()
+        OpenAPIClientAPI.requestBuilderFactory = BearerRequestBuilderFactory()
     }
     
     public func attachViewController() -> UIViewController {
