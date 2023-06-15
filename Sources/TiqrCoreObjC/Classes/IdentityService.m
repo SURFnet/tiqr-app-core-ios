@@ -71,6 +71,28 @@
     [self deleteObject:identityProvider];
 }
 
+- (void)deleteAllIdentitiesAndProviders: (NSError *)error {
+    // Delete the identities first
+    NSFetchRequest *identityRequest = [[NSFetchRequest alloc] initWithEntityName:@"Identity"];
+    NSBatchDeleteRequest *deleteIndentities = [[NSBatchDeleteRequest alloc] initWithFetchRequest:identityRequest];
+
+    [self.persistentStoreCoordinator executeRequest: deleteIndentities
+                                   withContext: self.managedObjectContext
+                                         error: &error];
+    if (error != nil) {
+        return;
+    }
+    
+    // Delete the identity providers
+    NSFetchRequest *providerRequest = [[NSFetchRequest alloc] initWithEntityName:@"IdentityProvider"];
+    NSBatchDeleteRequest *deleteProviders = [[NSBatchDeleteRequest alloc] initWithFetchRequest:identityRequest];
+
+    [self.persistentStoreCoordinator executeRequest: deleteProviders
+                                   withContext: self.managedObjectContext
+                                         error: &error];
+}
+
+
 - (void)deleteObject:(NSManagedObject *)object {
     [self.managedObjectContext deleteObject:object];
 }

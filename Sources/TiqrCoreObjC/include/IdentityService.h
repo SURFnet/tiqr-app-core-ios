@@ -69,6 +69,11 @@
 - (NSFetchedResultsController *)createFetchedResultsControllerForIdentities;
 
 /**
+  * Removes every saved identity from the internal managed object context.
+ */
+- (void)deleteAllIdentitiesAndProviders:(NSError *)error;
+
+/**
  * Tries to find the identity provider with the given identifier.
  *
  * @param identifier identity provider identifier
