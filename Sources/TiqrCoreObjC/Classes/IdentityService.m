@@ -72,22 +72,11 @@
 }
 
 - (void)deleteAllIdentitiesAndProviders: (NSError *)error {
-    // Delete the identities first
+    // Delete the identities only. The providers will be deleted via the cascade delete rule of the Core Data model.
     NSFetchRequest *identityRequest = [[NSFetchRequest alloc] initWithEntityName:@"Identity"];
-    NSBatchDeleteRequest *deleteIndentities = [[NSBatchDeleteRequest alloc] initWithFetchRequest:identityRequest];
+    NSBatchDeleteRequest *deleteIdentities = [[NSBatchDeleteRequest alloc] initWithFetchRequest:identityRequest];
 
-    [self.persistentStoreCoordinator executeRequest: deleteIndentities
-                                   withContext: self.managedObjectContext
-                                         error: &error];
-    if (error != nil) {
-        return;
-    }
-    
-    // Delete the identity providers
-    NSFetchRequest *providerRequest = [[NSFetchRequest alloc] initWithEntityName:@"IdentityProvider"];
-    NSBatchDeleteRequest *deleteProviders = [[NSBatchDeleteRequest alloc] initWithFetchRequest:identityRequest];
-
-    [self.persistentStoreCoordinator executeRequest: deleteProviders
+    [self.persistentStoreCoordinator executeRequest: deleteIdentities
                                    withContext: self.managedObjectContext
                                          error: &error];
 }
