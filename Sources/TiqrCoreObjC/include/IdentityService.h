@@ -99,6 +99,16 @@
 - (BOOL)allIdentitiesBlocked;
 
 /**
+ * Searches for an identity with the given identifier.
+ *
+ * @param identifier         identity identifier to search for
+ *
+ * @return identity
+ */
+- (Identity *)findIdentityWithIdentifier:(NSString *)identifier;
+
+
+/**
  * Searches for an identity with the given identifier for the given identity provider.
  *
  * @param identifier         identity identifier
