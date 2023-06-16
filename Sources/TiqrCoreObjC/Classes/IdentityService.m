@@ -165,6 +165,25 @@
     return error == nil && count == 0;
 }
 
+- (Identity *)findIdentityWithIdentifier:(NSString *)identifier {
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Identity" inManagedObjectContext:self.managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier = %@", identifier];
+    [request setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *result = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    Identity *identity = nil;
+    if (result != nil && [result count] == 1) {
+        identity = result[0];
+    }
+    
+    return identity;
+}
+
 - (Identity *)findIdentityWithIdentifier:(NSString *)identifier forIdentityProvider:(IdentityProvider *)identityProvider {
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Identity" inManagedObjectContext:self.managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
