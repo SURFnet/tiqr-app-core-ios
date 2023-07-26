@@ -1,0 +1,377 @@
+/* About tiqr */
+"about_title" = "O %@";
+
+/* Your account is activated! */
+"account_activated" = "Konto aktywowane!";
+
+/* Account activation title */
+"account_activation_title" = "Aktywacja konta";
+
+/* Account details navigation title */
+"account_details_title" = "Szczegóły konta";
+
+/* Your account is ready to be used. */
+"account_ready" = "Twoje konto jest gotowe do użycia.";
+
+/* Accounts back button title */
+"accounts" = "Konta";
+
+/* Do you want to activate the following account */
+"activate_following_account" = "Czy chcesz aktywować swoje konto?";
+
+/* Allow button */
+"allow_button" = "Zezwól";
+
+/* Don't worry! Click the QR tag on the\nwebsite. You will be asked to enter the\nfollowing one-time credentials: */
+"authentication_fallback_description" = "Nie martw się! Kliknij kod QR na stronie internetowej. Następnie wprowadź jednorazowe dane:";
+
+/* You appear to be offline */
+"authentication_fallback_title" = "Jesteś offline";
+
+/* Login title */
+"authentication_title" = "Uwierzytelnianie";
+
+/* Camera access prompt message */
+"camera_prompt_message" = "Aplikacja %@ wymaga dostępu do aparatu w celu skanowania kodów QR. Możesz zezwolić na dostęp do aparatu dla %@ w ustawieniach.";
+
+/* Camera access prompt title */
+"camera_prompt_title" = "Wymagany dostęp do aparatu";
+
+/* Cancel */
+"cancel" = "Anuluj";
+
+/* Confirm account activation */
+"confirm_account_activation" = "Potwierdź aktywację konta";
+
+/* Are you sure you want to login? */
+"confirm_authentication" = "Czy na pewno chcesz się zalogować?";
+
+/* Authentication confirm back button title */
+"confirm_authentication_title" = "Potwierdź logowanie";
+
+/* Delete confirm text */
+"confirm_delete" = "To konto nie będzie już dostępne po usunięciu.";
+
+/* Delete confirm title */
+"confirm_delete_title" = "Jesteś pewny(a)?";
+
+/* Delete */
+"delete_button" = "Usuń";
+
+/* Deny button */
+"deny_button" = "Odmów";
+
+/* Developed by: */
+"developed_by_title" = "Stworzone przez:";
+
+/* Done */
+"done_button" = "Gotowe";
+
+/* Error enroll title */
+"enroll_error_title" = "Błąd";
+
+/* You will enroll to the following domain */
+"enroll_following_domain" = "Zarejestrujesz się do następującej domeny:";
+
+/* You are enrolled for the following domain: */
+"enrolled_following_domain" = "Jesteś zarejestrowany(a) w następującej domenie:";
+
+/* Account activation navigation title Account activation title */
+"enrollment_confirmation_header_title" = "Aktywacja konta";
+
+/* Enrollment confirm back button title */
+"enrollment_confirmation_title" = "Potwierdź aktywację konta";
+
+/* Enrollment PIN title */
+"enrollment_pin_intro" = "Wybierz unikalny kod PIN dla %@";
+
+/* You need a PIN code for this account. If you don't yet have a PIN code for tiqr please choose one. */
+"enrollment_pin_message" = "Wprowadź PIN i naciśnij OK";
+
+/* You need to enter your 4-digit PIN to login. */
+"enter_four_digit_pin" = "Wprowadź PIN i naciśnij OK";
+
+/* Enrollment PIN back button title */
+"enter_pin" = "Wprowadź PIN";
+
+/* Alert title for error */
+"error" = "Błąd";
+
+/* Account blocked message */
+"error_auth_account_blocked_message" = "To konto nie będzie już dostępne.";
+
+/* Account blocked temporary message */
+"error_auth_account_blocked_temporary_message" = "To konto zostało zablokowane na %@ minut.";
+
+/* Account blocked temporary title */
+"error_auth_account_blocked_temporary_title" = "To konto zostało tymczasowo zablokowane.";
+
+/* Account blocked title */
+"error_auth_account_blocked_title" = "Konto zablokowane";
+
+/* INVALID_RESPONSE error message (infinite attempts left) */
+"error_auth_infinite_attempts_left" = "Wprowadzono nieprawidłowy PIN. Wprowadź swój PIN ponownie. Sprawdź ikonę weryfikacji dla ostatniej cyfry.";
+
+/* No account titleINVALID_USERID error title */
+"error_auth_invalid_account" = "Nieprawidłowe konto";
+
+/* No account message */
+"error_auth_invalid_account_message" = "Próbowałeś się zalogować za pomocą nieprawidłowego lub nieznanego konta. Proszę, (ponownie) aktywuj swoje konto.";
+
+/* Invalid QR tag message */
+"error_auth_invalid_challenge_message" = "Zeskanowany kod QR jest nieprawidłowy lub wygasł. Spróbuj ponownie.";
+
+/* INVALID_CHALLENGE error title */
+"error_auth_invalid_challenge_title" = "Nieprawidłowy kod";
+
+/* Invalid QR tag title */
+"error_auth_invalid_qr_code" = "Nieprawidłowy kod QR do uwierzytelnienia.";
+
+/* INVALID_REQUEST error message */
+"error_auth_invalid_request_message" = "Serwer nie rozpoznaje prośby o zalogowanie. Skontaktuj się z obsługą.";
+
+/* INVALID_REQUEST error title */
+"error_auth_invalid_request_title" = "Nieprawidłowe zapytanie";
+
+/* No account message */
+"error_auth_no_identities_for_identity_provider" = "Nie znaleziono identyfikatora dostawcy tożsamości. Proszę najpierw się zarejestrować.";
+
+/* INVALID_RESPONSE error message (1 attempt left) */
+"error_auth_one_attempt_left" = "Masz ostatnią szansę. Jeśli wprowadzisz ponownie nieprawidłowy PIN, wszystkie konta na tym urządzeniu zostaną zablokowane.";
+
+/* Protocol retired message */
+"error_auth_protocol_retired_message" = "Serwer jest niezgodny z tą wersją %@.";
+
+/* Protocol retired title */
+"error_auth_protocol_retired_title" = "Niewspierana wersja uwierzytelniania %@";
+
+/* Server incompatible message */
+"error_auth_server_incompatible" = "Serwer jest niezgodny z tą wersją %@.";
+
+/* Server incompatible title */
+"error_auth_server_incompatible_title" = "Niezgodny serwer";
+
+/* Unexpected error message */
+"error_auth_unknown_error" = "Serwer zwrócił odpowiedź w formacie, którego aplikacja %@ nie rozpoznaje. Skontaktuj się z obsługą.";
+
+/* No account title */
+"error_auth_unknown_identity" = "Nieznana tożsamość, proszę najpierw się zarejestrować.";
+
+/* Unknown */
+"error_auth_unknown_identity_provider" = "Nieznany dostawca tożsamości, proszę najpierw się zarejestrować.";
+
+/* UNKNOWN_RESPONSE_CODE error title */
+"error_auth_unknown_reponsecode" = "Nieznany kod odpowiedzi";
+
+/* UNKNOWN_RESPONSE_CODE error message */
+"error_auth_unknown_reponsecode_message" = "Serwer zwrócił kod odpowiedzi, którego aplikacja %@ nie rozpoznaje. Skontaktuj się z obsługą.";
+
+/* Wrong PIN */
+"error_auth_wrong_pin" = "Nieprawidłowy PIN";
+
+/* INVALID_RESPONSE error message (> 1 attempts left) */
+"error_auth_x_attempts_left" = "Wprowadziłeś nieprawidłowy PIN. Masz %d próby. Wprowadź swój PIN ponownie. Sprawdź ikonę weryfikacji dla ostatniej cyfry.";
+
+/* Account already activated message */
+"error_enroll_already_enrolled" = "Jesteś już zapisany z tożsamością %@ dla usługi %@";
+
+/* Account already activated */
+"error_enroll_already_enrolled_title" = "Jesteś już zarejestrowany(a)";
+
+/* Failed to generate identity secret. Please contact support. */
+"error_enroll_failed_to_generate_secret" = "Nie udało się wygenerować sekretu tożsamości. Skontaktuj się z obsługą.";
+
+/* Account cannot be saved message */
+"error_enroll_failed_to_store_identity" = "Nie udało się zapisać dostawcy tożsamości. Skontaktuj się z obsługą.";
+
+/* Account cannot be saved title */
+"error_enroll_failed_to_store_identity_title" = "Nie można zapisać konta";
+
+/* Invalid QR tag title */
+"error_enroll_invalid_qr_code" = "Nieprawidłowy kod QR do zapisu.";
+
+/* Invalid QR tag message */
+"error_enroll_invalid_response" = "Nieprawidłowa odpowiedź z serwera rejestracji. Skontaktuj się z administratorem strony internetowej.";
+
+/* Invalid response title */
+"error_enroll_invalid_response_title" = "Nieprawidłowa odpowiedź";
+
+/* No identity provider logo message */
+"error_enroll_logo_error" = "Nie można pobrać logo usługi. Skontaktuj się z administratorem strony internetowej.";
+
+/* No identity provider logo */
+"error_enroll_logo_error_title" = "Błąd zapisu";
+
+/* Your ID is: */
+"fallback_identifier_label" = "Twoje ID to:";
+
+/* Username label */
+"full_name" = "Konto";
+
+/* User ID label */
+"id" = "%@ ID konta";
+
+/* Blocked cell label */
+"identity_blocked" = "Zablokowane";
+
+/* Warning this account is blocked and needs to be reactivated. */
+"identity_blocked_message" = "Ostrzeżenie: to konto jest zablokowane i wymaga ponownej aktywacji.";
+
+/* Identity select back button title */
+"identity_title" = "Tożsamości";
+
+/* (No Comment) */
+"identity_upgrade_to_face_id" = "Ulepsz do Face ID";
+
+/* (No Comment) */
+"identity_upgrade_to_touch_id" = "Ulepsz do Touch ID";
+
+/* (No Comment) */
+"identity_uses_face_id" = "Używa Face ID";
+
+/* (No Comment) */
+"identity_uses_touch_id" = "Używa Touch ID";
+
+/* Info label */
+"information" = "Informacje";
+
+/* Interaction design: */
+"interaction_by_title" = "Metoda interakcji:";
+
+/* No connection error message */
+"internet_connection_required" = "Potrzebujesz połączenia internetowego, aby aktywować swoje konto. Spróbuj ponownie później.";
+
+/* Login information message */
+"loggedin_with_account" = "Zalogowałeś się za pomocą następującego konta:";
+
+/* Authentication PIN title */
+"login_intro" = "Wprowadź swój PIN dla %@";
+
+/* Login navigation title */
+"login_title" = "Logowanie";
+
+/* Enrollment PIN verification title */
+"login_verify_intro" = "Zweryfikuj unikalny PIN";
+
+/* Enter your PIN code again for verification. Please note the animal icon. This will help you remember your PIN code. */
+"login_verify_message" = "Wprowadź ponownie PIN i naciśnij OK";
+
+/* Blocked */
+"main_text_blocked" = "<b>Co teraz?</b><br/> Poproś swojego dostawcę tożsamości o nowy kod aktywacyjny. Możesz znaleźć linki do dostawców tożsamości w swoich tożsamościach (dostępne z prawego górnego rogu). <br/><br/> Wraz z nowym kodem aktywacyjnym otrzymasz instrukcje, jak ponownie aktywować swoje konto. Naciśnij <b>Skanuj</b>, jeśli zostaniesz o to poproszony.";
+
+/* Instructions */
+"main_text_instructions" = "<b>Użyj aplikacji %@ na swoim smartfonie, aby łatwo i bezpiecznie logować się na strony internetowe.</b><br/><ol><li>Naciśnij <b>Skanuj</b> i zeskanuj kod QR na stronie internetowej.<br/></br><i>Więcej niż jedno ID? Wybierz odpowiednie ID.</i></li><li>Zeskanuj swój odcisku palca lub wprowadź PIN dla %@ i naciśnij <b>OK</b>.</li><li>Jesteś zalogowany!</li></ol>";
+
+/* Welcome */
+"main_text_welcome" = "<b>Użyj aplikacji %@ na swoim smartfonie, aby łatwo i bezpiecznie logować się na strony internetowe.</b><br/><br/>Zarejestruj nowe konto %@ i postępuj zgodnie z instrukcjami aktywacji.<br/><br/>Naciśnij <b>Skanuj</b>, gdy zostaniesz o to poproszony.";
+
+/* Blocked navigation title */
+"main_title_blocked" = "%@ jest zablokowane";
+
+/* Instructions navigation title */
+"main_title_instructions" = "Instrukcja";
+
+/* Welcome navigation title */
+"main_title_welcome" = "Witaj w %@";
+
+/* Place a QR code inside the rectangle to scan it. */
+"msg_default_status" = "Umieść kod QR wewnątrz prostokąta, aby go zeskanować.";
+
+/* You appear to have no active Internet connection. */
+"no_active_internet_connection." = "Nie masz aktywnego połączenia internetowego.";
+
+/* No button title */
+"no_button" = "Nie";
+
+/* No connection error title */
+"no_connection" = "Brak połączenia z internetem";
+
+/* If you can't login with the credentials above, scan\nagain and enter the correct PIN code. */
+"note_pin_not_verified" = "Jeśli nie możesz się zalogować za pomocą powyższych danych, zeskanuj\nponownie i wprowadź prawidłowy kod PIN.";
+
+/* Note: your PIN has not been verified yet. */
+"note_pin_not_verified_title" = "Uwaga: Twój kod PIN nie został jeszcze zweryfikowany.";
+
+/* OK Button */
+"ok_button" = "OK";
+
+/* One time password: */
+"otp_label" = "Hasło jednorazowe:";
+
+/* Enrollment PIN back button title */
+"password_verify_back_button" = "Zweryfikuj PIN";
+
+/* Error message if PINs don't match */
+"passwords_dont_match" = "Wprowadzone kody PIN nie są identyczne. Spróbuj ponownie.\nWybierz kod PIN, który możesz zapamiętać.";
+
+/* Error title if PIN's don't match */
+"passwords_dont_match_title" = "Kody PIN nie są zgodne";
+
+/* Use pincode fallback button */
+"pin_fallback_button" = "Użyj kodu PIN";
+
+/* provided by: */
+"provided_by" = "dostarczone przez:";
+
+/* tiqr is provided by: */
+"provided_by_title" = "Dostarczone przez:";
+
+/* Remember your PIN, it cannot be changed! */
+"remember_pincode_notice" = "Zapamiętaj swój kod PIN, nie możesz go później zmienić!";
+
+/* Return to button title */
+"return_button" = "Powrót";
+
+/* Scan button title */
+"scan_button" = "Skanuj";
+
+/* Scan window title */
+"scan_window" = "Skanuj";
+
+/* Select Identity */
+"select_identity_title" = "Wybierz tożsamość";
+
+/* Name of the settings app */
+"settings_app_name" = "Ustawienia";
+
+/* Start button title */
+"start_button" = "Rozpocznij";
+
+/* Login succes confirmation message */
+"successfully_logged_in" = "Zalogowano pomyślnie!";
+
+/* Because you entered an incorrect PIN too many times, all your accounts have been blocked. You can't login anymore. */
+"to_many_attempts" = "Wprowadzono zbyt wiele razy nieprawidłowy kod PIN, wszystkie twoje konta w tej aplikacji zostały zablokowane. Nie możesz już się zalogować.";
+
+/* to: */
+"to_service_provider" = "do:";
+
+/* TouchID */
+"touch_id_reason" = "%@ chce zapisać tożsamość";
+
+/* Unknown error message */
+"unkown_enroll_error_message" = "Wystąpił nieznany błąd. Skontaktuj się z obsługą.";
+
+/* Unknown error title */
+"unkown_error" = "Nieznany błąd";
+
+/* Upgrade (to TouchID) */
+"upgrade" = "Ulepsz";
+
+/* Upgrade account to TouchID alert title */
+"upgrade_to_biometric_id" = "Ulepsz konto";
+
+/* (No Comment) */
+"upgrade_to_face_id_message" = "Czy chcesz ulepszyć to konto, aby korzystać z Face ID zamiast kodu PIN?";
+
+/* Upgrade account to TouchID alert message */
+"upgrade_to_touch_id_message" = "Czy chcesz ulepszyć to konto, aby korzystać z Touch ID zamiast kodu PIN?";
+
+/* Yes button title */
+"yes_button" = "Tak";
+
+/* You will be logged in as: */
+"you_will_be_logged_in_as" = "Zaloguj się jako:";
+
+/* Accounts navigation item title */
+"your_accounts" = "Twoje konta";

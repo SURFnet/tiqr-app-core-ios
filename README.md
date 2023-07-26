@@ -104,7 +104,7 @@ Tiqr Core is available in a number of languages. To facilitate handling updates 
 
 To export localization catalogs use: 
 
-    xcodebuild -exportLocalizations -sdk iphoneos16.1 -localizationPath localizations -includeScreenshots -exportLanguage da -exportLanguage de -exportLanguage en -exportLanguage es -exportLanguage fr -exportLanguage fy -exportLanguage hr -exportLanguage it -exportLanguage ja -exportLanguage nb -exportLanguage nl -exportLanguage pt -exportLanguage ro -exportLanguage sk -exportLanguage sl -exportLanguage sr -exportLanguage sv
+    xcodebuild -exportLocalizations -sdk iphoneos16.1 -localizationPath localizations -includeScreenshots -exportLanguage da -exportLanguage de -exportLanguage en -exportLanguage es -exportLanguage fr -exportLanguage fy -exportLanguage hr -exportLanguage it -exportLanguage ja -exportLanguage nb -exportLanguage nl -exportLanguage pl -exportLanguage pt -exportLanguage ro -exportLanguage sk -exportLanguage sl -exportLanguage sr -exportLanguage sv
 
 To import localization catalogs use:
 
@@ -119,6 +119,7 @@ To import localization catalogs use:
     xcodebuild -importLocalizations -sdk iphoneos16.1 -localizationPath localizations/ja.xcloc
     xcodebuild -importLocalizations -sdk iphoneos16.1 -localizationPath localizations/nb.xcloc
     xcodebuild -importLocalizations -sdk iphoneos16.1 -localizationPath localizations/nl.xcloc
+    xcodebuild -importLocalizations -sdk iphoneos16.1 -localizationPath localizations/pl.xcloc
     xcodebuild -importLocalizations -sdk iphoneos16.1 -localizationPath localizations/pt.xcloc
     xcodebuild -importLocalizations -sdk iphoneos16.1 -localizationPath localizations/ro.xcloc
     xcodebuild -importLocalizations -sdk iphoneos16.1 -localizationPath localizations/sk.xcloc
