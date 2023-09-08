@@ -163,7 +163,7 @@
 
 - (void)clear {
     self.pinTextField.text = @"";
-    self.okButton.enabled = YES;
+    self.okButton.enabled = NO;
 }
 
 @end
