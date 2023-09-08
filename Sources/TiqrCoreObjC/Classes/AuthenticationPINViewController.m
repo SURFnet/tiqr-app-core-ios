@@ -97,7 +97,7 @@
                     self.challenge.identity.blocked = @YES;
                     [ServiceContainer.sharedInstance.identityService saveIdentities];
                     
-                    [self presentErrorViewControllerWithError:error];
+                    [self presentErrorViewControllerWithError:error andUserRetryAllowed:NO];
                     break;
                 }
                     
@@ -107,7 +107,7 @@
                         [ServiceContainer.sharedInstance.identityService blockAllIdentities];
                         [ServiceContainer.sharedInstance.identityService saveIdentities];
                         
-                        [self presentErrorViewControllerWithError:error];
+                        [self presentErrorViewControllerWithError:error andUserRetryAllowed:NO];
                     } else {
                         [self clear];
                         [self showErrorWithTitle:[error localizedDescription] message:[error localizedFailureReason]];
@@ -116,7 +116,7 @@
                 }
                     
                 default: {
-                    [self presentErrorViewControllerWithError:error];
+                    [self presentErrorViewControllerWithError:error andUserRetryAllowed:NO];
                     break;
                 }
             }
@@ -124,9 +124,13 @@
     }];
 }
 
-- (void)presentErrorViewControllerWithError:(NSError *)error {
+- (void)presentErrorViewControllerWithError:(NSError *)error andUserRetryAllowed:(BOOL)retryAllowed  {
     UIViewController *viewController = [[ErrorViewController alloc] initWithErrorTitle:[error localizedDescription] errorMessage:[error localizedFailureReason]];
-    [self.navigationController pushViewController:viewController animated:YES];
+    UINavigationController *navController = [self navigationController];
+    if (!retryAllowed) {
+        [navController popToRootViewControllerAnimated: NO];
+    }
+    [navController pushViewController:viewController animated:YES];
 }
 
 
