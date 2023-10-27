@@ -31,6 +31,7 @@
 #import "AuthenticationPINViewController.h"
 #import "AuthenticationSummaryViewController.h"
 #import "AuthenticationFallbackViewController.h"
+#import "ScanViewController.h"
 #import "ServiceContainer.h"
 #import "OCRAWrapper.h"
 #import "OCRAWrapper_v1.h"
@@ -172,7 +173,7 @@
                     self.challenge.identity.blocked = @YES;
                     [ServiceContainer.sharedInstance.identityService saveIdentities];
                     
-                    [self presentErrorViewControllerWithError:error];
+                    [self presentErrorViewControllerWithError:error andUserRetryAllowed:NO];
                     break;
                 }
                 case TIQRACRInvalidResponseError: {
@@ -182,12 +183,12 @@
                         [ServiceContainer.sharedInstance.identityService saveIdentities];
                     }
                     
-                    [self presentErrorViewControllerWithError:error];
+                    [self presentErrorViewControllerWithError:error andUserRetryAllowed:YES];
                     break;
                 }
                     
                 default: {
-                    [self presentErrorViewControllerWithError:error];
+                    [self presentErrorViewControllerWithError:error andUserRetryAllowed:NO];
                     break;
                 }
             }
@@ -195,9 +196,23 @@
     }];
 }
 
-- (void)presentErrorViewControllerWithError:(NSError *)error {
+- (void)presentErrorViewControllerWithError:(NSError *)error andUserRetryAllowed:(BOOL)retryAllowed {
     UIViewController *viewController = [[ErrorViewController alloc] initWithErrorTitle:[error localizedDescription] errorMessage:[error localizedFailureReason]];
-    [self.navigationController pushViewController:viewController animated:YES];
+    UINavigationController *navController = [self navigationController];
+    if (!retryAllowed) {
+        // Pop back to scan view controller
+        if ([navController viewControllers].count > 0) {
+            UIViewController *popToController = [navController viewControllers][0];
+            for (UIViewController* presentedController in [navController viewControllers]) {
+                if ([presentedController isKindOfClass: [ScanViewController class]]) {
+                    popToController = presentedController;
+                    break;
+                }
+            }
+            [navController popToViewController:popToController animated:NO];
+        }
+    }
+    [navController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)allow {

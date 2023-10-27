@@ -30,6 +30,7 @@
 #import "AuthenticationPINViewController.h"
 #import "AuthenticationSummaryViewController.h"
 #import "AuthenticationFallbackViewController.h"
+#import "ScanViewController.h"
 #import "OCRAWrapper.h"
 #import "OCRAWrapper_v1.h"
 #import "External/MBProgressHUD.h"
@@ -128,7 +129,17 @@
     UIViewController *viewController = [[ErrorViewController alloc] initWithErrorTitle:[error localizedDescription] errorMessage:[error localizedFailureReason]];
     UINavigationController *navController = [self navigationController];
     if (!retryAllowed) {
-        [navController popToRootViewControllerAnimated: NO];
+        // Pop back to scan view controller
+        if ([navController viewControllers].count > 0) {
+            UIViewController *popToController = [navController viewControllers][0];
+            for (UIViewController* presentedController in [navController viewControllers]) {
+                if ([presentedController isKindOfClass: [ScanViewController class]]) {
+                    popToController = presentedController;
+                    break;
+                }
+            }
+            [navController popToViewController:popToController animated:NO];
+        }
     }
     [navController pushViewController:viewController animated:YES];
 }
