@@ -153,7 +153,7 @@
 "error_auth_server_incompatible_title" = "Server ongeschikt";
 
 /* Unexpected error message */
-"error_auth_unknown_error" = "De server gaf een reponse in een formaat dat de %@-app niet kan begrijpen. Neem contact op met support.";
+"error_auth_unknown_error" = "De server gaf een response in een formaat dat de %@-app niet kan begrijpen. Neem contact op met support.";
 
 /* No account title */
 "error_auth_unknown_identity" = "Onbekende identiteit voor dienst, registreer eerst.";

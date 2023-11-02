@@ -8,6 +8,7 @@
 #import "../Classes/ScanOverlayView.h"
 #import "../Classes/EnrollmentChallenge.h"
 #import "../Classes/AuthenticationChallenge.h"
+#import "../Classes/AuthenticationConfirmationRequest.h"
 
 #endif /* Header_h */
 
