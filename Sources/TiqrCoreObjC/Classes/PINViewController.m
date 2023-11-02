@@ -32,7 +32,9 @@
 #import "NSString+Verhoeff.h"
 @import TiqrCore;
 
-@interface PINViewController ()
+@interface PINViewController () {
+    NSTimeInterval lastCharacterUpdateTimestamp;
+}
 
 @property (nonatomic, strong) ErrorController *errorController;
 @property (nonatomic, strong) IBOutlet UIButton *confirmButton;
@@ -43,6 +45,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *okButton;
 @property (weak, nonatomic) IBOutlet UITextField *pinTextField;
 @property (weak, nonatomic) IBOutlet UIStackView *pinViewsStackView;
+
 
 @end
 
@@ -132,6 +135,16 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+#if TARGET_OS_SIMULATOR
+    // Fix for: https://developer.apple.com/forums/thread/727715
+    // Debounces the second calls
+    NSTimeInterval timestampNow = [[[NSDate alloc] init] timeIntervalSince1970];
+    NSTimeInterval timeDifference = timestampNow - lastCharacterUpdateTimestamp;
+    lastCharacterUpdateTimestamp = timestampNow;
+    if (timeDifference < 0.05) {
+        return NO;
+    }
+#endif
     NSString *text = [self.pinTextField.text stringByReplacingCharactersInRange:range withString:string];
     if ([text length] > 4) {
         return NO;
