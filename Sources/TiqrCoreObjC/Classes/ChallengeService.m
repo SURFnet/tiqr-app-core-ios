@@ -59,7 +59,7 @@
     return self;
 }
 
-- (void)startChallengeFromScanResult:(NSString *)scanResult completionHandler:(void (^)(TIQRChallengeType, NSObject *, NSError *))completionHandler {
+- (void)startChallengeFromScanResult:(NSString *)scanResult completionHandler:(void (^)(TIQRChallengeType,  NSObject * _Nullable ,  NSError * _Nullable ))completionHandler {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         TIQRChallengeType type = TIQRChallengeTypeInvalid;

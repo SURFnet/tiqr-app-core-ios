@@ -309,7 +309,7 @@
 - (void)processChallenge:(NSString *)scanResult {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
-    [ServiceContainer.sharedInstance.challengeService startChallengeFromScanResult:scanResult completionHandler:^(TIQRChallengeType type, NSObject *challengeObject, NSError *error) {
+    [ServiceContainer.sharedInstance.challengeService startChallengeFromScanResult:scanResult completionHandler:^(TIQRChallengeType type, NSObject * _Nullable challengeObject, NSError * _Nullable error) {
         
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
         

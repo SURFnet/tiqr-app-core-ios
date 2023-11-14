@@ -53,7 +53,7 @@ typedef NS_ENUM(NSInteger, TIQRChallengeType) {
  *
  * @param completionHandler     The block that will be called when this method finishes
  */
-- (void)startChallengeFromScanResult:(NSString *)scanResult completionHandler:(void (^)(TIQRChallengeType type, NSObject *challengeObject, NSError *error))completionHanlder;
+- (void)startChallengeFromScanResult:(NSString *)scanResult completionHandler:(void (^)(TIQRChallengeType type, NSObject * _Nullable challengeObject, NSError * _Nullable error))completionHanlder;
 
 /**
  * Attempts to complete the current enrollment challenge with the supplied data

@@ -96,7 +96,7 @@
 
     ChallengeService *challengeService = ServiceContainer.sharedInstance.challengeService;
 
-    [challengeService startChallengeFromScanResult:rawChallenge completionHandler:^(TIQRChallengeType type, NSObject *challengeObject, NSError *error) {
+    [challengeService startChallengeFromScanResult:rawChallenge completionHandler:^(TIQRChallengeType type, NSObject  * _Nullable challengeObject, NSError  * _Nullable error) {
         if (!error) {
             switch (type) {
                 case TIQRChallengeTypeAuthentication: {
