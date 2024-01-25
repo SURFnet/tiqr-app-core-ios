@@ -91,7 +91,7 @@
 }
 
 - (IBAction)surfnet {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.surf.nl/en/"]];    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://surf.nl/"]];    
 }
 
 - (IBAction)egeniq {
