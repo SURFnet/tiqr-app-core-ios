@@ -59,7 +59,7 @@
 }
 
 - (void)surfnet {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.surf.nl/en/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.surf.nl/"]];
 }
 
 @end
