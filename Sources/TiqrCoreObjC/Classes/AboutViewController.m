@@ -91,7 +91,8 @@
 }
 
 - (IBAction)surfnet {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://surf.nl/"]];    
+    NSString *countrySpecificSurfnetUrl = [Localization localize:@"surfnet_url" comment:@"Country specific SURFnet URL"];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:countrySpecificSurfnetUrl]];
 }
 
 - (IBAction)egeniq {
