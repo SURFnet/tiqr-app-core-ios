@@ -47,7 +47,7 @@
     UIImage *image = [ThemeService shared].theme.bottomBarIcon;
     [self.surfnetButton setImage:image forState:UIControlStateNormal];
     self.surfnetButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.surfnetButton addTarget:self action:@selector(surfnet) forControlEvents:UIControlEventTouchUpInside];
+    [self.surfnetButton addTarget:self action:@selector(openSurfnetUrl) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.surfnetButton];
 
 }
@@ -58,8 +58,9 @@
     self.surfnetButton.frame = CGRectMake(self.frame.size.width - self.surfnetButton.bounds.size.width - 12, 6, 109, 32);
 }
 
-- (void)surfnet {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.surf.nl/"]];
+- (void)openSurfnetUrl {
+    NSString *countrySpecificSurfnetUrl = [Localization localize:@"surfnet_url" comment:@"Country specific SURFnet URL"];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:countrySpecificSurfnetUrl]];
 }
 
 @end

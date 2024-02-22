@@ -377,3 +377,5 @@
 /* Accounts navigation item title */
 "your_accounts" = "Je accounts";
 
+/* Country specific SURFnet URL */
+"surfnet_url" = "https://surf.nl/";
