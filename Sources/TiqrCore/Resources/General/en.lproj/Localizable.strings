@@ -261,7 +261,7 @@
 "main_text_blocked" = "<b>Now what?</b><br/> Ask your identity provider(s) for a new activation code. For a link to your identity provider(s) check your identities (accessible from the top right). <br/><br/> Together with your new activation code you will receive instructions for reactivating your account. Press <b>Scan</b> if asked.";
 
 /* Instructions */
-"main_text_instructions" = "<b>Use the %@ app on your smartphone to log in</b><br/><ol><li>Press <b>Scan</b> and scan the QR-code on the website.<br/></br><i>More than one ID? Select the relevant ID.</i></li><li>Scan your fingerprint or enter your PIN for %@ and press <b>OK</b>.</li><li>You are logged in!</li></ol>";
+"main_text_instructions" = "<b>Use the %@ app on your smartphone to log in</b><br/><ol><li>Press <b>Scan</b> and scan the QR-code on the website.<br/></br><i>More than one ID? Select the relevant ID.</i></li><li>Scan your biometric or enter your PIN for %@ and press <b>OK</b>.</li><li>You are logged in!</li></ol>";
 
 /* Welcome */
 "main_text_welcome" = "<b>Use the %@ app on your smartphone to log in to websites easily and secure.</b><br/><br/>Register your new %@ account and follow the instructions for activation.<br/><br/>Press <b>Scan</b> when asked.";
