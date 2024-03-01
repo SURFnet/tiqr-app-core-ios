@@ -89,7 +89,16 @@ NSString* const KEY_DEVICE_TOKEN = @"TiqrDeviceToken";
     
     NSString *tokenExchangeURLKey = @"TIQRTokenExchangeURL";
     id tokenExchangeURLRef = [[[NSBundle mainBundle] infoDictionary] objectForKey:tokenExchangeURLKey];
-    NSString *tokenExchangeURL = [tokenExchangeURLRef stringValue];
+    
+    NSString *tokenExchangeURL;
+    // Should be always a string, but keeping old code for compatibility issues.
+    // By assigning it directly, we fix the very rare issue where stringValue was somehow not available on __NSCFString.
+    // You could trigger this by invoking this code from the Scene callback, which calls the init method of the Tiqr shared instance.
+    if ([tokenExchangeURLRef isKindOfClass:NSString.class]) {
+        tokenExchangeURL = tokenExchangeURLRef;
+    } else {
+        tokenExchangeURL = [tokenExchangeURLRef stringValue];
+    }
     
     NSString *url = [tokenExchangeURL stringByAppendingString: @"tiqr"]; // Only works with tiqr
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
