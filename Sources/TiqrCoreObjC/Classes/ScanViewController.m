@@ -307,11 +307,16 @@
 }
 
 - (void)processChallenge:(NSString *)scanResult {
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    UIView *navigationControllerView = self.navigationController.view;
+    if (navigationControllerView == nil) {
+        // User already left the screen.
+        return;
+    }
+    [MBProgressHUD showHUDAddedTo:navigationControllerView animated:YES];
     
     [ServiceContainer.sharedInstance.challengeService startChallengeFromScanResult:scanResult completionHandler:^(TIQRChallengeType type, NSObject * _Nullable challengeObject, NSError * _Nullable error) {
         
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+        [MBProgressHUD hideHUDForView:navigationControllerView animated:YES];
         
         if (type != TIQRChallengeTypeInvalid) {
             [self pushViewControllerForChallenge:challengeObject Type:type];
