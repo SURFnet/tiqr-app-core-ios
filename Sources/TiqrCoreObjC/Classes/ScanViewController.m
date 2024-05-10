@@ -268,11 +268,16 @@
             AVCaptureVideoDataOutput* output = (AVCaptureVideoDataOutput *)[currentCaptureSession.outputs objectAtIndex:0];
             [currentCaptureSession removeOutput:output];
         }
+        typeof(self) __weak weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [strongSelf.previewLayer removeFromSuperlayer];
+                strongSelf.previewLayer = nil;
+                strongSelf.captureSession = nil;
+            }
+        });
     });
-    
-    [self.previewLayer removeFromSuperlayer];
-    self.previewLayer = nil;
-    self.captureSession = nil;
 #endif
 }
 
