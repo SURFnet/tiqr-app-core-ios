@@ -129,3 +129,47 @@ To import localization catalogs use:
 
 
 Note that Xcode provides these actions also in its UI, but omits the option to set the SDK which makes the export fail due to defaulting to macOS, which is unsupported.
+
+# Apple App store configuration
+
+Use ID's based on a domain name you own, below we use example.org. Replace this with your own domain.
+
+# Identifiers
+
+Go to https://developer.apple.com/account/resources/identifiers/list/ to add the App Group and App ID Identifiers:
+
+Replace myapp.example.org with a domain name you control.
+The assumes you have a testing and production version of the app.
+
+Add "App Groups":
+* group.org.example.myapp.testing - App group for Tiqr Test App
+* group.org.example.myapp - App group for Tiqr App 
+
+Add "App IDs":"
+* Bundle ID (explicit): org.example.myapp.testing.notifications
+  Description: Tiqr Test Notifications
+  Type: App
+  Enable capabilities:
+  - App Groups: group.org.example.myapp.testing
+  - Push Notifications
+* Bundle ID (explicit): org.example.myapp.testing
+  Description: Tiqr Test App
+  Type: App
+  Enable capabilities:
+  - App Groups: group.org.example.myapp.testing
+  - Push Notifications
+  
+* Bundle ID (explicit): org.example.myapp.notifications
+  Description: Tiqr Nofifications
+  Type: App
+  Enable capabilities:
+  - App Groups: group.org.example.myapp
+  - Push Notifications
+* Bundle ID (explicit): org.example.myapp
+  Description: Tiqr App
+  Type: App
+  Enable capabilities:
+  - App Groups: group.org.example.myapp
+  - Push Notifications
+  
+
