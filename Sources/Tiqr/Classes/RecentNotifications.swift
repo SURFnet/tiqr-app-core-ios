@@ -28,12 +28,14 @@
  */
 
 import Foundation
+import NotificationCenter
 
 @objcMembers
 public class RecentNotifications: NSObject {
     
     private static let keyLastNotificationTimeoutTimestamp = "lastNotificationTimeoutTimestamp"
     private static let keyLastNotificationChallenge = "lastNotificationChallenge"
+    private static let keyLastNotificationIdentifier = "lastNotificationIdentifier"
     
     private let appGroup: String
     
@@ -50,7 +52,7 @@ public class RecentNotifications: NSObject {
         return UserDefaults.init(suiteName: appGroup)!
     }
     
-    public func onNewNotification(timeOut: Any?, challenge: Any?) {
+    public func onNewNotification(timeOut: Any?, challenge: Any?, notificationId: String) {
         guard let challengeUrl = challenge as? String else {
             assertionFailure("Challenge is not a string! Received: \(challenge ?? "<nil>").")
             return
@@ -71,6 +73,7 @@ public class RecentNotifications: NSObject {
         let defaults = defaults()
         defaults.setValue(timeoutTimestamp, forKey: RecentNotifications.keyLastNotificationTimeoutTimestamp)
         defaults.setValue(challengeUrl, forKey: RecentNotifications.keyLastNotificationChallenge)
+        defaults.setValue(notificationId, forKey: RecentNotifications.keyLastNotificationIdentifier)
     }
     
     public func getLastNotificationChallenge() -> String? {
@@ -81,9 +84,13 @@ public class RecentNotifications: NSObject {
             return nil
         }
         let challengeUrl = defaults.string(forKey: RecentNotifications.keyLastNotificationChallenge)
+        if let notificationIdentifier = defaults.string(forKey: RecentNotifications.keyLastNotificationIdentifier) {
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [notificationIdentifier])
+        }
         // Clear so we don't trigger it twice
         defaults.removeObject(forKey: RecentNotifications.keyLastNotificationChallenge)
         defaults.removeObject(forKey: RecentNotifications.keyLastNotificationTimeoutTimestamp)
+        defaults.removeObject(forKey: RecentNotifications.keyLastNotificationIdentifier)
         return challengeUrl
     }
 }
